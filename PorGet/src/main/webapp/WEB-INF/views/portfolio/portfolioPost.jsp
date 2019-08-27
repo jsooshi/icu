@@ -10,11 +10,12 @@
 </head>
 <body>
 
-    <form action="" method="POST">
+    <form action="insert" method="POST">
         제목: <input type="text" name="pfname"><br>
-        사진: <input multiple="multiple"  type="file" name="filename[]" /><br>
+        사진: <input type="file" name="pffile" /><br>
         포트폴리오주소: <input type="text" name="pfurl"><br>
         포지션: <input type="text" name="pfposition"><br>
+        태그: <input type="text" name="tagname"><br>
         <input type="submit" class="btn btn-primary"/>
     </form>
 

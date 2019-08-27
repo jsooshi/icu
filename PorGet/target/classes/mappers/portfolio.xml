@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="portfolio"> 
+
+	<insert id="insertPortfolio">
+		INSERT INTO portfolio 
+		VALUES (#{uname},portfolio_SEQ.nextval,#{pfname},
+				to_date(sysdate,'yyyy.mm.dd hh24:mi'),#{pfthumb},
+				0,#{pfurl},#{pffile},#{pfposition},#{tagname})
+	</insert>
+	
+	<select id = "allPortfolio" resultType="PortfolioVO">
+		SELECT uname, pfnum, pfname, pfdate, pfthumb, pfread, pfurl, pffile, pfposition, tagname
+				FROM portfolio
+	</select>
+	
+	<select id = "onePortfolio" resultType="PortfolioVO">
+		SELECT uname, pfnum, pfname, pfdate, pfthumb, pfread, pfurl, pffile, pfposition, tagname
+				FROM portfolio
+	</select>
+	
+	
+
+
+
+
+</mapper>
