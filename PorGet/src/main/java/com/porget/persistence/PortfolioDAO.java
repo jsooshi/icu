@@ -9,4 +9,7 @@ public interface PortfolioDAO {
 	
 	public List<Map<String, Object>> showPopularPart(int base);
 	
-}
+	public List<String> searchKeyword(String keyword);
+	
+	public List<Map<String, Object>> searchResult(String keyword);
+	}
