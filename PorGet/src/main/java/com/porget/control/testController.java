@@ -25,7 +25,7 @@ public class testController {
 		System.out.println("하이");
 //		MultipartRequest mr;
 		System.out.println("update ajax post.....");
-		String uploadFolder = "/resources/files";
+		String uploadFolder = "/";
 		for(MultipartFile multipartFile : uploadFile) {
 			System.out.println("------------");
 			System.out.println("upload file name : " + multipartFile.getOriginalFilename());
@@ -39,11 +39,11 @@ public class testController {
 			try {
 				multipartFile.transferTo(saveFile);
 			} catch (IllegalStateException | IOException e) {
-				e.printStackTrace();
 				System.out.println("icy...");
+				e.printStackTrace();
 			}
 		}
 		
-		return "redirect:test/inputFile";
+		return "redirect:/test/input";
 	}
 }

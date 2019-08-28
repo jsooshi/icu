@@ -37,6 +37,9 @@
 			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
+		<multipart-config>
+			<location>C:\Users\asdg9\OneDrive\문서\icu\PorGet\src\main\webapp\resources\file</location>
+		</multipart-config>
 	</servlet>
 		
 	<servlet-mapping>
