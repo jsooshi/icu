@@ -2,6 +2,7 @@ package com.porget.control;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,11 +22,15 @@ public class testController {
 		return "test/inputFile";
 	}
 	@RequestMapping(value = "input", method = RequestMethod.POST)
-	public String input2(MultipartFile[] uploadFile) {
+	public String input2(MultipartFile[] uploadFile, HttpServletRequest request) {
 		System.out.println("하이");
 //		MultipartRequest mr;
 		System.out.println("update ajax post.....");
-		String uploadFolder = "/";
+		String uploadFolder = request.getSession().getServletContext().getRealPath("/resources/files");
+		System.out.println(uploadFolder);
+		System.out.println(request.getSession().getServletContext().getContextPath());
+		System.out.println(request.getServletContext().getRealPath("/"));
+		System.out.println(request.getServletContext().getRealPath("/").substring(1,request.getServletContext().getRealPath("/").indexOf(".metadata"))+"Test/WebContent");
 		for(MultipartFile multipartFile : uploadFile) {
 			System.out.println("------------");
 			System.out.println("upload file name : " + multipartFile.getOriginalFilename());
@@ -34,10 +39,15 @@ public class testController {
 			String uploadFileName = multipartFile.getOriginalFilename();
 			
 			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\")+1);
+			
+			UUID uuid=UUID.randomUUID();
+			uploadFileName=uuid.toString()+"_"+uploadFileName;
+			
 			System.out.println("only file name : "+ uploadFileName);
 			File saveFile = new File(uploadFolder,uploadFileName);
 			try {
 				multipartFile.transferTo(saveFile);
+				System.out.println("성공");
 			} catch (IllegalStateException | IOException e) {
 				System.out.println("icy...");
 				e.printStackTrace();
