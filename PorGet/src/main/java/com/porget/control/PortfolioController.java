@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -12,26 +14,28 @@ import com.porget.domain.PortfolioVO;
 import com.porget.persistence.PortfolioDAO;
 
 @Controller
-@RequestMapping("portfolio")
+@RequestMapping("/portfolio")
 public class PortfolioController {
 
 	@Autowired
 	private PortfolioDAO dao;
 
+	
 	@RequestMapping("")
-	public String portfolio(Model m) { // 포트폴리오 게시판 이동. 포폴 전체리스트 출력
+	public String portfolio(Model m) { // <임시 매핑. 추후 뷰 컨트롤러로 이동> 포트폴리오 게시판 이동. 포폴 전체리스트 출력
 		List<PortfolioVO> list = dao.allPortfolio();
 		System.out.println(list);
 		m.addAttribute("list", list);
 		return "portfolio/portfolioBoard";
 	}
 
-	@RequestMapping(value = "post", method = RequestMethod.GET)
+
+	@GetMapping("/post")
 	public String portfolioPost() { // 글생성 창
 		return "portfolio/portfolioPost";
 	}
-
-	@RequestMapping(value = "post", method = RequestMethod.POST)
+	
+	@PostMapping("/post")
 	public String portfolioInsert(PortfolioVO vo) { // 글 생성 후 포트폴리오 게시판으로 이동
 		// vo=> pfname, pfurl, pfposition, tagname
 
@@ -49,7 +53,8 @@ public class PortfolioController {
 		return "redirect:/portfolio";
 	}
 
-	@RequestMapping("view")
+
+	@RequestMapping("/view")
 	public String portfolioView(int pfnum, Model m) {// 게시글 클릭시 포트폴리오 뷰
 
 		List<PortfolioVO> list = dao.onePortfolio(pfnum);
@@ -58,7 +63,7 @@ public class PortfolioController {
 		return "portfolio/portfolioView";
 	}
 
-	@RequestMapping(value = "update", method = RequestMethod.GET)
+	@GetMapping("/update")
 	public String portfolioUpdateView(int pfnum, Model m) {// 게시글 수정뷰
 
 		List<PortfolioVO> list = dao.onePortfolio(pfnum);
@@ -67,7 +72,7 @@ public class PortfolioController {
 		return "portfolio/portfolioUpdate";
 	}
 
-	@RequestMapping(value = "update", method = RequestMethod.POST)
+	@PostMapping("/update")
 	public String portfolioUpdate(PortfolioVO vo, int pfnum, Model m) {// 게시글 수정완료 후 본인글로 이동
 
 		/* 임시로 추가하는 VO */
@@ -82,7 +87,7 @@ public class PortfolioController {
 		return "redirect:/portfolio/view?pfnum=" + pfnum;
 	}
 
-	@RequestMapping("delete")
+	@RequestMapping("/delete")
 	public String portfolioDelete(int pfnum) {// 게시글 삭제후 게시판으로 이동
 
 		if (dao.deletePortfolio(pfnum) == 1) {
@@ -90,8 +95,15 @@ public class PortfolioController {
 		} else {
 			System.out.println("삭제실패");
 		}
-		return "reiderct:portfolio";
-
+		return "redirect:/portfolio";
 	}
+	
+	/*   좋아요 기능   */
+	@RequestMapping("/recommend")
+	public String recommend(int pfnum, String uname) {
+		
+		return "";
+	}
+	
 
 }
