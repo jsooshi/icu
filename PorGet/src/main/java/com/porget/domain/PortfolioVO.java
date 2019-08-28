@@ -2,7 +2,7 @@ package com.porget.domain;
 
 import java.util.Date;
 
-public class PortfolioVO {
+public class PortfolioVO { //포트폴리오 테이블 VO
 	
 	private String uname;
 	private int pfnum;

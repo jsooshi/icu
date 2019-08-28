@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title></title>
 </head>
 <style>
     .inline {
@@ -16,13 +16,14 @@
 </style>
 
 <body>
-
+uname, pfnum, pfname, pfdate, pfthumb, pfread, pfurl, pffile, pfposition, tagname
     <div class="container">
+
         <img src="http://placehold.it/200" class="rounded-circle" style="width:20%; display:inline;">
         <p class="inline">
-            닉네임: 하늘다람쥐<br>
-            포지션: 웹개발자<br>
-            태그: Java, Js, Spring
+            닉네임: ${list.uname }<br>
+            포지션: ${list.pfposition }<br>
+            태그: ${list.tagname }
         </p>
 
         [스크린샷]<br>
@@ -35,17 +36,17 @@
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <img class="d-block w-100"
-                        src="https://cdn.pixabay.com/photo/2017/03/28/22/55/night-photograph-2183637_1280.jpg"" alt="
+                        src="" alt="
                         First slide">
                 </div>
                 <div class="carousel-item">
                     <img class="d-block w-100"
-                        src="https://cdn.pixabay.com/photo/2017/03/28/22/55/night-photograph-2183637_1280.jpg"" alt="
+                        src="" alt="
                         Second slide">
                 </div>
                 <div class="carousel-item">
                     <img class="d-block w-100"
-                        src="https://cdn.pixabay.com/photo/2017/03/28/22/55/night-photograph-2183637_1280.jpg"" alt="
+                        src="" alt="
                         Third slide">
                 </div>
             </div>
@@ -59,22 +60,18 @@
             </a>
         </div>
 
-        좋아요수: 100<br>
-        조회수: 500<br>
+        좋아요수: <br>
+        조회수: <br>
 
-        <a href="" class="btn btn-primary">
-            포트폴리오 링크
+        <a href="${list.pfurl }" class="btn btn-primary">
+		 포트폴리오 링크
         </a><br>
 
-        <a href="">수정</a><br>
-        <a href="">삭제</a><br>
+        <a href="update?pfnum=${list.pfnum }">수정</a><br>
+        <a href="delete?pfnum=${list.pfnum }">삭제</a><br>
         <hr>
 
         [댓글]
-        <img src="http://placehold.it/200" class="rounded-circle" style="width:20%; display:inline;">
-        <input type="text">
-        <input type="button" value="등록" class="btn btn-primary">
-
 
 
 

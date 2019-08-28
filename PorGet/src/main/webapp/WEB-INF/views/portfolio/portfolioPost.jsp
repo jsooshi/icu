@@ -10,7 +10,7 @@
 </head>
 <body>
 
-    <form action="insert" method="POST">
+    <form action="post" method="POST">
         제목: <input type="text" name="pfname"><br>
         사진: <input type="file" name="pffile" /><br>
         포트폴리오주소: <input type="text" name="pfurl"><br>

@@ -19,13 +19,13 @@
 		<div class="row">
 			<div class="col-sm-12">
 				<h3>게시판</h3>
-				<button class="create btn btn-primary">글 생성</button>
+				<a href="post">글 생성</a>
 			</div>
 
 			<c:forEach items="${list }" var="p">
 				<div class="col-md-4">
 					<div class="card">
-						<a href="#" class="btn text-left custom-card"> <img
+						<a href="view?pfnum=${p.pfnum}" class="btn text-left custom-card"> <img
 							src="${pageContext.request.contextPath}/resources/img/${p.pfthumb}"
 							class="card-img-top" alt="...">
 							<div class="card-body">

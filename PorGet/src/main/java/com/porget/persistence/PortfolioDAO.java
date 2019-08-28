@@ -4,11 +4,12 @@ import java.util.List;
 
 import com.porget.domain.PortfolioVO;
 
-public interface PortfolioDAO {
+public interface PortfolioDAO {// 포트폴리오 관련 DAO
 	
-	public int insertPortfolio(PortfolioVO vo);
-	public List<PortfolioVO> allPortfolio();
-	public List<PortfolioVO> onePortfolio(String uname);
-	
+	public int insertPortfolio(PortfolioVO vo); //글생성
+	public List<PortfolioVO> allPortfolio();    //전체목록 출력
+	public List<PortfolioVO> onePortfolio(int pfnum);// 게시글 한개 출력
+	public int updatePortfolio(PortfolioVO vo); //게시글 업데이트
+	public int deletePortfolio(int pfnum); // 게시글 삭제
 
 }

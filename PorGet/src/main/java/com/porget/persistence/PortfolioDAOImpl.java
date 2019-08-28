@@ -27,9 +27,18 @@ public class PortfolioDAOImpl implements PortfolioDAO{
 	}
 
 	@Override
-	public List<PortfolioVO> onePortfolio(String uname) {
-		return null;
+	public List<PortfolioVO> onePortfolio(int pfnum) {
+		return sqlSession.selectList("portfolio.onePortfolio",pfnum);
 	}
 	
+	@Override
+	public int updatePortfolio(PortfolioVO vo) {
+		return sqlSession.update("portfolio.updatePf",vo);
+	}
+	
+	@Override
+	public int deletePortfolio(int pfnum) {
+		return sqlSession.delete("portfolio.deletePf",pfnum);
+	}
 	
 }
