@@ -16,7 +16,6 @@
 </style>
 
 <body>
-uname, pfnum, pfname, pfdate, pfthumb, pfread, pfurl, pffile, pfposition, tagname
     <div class="container">
 
         <img src="http://placehold.it/200" class="rounded-circle" style="width:20%; display:inline;">
@@ -67,6 +66,7 @@ uname, pfnum, pfname, pfdate, pfthumb, pfread, pfurl, pffile, pfposition, tagnam
 		 포트폴리오 링크
         </a><br>
 
+        <a href="">좋아요</a><br>
         <a href="update?pfnum=${list.pfnum }">수정</a><br>
         <a href="delete?pfnum=${list.pfnum }">삭제</a><br>
         <hr>

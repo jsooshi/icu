@@ -15,6 +15,7 @@ public class PortfolioDAOImpl implements PortfolioDAO{
 	@Inject
 	private SqlSession sqlSession;
 
+	/* 포트폴리오 CRUD */
 	@Override
 	public int insertPortfolio(PortfolioVO vo) {
 		System.out.println("dao>"+vo);
@@ -40,5 +41,24 @@ public class PortfolioDAOImpl implements PortfolioDAO{
 	public int deletePortfolio(int pfnum) {
 		return sqlSession.delete("portfolio.deletePf",pfnum);
 	}
+
+	/* 좋아요 */
 	
+	@Override
+	public int insertRecommend(PortfolioVO vo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int selectRecommend(int pfnum) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int distinctRecommend(int num) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }
