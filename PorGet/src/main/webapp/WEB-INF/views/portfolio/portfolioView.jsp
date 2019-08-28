@@ -8,7 +8,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+<script src="/js/jquery-3.js"></script>    
+<script type="text/javascript">
+
+$(function(){
+		
+	$('#replySave').click(function(){
+		var replyCon = document.getElementById('replyContents').value;
+		var boardnum = 1 //게시판 번호로 추후 변경 ${param.pfnum}
+		var replyData={
+				pfnum: boardnum, //게시글번호 
+				rcontent: replyCon,
+				rdeep: 0,
+				uname: 'gildong'
+							
+			};
+		
+		console.log(replyData);
+		
+		$.ajax({
+			url: '../replies/save',
+			dataType: "json",
+			type: "post",
+			data:  replyData,
+			success: function(result){
+				alert('성공')
+			}
+			
+			
+		})//ajax	
+	})//replySave click
+}) //ready
+
+
+
+</script>
 </head>
+
 <style>
     .inline {
         display: inline;
@@ -70,10 +106,23 @@
         <a href="">삭제</a><br>
         <hr>
 
-        [댓글]
+        [댓글] <!-- 댓글작성 -->
         <img src="http://placehold.it/200" class="rounded-circle" style="width:20%; display:inline;">
-        <input type="text">
-        <input type="button" value="등록" class="btn btn-primary">
+        <div class="box-header with-border">
+        	<h3 class="box-title">Comment</h3>
+        </div>
+        <div class="box-body">
+        	<div class="form-group">
+        		<textarea id="replyContents" rows="3" cols="60" placeholder="댓글내용"></textarea>
+        		<br>
+        		<br>
+        		<input type="button" value="submit" id="replySave">
+        	</div>
+        </div>
+        <div class="box-footer">
+        	--댓글리스트공간-- 
+        </div>
+        
 
 
 
