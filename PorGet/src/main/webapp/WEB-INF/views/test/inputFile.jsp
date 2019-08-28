@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>입력폼</title>
-<script src="<c:url value="/resources/js/jquery-3.js" />"></script>
+<script src="/porget/js/jquery-3.js"></script>
 <script type="text/javascript">
 	var fileCount =0;
 	var fileList = new FormData();
@@ -49,7 +49,7 @@
 				console.log("파일이 이미 3개있습니다");
 				$(this).val("");return;}
 			console.log("f+f : "+(files.length+fileCount));
-			fileIn = ((parseFloat(files.length)+parseFloat(fileCount))>3) ? (3-parseFloat(fileCount)) : files.length  ;
+			fileIn = ((parseFloat(files.length)+parseFloat(fileCount))>3) ? (3-pa`rseFloat(fileCount)) : files.length  ;
 			fileCount += fileIn;
 			console.log("filecount : "+ fileCount);
 			for(var i=0;i<fileIn;i++){
