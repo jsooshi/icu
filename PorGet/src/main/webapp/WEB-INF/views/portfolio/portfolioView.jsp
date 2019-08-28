@@ -15,7 +15,7 @@ $(function(){ //jquery영역
 	
 	var boardNum = ${param.pfnum} 
 	function replyList (){
-		alert('call replyList!!')
+		
 	 $.ajax({
 		 url : '../replies/list',
 		 data: {
