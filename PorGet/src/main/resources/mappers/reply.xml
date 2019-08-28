@@ -8,5 +8,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into reply (pfnum, rcontent, uname, rdate, rnum, rdeep, rgroup)
 		values (#{pfnum}, #{rcontent}, #{uname},sysdate,reply_seq.nextval, #{rdeep}, reply_seq.currval)
 	</insert>
+	<select id="list" resultType="ReplyVO">
+		select uname, rdate,rcontent, rdeep, rgroup
+		from reply
+		where pfnum=#{pfnum}
+		order by rdate desc
+	</select>
 
 </mapper>

@@ -213,3 +213,5 @@ ALTER TABLE recommend
     ADD CONSTRAINT FK_recommend_pfnum FOREIGN KEY (pfnum)
         REFERENCES portfolio (pfnum)ON DELETE CASCADE
 ;
+
+select 

@@ -8,35 +8,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-<script src="/js/jquery-3.js"></script>    
+<script src="/porget/js/jquery-3.js"></script>    
 <script type="text/javascript">
 
-$(function(){
+$(function(){ //jquery영역
+	
+	var boardNum = ${param.pfnum} 
+	function replyList (){
+		alert('call replyList!!')
+	 $.ajax({
+		 url : '../replies/list',
+		 data: {
+			 pfnum : boardNum
+		 },
+		 success: function(result){
+			 $('#replyArea').html(result);
+		 }
+		 
+	 })
+	 
+	}
+	
+	replyList(); //댓글리스트 로딩
 		
 	$('#replySave').click(function(){
-		var replyCon = document.getElementById('replyContents').value;
-		var boardnum = 1 //게시판 번호로 추후 변경 ${param.pfnum}
-		var replyData={
-				pfnum: boardnum, //게시글번호 
-				rcontent: replyCon,
-				rdeep: 0,
-				uname: 'gildong'
-							
-			};
+		var replyCon = $("#replyContents").val();
 		
-		console.log(replyData);
+		var replyData={
+				pfnum: boardNum,  //게시판번홈
+				rcontent: replyCon, //댓글내용
+				rdeep: 0,
+				uname: "${param.uname}" //userID 
+							
+			}; 
+	
 		
 		$.ajax({
 			url: '../replies/save',
-			dataType: "json",
 			type: "post",
 			data:  replyData,
-			success: function(result){
-				alert('성공')
+			success: function(){
+				replyList()
+			},
+			error:function(xhr,staTxt){
+				alert("에러?"+staTxt+':'+xhr.status)
 			}
 			
 			
 		})//ajax	
+		
+		$("#replyContents").val(''); //댓글초기화
+		
 	})//replySave click
 }) //ready
 
@@ -119,8 +141,8 @@ $(function(){
         		<input type="button" value="submit" id="replySave">
         	</div>
         </div>
-        <div class="box-footer">
-        	--댓글리스트공간-- 
+        <div class="box-footer" id="replyArea">
+        	
         </div>
         
 
