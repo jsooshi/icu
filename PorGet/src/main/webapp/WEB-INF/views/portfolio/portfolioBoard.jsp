@@ -3,15 +3,13 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>PorGet</title>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script>
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
 	/* 	function portfolioView(pfnum) {
 	
 	 console.log(pfnum);
@@ -28,27 +26,23 @@
 	 }
 	 }); 
 	 } */
+	 
 	var i = 2;
 	$(document).ready(function() {
 		$.ajax({
 			url : "/porget/portfolio/partPopular",
-			data : {
-				base : 1
-			},
+			data : {base : 1},
 			success : function(data) {
 				$('#divContent').append(data);
 			}
 		});
-		$('#div01').scroll(function() {
-			var scrollT = $(this).scrollTop(); //스크롤바의 상단위치
-			var scrollH = $(this).height(); //스크롤바를 갖는 div의 높이
-			var contentH = $('#divContent').height(); //문서 전체 내용을 갖는 div의 높이
-			if (scrollT + scrollH + 1 >= contentH) { // 스크롤바가 아래 쪽에 위치할 때
+		$(document).scroll(function() {
+		    var maxHeight = $(document).height();
+		    var currentScroll = $(window).scrollTop() + $(window).height();
+		    if (maxHeight <= currentScroll + 100) {
 				$.ajax({
 					url : "/porget/portfolio/partPopular",
-					data : {
-						base : i++
-					},
+					data : {base : i++},
 					success : function(data) {
 						$('#divContent').append(data);
 					}
@@ -64,36 +58,14 @@
 
 	<article>
 		<div class="content">
-			<div class="row">
-				<div class="col-sm-12">
 					<h3>게시판</h3>
 					<a href="portfolio/post" class="btn btn-primary">글 생성</a>
-				</div>
-	<!-- 			<div id="div01"
-					style="text-align: center; border: 1px solid #5AAFFF; height: 500px; overflow-y: scroll;">
-					<div id="divContent"> -->
-						<c:forEach items="${list }" var="p">
-							<div class="col-md-4" name="amu">
-								<div class="card">
-									<a href="portfolio/view?pfnum=${p.pfnum }" class="btn"> <img
-										src="${pageContext.request.contextPath}/porget/resources/img/${p.pfthumb}"
-										class="card-img-top" alt="...">
-										<div class="card-body">
-											<h5 class="card-title">${p.pfname }</h5>
-											<p class="card-text">
-												<img src="http://placehold.it/200" class="rounded-circle"
-													style="width: 20%; display: inline;"> ${p.uname }
-											</p>
-											<p class="text-muted">조회 ${p.pfread } 하트, 댓글수</p>
-										</div>
-									</a>
-								</div>
-							</div>
-						</c:forEach>
+				<!-- <div id="div01"	style="text-align: center; border: 1px solid #5AAFFF; height: 500px; overflow-y: scroll;"> -->
+					<div id="divContent" class="row"> 
+						
 					</div>
-				</div>
-<!-- 			</div>
-		</div> -->
+				<!-- </div> -->
+		</div> 
 		<!-- 모달창 -->
 		<div class="modal" id="myModal"></div>
 	</article>
