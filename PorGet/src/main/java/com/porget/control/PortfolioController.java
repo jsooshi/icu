@@ -51,7 +51,12 @@ public class PortfolioController {
 		return "portfolio/searchResult";
 	}
 	
-	
+	@RequestMapping("/searchTegBox")
+	public String searchTegBox(Model m, String keyword) { //검색창에서 연관검색어 가져오기
+		List<String> list = dao.searchKeyword(keyword);
+		m.addAttribute("list", list);
+		return "portfolio/searchTegBox";
+	}
 	
 	
 	
