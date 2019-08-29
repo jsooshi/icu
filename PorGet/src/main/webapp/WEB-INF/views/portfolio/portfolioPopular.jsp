@@ -8,35 +8,34 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
-
-	<div class="container">
-		<div class="row">
-			<div class="col-sm-12">
-				<h3>인기게시판. 뷰를 수정할지.. 기능을 좀더 고민해야 할듯함</h3>
-			</div>
-
-			<c:forEach items="${list }" var="p">
-				<div class="col-md-4">
-					<div class="card">
-						<a href="portfolio/view?pfnum=${p.pfnum}" class="btn text-left custom-card"> <img
-							src="${pageContext.request.contextPath}/resources/img/${p.pfthumb}"
-							class="card-img-top" alt="...">
-							<div class="card-body">
-								<h5 class="card-title">${p.pfname }</h5>
-								<p class="card-text">
-									<img src="http://placehold.it/200" class="rounded-circle"
-										style="width: 20%; display: inline;"> ${p.uname }
-								</p>
-								<p class="text-muted">조회 ${p.pfread } 하트, 댓글수</p>
-							</div>	
-						</a>
-					</div>
+	
+	<article>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12">
+					<h3>인기게시판. 뷰를 수정할지.. 기능을 좀더 고민해야 할듯함</h3>
 				</div>
-			</c:forEach>
-
-
-
-		</div>
+	
+				<c:forEach items="${list }" var="p">
+					<div class="col-md-4">
+						<div class="card">
+							<a href="portfolio/view?pfnum=${p.pfnum}" class="btn text-left custom-card"> <img
+								src="${pageContext.request.contextPath}/resources/img/${p.pfthumb}"
+								class="card-img-top" alt="...">
+								<div class="card-body">
+									<h5 class="card-title">${p.pfname }</h5>
+									<p class="card-text">
+										<img src="http://placehold.it/200" class="rounded-circle"
+											style="width: 20%; display: inline;"> ${p.uname }
+									</p>
+									<p class="text-muted">조회 ${p.pfread } 하트, 댓글수</p>
+								</div>	
+							</a>
+						</div>
+					</div>
+				</c:forEach>
+			</div>
+	</article>
 
 
 		<script

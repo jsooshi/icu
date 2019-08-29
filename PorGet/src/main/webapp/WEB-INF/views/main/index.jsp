@@ -9,69 +9,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>PorGet</title>
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-	crossorigin="anonymous">
-</head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <script src="/porget/js/jquery-3.js"></script>
+<script src="/porget/js/page.js"></script>
+</head>
 <style>
 #bannerimage {
 	width: 100%;
-	background-image:
-		url(https://assets.awwwards.com/awards/sites_of_the_day/2019/07/humpback-whale-1.jpg);
+	background-image: url(https://assets.awwwards.com/awards/sites_of_the_day/2019/07/humpback-whale-1.jpg);
 	height: 405px;
 	background-position: center;
 }
 </style>
-<script>
-	$(function() {
-		$.ajax({
-			url : "/",
-			success : function(result) {
-				$('#porgetBody').html(result);
-			}
-		})
-	});
-	
-	window.onhashchange = function() {
-	    if (window.innerDocClick) {
-	        window.innerDocClick = false;
-	    } else {
-	        if (window.location.hash != '#undefined') {
-	            goBack();
-	        } else {
-	            history.pushState("", document.title, window.location.pathname);
-	            location.reload();
-	        }
-	    }
-	}
-	
-	function portfolioBoard() {
-		$.ajax({
-			url : "portfolio",
-			success : function(result) {
-				$('#porgetBody').html(result);
-			}
-		});
-	}
-
-	function portfolioPopular() {
-		$.ajax({
-			url : "portfolio/popular",
-			success : function(result) {
-				$('#porgetBody').html(result);
-			}
-		});
-	}
-
-</script>
 
 <body>
 
 	<!-- Navigation 임시-->
 	<nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
-		<div class="container-fluid">
 			<a href="" class="navbar-brand">PorGet</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarResponsive">
@@ -79,18 +33,17 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"><a href="/porget" class="nav-link">Home</a></li>
-					<li class="nav-item"><a href="#" onclick="portfolioBoard(); return false;" class="nav-link">Portfolio</a></li>
-					<li class="nav-item"><a href="#" onclick="portfolioPopular(); return false;" class="nav-link">Popular</a></li>
+					<li class="nav-item"><a href="/porget" class="home nav-link">Home</a></li>
+					<li class="nav-item"><a href="/porget/portfolio" class="portfolio nav-link">Portfolio</a></li>
+					<li class="nav-item"><a href="/porget/portfolio/popular" class="popular nav-link">Popular</a></li>
 				</ul>
 			</div>
-		</div>
 	</nav>
 
 
 	<!-- body -->
 
-	<div id="porgetBody">
+	<article>
 
 		<div id="bannerimage">
 			<div class="text-center">인기 포트폴리오 (임시)</div>
@@ -180,7 +133,7 @@
 
 				</div>
 
-			</div>
+	</article>
 
 			<!-- footer -->
 			<footer>
@@ -197,20 +150,8 @@
 			</footer>
 
 
-
-
-			<script
-				src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-				integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-				crossorigin="anonymous">
-				
-			</script>
-			<script
-				src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-				integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-				crossorigin="anonymous">
-				
-			</script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 
 </html>
