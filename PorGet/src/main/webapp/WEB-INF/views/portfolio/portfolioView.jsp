@@ -63,7 +63,15 @@ $(function(){ //jquery영역
 		
 	})//replySave click
 	
-	
+	$('#replyContents').keyup(function (e){ //댓글글자수카운터 및 제한
+		var content = $(this).val();
+		$('#counter').html("("+content.length+"/최대150자)");
+		if(content.length>150){
+			alert('최대150자까지 가능합니다')
+			$(this).val(content.substring(0, 150));
+			$('#counter').html('(150/최대150자)')
+		}
+	})
 	
 	
 	
@@ -145,7 +153,8 @@ $(function(){ //jquery영역
         	<div class="form-group">
         		<textarea id="replyContents" rows="3" cols="60" placeholder="댓글내용"></textarea>
         		<br>
-        		<br>
+        		<span style="color:#aaa;" id="counter">(0/최대150자)</span>
+        		
         		<input type="button" value="submit" id="replySave">
         	</div>
         </div>
