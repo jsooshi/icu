@@ -3,6 +3,8 @@
 -- user Table Create SQL
 drop table userList cascade CONSTRAINTS;
 
+
+
 CREATE TABLE userList
 (
     uname     VARCHAR2(30)    unique NOT NULL, 
