@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,29 +9,59 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>PorGet</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
-/* 	function portfolioView(pfnum) {
+	/* 	function portfolioView(pfnum) {
 	
-		console.log(pfnum);
-		
+	 console.log(pfnum);
+	
+	 $.ajax({
+	 url : "portfolio/view",
+	 type: "get",
+	 data: {
+	 pfnum: pfnum
+	 },
+	 success : function(result) {
+	 console.log(result);
+	 $('#myModal').html(result);
+	 }
+	 }); 
+	 } */
+	var i = 2;
+	$(document).ready(function() {
 		$.ajax({
-			url : "portfolio/view",
-			type: "get",
-			data: {
-				pfnum: pfnum
-				},
-			success : function(result) {
-				console.log(result);
-				$('#myModal').html(result);
+			url : "/porget/portfolio/partPopular",
+			data : {
+				base : 1
+			},
+			success : function(data) {
+				$('#divContent').append(data);
 			}
-		}); 
-	} */
+		});
+		$('#div01').scroll(function() {
+			var scrollT = $(this).scrollTop(); //스크롤바의 상단위치
+			var scrollH = $(this).height(); //스크롤바를 갖는 div의 높이
+			var contentH = $('#divContent').height(); //문서 전체 내용을 갖는 div의 높이
+			if (scrollT + scrollH + 1 >= contentH) { // 스크롤바가 아래 쪽에 위치할 때
+				$.ajax({
+					url : "/porget/portfolio/partPopular",
+					data : {
+						base : i++
+					},
+					success : function(data) {
+						$('#divContent').append(data);
+					}
+				});
+			}
+		});
+	});
 </script>
 </head>
 <body>
 
-	<jsp:include page="/WEB-INF/views/include/header.jsp"/>
-	
+	<jsp:include page="/WEB-INF/views/include/header.jsp" />
+
 	<article>
 		<div class="content">
 			<div class="row">
@@ -39,49 +69,51 @@
 					<h3>게시판</h3>
 					<a href="portfolio/post" class="btn btn-primary">글 생성</a>
 				</div>
-	
-				<c:forEach items="${list }" var="p">
-					<div class="col-md-4" name="amu">
-<%-- 					<input type="text" value="${p.pfnum }" name="pfnum"> --%>
-						<div class="card">
-							<%-- <button onclick= "portfolioView(`${p.pfnum}`)" class="btn text-left custom-card" data-toggle="modal" data-target="#myModal">  --%>
-							<a href="portfolio/view?pfnum=${p.pfnum }" class="btn">
-								<img src="${pageContext.request.contextPath}/porget/resources/img/${p.pfthumb}"
-									class="card-img-top" alt="...">
-									<div class="card-body">
-										<h5 class="card-title">${p.pfname }</h5>
-										<p class="card-text">
-											<img src="http://placehold.it/200" class="rounded-circle"
-												style="width: 20%; display: inline;"> ${p.uname }
-										</p>
-										<p class="text-muted">조회 ${p.pfread } 하트, 댓글수</p>
-									</div>	
-							</a>
-						</div>
+	<!-- 			<div id="div01"
+					style="text-align: center; border: 1px solid #5AAFFF; height: 500px; overflow-y: scroll;">
+					<div id="divContent"> -->
+						<c:forEach items="${list }" var="p">
+							<div class="col-md-4" name="amu">
+								<div class="card">
+									<a href="portfolio/view?pfnum=${p.pfnum }" class="btn"> <img
+										src="${pageContext.request.contextPath}/porget/resources/img/${p.pfthumb}"
+										class="card-img-top" alt="...">
+										<div class="card-body">
+											<h5 class="card-title">${p.pfname }</h5>
+											<p class="card-text">
+												<img src="http://placehold.it/200" class="rounded-circle"
+													style="width: 20%; display: inline;"> ${p.uname }
+											</p>
+											<p class="text-muted">조회 ${p.pfread } 하트, 댓글수</p>
+										</div>
+									</a>
+								</div>
+							</div>
+						</c:forEach>
 					</div>
-				</c:forEach>
-			</div>
-		</div>
- 		<!-- 모달창 -->
-		<div class="modal" id="myModal"></div> 
+				</div>
+<!-- 			</div>
+		</div> -->
+		<!-- 모달창 -->
+		<div class="modal" id="myModal"></div>
 	</article>
-	
-	
-		<jsp:include page="/WEB-INF/views/include/footer.jsp"/>
+
+
+	<jsp:include page="/WEB-INF/views/include/footer.jsp" />
+
+
+
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous">
 		
-
-
-		<script
-			src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-			integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-			crossorigin="anonymous">
-			
-		</script>
-		<script
-			src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-			integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-			crossorigin="anonymous">
-			
-		</script>
-	</body>
+	</script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous">
+		
+	</script>
+</body>
 </html>

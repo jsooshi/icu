@@ -66,7 +66,7 @@ public class PortfolioDAOImpl implements PortfolioDAO{
 	
 	@Override
 	public List<Map<String, Object>> showPopularPart(int base) { //인기포트폴리오 게시판 스크롤 내려가면 그 다음 목록 검색해서 뿌려주기
-		RowBounds bounds = new RowBounds((base-1)*9, 9);
+		RowBounds bounds = new RowBounds((base-1)*2, 2);
 		
 		return sqlSession.selectList("portfolio.portfolioList", null, bounds);
 	}

@@ -3,7 +3,8 @@
     
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<script src="/porget/js/jquery-3.js"></script>    
+<script src="/porget/js/jquery-3.js"></script>  
+
 
 	<!-- Navigation -->
 	<nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
@@ -12,6 +13,7 @@
 				data-target="#navbarResponsive">
 				<span class="navbar-toggler-icon"></span>
 			</button>
+
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item"><a href="/porget" class="home nav-link">Home</a></li>

@@ -133,53 +133,17 @@ public class PortfolioController {
 		return "redirect:/portfolio";
 	}
 	
-	@RequestMapping("/popular")
-	public String portfolioPopular(Model m) { //포폴 인기게시판. 임시기능으로
-		List<PortfolioVO> list = dao.allPortfolio();
-		m.addAttribute("list", list);
-		return "portfolio/portfolioPopular";
-	}
-
-	@RequestMapping("/popularView")
-	public String showPopularView() { //인기포트폴리오 게시판 뷰 보기
-		return "portfolio/popularBoard";
-	}
+	/*
+	 * @RequestMapping("/popularView") public String showPopularView() { //인기포트폴리오
+	 * 게시판 뷰 보기 return "portfolio/popularBoard"; }
+	 */
 	
 	@RequestMapping("/partPopular")
 	public String showPopularPart(Model m, int base) { //인기포트폴리오 게시판 스크롤 내려가면 그 다음 목록 검색해서 뿌려주기
 		List<Map<String, Object>> list = dao.showPopularPart(base);
 		m.addAttribute("list", list);
-		return "portfolio/popularBoardPart";
+		return "";
 	}
 	
-	@RequestMapping("/showSearch")
-	public String showSearch() {  //테스트용으로 검색창 띄우기 원래는 메인에 있음
-		return "portfolio/searchInputTest";
-	}
-	
-	
-	@RequestMapping("/searchKeyword")
-	public String searchKeyword(Model m, String keyword) { //검색창에서 연관검색어 가져오기
-		//System.out.println("keyword>>"+keyword);
-		List<String> list = dao.searchKeyword(keyword);
-		m.addAttribute("list", list);
-		return "portfolio/searchInputPartTest";
-	}
-	
-	
-	@RequestMapping("/searchButton")
-	public String searchButton(String keyword, Model m) {//검색버튼 눌렀을시 검색결과 가져오기
-		List<Map<String, Object>> list = dao.searchResult(keyword);
-		m.addAttribute("list", list);
-		return "portfolio/searchResult";
-	}
-	
-	@RequestMapping("/searchTegBox")
-	public String searchTegBox(Model m, String keyword) { //검색창에서 연관검색어 가져오기
-		List<String> list = dao.searchKeyword(keyword);
-		m.addAttribute("list", list);
-		return "portfolio/searchTegBox";
-	}
-
 
 }
