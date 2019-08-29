@@ -104,6 +104,7 @@ $(function(){
 <!-- 대댓글 작성창 -->
 <div id='replyReply' style="display: none; margin-left: 20px">
 	<!-- 대댓글창  -->
+	
 	<br><textarea id="reReplyCon" row=3 cols=57></textarea>
 	<br>
 	<span style="color:#aaa;" id="counter2">(0/최대150자)</span>
