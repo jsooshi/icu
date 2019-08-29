@@ -72,6 +72,21 @@
 	});
 </script>     
     
+    <title>Document</title>
+    <script src="/porget/js/jquery-3.js"></script>
+    <script>
+    
+    $(function(){
+		function portfolioSubmit() {
+			$.ajax({
+				url : "portfolio/post",
+				success : function(result) {
+					$('#porgetBody').html(result);
+				}
+			});    	
+    })
+    
+    </script>
 </head>
 <body>
 

@@ -88,9 +88,10 @@ public class PortfolioController {
 	}
 
 
-	@RequestMapping("/view")
+	@GetMapping("/view")
 	public String portfolioView(int pfnum, Model m) {// 게시글 클릭시 포트폴리오 뷰
 
+		System.out.println("pfnum>"+pfnum);
 		List<PortfolioVO> list = dao.onePortfolio(pfnum);
 		System.out.println(list.get(0));
 		m.addAttribute("list", list.get(0));
@@ -99,7 +100,7 @@ public class PortfolioController {
 
 	@GetMapping("/update")
 	public String portfolioUpdateView(int pfnum, Model m) {// 게시글 수정뷰
-
+		
 		List<PortfolioVO> list = dao.onePortfolio(pfnum);
 		System.out.println(list.get(0));
 		m.addAttribute("p", list.get(0));
@@ -132,12 +133,14 @@ public class PortfolioController {
 		return "redirect:/portfolio";
 	}
 	
-	/*   좋아요 기능   */
-	@RequestMapping("/recommend")
-	public String recommend(int pfnum, String uname) {
-		
-		return "";
+	@RequestMapping("/popular")
+	public String portfolioPopular(Model m) { //포폴 인기게시판. 임시기능으로
+		List<PortfolioVO> list = dao.allPortfolio();
+		m.addAttribute("list", list);
+		return "portfolio/portfolioPopular";
 	}
+
+	
 	
 
 }
