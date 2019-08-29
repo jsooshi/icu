@@ -14,6 +14,64 @@
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
 	<script src="/porget/js/jquery-3.js"></script>
+    <title>Document</title>
+<script src="/porget/js/jquery-3.js"></script>    
+<script type="text/javascript">
+
+$(function(){ //jquery영역
+	
+	var boardNum = ${param.pfnum}  //열람한 게시글 번호 
+	var accessName = "${param.uname}" //게시글을 열람, 접속한 사람
+	function replyList (){
+		
+	 $.ajax({
+		 url : '../replies/list',
+		 data: {
+			 pfnum : boardNum,
+			 uname : accessName
+		 },
+		 success: function(result){
+			 $('#replyArea').html(result);
+		 }
+		 
+	 })
+	 
+	}
+	
+	replyList(); //댓글리스트 로딩
+		
+	$('#replySave').click(function(){
+		var replyCon = $("#replyContents").val();
+		
+		var replyData={
+				pfnum: boardNum,  //게시판번홈
+				rcontent: replyCon, //댓글내용
+				rdeep: 0,
+				uname: "${param.uname}" //userID 
+							
+			}; 
+	
+		
+		$.ajax({
+			url: '../replies/save',
+			type: "post",
+			data:  replyData,
+			success: function(){
+				replyList()
+			},
+			error:function(xhr,staTxt){
+				alert("에러?"+staTxt+':'+xhr.status)
+			}
+			
+			
+		})//ajax	
+		
+		$("#replyContents").val(''); //댓글초기화
+		
+	})//replySave click
+}) //ready
+</script>
+</head>
 <style>
     .inline {
         display: inline;
@@ -85,12 +143,37 @@
         <a href="update?pfnum=${list.pfnum }">수정</a><br>
         <a href="delete?pfnum=${list.pfnum }">삭제</a><br>
         <hr>
+        
+                [댓글] <!-- 댓글작성 -->
+        <img src="http://placehold.it/200" class="rounded-circle" style="width:20%; display:inline;">
+        <div class="box-header with-border">
+        	<h3 class="box-title">Comment</h3>
+        </div>
+        <div class="box-body">
+        	<div class="form-group">
+        		<textarea id="replyContents" rows="3" cols="60" placeholder="댓글내용"></textarea>
+        		<br>
+        		<br>
+        		<input type="button" value="submit" id="replySave">
+        	</div>
+        </div>
+        <div class="box-footer" id="replyArea">
+        	<!-- 댓글 뿌려주기 -->
+        </div>
+        
       </div>
+
 
       <!-- Modal footer -->
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
       </div>
+
+
+
+
+
+
 
     </div>
   </div>

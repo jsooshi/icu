@@ -8,7 +8,7 @@ CREATE TABLE userList
     uname     VARCHAR2(30)    unique NOT NULL, 
     upass     VARCHAR2(20)    NOT NULL, 
     uemail    VARCHAR2(60)    NOT NULL, 
-    uphoto    NUMBER          NULL,
+    uphoto    varchar2(1000)         NULL,
     ucheck     NUMBER          NULL,
     CONSTRAINT userList_PK PRIMARY KEY (uemail)
 );
@@ -157,7 +157,7 @@ CREATE TABLE recruiter
     cname      VARCHAR2(60)    NOT NULL, 
     cemail     VARCHAR2(40)    NOT NULL, 
     cdomain    VARCHAR2(60)    NULL, 
-    cphoto     NUMBER          NULL, 
+    cphoto     varchar2(1000)   NULL, 
     cpass      VARCHAR2(20)    NOT NULL, 
     CONSTRAINT RECRUITER_PK PRIMARY KEY (cemail)
 )
@@ -217,3 +217,5 @@ ALTER TABLE recommend
     ADD CONSTRAINT FK_recommend_pfnum FOREIGN KEY (pfnum)
         REFERENCES portfolio (pfnum)ON DELETE CASCADE
 ;
+
+select 

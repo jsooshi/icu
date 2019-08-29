@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="reply"><!-- mybatis는 namespace필수 -->
+<!-- pfnum, rcontent, uname, rdate, rnum, rdeep, rgroup -->
+	<insert id="save">
+		insert into reply (pfnum, rcontent, uname, rdate, rnum, rdeep, rgroup)
+		<choose>
+		<when test="rdeep!=0">
+		values (#{pfnum}, #{rcontent}, #{uname}, sysdate, reply_seq.nextval, #{rdeep}, #{rgroup})
+		</when>
+		<otherwise>
+		values (#{pfnum}, #{rcontent}, #{uname},sysdate,reply_seq.nextval, #{rdeep}, reply_seq.currval)
+		</otherwise>
+		</choose>
+	</insert>
+	<select id="list" resultType="ReplyVO">
+		select uname, rdate,rcontent, rdeep, rgroup, rnum
+		from reply
+		where pfnum=#{pfnum}
+		order by rgroup desc,rdeep asc, rdate desc
+	</select>
+	<delete id="delete">
+		delete from reply
+		where rnum=#{rnum} and pfnum=#{pfnum}
+	</delete>
+</mapper>
