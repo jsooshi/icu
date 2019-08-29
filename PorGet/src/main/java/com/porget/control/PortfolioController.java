@@ -61,7 +61,7 @@ public class PortfolioController {
 			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\")+1);
 			
 			UUID uuid=UUID.randomUUID();
-			uploadFileName=uuid.toString()+"_"+uploadFileName;
+//			uploadFileName=uuid.toString()+"_"+uploadFileName;
 			ptthumb += uploadFileName+"|";
 			System.out.println("only file name : "+ uploadFileName);
 			File saveFile = new File(uploadFolder,uploadFileName);

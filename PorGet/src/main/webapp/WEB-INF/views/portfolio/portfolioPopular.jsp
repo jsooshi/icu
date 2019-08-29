@@ -2,24 +2,29 @@
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
+<html lang="en">
 
-<title>인기 게시판</title>
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-	crossorigin="anonymous">
-	
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>PorGet</title>
+
+</head>
+<body>
+
+	<jsp:include page="/WEB-INF/views/include/header.jsp"/>
 	<article>
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-12">
-					<h3>인기게시판. 뷰를 수정할지.. 기능을 좀더 고민해야 할듯함</h3>
+					<h3>인기게시판</h3>
 				</div>
 	
 				<c:forEach items="${list }" var="p">
 					<div class="col-md-4">
 						<div class="card">
-							<a href="portfolio/view?pfnum=${p.pfnum}" class="btn text-left custom-card"> <img
+							<a href="view?pfnum=${p.pfnum}" class="btn text-left custom-card"> <img
 								src="${pageContext.request.contextPath}/resources/img/${p.pfthumb}"
 								class="card-img-top" alt="...">
 								<div class="card-body">
@@ -36,6 +41,8 @@
 				</c:forEach>
 			</div>
 	</article>
+	
+	<jsp:include page="/WEB-INF/views/include/footer.jsp"/>
 
 
 		<script
@@ -50,3 +57,5 @@
 			crossorigin="anonymous">
 			
 		</script>
+</body>
+</html>
