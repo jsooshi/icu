@@ -8,7 +8,7 @@ CREATE TABLE userList
     uname     VARCHAR2(30)    unique NOT NULL, 
     upass     VARCHAR2(20)    NOT NULL, 
     uemail    VARCHAR2(60)    NOT NULL, 
-    uphoto    NUMBER          NULL,
+    uphoto    VARCHAR2(60)     NULL,
     ucheck     NUMBER          NULL,
     CONSTRAINT userList_PK PRIMARY KEY (uemail)
 );
