@@ -16,9 +16,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</choose>
 	</insert>
 	<select id="list" resultType="ReplyVO">
-		select uname, rdate,rcontent, rdeep, rgroup
+		select uname, rdate,rcontent, rdeep, rgroup, rnum
 		from reply
 		where pfnum=#{pfnum}
 		order by rgroup desc,rdeep asc, rdate desc
 	</select>
+	<delete id="delete">
+		delete from reply
+		where rnum=#{rnum} and pfnum=#{pfnum}
+	</delete>
 </mapper>

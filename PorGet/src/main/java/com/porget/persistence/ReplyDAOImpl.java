@@ -1,6 +1,7 @@
 package com.porget.persistence;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -27,6 +28,10 @@ public class ReplyDAOImpl implements ReplyDAO {
 		
 	}
 	
-
+	@Override
+	public void replyDelete(Map<String, Integer>map) {
+		sqlSession.delete("reply.delete",map);
+		
+	}
 	
 }

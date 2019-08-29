@@ -1,5 +1,8 @@
 package com.porget.control;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,6 +38,14 @@ public class ReplyController {
 		return "portfolio/replyList";
 	}
 	
+	@RequestMapping("delete")
+	public String replyDelete(int rnum, int pfnum, String uname  ) { //댓글삭제하기
+		Map<String, Integer> map = new HashMap<>();
+				map.put("pfnum", pfnum);
+				map.put("rnum",rnum);
+		dao.replyDelete(map);
+		return "redirect:/replies/list?pfnum="+pfnum+"&uname="+uname;
+	}
 	
 	
 }
