@@ -3,42 +3,23 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 
-<title>포트폴리오 게시판</title>
+<title>인기 게시판</title>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
-	<script src="/porget/js/jquery-3.js"></script>
-<script>
-
-	function portfolioView() {
-	
-		
-		
-/* 		console.log(pfnum);
-		$.ajax({
-			url : "portfolio/view?pfnum="+pfnum,
-			success : function(result) {
-				console.log(result);
-				$('#myModal').html(result);
-			}
-		}); */
-	}
-</script>
 
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-12">
-				<h3>게시판</h3>
-				<button onclick="portfolioPost()" class="btn btn-primary">글 생성</button>
+				<h3>인기게시판. 뷰를 수정할지.. 기능을 좀더 고민해야 할듯함</h3>
 			</div>
 
 			<c:forEach items="${list }" var="p">
-				<input type="text" value="${p.pfnum }" id="pfnum"+p.current>
 				<div class="col-md-4">
 					<div class="card">
-						<button onclick= "portfolioView()" class="btn text-left custom-card" data-toggle="modal" data-target="#myModal"> <img
-							src="${pageContext.request.contextPath}/porget/resources/img/${p.pfthumb}"
+						<a href="portfolio/view?pfnum=${p.pfnum}" class="btn text-left custom-card"> <img
+							src="${pageContext.request.contextPath}/resources/img/${p.pfthumb}"
 							class="card-img-top" alt="...">
 							<div class="card-body">
 								<h5 class="card-title">${p.pfname }</h5>
@@ -48,14 +29,14 @@
 								</p>
 								<p class="text-muted">조회 ${p.pfread } 하트, 댓글수</p>
 							</div>	
-						</button>
+						</a>
 					</div>
 				</div>
 			</c:forEach>
+
+
+
 		</div>
-		
-		<!-- 모달창 -->
-		<div class="modal" id="myModal"></div>
 
 
 		<script

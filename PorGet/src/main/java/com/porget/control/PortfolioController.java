@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.porget.domain.PortfolioVO;
 import com.porget.persistence.PortfolioDAO;
@@ -19,7 +18,7 @@ public class PortfolioController {
 
 	@Autowired
 	private PortfolioDAO dao;
-
+	
 	
 	@RequestMapping("")
 	public String portfolio(Model m) { // <임시 매핑. 추후 뷰 컨트롤러로 이동> 포트폴리오 게시판 이동. 포폴 전체리스트 출력
@@ -54,9 +53,10 @@ public class PortfolioController {
 	}
 
 
-	@RequestMapping("/view")
+	@GetMapping("/view")
 	public String portfolioView(int pfnum, Model m) {// 게시글 클릭시 포트폴리오 뷰
 
+		System.out.println("pfnum>"+pfnum);
 		List<PortfolioVO> list = dao.onePortfolio(pfnum);
 		System.out.println(list.get(0));
 		m.addAttribute("list", list.get(0));
@@ -65,7 +65,7 @@ public class PortfolioController {
 
 	@GetMapping("/update")
 	public String portfolioUpdateView(int pfnum, Model m) {// 게시글 수정뷰
-
+		
 		List<PortfolioVO> list = dao.onePortfolio(pfnum);
 		System.out.println(list.get(0));
 		m.addAttribute("p", list.get(0));
@@ -98,12 +98,14 @@ public class PortfolioController {
 		return "redirect:/portfolio";
 	}
 	
-	/*   좋아요 기능   */
-	@RequestMapping("/recommend")
-	public String recommend(int pfnum, String uname) {
-		
-		return "";
+	@RequestMapping("/popular")
+	public String portfolioPopular(Model m) { //포폴 인기게시판. 임시기능으로
+		List<PortfolioVO> list = dao.allPortfolio();
+		m.addAttribute("list", list);
+		return "portfolio/portfolioPopular";
 	}
+
+	
 	
 
 }

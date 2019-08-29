@@ -7,6 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <script src="/porget/js/jquery-3.js"></script>
+    <script>
+    
+    $(function(){
+		function portfolioSubmit() {
+			$.ajax({
+				url : "portfolio/post",
+				success : function(result) {
+					$('#porgetBody').html(result);
+				}
+			});    	
+    })
+    
+    </script>
 </head>
 <body>
 
