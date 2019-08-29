@@ -47,36 +47,40 @@ public class PortfolioController {
 
 		/* 임시로 추가하는 VO */
 		vo.setUname("afterup"); // 세션 아이디값
-		vo.setPfthumb("cat.jpg"); // 썸네일
+		
+		String ptthumb="";
+		String uploadFolder = request.getSession().getServletContext().getRealPath("/resources/files");
+		System.out.println(uploadFolder);
+		for(MultipartFile multipartFile : uploadFile) {
+			System.out.println("------------");
+			System.out.println("upload file name : " + multipartFile.getOriginalFilename());
+			System.out.println("upload file size : " + multipartFile.getSize());
+			
+			String uploadFileName = multipartFile.getOriginalFilename();
+			
+			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\")+1);
+			
+			UUID uuid=UUID.randomUUID();
+			uploadFileName=uuid.toString()+"_"+uploadFileName;
+			ptthumb += uploadFileName+"|";
+			System.out.println("only file name : "+ uploadFileName);
+			File saveFile = new File(uploadFolder,uploadFileName);
+			try {
+				multipartFile.transferTo(saveFile);
+				System.out.println("성공");
+			} catch (IllegalStateException | IOException e) {
+				System.out.println("icy...");
+				e.printStackTrace();
+			}
+			
+		}
+		
+		vo.setPfthumb(ptthumb); // 썸네일
 		vo.setPffile("cat.jpg"); // 사진파일경로
 
 		System.out.println(vo);
 		if (dao.insertPortfolio(vo) == 1) {
 			System.out.println("추가성공");
-			String uploadFolder = request.getSession().getServletContext().getRealPath("/resources/files");
-			System.out.println(uploadFolder);
-			for(MultipartFile multipartFile : uploadFile) {
-				System.out.println("------------");
-				System.out.println("upload file name : " + multipartFile.getOriginalFilename());
-				System.out.println("upload file size : " + multipartFile.getSize());
-				
-				String uploadFileName = multipartFile.getOriginalFilename();
-				
-				uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\")+1);
-				
-				UUID uuid=UUID.randomUUID();
-				uploadFileName=uuid.toString()+"_"+uploadFileName;
-				
-				System.out.println("only file name : "+ uploadFileName);
-				File saveFile = new File(uploadFolder,uploadFileName);
-				try {
-					multipartFile.transferTo(saveFile);
-					System.out.println("성공");
-				} catch (IllegalStateException | IOException e) {
-					System.out.println("icy...");
-					e.printStackTrace();
-				}
-			}
 		} else {
 			System.out.println("추가실패");
 		}
