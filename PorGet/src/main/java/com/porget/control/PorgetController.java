@@ -49,8 +49,9 @@ public class PorgetController {
 	@RequestMapping(value = "/loginform", method = RequestMethod.POST)
 	public String loginsuccess(UserVO vo, HttpSession session) {
 		System.out.println("로그인vo ueamil="+vo.getUemail()+", upass="+vo.getUpass());
-		if(dao.login(vo)==1) {
-			session.setAttribute("login", vo);
+		String uname = dao.login(vo);
+		if(uname!=null) {
+			session.setAttribute("uname", uname);
 			System.out.println("성공");
 			return "redirect:/main";
 		}else {
