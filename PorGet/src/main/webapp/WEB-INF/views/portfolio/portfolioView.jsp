@@ -13,13 +13,15 @@
 
 $(function(){ //jquery영역
 	
-	var boardNum = ${param.pfnum} 
+	var boardNum = ${param.pfnum}  //열람한 게시글 번호 
+	var accessName = "${param.uname}" //게시글을 열람, 접속한 사람
 	function replyList (){
 		
 	 $.ajax({
 		 url : '../replies/list',
 		 data: {
-			 pfnum : boardNum
+			 pfnum : boardNum,
+			 uname : accessName
 		 },
 		 success: function(result){
 			 $('#replyArea').html(result);
@@ -60,6 +62,12 @@ $(function(){ //jquery영역
 		$("#replyContents").val(''); //댓글초기화
 		
 	})//replySave click
+	
+	
+	
+	
+	
+	
 }) //ready
 
 
@@ -142,7 +150,7 @@ $(function(){ //jquery영역
         	</div>
         </div>
         <div class="box-footer" id="replyArea">
-        	
+        	<!-- 댓글 뿌려주기 -->
         </div>
         
 

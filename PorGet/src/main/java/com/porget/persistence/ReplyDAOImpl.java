@@ -16,15 +16,17 @@ public class ReplyDAOImpl implements ReplyDAO {
 	private SqlSession sqlSession;
 	
 	@Override
-	public void replySave(ReplyVO vo) {
+	public void replySave(ReplyVO vo) { //댓글저장 
 		sqlSession.insert("reply.save",vo);
 		
 	}
 	
 	@Override
-	public List<ReplyVO> replyList(int pfnum) {
+	public List<ReplyVO> replyList(int pfnum) { //댓글 목록 보이기 
 		return sqlSession.selectList("reply.list",pfnum);
 		
 	}
+	
+
 	
 }

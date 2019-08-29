@@ -8,5 +8,6 @@ public interface ReplyDAO {
 	
 	public void replySave(ReplyVO vo);
 	public List<ReplyVO> replyList(int pfnum);
+	
 
 }

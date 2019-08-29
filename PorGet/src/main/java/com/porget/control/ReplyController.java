@@ -25,16 +25,18 @@ public class ReplyController {
 	@RequestMapping("save")
 	public String replySave(ReplyVO vo) { //댓글 저장 눌렀을 시, 리다이렉트 이동
 		dao.replySave(vo);
-		return "redirect:/replies/list?pfnum="+vo.getPfnum();
+		return "redirect:/replies/list?pfnum="+vo.getPfnum()+"&uname="+vo.getUname(); //댓글저장돼
 	}
 
 
 	@RequestMapping("list")
-	public String test(int pfnum, Model m) { //게시글 누르면 댓글작성창 및 댓글리스트보이기 
+	public String replyList(int pfnum, Model m) { //게시글 누르면 댓글작성창 및 댓글리스트보이기 
 		m.addAttribute("replyList",dao.replyList(pfnum));
-		
 		return "portfolio/replyList";
 	}
+	
+	
+	
 }
 
 
