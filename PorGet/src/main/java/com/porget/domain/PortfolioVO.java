@@ -116,11 +116,4 @@ public class PortfolioVO { //포트폴리오 테이블 VO
 	public void setTagname(String tagname) {
 		this.tagname = tagname;
 	}
-
-	
-	
-	
-	
-	
-
 }

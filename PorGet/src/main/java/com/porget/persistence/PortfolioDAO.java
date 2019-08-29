@@ -1,7 +1,7 @@
 package com.porget.persistence;
 
 import java.util.List;
-
+import java.util.Map;
 import com.porget.domain.PortfolioVO;
 
 public interface PortfolioDAO {// 포트폴리오 관련 DAO
@@ -17,4 +17,8 @@ public interface PortfolioDAO {// 포트폴리오 관련 DAO
 	public int insertRecommend(PortfolioVO vo);
 	public int selectRecommend(int pfnum);
 	public int distinctRecommend(int num);
-}
+
+	public List<Map<String, Object>> showPopularPart(int base);
+	public List<String> searchKeyword(String keyword);
+	public List<Map<String, Object>> searchResult(String keyword);
+	}
