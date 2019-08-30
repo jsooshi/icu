@@ -30,7 +30,13 @@ public class ReplyDAOImpl implements ReplyDAO {
 	
 	@Override
 	public void replyDelete(Map<String, Integer>map) {
-		sqlSession.delete("reply.delete",map);
+		sqlSession.update("reply.delete",map);
+		
+	}
+	
+	@Override
+	public void updateHit(int pfnum) {
+		sqlSession.update("reply.readUpdate",pfnum);
 		
 	}
 	

@@ -20,18 +20,28 @@
 
 $(function(){ //jquery영역
 	
-	//게시글을 열람, 접속한 사람
-	function replyList (){
+	$.ajax({ //조회수 업데이트 
+		url: '../replies/read',
+		type: 'post',
+		data: {
+			pfnum : ${param.pfnum}
+		}
 		
+	})	 
+	
+	//게시글을 열람, 접속한 사람, 무조건 실행? 실행. 
+	function replyList (){ 	
 	 $.ajax({
 		 url : '../replies/list',
 		 type : 'post',
 		 data: {
 			 pfnum : ${param.pfnum},
-			 uname : "${uname}"
+			 uname : "${uname}",
+			 
 		 },
 		 success: function(result){
 			 $('#replyArea').html(result);
+			 
 		 }
 		 
 	 })

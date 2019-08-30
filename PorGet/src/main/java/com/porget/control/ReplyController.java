@@ -49,7 +49,11 @@ public class ReplyController {
 		return "redirect:/replies/list?pfnum="+pfnum;
 	}
 	
-	
+	@RequestMapping("read")
+	public String updateHit(int pfnum) { //조회수 업데이트 
+		dao.updateHit(pfnum);
+		return "portfolio/replyList";
+	}
 }
 
 

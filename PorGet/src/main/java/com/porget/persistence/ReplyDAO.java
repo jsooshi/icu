@@ -10,6 +10,7 @@ public interface ReplyDAO {
 	public void replySave(ReplyVO vo);
 	public List<ReplyVO> replyList(int pfnum);
 	public void replyDelete(Map<String, Integer>map);
+	public void updateHit(int pfnum);
 	
 
 }
