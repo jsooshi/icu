@@ -4,6 +4,6 @@ import com.porget.domain.UserVO;
 
 public interface UserDAO {
 	public void insert(UserVO vo);
-	public int login(UserVO vo);
+	public String login(UserVO vo);
 
 }

@@ -19,7 +19,7 @@ public class UserDAOImpl implements UserDAO{
 	}
 
 	@Override
-	public int login(UserVO vo) {
+	public String login(UserVO vo) {
 		return sqlSession.selectOne("userList.login",vo);
 	}
 

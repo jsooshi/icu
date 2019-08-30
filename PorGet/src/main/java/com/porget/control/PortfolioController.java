@@ -27,11 +27,9 @@ public class PortfolioController {
 	private PortfolioDAO dao;
 
 	
-	@RequestMapping("")
+	@RequestMapping(value = {"","/"} )
 	public String portfolio(Model m) { // <임시 매핑. 추후 뷰 컨트롤러로 이동> 포트폴리오 게시판 이동. 포폴 전체리스트 출력
-		List<PortfolioVO> list = dao.allPortfolio();
-		System.out.println(list);
-		m.addAttribute("list", list);
+		
 		return "portfolio/portfolioBoard";
 	}
 
@@ -140,9 +138,10 @@ public class PortfolioController {
 	
 	@RequestMapping("/partPopular")
 	public String showPopularPart(Model m, int base) { //인기포트폴리오 게시판 스크롤 내려가면 그 다음 목록 검색해서 뿌려주기
+		System.out.println("base"+base);
 		List<Map<String, Object>> list = dao.showPopularPart(base);
 		m.addAttribute("list", list);
-		return "";
+		return "portfolio/partPopular";
 	}
 	
 
