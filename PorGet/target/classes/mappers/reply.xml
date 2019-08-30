@@ -21,8 +21,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where pfnum=#{pfnum}
 		order by rgroup asc,rdeep asc, rdate asc
 	</select>
-	<delete id="delete">
-		delete from reply
+	<update id="delete">
+		update reply
+		set rcontent = '삭제된 댓글입니다'
 		where rnum=#{rnum} and pfnum=#{pfnum}
-	</delete>
+	</update>
+	<update id="readUpdate">
+		update portfolio
+		set pfread = pfread+1
+		where pfnum = #{pfnum}
+	</update>
+	
 </mapper>
