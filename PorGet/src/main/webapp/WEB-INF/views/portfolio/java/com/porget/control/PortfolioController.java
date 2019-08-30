@@ -42,8 +42,9 @@ public class PortfolioController {
 	@PostMapping("/post")
 	public String portfolioInsert(MultipartFile[] uploadFile, PortfolioVO vo, HttpServletRequest request) { // 글 생성 후 포트폴리오 게시판으로 이동
 		// vo=> pfname, pfurl, pfposition, tagname
-		
-		vo.setUname((String)request.getSession().getAttribute("uname"));
+
+		/* 임시로 추가하는 VO */
+		vo.setUname("afterup"); // 세션 아이디값
 		
 		String ptthumb="";
 		String uploadFolder = request.getSession().getServletContext().getRealPath("/resources/files");
@@ -72,7 +73,6 @@ public class PortfolioController {
 			
 		}
 		
-	
 		vo.setPfthumb(ptthumb); // 썸네일
 		vo.setPffile("cat.jpg"); // 사진파일경로
 

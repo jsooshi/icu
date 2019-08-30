@@ -18,13 +18,7 @@ public interface PortfolioDAO {// 포트폴리오 관련 DAO
 	public int selectRecommend(int pfnum);
 	public int distinctRecommend(int num);
 
-	/* 검색 */
 	public List<Map<String, Object>> showPopularPart(int base);
 	public List<String> searchKeyword(String keyword);
 	public List<Map<String, Object>> searchResult(String keyword);
-	
-	/* 메인 인기, 최근 */
-	public List<Map> mainPopular();
-	public List<Map> mainRecent();
-	
 	}
