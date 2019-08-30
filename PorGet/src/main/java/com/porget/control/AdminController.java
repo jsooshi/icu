@@ -1,5 +1,8 @@
 package com.porget.control;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,10 +34,18 @@ public class AdminController {
 		return "admin/member_ordinary";
 	}
 	
-	//일반회원 출력
+	//일반회원 출력	//여기하는중
 	@RequestMapping("/list")
-	public String list(Model m) {	
-		m.addAttribute("list", porgetDAO.selectAll());
+	public String list(Model m, String uname) {	
+		System.out.println("List요청 > uname:"+ uname);
+		//emp_copy.xml에서 sql문 전체부서, 특정부서 통합한 한 문장으로 꾸밀 시에 필요한 정보
+		Map<String, String> map = new HashMap<String, String>();
+		
+		if (uname!=null && uname.length()!=0) {
+			map.put("uname", uname);
+		}
+				
+		m.addAttribute("list", porgetDAO.selectAll(map));
 		return "admin/member_ordinary";	
 	}
 	
@@ -66,8 +77,15 @@ public class AdminController {
 	
 	//리크루터회원 출력
 	@RequestMapping("/listR")
-	public String listR(Model m) {
-		m.addAttribute("listR", porgetDAO.selectAllRec());
+	public String listR(Model m, String cname) {
+		
+		Map<String, String> map = new HashMap<String, String>();
+		
+		if (cname!=null && cname.length()!=0) {
+			map.put("cname", cname);
+		}
+		
+		m.addAttribute("listR", porgetDAO.selectAllRec(map));
 		return "admin/member_recruiter";	
 	}
 	

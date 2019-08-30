@@ -5,16 +5,22 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="porget"> <!-- mybatis는 namespace필수!! -->
 
-	<!-- 일반회원 조회 -->
+	<!-- 일반회원 전체, 부분조회 -->
    <select id="selectAll" resultType="Portget_ordinaryVO">
-   		select uemail, uname, upass
+   		select uemail, uname, ucheck
    		from userList
+   		<if test="uname!=null">
+   		where uname=#{uname}
+   		</if>
    </select>
-   
-   <!-- 리크루팅회원 조회 -->
+   						
+   <!-- 리크루팅회원 전체, 부분조회 -->
    <select id="selectAllRec" resultType="Porget_recruiterVO">
    		select cname, cemail, cdomain
    		from recruiter
+   		<if test="cname!=null">
+   		where cname=#{cname}
+   		</if>
    </select>
    
      
@@ -28,7 +34,7 @@
    <!-- 일반회원(상세폼에 입력된)글 수정 -->
    <update id="update">
    		update userList
-   		set uemail=#{uemail}, uname=#{uname}, upass=#{upass}
+   		set uemail=#{uemail}, uname=#{uname}, ucheck=#{ucheck}
    		where uemail = #{uemail}
    </update>
    

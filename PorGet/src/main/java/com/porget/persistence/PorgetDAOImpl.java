@@ -1,6 +1,7 @@
 package com.porget.persistence;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +18,13 @@ public class PorgetDAOImpl implements PorgetDAO {
 	private SqlSession sqlSession;
 	
 	@Override
-	public List<Portget_ordinaryVO> selectAll() {
-		return sqlSession.selectList("porget.selectAll");
+	public List<Portget_ordinaryVO> selectAll(Map map) {
+		return sqlSession.selectList("porget.selectAll",map);
 	}
 
 	@Override
-	public List<Porget_recruiterVO> selectAllRec() {
-		return sqlSession.selectList("porget.selectAllRec");
+	public List<Porget_recruiterVO> selectAllRec(Map map) {
+		return sqlSession.selectList("porget.selectAllRec",map);
 	}
 	
 	
