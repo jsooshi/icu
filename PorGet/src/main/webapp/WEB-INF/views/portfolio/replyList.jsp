@@ -52,7 +52,7 @@ $(function(){
 			data : {
 				rnum : number,
 				pfnum: ${param.pfnum},
-				uname: "${uname}"
+				
 			},
 			success : function(result){
 				$('#replyArea').html(result);

@@ -40,7 +40,7 @@ public class ReplyController {
 	}
 	
 	@RequestMapping("delete")
-	public String replyDelete(int rnum, int pfnum, String uname) { //댓글삭제하기
+	public String replyDelete(int rnum, int pfnum) { //댓글삭제하기
 		Map<String, Integer> map = new HashMap<>();
 				map.put("pfnum", pfnum);
 				map.put("rnum",rnum);

@@ -220,4 +220,4 @@ ALTER TABLE recommend
         REFERENCES portfolio (pfnum)ON DELETE CASCADE
 ;
 
-select 
+select * from userList;
