@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- mappers/emp.xml -->
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="porget"> <!-- mybatis는 namespace필수!! -->
+
+	<!-- 일반회원 조회 -->
+   <select id="selectAll" resultType="Portget_ordinaryVO">
+   		select uemail, uname, upass
+   		from userList
+   </select>
+   
+   <!-- 리크루팅회원 조회 -->
+   <select id="selectAllRec" resultType="Porget_recruiterVO">
+   		select cname, cemail, cdomain
+   		from recruiter
+   </select>
+   
+     
+    <!-- 일반회원(상세폼에 출력할) 글 조회 -->
+   <select id="select" resultType="Portget_ordinaryVO">
+   		select uemail, uname, upass
+   		from userList
+   		where uemail = #{uemail}
+   </select>
+   
+   <!-- 일반회원(상세폼에 입력된)글 수정 -->
+   <update id="update">
+   		update userList
+   		set uemail=#{uemail}, uname=#{uname}, upass=#{upass}
+   		where uemail = #{uemail}
+   </update>
+   
+   <!-- 리쿠르팅회원(상세폼에 출력할) 글 조회  -->
+   <select id="selectRec" resultType="Porget_recruiterVO">
+   		select cname, cemail, cdomain, cpass
+   		from recruiter
+   		where cemail = #{cemail}
+   </select>
+   
+   <!-- 리쿠르팅회원(상세폼에 입력된)글 수정 -->
+   <update id="updateRec">
+   		update recruiter
+   		set cname=#{cname}, cemail=#{cemail}, cdomain=#{cdomain}, cpass=#{cpass}
+   		where cemail = #{cemail}
+   </update>
+   
+   
+   <!-- 일반회원 지우기  -->
+   <delete id="delete">
+   		delete from userList
+   		where uemail = #{uemail}
+   </delete>
+   
+   <!-- 리크루팅회원 삭제 -->
+   <delete id="deleteRec">
+   		delete from recruiter
+   		where cemail = #{cemail}
+   </delete>
+</mapper>

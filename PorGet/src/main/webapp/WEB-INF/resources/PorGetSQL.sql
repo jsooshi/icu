@@ -213,3 +213,20 @@ ALTER TABLE recommend
     ADD CONSTRAINT FK_recommend_pfnum FOREIGN KEY (pfnum)
         REFERENCES portfolio (pfnum)ON DELETE CASCADE
 ;
+
+     VARCHAR2(30)    unique NOT NULL, 
+         VARCHAR2(20)    NOT NULL, 
+      
+
+insert into userList (uname, upass, uemail) values ('gildong', 1234, 'gildong@gmail.com');
+insert into userList (uname, upass, uemail) values ('lime', 1234, 'lime@gmail.com');
+insert into userList (uname, upass, uemail) values ('soonsin', 5678, 'lopelope@gmail.com');
+insert into userList (uname, upass, uemail) values ('yoosin', 3344, 'hawrang@gmail.com');
+
+
+
+insert into recruiter (cname, cemail, cdomain, cpass) values ('encore', 'lopelope@gmail.com', 'www.encore.com',1234);
+insert into recruiter (cname, cemail, cdomain, cpass) values ('google', 'google@gmail.com', 'www.google.com',4567);
+insert into recruiter (cname, cemail, cdomain, cpass) values ('ecne', 'ecnen@gmail.com', 'www.ecnesoft.com',8889);
+
+
