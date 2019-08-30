@@ -45,8 +45,8 @@ $(function(){
 	
 	
 	$('input[name=replyDelete]').on('click', function(){
-	var number = $(this).parent().children('input[name=rn]').val();
-		
+		if(confirm('삭제하시겠습니까? '))
+		var number = $(this).parent().children('input[name=rn]').val();
 		$.ajax({
 			url : '../replies/delete',
 			data : {
