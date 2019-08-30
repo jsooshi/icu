@@ -19,7 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select uname, rdate,rcontent, rdeep, rgroup, rnum
 		from reply
 		where pfnum=#{pfnum}
-		order by rgroup desc,rdeep asc, rdate desc
+		order by rgroup asc,rdeep asc, rdate asc
 	</select>
 	<delete id="delete">
 		delete from reply

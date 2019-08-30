@@ -20,7 +20,7 @@ $(function(){
 		var reCon = $("#reReplyCon").val();
 		var concon =  {
 				pfnum: ${param.pfnum},
-				uname: "${param.uname}",
+				uname: "${uname}",
 				rcontent: reCon,
 				rgroup : group,
 				rdeep: 1
@@ -28,6 +28,7 @@ $(function(){
 			console.log(concon)
 		$.ajax({
 			url: '../replies/save',
+			type: 'post',
 			data: concon,
 			success: function(result){
 				$('#replyArea').html(result);
@@ -51,7 +52,7 @@ $(function(){
 			data : {
 				rnum : number,
 				pfnum: ${param.pfnum},
-				uname: "${param.uname}"
+				uname: "${uname}"
 			},
 			success : function(result){
 				$('#replyArea').html(result);
@@ -90,7 +91,7 @@ $(function(){
 		 작성날짜:<fmt:formatDate value="${reply.rdate }" pattern="yyyy-MM-dd" />
 		<br>
 		<textarea rows="3" cols="60" placeholder="comment" disabled >${reply.rcontent }</textarea><br>
-		<c:if test="${reply.uname eq param.uname }">
+		<c:if test="${reply.uname eq uname }">
 		<input type="button" value="삭제" name="replyDelete">
 		</c:if>
 		<c:if test="${reply.rdeep eq 0 }">

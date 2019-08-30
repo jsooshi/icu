@@ -20,15 +20,15 @@
 
 $(function(){ //jquery영역
 	
-	var boardNum = ${param.pfnum}  //열람한 게시글 번호 
-	var accessName = "${param.uname}" //게시글을 열람, 접속한 사람
+	//게시글을 열람, 접속한 사람
 	function replyList (){
 		
 	 $.ajax({
 		 url : '../replies/list',
+		 type : 'post',
 		 data: {
-			 pfnum : boardNum,
-			 uname : accessName
+			 pfnum : ${param.pfnum},
+			 uname : "${uname}"
 		 },
 		 success: function(result){
 			 $('#replyArea').html(result);
@@ -44,10 +44,10 @@ $(function(){ //jquery영역
 		var replyCon = $("#replyContents").val();
 		
 		var replyData={
-				pfnum: boardNum,  //게시판번홈
+				pfnum: ${param.pfnum},  //게시판번홈
 				rcontent: replyCon, //댓글내용
 				rdeep: 0,
-				uname: "${param.uname}" //userID 
+				uname: "${uname}" //userID 
 							
 			}; 
 	
@@ -79,9 +79,9 @@ $(function(){ //jquery영역
 			$(this).val(content.substring(0, 150));
 			$('#counter').html('(150/최대150자)')
 		}
-	})
+
 	
-	
+})
 	
 
 }) //ready
