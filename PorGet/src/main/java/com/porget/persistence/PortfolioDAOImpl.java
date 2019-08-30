@@ -48,21 +48,18 @@ public class PortfolioDAOImpl implements PortfolioDAO{
 	/* 좋아요 */
 	
 	@Override
-	public int insertRecommend(PortfolioVO vo) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int insertRecommend(Map<String,Object> map) {
+		return sqlSession.insert("portfolio.insertRecommend",map);
+	}
+	
+	@Override
+	public int deleteRecommend(Map<String, Object> map) {
+		return sqlSession.delete("portfolio.deleteRecommend",map);
 	}
 
 	@Override
-	public int selectRecommend(int pfnum) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int distinctRecommend(int num) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int distinctRecommend(Map<String,Object> list) {
+		return sqlSession.selectOne("portfolio.distinctRecommend",list);
 	}
 	
 	@Override

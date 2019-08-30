@@ -2,11 +2,13 @@ package com.porget.control;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -88,7 +90,6 @@ public class PortfolioController {
 	@GetMapping("/view")
 	public String portfolioView(int pfnum, Model m) {// 게시글 클릭시 포트폴리오 뷰
 		List<Map> list = dao.selectPortfolio(pfnum);
-		System.out.println(list);
 		m.addAttribute("list",list.get(0));
 		return "portfolio/portfolioView";
 	}
@@ -143,10 +144,24 @@ public class PortfolioController {
 	
 	/*좋아요 기능*/
 	@RequestMapping("/good")
-	public void insertGood() {
-		
+	public String insertGood(int pfnum,HttpSession session) {
+		String uname = (String) session.getAttribute("uname");
+		Map<String,Object> recommend = new HashMap<String,Object>();
+		recommend.put("pfnum", pfnum);
+		recommend.put("uname", uname);
+		System.out.println(recommend);
+		if(dao.distinctRecommend(recommend)==0) {
+			System.out.println("ok");
+			if(dao.insertRecommend(recommend)==1) {
+				System.out.println("추가완료");
+			}else{
+				System.out.println("추가실패");
+			}
+		}else {
+			System.out.println("no");
+			dao.deleteRecommend(recommend);
+		}
+		return "redirect:/portfolio/view?pfnum="+pfnum;
 	}
-	
-	
 
 }

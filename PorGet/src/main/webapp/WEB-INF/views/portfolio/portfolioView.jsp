@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,10 +18,10 @@
     <title>Document</title>
 <script src="/porget/js/jquery-3.js"></script>    
 <script type="text/javascript">
-$(function(){ //jquery영역
-	
+$(function(){ //jquery영역	
 	var boardNum = ${param.pfnum}  //열람한 게시글 번호 
 	var accessName = "${param.uname}" //게시글을 열람, 접속한 사람
+	
 	function replyList (){
 		
 	 $.ajax({
@@ -80,10 +81,22 @@ $(function(){ //jquery영역
 		}
 	})
 	
-	
-	
-
+	$('#recommendBtn').click(function(){ //좋아요버튼
+		 $.ajax({
+			 url : '../portfolio/good',
+			 data: {
+				 pfnum : boardNum,
+				 uname : accessName
+			 },
+			 success: function(result){
+				 var recommend = $(result).find('div.recommend:eq(0)').html();
+				 $('.recommend').html(recommend); 
+				 }
+			 })
+		 });
 }) //ready
+
+
 </script>
 </head>
 <body>
@@ -140,14 +153,16 @@ $(function(){ //jquery영역
             </a>
         </div>
 
-        좋아요수: ${list.JOA } <br>
         조회수: <br>
 
         <a href="${list.PFURL }" class="btn btn-primary">
 		 포트폴리오 링크
         </a><br>
-
-        <a href="">좋아요</a><br>
+		
+		<button class="btn btn-danger" id="recommendBtn">좋아요</button>
+		<div class="recommend">
+	        좋아요수: ${list.JOA }<br>
+		</div>		
         <a href="update?pfnum=${list.PFNUM }">수정</a><br>
         <a href="delete?pfnum=${list.PFNUM }">삭제</a><br>
         <hr>

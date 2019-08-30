@@ -37,13 +37,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 좋아요 기능 -->
 	<insert id="insertRecommend">
-		INSERT INTO recommend VALUES (pfnum=#{pfnum} , uname=#{uname})
+		INSERT INTO recommend VALUES (#{pfnum},#{uname})
 	</insert>
 	
 	<select id="distinctRecommend" resultType="int">
 		SELECT count(*) FROM recommend WHERE pfnum=#{pfnum} AND uname=#{uname}
 	</select>
 	
+	<delete id="deleteRecommend">
+		DELETE FROM recommend WHERE pfnum=#{pfnum} AND uname=#{uname}	
+	</delete>
 
 	<!-- 검색 기능 -->
 	<select id="portfolioList" resultType="Map"> 
@@ -78,10 +81,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 메인 기능 -->
 	<select id="mainPopular" resultType="Map"> 
 		<![CDATA[
-			select p.uname, p.pfnum, p.pfname, p.pfthumb, p.pfread, u.uphoto, (select count(*) from recommend rc where p.pfnum=rc.pfnum) as joa, (select count(*) from reply r where p.pfnum=r.pfnum) as replyNum
-			from portfolio p, userList u 
-			where p.uname=u.uname AND rownum <=3
-			order by joa desc
+			select p.uname, p.pfnum, p.pfname, p.pfthumb, p.pfread, u.uphoto,
+            (select count(*) from recommend rc where p.pfnum=rc.pfnum) as joa, (select count(*) from reply r where p.pfnum=r.pfnum) as replyNum
+			from portfolio p join (select  pfnum from recommend group by pfnum order by count(pfnum) desc) recommend on p.pfnum = recommend.pfnum 
+            join userlist u on p.uname=u.uname where rownum<=3
 		]]>
 	</select>
 	
