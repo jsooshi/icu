@@ -59,7 +59,7 @@ public class PortfolioController {
 			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\")+1);
 			
 			UUID uuid=UUID.randomUUID();
-//			uploadFileName=uuid.toString()+"_"+uploadFileName;
+			uploadFileName=uuid.toString()+"_"+uploadFileName;
 			ptthumb += uploadFileName+"|";
 			System.out.println("only file name : "+ uploadFileName);
 			File saveFile = new File(uploadFolder,uploadFileName);
@@ -87,12 +87,14 @@ public class PortfolioController {
 
 
 	@GetMapping("/view")
-	public String portfolioView(int pfnum, Model m) {// 게시글 클릭시 포트폴리오 뷰
+	public String portfolioView(int pfnum, Model m,HttpServletRequest request) {// 게시글 클릭시 포트폴리오 뷰
 
 		System.out.println("pfnum>"+pfnum);
 		List<PortfolioVO> list = dao.onePortfolio(pfnum);
 		System.out.println(list.get(0));
 		m.addAttribute("list", list.get(0));
+		m.addAttribute("realPath", request.getSession().getServletContext().getRealPath("/resources/files"));
+		m.addAttribute("thumb",list.get(0).getPfthumb().split("\\|"));
 		return "portfolio/portfolioView";
 	}
 
@@ -106,18 +108,45 @@ public class PortfolioController {
 	}
 
 	@PostMapping("/update")
-	public String portfolioUpdate(PortfolioVO vo, int pfnum, Model m) {// 게시글 수정완료 후 본인글로 이동
+	public String portfolioUpdate(MultipartFile[] uploadFile, PortfolioVO vo, HttpServletRequest request, Model m) {// 게시글 수정완료 후 본인글로 이동
 
 		/* 임시로 추가하는 VO */
-		vo.setPfthumb("dog.jpg"); // 썸네일
 		vo.setPffile("dog.jpg"); // 사진파일경로
+		
+		String ptthumb="";
+		String uploadFolder = request.getSession().getServletContext().getRealPath("/resources/files");
+		System.out.println(uploadFolder);
+		for(MultipartFile multipartFile : uploadFile) {
+			System.out.println("------------");
+			System.out.println("upload file name : " + multipartFile.getOriginalFilename());
+			System.out.println("upload file size : " + multipartFile.getSize());
+			
+			String uploadFileName = multipartFile.getOriginalFilename();
+			
+			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\")+1);
+			
+			UUID uuid=UUID.randomUUID();
+			uploadFileName=uuid.toString()+"_"+uploadFileName;
+			ptthumb += uploadFileName+"|";
+			System.out.println("only file name : "+ uploadFileName);
+			File saveFile = new File(uploadFolder,uploadFileName);
+			/*
+			 * try { multipartFile.transferTo(saveFile); System.out.println("성공"); } catch
+			 * (IllegalStateException | IOException e) { System.out.println("icy...");
+			 * e.printStackTrace(); }
+			 */
+			
+		}
+		
+		vo.setPfthumb(ptthumb); // 썸네일
+		
 
-		if (dao.updatePortfolio(vo) == 1) {
+		/*if (dao.updatePortfolio(vo) == 1) {
 			System.out.println("수정성공");
 		} else {
 			System.out.println("수정실패");
-		}
-		return "redirect:/portfolio/view?pfnum=" + pfnum;
+		}*/
+		return "redirect:/portfolio/view?pfnum=" + vo.getPfnum();
 	}
 
 	@RequestMapping("/delete")

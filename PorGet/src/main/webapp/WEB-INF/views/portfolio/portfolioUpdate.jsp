@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,19 +8,100 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>포트폴리오 수정</title>
+    <script src="/porget/js/jquery-3.js"></script>
+    <script type="text/javascript">
+    	var fileCount = 0;
+    	var fileList = new FormData();
+    	var thumbs = "${p.pfthumb}".split("\\|");
+    	console.log(thumbs[0]);
+    	
+    	$(function(){
+	    	$('#uploadBtn').on("click", function(e){
+				var formData = new FormData();
+				/*var inputFile = $("input[name='uploadFile']");
+				var files = inputFile[0].files;
+				console.log(files); */
+				/* console.log("${p.pfnum}"); */				
+				formData.append("pfnum",${p.pfnum})
+				formData.append("pfname",$('input[name=pfname]:eq(0)').val())
+				formData.append("pfurl",$('input[name=pfurl]:eq(0)').val())
+				formData.append("pfposition",$('input[name=pfposition]:eq(0)').val())
+				formData.append("tagname",$('input[name=tagname]:eq(0)').val())
+				
+				for(var i=0;i<fileCount;i++){
+					formData.append("uploadFile",fileList.get($("#dataList tr").eq(i).children("td:eq(0)").html()));
+				}
+				
+				$.ajax({
+					url:'post',
+					processData:false,
+					contentType:false,
+					data:formData,
+					type:'POST',
+					success:function(result){
+						alert("Uploaded");
+						$('#dataList').html("");
+					}
+				});
+				//console.log($('input[name=pfname]:eq(0)').val());
+				
+			});//#uploadBtn.on click
+	    	
+	    	$('#dataList').on('click','button',function(){
+				console.log("삭제하라우");
+				fileList.delete($(this).parent().children('td').html());
+				$(this).closest('tr').remove();
+				fileCount -= 1;
+			});//삭제버튼
+	    	
+			$("input[name='uploadFile']:eq(0)").on("change",function(){
+				console.log("아앗 바꼈어요");
+				var inputFile = $("input[name='uploadFile']");
+				var files = inputFile[0].files;
+				var fileIn =0;
+				if(fileCount>2){
+					console.log("파일이 이미 3개있습니다");
+					$(this).val("");return;}
+				console.log("f+f : "+(files.length+fileCount));
+				fileIn = ((parseFloat(files.length)+parseFloat(fileCount))>3) ? (3-parseFloat(fileCount)) : files.length  ;
+				fileCount += fileIn;
+				console.log("filecount : "+ fileCount);
+				for(var i=0;i<fileIn;i++){
+					fileList.append(files[i].name,files[i]);
+					//$("input[name='uploadFile']:eq(0)").val().split("\\")
+					$('#dataList').html($('#dataList').html()+"<tr><td>"+files[i].name+"</td>"+
+						"<td><button>삭제</button></td></tr>");
+				}
+					console.log("3 : "+$('#dataList tr:eq(0) td:eq(0)').html());
+				$(this).val("")
+			})//파일 insert
+		
+    	
+	    	for (var i in thumbs){
+	    		fileCount ++;
+	    		console.log(thumbs[i])
+	    		var viewName = thumbs[i].split("_")[1];
+	    		fileList.append(viewName,{"name":thumbs[i]});
+	    		console.log(thumbs[i]);
+	    		$('#dataList').html($('#dataList').html()+"<tr><td>"+viewName+"</td>"+
+				"<td><button>삭제</button></td></tr>");
+	    	}
+    		
+    	});//document.ready
+    </script>
 </head>
 <body>
 
-    <form action="update?pfnum=${p.pfnum }" method="POST">
         제목: <input type="text" name="pfname" value="${p.pfname }"><br>
-        사진: <input type="file" name="pffile" value="${p.pffile }"/><br>
+	썸네이일: <input type="file" name="uploadFile" multiple> <button id='uploadBtn'>업로드</button><br> 
+	<table>
+	<thead><tr><th>제목</th><th>삭제</th></tr></thead>
+	<tbody id="dataList">
+	</tbody>
+	</table><br>
         포트폴리오주소: <input type="text" name="pfurl" value="${p.pfurl }"><br>
         포지션: <input type="text" name="pfposition" value="${p.pfposition }"><br>
         태그: <input type="text" name="tagname" value="${p.tagname }"><br>
-        <input type="submit" class="btn btn-primary"/>
-    </form>
 
-
-    
 </body>
 </html>

@@ -48,7 +48,7 @@ CREATE TABLE portfolio
     pfnum         NUMBER           NOT NULL, 
     pfname        VARCHAR2(30)     NOT NULL, 
     pfdate        DATE             default sysdate not null, 
-    pfthumb       VARCHAR2(60)     NOT NULL, 
+    pfthumb       VARCHAR2(1000)     NOT NULL, 
     pfread        NUMBER           NOT NULL, 
     pfurl         VARCHAR2(200)    NULL, 
     pffile        VARCHAR2(200)    NULL, 
@@ -194,8 +194,7 @@ drop table recommend;
 CREATE TABLE recommend
 (
     pfnum    NUMBER          NOT NULL, 
-    uname    VARCHAR2(30)    NULL, 
-    CONSTRAINT recommend_PK PRIMARY KEY (pfnum)
+    uname    VARCHAR2(30)    NULL
 )
 ;
 
@@ -220,4 +219,4 @@ ALTER TABLE recommend
         REFERENCES portfolio (pfnum)ON DELETE CASCADE
 ;
 
-select 
+select * from portfolio;

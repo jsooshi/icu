@@ -19,9 +19,9 @@
 			var files = inputFile[0].files;
 			console.log(files); */
 			formData.append("pfname",$('input[name=pfname]:eq(0)').val())
-			formData.append("pfurl",$('input[name=pfname]:eq(0)').val())
-			formData.append("pfposition",$('input[name=pfname]:eq(0)').val())
-			formData.append("tagname",$('input[name=pfname]:eq(0)').val())
+			formData.append("pfurl",$('input[name=pfurl]:eq(0)').val())
+			formData.append("pfposition",$('input[name=pfposition]:eq(0)').val())
+			formData.append("tagname",$('input[name=tagname]:eq(0)').val())
 			
 			for(var i=0;i<fileCount;i++){
 				formData.append("uploadFile",fileList.get($("#dataList tr").eq(i).children("td:eq(0)").html()));
@@ -44,6 +44,7 @@
 		
 		$('#dataList').on('click','button',function(){
 			console.log("삭제하라우");
+			fileList.delete($(this).parent().children('td').html());
 			$(this).closest('tr').remove();
 			fileCount -= 1;
 		});
@@ -71,22 +72,6 @@
 		})
 	});
 </script>     
-    
-    <title>Document</title>
-    <script src="/porget/js/jquery-3.js"></script>
-    <script>
-    
-    $(function(){
-		function portfolioSubmit() {
-			$.ajax({
-				url : "portfolio/post",
-				success : function(result) {
-					$('#porgetBody').html(result);
-				}
-			});    	
-    })
-    
-    </script>
 </head>
 <body>
 
@@ -97,7 +82,6 @@
 	<tbody id="dataList">
 	</tbody>
 	</table><br>
-        사진: <input type="file" name="pffile" /><br>
         포트폴리오주소: <input type="text" name="pfurl"><br>
         포지션: <input type="text" name="pfposition"><br>
         태그: <input type="text" name="tagname"><br>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,17 +8,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title></title>
-</head>
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-	crossorigin="anonymous">
-	<script src="/porget/js/jquery-3.js"></script>
-    <title>Document</title>
+	<link rel="stylesheet"
+		href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+		crossorigin="anonymous">
+<title>Document</title>
 <script src="/porget/js/jquery-3.js"></script>    
 <script type="text/javascript">
-
+var realPath = "${realPath}";
 $(function(){ //jquery영역
 	
 	var boardNum = ${param.pfnum}  //열람한 게시글 번호 
@@ -84,7 +82,7 @@ $(function(){ //jquery영역
 	
 	
 
-}) //ready
+}); //ready
 </script>
 </head>
 <style>
@@ -97,7 +95,6 @@ $(function(){ //jquery영역
 
 <div class="modal-dialog">
     <div class="modal-content">
-
       <!-- Modal Header -->
       <div class="modal-header">
         <h4 class="modal-title">${list.pfname }</h4>
@@ -106,14 +103,18 @@ $(function(){ //jquery영역
 
       <!-- Modal body -->
       <div class="modal-body">
+      	
         <img src="http://placehold.it/200" class="rounded-circle" style="width:20%; display:inline;">
         <p class="inline">
             닉네임: ${list.uname }<br>
             포지션: ${list.pfposition }<br>
             태그: ${list.tagname }
         </p>
-
         [스크린샷]<br>
+
+		<c:forEach items="${thumb}" var="thumbImg">
+			<img alt="하하하" src="/porget/files/${thumbImg}" style="max-height:390px;max-width:260px;">
+		</c:forEach>
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
                 <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
