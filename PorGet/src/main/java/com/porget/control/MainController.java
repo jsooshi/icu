@@ -51,8 +51,9 @@ public class MainController {
 	
 	@RequestMapping(value = "/loginform", method = RequestMethod.POST)
 	public String loginsuccess(UserVO vo, HttpSession session) {
-		if(userdao.login(vo)==1) {
-			session.setAttribute("login", vo);
+		String uname = userdao.login(vo);
+		if(uname != null) {
+			session.setAttribute("uname",uname);
 			System.out.println("성공");
 			return "redirect:/";
 		}else {
