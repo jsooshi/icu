@@ -80,14 +80,4 @@ public class PortfolioDAOImpl implements PortfolioDAO{
 	public List<Map<String, Object>> searchResult(String keyword) {
 		return sqlSession.selectList("portfolio.searchResult", "%"+keyword+"%");
 	}
-	
-	@Override
-	public List<Map> mainPopular() {
-		return sqlSession.selectList("portfolio.mainPopular");
-	}
-	
-	@Override
-	public List<Map> mainRecent() {
-		return sqlSession.selectList("portfolio.recentPortfolio");
-	}
 }

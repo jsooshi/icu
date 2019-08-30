@@ -19,9 +19,9 @@
 			var files = inputFile[0].files;
 			console.log(files); */
 			formData.append("pfname",$('input[name=pfname]:eq(0)').val())
-			formData.append("pfurl",$('input[name=pfname]:eq(0)').val())
-			formData.append("pfposition",$('input[name=pfname]:eq(0)').val())
-			formData.append("tagname",$('input[name=pfname]:eq(0)').val())
+			formData.append("pfurl",$('input[name=pfurl]:eq(0)').val())
+			formData.append("pfposition",$('input[name=pfposition]:eq(0)').val())
+			formData.append("tagname",$('input[name=tagname]:eq(0)').val())
 			
 			for(var i=0;i<fileCount;i++){
 				formData.append("uploadFile",fileList.get($("#dataList tr").eq(i).children("td:eq(0)").html()));
@@ -71,36 +71,23 @@
 		})
 	});
 </script>     
-    
-    <title>Document</title>
-    <script src="/porget/js/jquery-3.js"></script>
-    <script>
-    
-    $(function(){
-		function portfolioSubmit() {
-			$.ajax({
-				url : "portfolio/post",
-				success : function(result) {
-					$('#porgetBody').html(result);
-				}
-			});    	
-    })
-    
-    </script>
 </head>
 <body>
-
+	
+	<div class="container">
         제목: <input type="text" name="pfname"><br>
-	썸네이일: <input type="file" name="uploadFile" multiple> <button id='uploadBtn'>업로드</button><br> 
-	<table>
-	<thead><tr><th>제목</th><th>삭제</th></tr></thead>
-	<tbody id="dataList">
-	</tbody>
-	</table><br>
-        사진: <input type="file" name="pffile" /><br>
+		사진: <input type="file" name="uploadFile" multiple> 
+		<table>
+			<thead><tr><th>제목</th><th>삭제</th></tr></thead>
+			<tbody id="dataList">
+			</tbody>
+		</table><br>
         포트폴리오주소: <input type="text" name="pfurl"><br>
         포지션: <input type="text" name="pfposition"><br>
         태그: <input type="text" name="tagname"><br>
+	<button id='uploadBtn' class="btn btn-primary">등록</button><br> 
     
+	
+	</div>
 </body>
 </html>
