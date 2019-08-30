@@ -90,20 +90,28 @@ $(function(){ //jquery영역
 			$(this).val(content.substring(0, 100));
 			$('#counter').html('(100/최대100자)')
 		}
-
 	
-})
+	$('#recommendBtn').click(function(){ //좋아요버튼
+			 $.ajax({
+				 url : '../portfolio/good',
+				 data: {
+					 pfnum : boardNum,
+					 uname : accessName
+				 },
+				 success: function(result){
+					 var recommend = $(result).find('div.recommend:eq(0)').html();
+					 $('.recommend').html(recommend); 
+					 }
+				 })
+			 });
 	
-
+	})
+	
 }) //ready
+
+
 </script>
 </head>
-<style>
-    .inline {
-        display: inline;
-    }
-</style>
-
 <body>
 
 <div class="modal-dialog">
@@ -111,18 +119,18 @@ $(function(){ //jquery영역
 
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">${list.pfname }</h4>
+        <h4 class="modal-title">${list.PFNAME }</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
 
       <!-- Modal body -->
       <div class="modal-body">
-        <img src="http://placehold.it/200" class="rounded-circle" style="width:20%; display:inline;">
-        <p class="inline">
-            닉네임: ${list.uname }<br>
-            포지션: ${list.pfposition }<br>
-            태그: ${list.tagname }
-        </p>
+	    <img src="http://placehold.it/200" class="rounded-circle" style="width:20%;">
+        <div class="d-inline">
+            닉네임: ${list.UNAME }<br>
+            포지션: ${list.PFPOSITION }<br>
+            태그: ${list.TAGNAME }
+        </div>
 
         [스크린샷]<br>
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -158,22 +166,25 @@ $(function(){ //jquery영역
             </a>
         </div>
 
-        좋아요수: <br>
         조회수: <br>
 
-        <a href="${list.pfurl }" class="btn btn-primary">
+        <a href="${list.PFURL }" class="btn btn-primary">
 		 포트폴리오 링크
         </a><br>
-
-        <a href="">좋아요</a><br>
-        <a href="update?pfnum=${list.pfnum }">수정</a><br>
-        <a href="delete?pfnum=${list.pfnum }">삭제</a><br>
+		
+		<button class="btn btn-danger" id="recommendBtn">좋아요</button>
+		<div class="recommend">
+	        좋아요수: ${list.JOA }<br>
+		</div>		
+        <a href="update?pfnum=${list.PFNUM }">수정</a><br>
+        <a href="delete?pfnum=${list.PFNUM }">삭제</a><br>
         <hr>
         
                 [댓글] <!-- 댓글작성 -->
         <img src="http://placehold.it/200" class="rounded-circle" style="width:20%; display:inline;">
         <div class="box-header with-border">
         	<h3 class="box-title">Comment</h3>
+        	댓글 수: ${list.REPLYNUM }
         </div>
         <div class="box-body">
         	<div class="form-group">

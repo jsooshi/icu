@@ -2,11 +2,13 @@ package com.porget.control;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,8 +30,7 @@ public class PortfolioController {
 
 	
 	@RequestMapping(value = {"","/"} )
-	public String portfolio(Model m) { // <임시 매핑. 추후 뷰 컨트롤러로 이동> 포트폴리오 게시판 이동. 포폴 전체리스트 출력
-		
+	public String portfolio(Model m) { 
 		return "portfolio/portfolioBoard";
 	}
 
@@ -88,18 +89,15 @@ public class PortfolioController {
 
 	@GetMapping("/view")
 	public String portfolioView(int pfnum, Model m) {// 게시글 클릭시 포트폴리오 뷰
-
-		System.out.println("pfnum>"+pfnum);
-		List<PortfolioVO> list = dao.onePortfolio(pfnum);
-		System.out.println(list.get(0));
-		m.addAttribute("list", list.get(0));
+		List<Map> list = dao.selectPortfolio(pfnum);
+		m.addAttribute("list",list.get(0));
 		return "portfolio/portfolioView";
 	}
 
 	@GetMapping("/update")
 	public String portfolioUpdateView(int pfnum, Model m) {// 게시글 수정뷰
 		
-		List<PortfolioVO> list = dao.onePortfolio(pfnum);
+		List<PortfolioVO> list = dao.selectUpdate(pfnum);
 		System.out.println(list.get(0));
 		m.addAttribute("p", list.get(0));
 		return "portfolio/portfolioUpdate";
@@ -144,5 +142,26 @@ public class PortfolioController {
 		return "portfolio/partPopular";
 	}
 	
+	/*좋아요 기능*/
+	@RequestMapping("/good")
+	public String insertGood(int pfnum,HttpSession session) {
+		String uname = (String) session.getAttribute("uname");
+		Map<String,Object> recommend = new HashMap<String,Object>();
+		recommend.put("pfnum", pfnum);
+		recommend.put("uname", uname);
+		System.out.println(recommend);
+		if(dao.distinctRecommend(recommend)==0) {
+			System.out.println("ok");
+			if(dao.insertRecommend(recommend)==1) {
+				System.out.println("추가완료");
+			}else{
+				System.out.println("추가실패");
+			}
+		}else {
+			System.out.println("no");
+			dao.deleteRecommend(recommend);
+		}
+		return "redirect:/portfolio/view?pfnum="+pfnum;
+	}
 
 }

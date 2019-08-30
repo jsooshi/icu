@@ -15,14 +15,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				0,#{pfurl},#{pffile},#{pfposition},#{tagname})
 	</insert>
 	
-	<select id = "allPortfolio" resultType="PortfolioVO"> 
-		SELECT uname, pfnum, pfname, pfdate, pfthumb, pfread, pfurl, pffile, pfposition, tagname
-				FROM portfolio
-	</select>
-	
-	<select id = "onePortfolio" resultType="PortfolioVO"> 
-		SELECT uname, pfnum, pfname, pfdate, pfthumb, pfread, pfurl, pffile, pfposition, tagname
-				FROM portfolio WHERE pfnum = #{pfnum}
+	<select id="portfolioView" resultType="Map"> 
+		select p.uname, p.pfnum, p.pfposition, p.pfname,p.tagname, p.pfthumb,p.pffile, p.pfread, u.uphoto, 
+		(select count(*) from recommend rc where p.pfnum=rc.pfnum) as joa, (select count(*) from reply r where p.pfnum=r.pfnum) as replyNum
+		from portfolio p inner join userList u on p.uname=u.uname where p.pfnum=#{pfnum}
 	</select>
 	
 	<update id="updatePf">
@@ -30,23 +26,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			WHERE pfnum=#{pfnum}
 	</update> 
 	
+	<select id="selectUpdate" resultType="portfolioVO">
+		select pfname, pfthumb, pfurl, pffile, pfposition, tagname from portfolio
+		where  pfnum = #{pfnum}
+	</select>
+	
 	<delete id="deletePf">
 		DELETE FROM portfolio WHERE pfnum=#{pfnum}
 	</delete>
 	
 	<!-- 좋아요 기능 -->
-	<select id="selectRecommend" resultType="int">
-		SELECT count(*) FROM recommend WHERE pfnum=#{pfnum}
-	</select>
-	
 	<insert id="insertRecommend">
-		INSERT INTO recommend VALUES (pfnum=#{pfnum} , uname=#{uname})
+		INSERT INTO recommend VALUES (#{pfnum},#{uname})
 	</insert>
 	
 	<select id="distinctRecommend" resultType="int">
 		SELECT count(*) FROM recommend WHERE pfnum=#{pfnum} AND uname=#{uname}
 	</select>
 	
+	<delete id="deleteRecommend">
+		DELETE FROM recommend WHERE pfnum=#{pfnum} AND uname=#{uname}	
+	</delete>
 
 	<!-- 검색 기능 -->
 	<select id="portfolioList" resultType="Map"> 
@@ -81,10 +81,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 메인 기능 -->
 	<select id="mainPopular" resultType="Map"> 
 		<![CDATA[
-			select p.uname, p.pfnum, p.pfname, p.pfthumb, p.pfread, u.uphoto, (select count(*) from recommend rc where p.pfnum=rc.pfnum) as joa, (select count(*) from reply r where p.pfnum=r.pfnum) as replyNum
-			from portfolio p, userList u 
-			where p.uname=u.uname AND rownum <=3
-			order by joa desc
+			select p.uname, p.pfnum, p.pfname, p.pfthumb, p.pfread, u.uphoto,
+            (select count(*) from recommend rc where p.pfnum=rc.pfnum) as joa, (select count(*) from reply r where p.pfnum=r.pfnum) as replyNum
+			from portfolio p join (select  pfnum from recommend group by pfnum order by count(pfnum) desc) recommend on p.pfnum = recommend.pfnum 
+            join userlist u on p.uname=u.uname where rownum<=3
 		]]>
 	</select>
 	

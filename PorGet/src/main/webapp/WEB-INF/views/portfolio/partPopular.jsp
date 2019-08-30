@@ -3,7 +3,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:forEach items="${list }" var="p">
 		<div class="card col-md-4">
-			<a href="portfolio/view?pfnum=${p.PFNUM }&uname=${sessionScope.uname}" class="btn"> <img
+			<a href="portfolio/view?pfnum=${p.PFNUM }" class="btn"> <img
 				src="/porget/img/${p.PFTHUMB }"
 				class="card-img-top" alt="...">
 				<div class="card-body">

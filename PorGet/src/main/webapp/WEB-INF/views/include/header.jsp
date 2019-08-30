@@ -30,8 +30,21 @@
 					<button onclick="location.href='join'" class="btn btn-primary">Sign in</button>
 				</c:when>
 				<c:otherwise>
-					<li class="nav-item"><a href="/porget/logout" class="nav-link">logout</a></li>
-					<button onclick="location.href='portfolio/post'" class="btn btn-primary">Posting!</button>
+					<!-- <button onclick="location.href='portfolio/post'" class="btn btn-primary">Posting!</button> -->
+					<div class="dropdown show">
+						  <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						  	<img src="http://placehold.it/200" class="rounded-circle" style="width: 20%;">
+						  </a>
+						
+						  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+						    <div class="dropdown-item">${uname }님 환영합니다! </div>
+						    <a class="dropdown-item" href="#">프로필</a>
+						    <a class="dropdown-item" href="#">포트폴리오</a>
+						    <a class="dropdown-item" href="#">북마크</a>
+						    <a class="dropdown-item" href="#">마이페이지</a>
+						    <a class="dropdown-item" href="/porget/logout">로그아웃</a>
+						  </div>
+					</div>
 				</c:otherwise>
 			</c:choose>
 

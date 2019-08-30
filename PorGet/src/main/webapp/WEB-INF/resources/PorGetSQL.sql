@@ -194,17 +194,10 @@ drop table recommend;
 CREATE TABLE recommend
 (
     pfnum    NUMBER          NOT NULL, 
-    uname    VARCHAR2(30)    NULL, 
-    CONSTRAINT recommend_PK PRIMARY KEY (pfnum)
+    uname    VARCHAR2(30)    NULL
 )
 ;
 
-DROP SEQUENCE recommend_SEQ;
-;
-CREATE SEQUENCE recommend_SEQ
-START WITH 1
-INCREMENT BY 1;
-;
 
 COMMENT ON TABLE recommend IS '추천수'
 ;
