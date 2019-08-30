@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -51,7 +52,7 @@ $(function(){ //jquery영역
 	replyList(); //댓글리스트 로딩
 		
 	$('#replySave').click(function(){
-		var replyCon = $("#replyContents").val();
+		var replyCon = $("#replyContents").val(); //댓글내용 
 		
 		var replyData={
 				pfnum: ${param.pfnum},  //게시판번홈
@@ -176,11 +177,19 @@ $(function(){ //jquery영역
         </div>
         <div class="box-body">
         	<div class="form-group">
-        		<textarea id="replyContents" rows="3" cols="60" placeholder="댓글내용"></textarea>
+        	<c:choose>
+        		<c:when test="${!empty uname }">
+        		<textarea id="replyContents" rows="3" cols="60" placeholder="내용을입력하세요" ></textarea>
         		<br>
         		<span style="color:#aaa;" id="counter">(0/최대100자)</span>
+        		<input type="button" value="저장" id="replySave">
+        		</c:when>
+        		<c:otherwise>
+        		<textarea id="replyContents" rows="3" cols="60" placeholder="로그인하세요" ></textarea>
+        		</c:otherwise>
+        	</c:choose>	
         		
-        		<input type="button" value="submit" id="replySave">
+        		
         	</div>
         </div>
         <div class="box-footer" id="replyArea">
