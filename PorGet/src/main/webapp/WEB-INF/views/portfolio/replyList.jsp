@@ -66,11 +66,11 @@ $(function(){
 	
 	$('#reReplyCon').keyup(function(e){ //대댓글 글자수 카운터 및 제한
 		var content2 = $(this).val();
-		$('#counter2').html("("+content2.length+"/최대150자)");
+		$('#counter2').html("("+content2.length+"/최대100자)");
 		if(content2.length>150){
-			alert('최대150자까지 가능합니다')
-			$(this).val(content.substring(0,150));
-			$('#counter2').html('(150/최대150자');
+			alert('최대100자까지 가능합니다')
+			$(this).val(content.substring(0,100));
+			$('#counter2').html('(100/최대150자');
 		}
 		
 	})
@@ -108,7 +108,7 @@ $(function(){
 	
 	<br><textarea id="reReplyCon" row=3 cols=57></textarea>
 	<br>
-	<span style="color:#aaa;" id="counter2">(0/최대150자)</span>
+	<span style="color:#aaa;" id="counter2">(0/최대100자)</span>
 	<button name="reReSave">저장</button>
 	<input type="button" value="취소" name="reReplyCancel"><br>
 </div>
