@@ -24,19 +24,20 @@ public class PortfolioDAOImpl implements PortfolioDAO{
 		return sqlSession.insert("portfolio.insertPortfolio",vo);
 	}
 
-	@Override
-	public List<PortfolioVO> allPortfolio() {
-		return sqlSession.selectList("portfolio.allPortfolio");
-	}
 
 	@Override
-	public List<PortfolioVO> onePortfolio(int pfnum) {
-		return sqlSession.selectList("portfolio.onePortfolio",pfnum);
+	public List<Map> selectPortfolio(int pfnum) {
+		return sqlSession.selectList("portfolio.portfolioView",pfnum);
 	}
 	
 	@Override
 	public int updatePortfolio(PortfolioVO vo) {
 		return sqlSession.update("portfolio.updatePf",vo);
+	}
+	
+	@Override
+	public List<PortfolioVO> selectUpdate(int pfnum) {
+		return sqlSession.selectList("portfolio.selectUpdate",pfnum);
 	}
 	
 	@Override

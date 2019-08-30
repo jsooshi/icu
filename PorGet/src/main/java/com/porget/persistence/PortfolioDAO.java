@@ -8,10 +8,10 @@ public interface PortfolioDAO {// 포트폴리오 관련 DAO
 	
 	/* 포트폴리오 CRUD */
 	public int insertPortfolio(PortfolioVO vo); //글생성
-	public List<PortfolioVO> allPortfolio();    //전체목록 출력
-	public List<PortfolioVO> onePortfolio(int pfnum);// 게시글 한개 출력
 	public int updatePortfolio(PortfolioVO vo); //게시글 업데이트
 	public int deletePortfolio(int pfnum); // 게시글 삭제
+	public List<PortfolioVO> selectUpdate(int pfnum); // 게시글 수정뷰
+	public List<Map> selectPortfolio(int pfnum); // 게시글 출력
 	
 	/* 좋아요 */
 	public int insertRecommend(PortfolioVO vo);

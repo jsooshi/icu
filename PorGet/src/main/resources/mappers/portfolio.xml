@@ -15,14 +15,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				0,#{pfurl},#{pffile},#{pfposition},#{tagname})
 	</insert>
 	
-	<select id = "allPortfolio" resultType="PortfolioVO"> 
-		SELECT uname, pfnum, pfname, pfdate, pfthumb, pfread, pfurl, pffile, pfposition, tagname
-				FROM portfolio
-	</select>
-	
-	<select id = "onePortfolio" resultType="PortfolioVO"> 
-		SELECT uname, pfnum, pfname, pfdate, pfthumb, pfread, pfurl, pffile, pfposition, tagname
-				FROM portfolio WHERE pfnum = #{pfnum}
+	<select id="portfolioView" resultType="Map"> 
+		select p.uname, p.pfnum, p.pfposition, p.pfname,p.tagname, p.pfthumb,p.pffile, p.pfread, u.uphoto, 
+		(select count(*) from recommend rc where p.pfnum=rc.pfnum) as joa, (select count(*) from reply r where p.pfnum=r.pfnum) as replyNum
+		from portfolio p inner join userList u on p.uname=u.uname where p.pfnum=#{pfnum}
 	</select>
 	
 	<update id="updatePf">
@@ -30,15 +26,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			WHERE pfnum=#{pfnum}
 	</update> 
 	
+	<select id="selectUpdate" resultType="portfolioVO">
+		select pfname, pfthumb, pfurl, pffile, pfposition, tagname from portfolio
+		where  pfnum = #{pfnum}
+	</select>
+	
 	<delete id="deletePf">
 		DELETE FROM portfolio WHERE pfnum=#{pfnum}
 	</delete>
 	
 	<!-- 좋아요 기능 -->
-	<select id="selectRecommend" resultType="int">
-		SELECT count(*) FROM recommend WHERE pfnum=#{pfnum}
-	</select>
-	
 	<insert id="insertRecommend">
 		INSERT INTO recommend VALUES (pfnum=#{pfnum} , uname=#{uname})
 	</insert>
