@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- portfolio 관련 sql문 -->
+<mapper namespace="portfolio"> 
+
+
+	<!-- 포트폴리오 CRUD -->
+	<insert id="insertPortfolio">
+		INSERT INTO portfolio 
+		VALUES (#{uname},portfolio_SEQ.nextval,#{pfname},
+				to_date(sysdate,'yyyy.mm.dd hh24:mi'),#{pfthumb},
+				0,#{pfurl},#{pffile},#{pfposition},#{tagname})
+	</insert>
+	
+	<select id = "allPortfolio" resultType="PortfolioVO"> 
+		SELECT uname, pfnum, pfname, pfdate, pfthumb, pfread, pfurl, pffile, pfposition, tagname
+				FROM portfolio
+	</select>
+	
+	<select id = "onePortfolio" resultType="PortfolioVO"> 
+		SELECT uname, pfnum, pfname, pfdate, pfthumb, pfread, pfurl, pffile, pfposition, tagname
+				FROM portfolio WHERE pfnum = #{pfnum}
+	</select>
+	
+	<update id="updatePf">
+		UPDATE portfolio SET pfname=#{pfname},pffile=#{pffile},pfurl=#{pfurl}, pfposition=#{pfposition}, tagname=#{tagname}  
+			WHERE pfnum=#{pfnum}
+	</update> 
+	
+	<delete id="deletePf">
+		DELETE FROM portfolio WHERE pfnum=#{pfnum}
+	</delete>
+	
+	<!-- 좋아요 기능 -->
+	<select id="selectRecommend" resultType="int">
+		SELECT count(*) FROM recommend WHERE pfnum=#{pfnum}
+	</select>
+	
+	<insert id="insertRecommend">
+		INSERT INTO recommend VALUES (pfnum=#{pfnum} , uname=#{uname})
+	</insert>
+	
+	<select id="distinctRecommend" resultType="int">
+		SELECT count(*) FROM recommend WHERE pfnum=#{pfnum} AND uname=#{uname}
+	</select>
+	
+
+	<select id="portfolioList" resultType="Map"> 
+		select p.uname, p.pfnum, p.pfname, p.pfthumb, p.pfread, u.uphoto, (select count(*) from recommend rc where p.pfnum=rc.pfnum) as joa, (select count(*) from reply r where p.pfnum=r.pfnum) as replyNum
+		from portfolio p, userList u 
+		where p.uname=u.uname
+		order by joa desc
+	</select>
+	
+	<select id="searchKeyword" parameterType="String" resultType="Map">
+		select tagname from portfolio where tagname like #{keyword}
+	</select>
+	
+	<select id="searchResult" parameterType="String" resultType="Map"> 
+		select p.uname, p.pfname, p.pfthumb, p.pfread, u.uphoto, (select count(*) from recommend rc where p.pfnum=rc.pfnum) as joa, (select count(*) from reply r where p.pfnum=r.pfnum) as replyNum
+		from portfolio p, userList u 
+		where p.uname=u.uname and tagname like #{keyword}
+		order by joa desc
+	</select>
+	
+	<select id="selectUphoto" parameterType="String" resultType="String">
+		select uphoto from userList where uname=#{uname}
+	</select>
+	
+	<select id="selectMyportfolio" parameterType="String" resultType="Map">
+		select p.uname, p.pfname, p.pfthumb, p.pfread, u.uphoto, (select count(*) from recommend rc where p.pfnum=rc.pfnum) as joa, (select count(*) from reply r where p.pfnum=r.pfnum) as replyNum
+		from portfolio p, userList u 
+		where p.uname=u.uname and p.uname=#{uname}
+		order by pfdate desc
+	</select>
+	
+</mapper>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- mappers/gueset.xml -->
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="userList">    
+	<!-- 회원가입 -->
+	<insert id="insert">
+		insert into userList (uname, upass, uemail)
+		values (#{uname}, #{upass}, #{uemail})
+	</insert>
+	
+	<!-- 로그인 -->
+	<select id="login" resultType="String"> <!-- count(*) -> sql 관련된 함수/ 갯수를 세어주는 함수 ///현재는1,0  -->
+		select uname
+		from userList
+		where uemail=#{uemail} and upass=#{upass}
+	</select>
+
+</mapper>

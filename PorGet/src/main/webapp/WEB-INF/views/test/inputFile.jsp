@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>포트폴리오 등록</title>
+<meta charset="UTF-8">
+<title>입력폼</title>
 <script src="/porget/js/jquery-3.js"></script>
 <script type="text/javascript">
 	var fileCount =0;
@@ -15,20 +14,15 @@
 		console.log("하이");
 		$('#uploadBtn').on("click", function(e){
 			var formData = new FormData();
-			/*var inputFile = $("input[name='uploadFile']");
+			/* var inputFile = $("input[name='uploadFile']");
 			var files = inputFile[0].files;
 			console.log(files); */
-			formData.append("pfname",$('input[name=pfname]:eq(0)').val())
-			formData.append("pfurl",$('input[name=pfname]:eq(0)').val())
-			formData.append("pfposition",$('input[name=pfname]:eq(0)').val())
-			formData.append("tagname",$('input[name=pfname]:eq(0)').val())
-			
 			for(var i=0;i<fileCount;i++){
 				formData.append("uploadFile",fileList.get($("#dataList tr").eq(i).children("td:eq(0)").html()));
 			}
 			
 			$.ajax({
-				url:'post',
+				url:'input',
 				processData:false,
 				contentType:false,
 				data:formData,
@@ -38,8 +32,6 @@
 					$('#dataList').html("");
 				}
 			});
-			//console.log($('input[name=pfname]:eq(0)').val());
-			
 		});//#uploadBtn.on click
 		
 		$('#dataList').on('click','button',function(){
@@ -57,7 +49,7 @@
 				console.log("파일이 이미 3개있습니다");
 				$(this).val("");return;}
 			console.log("f+f : "+(files.length+fileCount));
-			fileIn = ((parseFloat(files.length)+parseFloat(fileCount))>3) ? (3-parseFloat(fileCount)) : files.length  ;
+			fileIn = ((parseFloat(files.length)+parseFloat(fileCount))>3) ? (3-pa`rseFloat(fileCount)) : files.length  ;
 			fileCount += fileIn;
 			console.log("filecount : "+ fileCount);
 			for(var i=0;i<fileIn;i++){
@@ -70,37 +62,19 @@
 			$(this).val("")
 		})
 	});
-</script>     
-    
-    <title>Document</title>
-    <script src="/porget/js/jquery-3.js"></script>
-    <script>
-    
-    $(function(){
-		function portfolioSubmit() {
-			$.ajax({
-				url : "portfolio/post",
-				success : function(result) {
-					$('#porgetBody').html(result);
-				}
-			});    	
-    })
-    
-    </script>
+</script>
 </head>
+<%--inputFile.jsp --%>
 <body>
-
-        제목: <input type="text" name="pfname"><br>
-	썸네이일: <input type="file" name="uploadFile" multiple> <button id='uploadBtn'>업로드</button><br> 
-	<table>
-	<thead><tr><th>제목</th><th>삭제</th></tr></thead>
-	<tbody id="dataList">
-	</tbody>
-	</table><br>
-        사진: <input type="file" name="pffile" /><br>
-        포트폴리오주소: <input type="text" name="pfurl"><br>
-        포지션: <input type="text" name="pfposition"><br>
-        태그: <input type="text" name="tagname"><br>
-    
+  <h3>입력폼</h3>
+  <hr>
+       파일: <input type="file" name="uploadFile" multiple><br>
+	<button id='uploadBtn'>업로드</button>
+  <hr>
+<table>
+<thead><tr><th>제목</th><th>삭제</th></tr></thead>
+<tbody id="dataList">
+</tbody>
+</table>
 </body>
 </html>

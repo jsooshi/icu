@@ -3,6 +3,8 @@
 -- user Table Create SQL
 drop table userList cascade CONSTRAINTS;
 
+
+
 CREATE TABLE userList
 (
     uname     VARCHAR2(30)    unique NOT NULL, 
@@ -13,6 +15,7 @@ CREATE TABLE userList
     CONSTRAINT userList_PK PRIMARY KEY (uemail)
 );
 
+INSERT INTO userList VALUES ('afterup','1234','afterup@naver.com',userList_SEQ.nextval,0);
 
 drop sequence userList_SEQ;
 CREATE SEQUENCE userList_SEQ
@@ -54,6 +57,9 @@ CREATE TABLE portfolio
     CONSTRAINT PORTFOLIO_PK PRIMARY KEY (pfnum)
 )
 ;
+
+
+INSERT INTO portfolio VALUES ('afterup',portfolio_SEQ.nextval, '포트폴리오명',to_date(sysdate,'yyyy.mm.dd hh24:mi'),'cat.jpg',0,null,null,'웹개발자','JAVA, JAVASCRIPT')
 
 drop sequence portfolio_SEQ;
 CREATE SEQUENCE portfolio_SEQ
