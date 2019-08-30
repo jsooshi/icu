@@ -23,4 +23,17 @@ public class UserDAOImpl implements UserDAO{
 		return sqlSession.selectOne("userList.login",vo);
 	}
 
+	@Override
+	public int idCheck(String uname) {
+		System.out.println("sqlSession="+ sqlSession+", uname="+uname);
+		return sqlSession.selectOne("userList.idCheck",uname);
+	}
+
+	@Override
+	public int emailCheck(String uemail) {
+		return sqlSession.selectOne("userList.emailCheck",uemail);
+	}
+
+
+
 }

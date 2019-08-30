@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html4; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="kr">
@@ -31,34 +31,34 @@
 					Recruiter Join
 				</h3>
 				<hr>
-				<form role="form">
+				<form role="form" method="post">
 					<div class="form-group">
 
 						<label for="cName">
 							회사명
 						</label>
-						<input type="text" class="form-control" id="companyName">
+						<input type="text" class="form-control" id="companyName" name="cname">
 					</div>
 					<div class="form-group">
 
 						<label for="cEmail">
 							이메일
 						</label>
-						<input type="email" class="form-control" id="companyEmail">
+						<input type="email" class="form-control" id="companyEmail" name="cemail">
 					</div>
 					<div class="form-group">
 
 						<label for="cPass">
 							비밀번호
 						</label>
-						<input type="password" class="form-control" id="companyPass">
+						<input type="password" class="form-control" id="companyPass" name="cpass">
 					</div>
 					<div class="form-group">
 
 						<label for="cdomain">
 							회사사이트
 						</label>
-						<input type="text" class="form-control" id="companyDomain">
+						<input type="text" class="form-control" id="companyDomain" name="cdomain">
 					</div>
 					<div class="form-group">
 
@@ -67,7 +67,7 @@
 						</label>
 
 
-						<input type="file" class="form-control-file" id="companyPhoto">
+						<input type="file" class="form-control-file" id="companyPhoto" name="cphoto">
 
 
 					</div>

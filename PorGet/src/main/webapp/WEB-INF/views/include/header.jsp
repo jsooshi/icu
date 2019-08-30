@@ -20,6 +20,7 @@
 					<li class="nav-item"><a href="/porget/portfolio" class="portfolio nav-link">Portfolio</a></li>
 					<li class="nav-item"><a href="/porget/portfolio/popular" class="popular nav-link">Popular</a></li>
 					<button onclick="location.href='login'" class="btn btn-primary">login</button>
+					<button onclick="location.href='/porget/joinform'" class="btn btn-primary">회원가입</button>
 				</ul>
 			</div>
 	</nav>

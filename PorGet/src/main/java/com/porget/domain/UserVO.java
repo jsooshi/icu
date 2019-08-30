@@ -5,7 +5,7 @@ public class UserVO {
 	private String uname;
 	private String upass;
 	private String uemail;
-	private int uphoto;
+	private String uphoto;
 	
 	
 	public String getUname() {
@@ -26,11 +26,16 @@ public class UserVO {
 	public void setUemail(String uemail) {
 		this.uemail = uemail;
 	}
-	public Number getUphoto() {
+
+	public String getUphoto() {
 		return uphoto;
 	}
-	public void setUphoto(int uphoto) {
+	public void setUphoto(String uphoto) {
 		this.uphoto = uphoto;
+	}
+	@Override
+	public String toString() {
+		return "UserVO [uname=" + uname + ", upass=" + upass + ", uemail=" + uemail + ", uphoto=" + uphoto + "]";
 	}
 	
 	
