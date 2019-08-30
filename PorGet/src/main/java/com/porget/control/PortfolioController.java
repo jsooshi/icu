@@ -43,6 +43,8 @@ public class PortfolioController {
 	public String portfolioInsert(MultipartFile[] uploadFile, PortfolioVO vo, HttpServletRequest request) { // 글 생성 후 포트폴리오 게시판으로 이동
 		// vo=> pfname, pfurl, pfposition, tagname
 
+		
+		
 		/* 임시로 추가하는 VO */
 		vo.setUname("afterup"); // 세션 아이디값
 		
@@ -76,7 +78,7 @@ public class PortfolioController {
 		vo.setPfthumb(ptthumb); // 썸네일
 		vo.setPffile("cat.jpg"); // 사진파일경로
 
-		System.out.println(vo);
+		System.out.println("포트폴리오 업로드 vo>>"+vo);
 		if (dao.insertPortfolio(vo) == 1) {
 			System.out.println("추가성공");
 		} else {
@@ -130,11 +132,6 @@ public class PortfolioController {
 		}
 		return "redirect:/portfolio";
 	}
-	
-	/*
-	 * @RequestMapping("/popularView") public String showPopularView() { //인기포트폴리오
-	 * 게시판 뷰 보기 return "portfolio/popularBoard"; }
-	 */
 	
 	@RequestMapping("/partPopular")
 	public String showPopularPart(Model m, int base) { //인기포트폴리오 게시판 스크롤 내려가면 그 다음 목록 검색해서 뿌려주기
