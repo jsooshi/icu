@@ -90,7 +90,7 @@ $(function(){
 		작성자: ${reply.uname }
 		 작성날짜:<fmt:formatDate value="${reply.rdate }" pattern="yyyy-MM-dd" />
 		<br>
-		<textarea rows="3" cols="60" placeholder="comment" disabled >${reply.rcontent }</textarea><br>
+		<textarea rows="3" cols="60" placeholder="comment" readonly><c:out value="${reply.rcontent }"></c:out></textarea><br>
 		<c:if test="${reply.uname eq uname }">
 		<input type="button" value="삭제" name="replyDelete">
 		</c:if>
