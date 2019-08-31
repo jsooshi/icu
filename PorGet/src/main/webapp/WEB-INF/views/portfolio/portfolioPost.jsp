@@ -44,7 +44,7 @@
 		
 		$('#dataList').on('click','button',function(){
 			console.log("삭제하라우");
-			fileList.delete($(this).parent().children('td').html());
+			fileList.delete($(this).closest('tr').children('td:eq(0)').html());
 			$(this).closest('tr').remove();
 			fileCount -= 1;
 		});

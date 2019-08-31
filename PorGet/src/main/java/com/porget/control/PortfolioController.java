@@ -1,14 +1,17 @@
 package com.porget.control;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.swing.plaf.multi.MultiFileChooserUI;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,6 +54,7 @@ public class PortfolioController {
 		System.out.println(uploadFolder);
 		for(MultipartFile multipartFile : uploadFile) {
 			System.out.println("------------");
+			System.out.println("multiName : " + multipartFile.getName());
 			System.out.println("upload file name : " + multipartFile.getOriginalFilename());
 			System.out.println("upload file size : " + multipartFile.getSize());
 			
@@ -90,25 +94,60 @@ public class PortfolioController {
 	public String portfolioView(int pfnum, Model m,HttpServletRequest request) {// 게시글 클릭시 포트폴리오 뷰
 
 		System.out.println("pfnum>"+pfnum);
-		List<PortfolioVO> list = dao.onePortfolio(pfnum);
-		System.out.println(list.get(0));
-		m.addAttribute("list", list.get(0));
+		PortfolioVO vo = dao.onePortfolio(pfnum);
+		System.out.println(vo);
+		m.addAttribute("list", vo);
 		m.addAttribute("realPath", request.getSession().getServletContext().getRealPath("/resources/files"));
-		m.addAttribute("thumb",list.get(0).getPfthumb().split("\\|"));
+		m.addAttribute("thumb",vo.getPfthumb().split("\\|"));
 		return "portfolio/portfolioView";
 	}
 
 	@GetMapping("/update")
-	public String portfolioUpdateView(int pfnum, Model m) {// 게시글 수정뷰
+	public String portfolioUpdateView(int pfnum, Model m, HttpServletRequest request) {// 게시글 수정뷰
 		
-		List<PortfolioVO> list = dao.onePortfolio(pfnum);
-		System.out.println(list.get(0));
-		m.addAttribute("p", list.get(0));
+		PortfolioVO vo = dao.onePortfolio(pfnum);
+		System.out.println(vo);
+		String[] thumbsList = vo.getPfthumb().split("\\|");
+		///////////////////////////////
+		MultipartFile[] fList= new MockMultipartFile[thumbsList.length];
+		///////////////////////////////
+		String thumbs = "[";
+		m.addAttribute("p", vo);
+		for (int i = 0; i < thumbsList.length; i++) {
+			thumbs+="\"";
+			System.out.println(thumbsList[i]);
+			thumbs+=thumbsList[i];
+			thumbs+="\"";
+			if(i+1<thumbsList.length) {
+				thumbs+=",";
+			}
+			
+			///////////////////////////////
+			String path = request.getSession().getServletContext().getRealPath("/resources/files");
+			File openfile = new File(path,thumbsList[i]);
+			MultipartFile mFile;
+			try {
+				mFile = new MockMultipartFile("uploadFile",new FileInputStream(openfile));
+				fList[i] = mFile;
+				System.out.println(mFile);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			///////////////////////////////
+		}
+		thumbs+="]";
+		System.out.println("하하 : "+thumbs);
+		m.addAttribute("thumbs",thumbs);
+		
+		///////////////////////////////
+		m.addAttribute("fList",fList);
+		///////////////////////////////
+		
 		return "portfolio/portfolioUpdate";
 	}
 
 	@PostMapping("/update")
-	public String portfolioUpdate(MultipartFile[] uploadFile, PortfolioVO vo, HttpServletRequest request, Model m) {// 게시글 수정완료 후 본인글로 이동
+	public String portfolioUpdate(MultipartFile[] uploadFile,String[] removeNames, PortfolioVO vo, HttpServletRequest request, Model m) {// 게시글 수정완료 후 본인글로 이동
 
 		/* 임시로 추가하는 VO */
 		vo.setPffile("dog.jpg"); // 사진파일경로
@@ -116,6 +155,15 @@ public class PortfolioController {
 		String ptthumb="";
 		String uploadFolder = request.getSession().getServletContext().getRealPath("/resources/files");
 		System.out.println(uploadFolder);
+		System.out.println("파일이름리스트 보고 가 : " +removeNames[0]);
+		for(String removeName : removeNames) {
+			File removeFile = new File(uploadFolder,removeName);
+			System.out.println("파일 이름 보고 가 : "+removeName);
+			if(removeFile.isFile()) {
+				System.out.println("있으니까 지운다");
+				removeFile.delete();
+			}
+		}
 		for(MultipartFile multipartFile : uploadFile) {
 			System.out.println("------------");
 			System.out.println("upload file name : " + multipartFile.getOriginalFilename());
@@ -131,17 +179,20 @@ public class PortfolioController {
 			System.out.println("only file name : "+ uploadFileName);
 			File saveFile = new File(uploadFolder,uploadFileName);
 			/*
-			 * try { multipartFile.transferTo(saveFile); System.out.println("성공"); } catch
-			 * (IllegalStateException | IOException e) { System.out.println("icy...");
-			 * e.printStackTrace(); }
-			 */
+			try {
+				multipartFile.transferTo(saveFile);
+				System.out.println("성공");
+			} catch (IllegalStateException | IOException e) {
+				System.out.println("icy...");
+				e.printStackTrace();
+			}*/
 			
 		}
 		
 		vo.setPfthumb(ptthumb); // 썸네일
 		
-
-		/*if (dao.updatePortfolio(vo) == 1) {
+/*
+		if (dao.updatePortfolio(vo) == 1) {
 			System.out.println("수정성공");
 		} else {
 			System.out.println("수정실패");

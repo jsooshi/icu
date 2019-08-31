@@ -26,7 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<update id="updatePf">
-		UPDATE portfolio SET pfname=#{pfname},pffile=#{pffile},pfurl=#{pfurl}, pfposition=#{pfposition}, tagname=#{tagname}  
+		UPDATE portfolio SET pfname=#{pfname},pfthumb=#{pfthumb},pffile=#{pffile},pfurl=#{pfurl}, pfposition=#{pfposition}, tagname=#{tagname}  
 			WHERE pfnum=#{pfnum}
 	</update> 
 	

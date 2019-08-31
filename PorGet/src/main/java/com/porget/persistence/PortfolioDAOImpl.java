@@ -30,8 +30,8 @@ public class PortfolioDAOImpl implements PortfolioDAO{
 	}
 
 	@Override
-	public List<PortfolioVO> onePortfolio(int pfnum) {
-		return sqlSession.selectList("portfolio.onePortfolio",pfnum);
+	public PortfolioVO onePortfolio(int pfnum) {
+		return sqlSession.selectOne("portfolio.onePortfolio",pfnum);
 	}
 	
 	@Override

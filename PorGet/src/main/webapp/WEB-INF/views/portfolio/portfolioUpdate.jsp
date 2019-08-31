@@ -12,12 +12,14 @@
     <script type="text/javascript">
     	var fileCount = 0;
     	var fileList = new FormData();
-    	var thumbs = "${p.pfthumb}".split("\\|");
+		var formData = new FormData();
+    	var thumbs = ${thumbs};
+    	//var fList=${fList};
     	console.log(thumbs[0]);
+    	//console.log(fList);
     	
     	$(function(){
 	    	$('#uploadBtn').on("click", function(e){
-				var formData = new FormData();
 				/*var inputFile = $("input[name='uploadFile']");
 				var files = inputFile[0].files;
 				console.log(files); */
@@ -29,11 +31,14 @@
 				formData.append("tagname",$('input[name=tagname]:eq(0)').val())
 				
 				for(var i=0;i<fileCount;i++){
+					console.log(fileList.get($("#dataList tr").eq(i).children("td:eq(0)").html()).name)
+					formData.append("fileName",fileList.get($("#dataList tr").eq(i).children("td:eq(0)").html()).name)
+					console.log(fileList.get($("#dataList tr").eq(i).children("td:eq(0)").html()));
 					formData.append("uploadFile",fileList.get($("#dataList tr").eq(i).children("td:eq(0)").html()));
 				}
 				
 				$.ajax({
-					url:'post',
+					url:'update',
 					processData:false,
 					contentType:false,
 					data:formData,
@@ -49,7 +54,9 @@
 	    	
 	    	$('#dataList').on('click','button',function(){
 				console.log("삭제하라우");
-				fileList.delete($(this).parent().children('td').html());
+				console.log($(this).closest('tr').children('td:eq(0)').html());
+				formData.append("removeNames",fileList.get($(this).closest('tr').children('td:eq(0)').html()));
+				fileList.delete($(this).closest('tr').children('td:eq(0)').html());
 				$(this).closest('tr').remove();
 				fileCount -= 1;
 			});//삭제버튼
@@ -59,6 +66,7 @@
 				var inputFile = $("input[name='uploadFile']");
 				var files = inputFile[0].files;
 				var fileIn =0;
+				console.log(files[0]);
 				if(fileCount>2){
 					console.log("파일이 이미 3개있습니다");
 					$(this).val("");return;}
@@ -81,7 +89,7 @@
 	    		fileCount ++;
 	    		console.log(thumbs[i])
 	    		var viewName = thumbs[i].split("_")[1];
-	    		fileList.append(viewName,{"name":thumbs[i]});
+	    		fileList.append(viewName,{"name":"uploadFile","originalFilename":thumbs[i],"contentType":"none","content":null});
 	    		console.log(thumbs[i]);
 	    		$('#dataList').html($('#dataList').html()+"<tr><td>"+viewName+"</td>"+
 				"<td><button>삭제</button></td></tr>");
