@@ -23,6 +23,17 @@ public class RecruiterDAOImpl implements RecruiterDAO{
 		return sqlSession.selectOne("recruiter.login",rvo);
 	}
 
+	@Override
+	public int cidCheck(String cname) {
+		System.out.println("sqlSession="+ sqlSession+", uname="+cname);
+		return sqlSession.selectOne("recruiter.cidCheck",cname);
+	}
+
+	@Override
+	public int cemailCheck(String cemail) {
+		return sqlSession.selectOne("recruiter.cemailCheck",cemail);
+	}
+
 	
 
 }

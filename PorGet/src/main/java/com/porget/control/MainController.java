@@ -43,19 +43,19 @@ public class MainController {
 	}
 	
 	@RequestMapping(value = "/joinform", method = RequestMethod.GET)//메인폼에서 회원가입누르면 리크루터 구직자 선택
-	public String userjoinform() {
+	public String userJoinForm() {
 		
 		return "member/memberJoin";
 	}
 	
 	@RequestMapping(value = "/userjoin", method = RequestMethod.GET)//구직자 회원가입 폼
-	public String insertuser() {
+	public String insertUser() {
 		
 		return "member/userJoin";
 	}
 	
 	@RequestMapping(value = "/userjoin", method = RequestMethod.POST)//구직자 DB 회원가입 
-	public String userjoin(UserVO vo) {
+	public String userJoin(UserVO vo) {
 		System.out.println("구직자 회원가입vo="+vo);
 		userdao.insert(vo);//DB입력요청
 		
@@ -63,13 +63,13 @@ public class MainController {
 	}
 	
 	@RequestMapping(value = "/recrujoin", method = RequestMethod.GET)//리쿠르터 회원가입 폼
-	public String recruitjoinform() {
+	public String recruitjJinForm() {
 		
 		return "member/recruiterJoin";
 	}
 	
 	@RequestMapping(value = "/recrujoin", method = RequestMethod.POST)//리쿠르터 DB 회원가입 
-	public String insertrecruit(RecruiterVO rvo) {
+	public String insertRecruit(RecruiterVO rvo) {
 		System.out.println("리크루터 회원가입vo="+rvo);
 		recruiterdao.insert(rvo);
 		
@@ -86,7 +86,7 @@ public class MainController {
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String loginsuccess(UserVO vo, HttpSession session, HttpServletResponse response) throws Exception {
+	public String loginSuccess(UserVO vo, HttpSession session, HttpServletResponse response) throws Exception {//로그인시 세션 저장
 		String uname = userdao.login(vo);
 		if(uname != null) {
 			session.setAttribute("uname",uname);
@@ -128,6 +128,36 @@ public class MainController {
 		
 		return msg;
 	}
+	
+	@RequestMapping("checkCname")
+	public @ResponseBody String checkCname(String companyName) {
+		System.out.println("checkcname>>"+companyName);
+		String msg;
+		if(recruiterdao.cidCheck(companyName)==0) {
+			msg="<font color=blue>사용가능한 회사명입니다</font>";
+		}else {
+			msg="<font color=red>사용불가능한 회사명입니다</font>";	
+		}
+		return msg;
+	}
+	
+	@RequestMapping("checkCemail")
+	public @ResponseBody String checkCemail(String companyEmail) {
+		System.out.println("checkcname>>"+companyEmail);
+		String msg;
+		if(recruiterdao.cemailCheck(companyEmail)==0) {
+			msg="<font color=blue>사용가능한 이메일입니다</font>";
+		}else {
+			msg="<font color=red>사용불가능한 이메일입니다</font>";	
+		}
+		return msg;
+	}
+	
+	@RequestMapping("myPage")
+	public String myPage() {
+		
+		return "main/myPage";
+	}
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
 	
 
@@ -153,5 +183,12 @@ public class MainController {
 		m.addAttribute("list", list);
 		return "portfolio/searchTegBox";
 	}
+	
+	@RequestMapping("logout")
+	public String logout(HttpSession session) {
+		session.removeAttribute("uname");
+		return "redirect:/";
+	}
+	
 
 }

@@ -16,5 +16,16 @@
 		from recruiter
 		where cname=#{cname} and cpass=#{cpass}
 	</select>
-
+	
+	<!-- 회사명 중복확인 -->
+	<select id="cidCheck" resultType="int">
+		select count(*) from recruiter
+		where cname = #{cname}
+	</select>
+	
+	<!-- 이메일 중복확인 -->
+	<select id="cemailCheck" resultType="int">
+		select count(*) from recruiter
+		where cemail = #{cemail}
+	</select>
 </mapper>

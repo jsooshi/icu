@@ -18,7 +18,37 @@
 
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+	
+	<script src="/porget/js/jquery-3.js"></script>
+	<script src="/porget/js/ajax.js"></script>
+	
+	<script>
+	$(function(){
+		$('#companyName').keyup(function(){
+			$.ajax({
+				url:"checkCname", 
+				data:{
+					companyName:$(this).val()
+				},
+				success:function(data){
+					$('#companyNameMsg').html(data);
+				}
+			});	
+		});
+		
+		$('#companyEmail').keyup(function(){
+			$.ajax({
+				url:"checkCemail",
+				data:{
+					companyEmail:$(this).val()
+				},
+				success:function(data){
+					$('#companyEmailMsg').html(data);
+				}
+			});
+		});
+	});
+	</script>
 
 </head>
 
@@ -38,14 +68,18 @@
 							회사명
 						</label>
 						<input type="text" class="form-control" id="companyName" name="cname">
+						<div id="companyNameMsg"></div>
 					</div>
+					
 					<div class="form-group">
 
 						<label for="cEmail">
 							이메일
 						</label>
 						<input type="email" class="form-control" id="companyEmail" name="cemail">
+						<div id="companyEmailMsg"></div>
 					</div>
+					
 					<div class="form-group">
 
 						<label for="cPass">

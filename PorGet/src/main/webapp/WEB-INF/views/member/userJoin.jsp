@@ -53,30 +53,7 @@
 				}
 			});
 		});
-		   /*  $('#userName').blur(function(){
-		        $.ajax({
-			     type:"POST",
-			     url:"Join",
-			     data:{
-			            "id":$('#userName').val()
-			     },
-			     success:function(data){	//data : checkSignup에서 넘겨준 결과값
-			            if($.trim(data)=="YES"){
-			               if($('#userName').val()!=''){ 
-			               	alert("사용가능한 아이디입니다.");
-			               }
-			           	}else{
-			               if($('#userName').val()!=''){
-			                  alert("중복된 아이디입니다.");
-			                  $('#userName').val('');
-			                  $('#userName').focus();
-			               }
-			            }
-			         }
-			    }) 
-		     }) */
-
-		});
+	});
 	</script>
 
 </head>
