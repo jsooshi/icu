@@ -78,8 +78,8 @@ public class PortfolioDAOImpl implements PortfolioDAO{
 		return sqlSession.selectList("portfolio.searchResult", "%"+keyword+"%");
 	}
 	@Override
-	public List<Map<String, Object>> searchName(String keyword) {//제목으로 검색시
-		return sqlSession.selectList("portfolio.searchName", "%"+keyword+"%");
+	public List<Map<String, Object>> searchNameList(String keyword) {//제목으로 검색시
+		return sqlSession.selectList("portfolio.searchNameList", "%"+keyword+"%");
 	}
 
 	@Override
@@ -89,5 +89,15 @@ public class PortfolioDAOImpl implements PortfolioDAO{
 	@Override
 	public List<String> searchTag(String keyword) {//샵있는 키워드 검색
 		return sqlSession.selectList("portfolio.searchTag", "%"+keyword+"%");
+	}
+
+	@Override
+	public List<String> searchName(String keyword) {
+		return sqlSession.selectList("portfolio.searchName", "%"+keyword+"%");
+	}
+
+	@Override
+	public List<Map<String, Object>> searchTagList(String keyword) {
+		return sqlSession.selectList("portfolio.searchResult", "%"+keyword+"%");
 	}
 }

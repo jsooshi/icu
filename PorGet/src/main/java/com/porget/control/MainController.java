@@ -1,6 +1,7 @@
 package com.porget.control;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -13,7 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.porget.domain.UserVO;
 import com.porget.persistence.PortfolioDAO;
@@ -73,46 +73,49 @@ public class MainController {
 		return "portfolio/searchInputPartTest";
 	}
 	
-	
-//	@RequestMapping("/searchButton")
-//	public String searchButton(String keyword, Model m) {//검색버튼 눌렀을시 검색결과 가져오기
-//		System.out.println("키워드얌 검색창-->"+keyword);
-//		List<Map<String, Object>> list=null;
-//		if(keyword.contains("#")) {
-//			String[] keyword2 = keyword.split("#");
-//			for (int i = 1; i < keyword2.length; i++) {
-//				list = dao.searchResult(keyword2[i]);
-//			}
-//		}else {
-//		 list = dao.searchResult(keyword);
-//		}
-//		m.addAttribute("list", list);
-//		return "portfolio/searchResult";
-//	}
-//	
 	@RequestMapping("/searchButton")
 	public String searchButton(String keyword, Model m) {//검색버튼 눌렀을시 검색결과 가져오기
 		System.out.println("키워드얌 검색창-->"+keyword);
-		List<List<Map<String, Object>>> list4 = new ArrayList<List<Map<String,Object>>>();
+		Set<List<Map<String, Object>>> list4 = new HashSet<List<Map<String,Object>>>();
 		List<Map<String, Object>> list=null;
 		if(keyword.contains("#")) {
 			String[] keyword2 = keyword.split("#");
 			for (int i = 1; i < keyword2.length; i++) {
-				list = dao.searchResult("#"+keyword2[i]);
-				for (int j = 0; j < list.size(); j++) {
-					list4.add(list);
-				}
+				list4.add(dao.searchResult("#"+keyword2[i]));
+//				list = dao.searchResult("#"+keyword2[i]);
+				//list4.add(list);
 			}
-			String name = "tag";
-			m.addAttribute("tagOrName", name);
+			System.out.println("쿼리문에서 distinct해도 중복 안사라짐 ㅜ");
+//			for (int j = 0; j < list4.size(); j++) {
+//				for (int j2 = 0; j2 < list4.size(); j2++) {
+//					if(!list4.get(j).equals(list4.get(j2))) {
+//						list4.add(list4.get(j));
+//					}
+//				}
+//			}
+			String hashTag = "hashTag";
+			m.addAttribute("hashTag", hashTag);
 			m.addAttribute("list4", list4);
 			return "portfolio/searchResult";
 		}else {
+			
+			if(!dao.searchName(keyword).isEmpty()&&!dao.searchTag(keyword).isEmpty()) {
+			m.addAttribute("tagOrName", "both");
 			m.addAttribute("input", keyword);
-//		 list = dao.searchResult(keyword);///////여기서는 그냥 뷰만 뿌려주게 뷰에서 ajax로 컨트롤러
-//		 m.addAttribute("tagOrName", "name");////////
-//		 m.addAttribute("list", list);////////////
-			return "portfolio/searchResult";
+			return "portfolio/searchResultAll";
+			
+			}else if(!dao.searchTag(keyword).isEmpty()&&dao.searchName(keyword).isEmpty()) {
+			m.addAttribute("tagOrName", "tag");
+			m.addAttribute("input", keyword);
+			return "portfolio/searchResultAll";
+			
+			}else if(!dao.searchName(keyword).isEmpty()&&dao.searchTag(keyword).isEmpty()) {
+			System.out.println("dao.searchName(keyword)"+dao.searchName(keyword));
+			m.addAttribute("tagOrName", "name");
+			m.addAttribute("input", keyword);
+			return "portfolio/searchResultAll";	
+			}
+			return "portfolio/searchResultAll";
 		}
 		
 	}
@@ -125,14 +128,22 @@ public class MainController {
 		return "portfolio/searchTagBox";
 	}
 	
-	@RequestMapping("/searchName")
-	public String searchName(Model m, String input) {
+	@RequestMapping("/searchNameList")
+	public String searchNameList(Model m, String input) { //검색시 제목에 검색어가 포함되어있을때
+		List<List<Map<String, Object>>> list4 = new ArrayList<List<Map<String,Object>>>();
 		List<Map<String, Object>> list=null;
-		 list = dao.searchName(input);///////여기서는 그냥 뷰만 뿌려주게 뷰에서 ajax로 컨트롤러
-		 m.addAttribute("input", input);
-		 m.addAttribute("tagOrName", "name");////////
-		 m.addAttribute("list", list);
-		return "portfolio/searchName";
+			list4.add(dao.searchNameList(input));
+			m.addAttribute("list4", list4);
+		return "portfolio/searchNameResult";
+	}
+
+	@RequestMapping("/searchTagList")
+	public String searchTagList(Model m, String input) {//검색시 태그에 검색어가 포함되어있을때
+		List<List<Map<String, Object>>> list4 = new ArrayList<List<Map<String,Object>>>();
+		List<Map<String, Object>> list=null;
+		list4.add(dao.searchTagList(input));
+		m.addAttribute("list4", list4);
+		return "portfolio/searchTagResult";
 	}
 	
 

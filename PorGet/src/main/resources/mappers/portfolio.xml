@@ -68,14 +68,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="searchResult" parameterType="String" resultType="Map"> 
-		select p.uname, p.pfnum, p.pfname, p.pfthumb, p.pfread, u.uphoto, (select count(*) from recommend rc where p.pfnum=rc.pfnum) as joa, (select count(*) from reply r where p.pfnum=r.pfnum) as replyNum
+		select distinct p.uname, p.pfnum, p.pfname, p.pfthumb, p.pfread, u.uphoto, (select count(*) from recommend rc where p.pfnum=rc.pfnum) as joa, (select count(*) from reply r where p.pfnum=r.pfnum) as replyNum
 		from portfolio p, userList u 
 		where p.uname=u.uname and tagname like #{keyword}
 		order by joa desc
 	</select>
 
-	<select id="searchName" parameterType="String" resultType="Map"> 
-		select p.uname, p.pfnum, p.pfname, p.pfthumb, p.pfread, u.uphoto, (select count(*) from recommend rc where p.pfnum=rc.pfnum) as joa, (select count(*) from reply r where p.pfnum=r.pfnum) as replyNum
+	<select id="searchName" parameterType="String" resultType="String"> 
+		select distinct p.pfname
+		from portfolio p
+		where p.pfname like #{keyword}
+		order by p.pfname
+	</select>
+
+	<select id="searchNameList" parameterType="String" resultType="Map"> 
+		select distinct p.uname, p.pfnum, p.pfname, p.pfthumb, p.pfread, u.uphoto, (select count(*) from recommend rc where p.pfnum=rc.pfnum) as joa, (select count(*) from reply r where p.pfnum=r.pfnum) as replyNum
 		from portfolio p, userList u 
 		where p.uname=u.uname and p.pfname like #{keyword}
 		order by joa desc
