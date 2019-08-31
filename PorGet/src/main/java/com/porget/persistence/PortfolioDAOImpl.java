@@ -83,7 +83,7 @@ public class PortfolioDAOImpl implements PortfolioDAO{
 	}
 
 	@Override
-	public List<String> searchKeyword(String keyword) {//샵없는 키워드 검색
+	public List<Map<String, Object>> searchKeyword(String keyword) {//에이작스 위한 샵없는 키워드 검색
 		return sqlSession.selectList("portfolio.searchKeyword", "%"+keyword+"%");
 	}
 	@Override

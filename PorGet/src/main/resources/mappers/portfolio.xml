@@ -55,10 +55,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		order by p.pfnum desc
 	</select>
 	
-	<select id="searchKeyword" parameterType="String" resultType="String">
-		select distinct tagname from portfolio 
-		where tagname like #{keyword}
-		      and tagname not like '%#%'
+	<select id="searchKeyword" parameterType="String" resultType="Map">
+		select distinct tagname, pfname  from portfolio 
+		where tagname like #{keyword} or pfname like #{keyword}
+		      <!-- and tagname not like '%#%' -->
 	</select>
 	
 	<select id="searchTag" parameterType="String" resultType="String">

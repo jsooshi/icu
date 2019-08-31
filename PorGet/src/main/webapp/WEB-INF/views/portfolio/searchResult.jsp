@@ -18,7 +18,7 @@
 				$('#divContent').append(data);
 			}
 		});
-	}
+	})
 </script>
 </head>
 <body>

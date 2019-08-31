@@ -23,17 +23,18 @@
 		
 		var keyword = document.searchForm.keyword.value;
 		
+		
 		if(!keyword.includes('#')&&keyword != ''){
-			console.log('여긴 에이작스 자리란다');
 			show('suggest');
 			$.ajax({
-				url:"/porget/searchKeyword",
+				url:"/porget/searchKey",
 				data: {keyword:keyword},
 				success: function(data){
-					//$('#suggestList').html('');
 					$('#suggestList').html(data);
 				}
 			});
+			check = false;
+			loopKeyword=false;
 		}else if(keyword.includes('#')){
 				if(keyword.substr(0,keyword.length)=='#'||keyword.substr(keyword.lastIndexOf('#'),keyword.length)=='#'){
 					hide('suggest');

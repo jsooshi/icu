@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.porget.domain.UserVO;
 import com.porget.persistence.PortfolioDAO;
@@ -65,10 +66,9 @@ public class MainController {
 	}
 	
 	
-	@RequestMapping("/searchKeyword")
+	@RequestMapping("/searchKey")
 	public String searchKeyword(Model m, String keyword) { //검색창에서 연관검색어 가져오기
-		//System.out.println("keyword>>"+keyword);
-		List<String> list = dao.searchKeyword(keyword);
+		List<Map<String, Object>> list = dao.searchKeyword(keyword);
 		m.addAttribute("list", list);
 		return "portfolio/searchInputPartTest";
 	}
