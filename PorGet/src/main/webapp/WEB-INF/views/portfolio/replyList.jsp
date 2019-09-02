@@ -18,6 +18,11 @@ $(function(){
 
 	$('button[name=reReSave]').on('click', function(){ //대댓글 작성 저장 클릭 
 		var reCon = $("#reReplyCon").val();
+		if(reCon===""){
+			alert('내용을입력하세요')
+			$("#reReplyCon").focus();
+			return;
+		}
 		var concon =  {
 				pfnum: ${param.pfnum},
 				uname: "${uname}",
