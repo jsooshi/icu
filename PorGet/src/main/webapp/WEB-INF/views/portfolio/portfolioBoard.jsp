@@ -71,7 +71,7 @@
 
 		    var maxHeight = $(document).height();
 		    var currentScroll = $(window).scrollTop() + $(window).height();
-		    if (maxHeight <= currentScroll) {
+		    if (maxHeight <= currentScroll+1) {
 				$.ajax({
 					url : "/porget/portfolio/partPopular",
 					data : {

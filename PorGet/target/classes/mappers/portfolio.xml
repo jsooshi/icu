@@ -68,12 +68,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		and tagname like '%#%'
 	</select>
 	
-	<select id="searchResult"  resultType="Map"> 
+	
+	<select id="searchResult" resultType="Map"> 
 		select p.uname, p.pfnum, p.pfname, p.pfthumb, p.pfread, u.uphoto, (select count(*) from recommend rc where p.pfnum=rc.pfnum) as joa, (select count(*) from reply r where p.pfnum=r.pfnum) as replyNum
 		from portfolio p, userList u 
 		where p.uname=u.uname and tagname like #{keyword}
-		order by joa desc
+		order by p.pfnum desc
 	</select>
+	<!-- <select id="searchResult"  resultType="Map"> 
+		select distinct p.uname, p.pfnum, p.pfname, p.pfthumb, p.pfread, u.uphoto, (select count(*) from recommend rc where p.pfnum=rc.pfnum) as joa, (select count(*) from reply r where p.pfnum=r.pfnum) as replyNum
+		from portfolio p, userList u 
+		where p.uname=u.uname and tagname like #{keyword}
+		order by joa desc
+	</select> -->
 
 	<select id="searchName" parameterType="String" resultType="String"> 
 		select distinct p.pfname

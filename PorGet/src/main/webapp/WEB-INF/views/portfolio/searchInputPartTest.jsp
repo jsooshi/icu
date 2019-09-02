@@ -6,6 +6,6 @@
 <div>
 	<%-- <a href="javascript:select('${keyword }')">${keyword }</a><br> --%>
  	<a href="javascript:select('${keyword.PFNAME }')">${keyword.PFNAME }</a><br>
-	 <a href="javascript:select(''${keyword.TAGNAME }'')">${keyword.TAGNAME }</a> 
+	 <a href="javascript:select('${keyword.TAGNAME }')">${keyword.TAGNAME }</a> 
 </div>
 </c:forEach>

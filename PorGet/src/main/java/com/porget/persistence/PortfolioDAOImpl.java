@@ -81,6 +81,7 @@ public class PortfolioDAOImpl implements PortfolioDAO{
 		System.out.println("#붙인 키워드"+keyword);
 		System.out.println("DAO base>>"+base);
 		RowBounds bounds = new RowBounds((base-1)*6, 6);
+		System.out.println("Bounds>>"+bounds);
 		return sqlSession.selectList("portfolio.searchResult", "%"+keyword+"%", bounds);
 	}
 	@Override
