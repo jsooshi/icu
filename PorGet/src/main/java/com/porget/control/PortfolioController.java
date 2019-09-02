@@ -208,7 +208,7 @@ public class PortfolioController {
 		System.out.println("base"+base);
 		List<Map<String, Object>> list = dao.showPopularPart(base);
 		m.addAttribute("list", list);
-		return "portfolio/partPopular";
+		return "portfolio/cardPost";
 	}
 	
 	/*좋아요 기능*/

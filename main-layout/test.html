@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+</head>
+<style>
+    #logo {
+        width: 30px;
+    }
+
+    .nav-item {
+        padding: 10px;
+    }
+
+    .jumbotron {
+        background-image: url("propyweb.png");
+        height: 500px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .img-hover-zoom {
+        height: 230px;
+        overflow: hidden;
+    }
+
+    .img-hover-zoom img {
+        transition: transform .5s ease;
+    }
+
+    .img-hover-zoom:hover img {
+        transform: scale(1.2);
+    }
+
+
+    .btn-primary {
+        background-color: rgb(111, 181, 238);
+        border-color: rgb(111, 181, 238);
+    }
+</style>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
+        <a href="/porget" class="navbar-brand">
+            <img id="logo" class="d-inline-block mr-1" alt="Logo" src="dotty.svg">
+            <span>PorGet</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a href="/porget" class="home nav-link">Home</a></li>
+                <li class="nav-item"><a href="/porget/portfolio" class="portfolio nav-link">Portfolio</a></li>
+
+                <li class="nav-item"><a href="/porget/login" class="nav-link">login</a></li>
+                <button onclick="location.href='join'" class="btn btn-primary">Sign in</button>
+
+            </ul>
+        </div>
+    </nav>
+
+
+
+    <!-- main -->
+
+    <div class="jumbotron">
+        <h1 class="display-4 text-center text-white">ProPy Item</h1>
+        <hr>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h4>인기 게시글</h4>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <a href="" class="btn text-left custom-card">
+                        <div class="img-hover-zoom">
+                            <img src="1.png" class="card-img-top" alt="...">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">포트폴리오 명</h5>
+                            <p class="card-text">
+                                <img src="http://placehold.it/200" class="rounded-circle"
+                                    style="width: 50px; height:50px; display: inline;">
+                                유저네임
+                            </p>
+                            <p class="text-muted">조회 100, 하트200, 댓글수100 </p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <a href="" class="btn text-left custom-card"> <img src="2.png" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">포트폴리오 명</h5>
+                            <p class="card-text">
+                                <img src="http://placehold.it/200" class="rounded-circle"
+                                    style="width: 50px; height:50px; display: inline;">
+                                유저네임
+                            </p>
+                            <p class="text-muted">조회 100, 하트200, 댓글수100 </p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card ">
+                    <a href="" class="btn text-left custom-card"> <img src="3.png" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">포트폴리오 명</h5>
+                            <p class="card-text">
+                                <img src="http://placehold.it/200" class="rounded-circle"
+                                    style="width: 50px; height:50px; display: inline;">
+                                유저네임
+                            </p>
+                            <p class="text-muted">조회 100, 하트200, 댓글수100 </p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row py-4">
+            <div class="col-lg-7">
+                <h2>Portfolio Get ya</h2>
+                <p> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugiat iste voluptates voluptatibus nam
+                    sapiente aliquid necessitatibus saepe illum voluptas error asperiores, enim sint perspiciatis natus
+                    vel minus quibusda </p>
+                <hr>
+                <p> sfffmll Lo sdflknl asdfmlks sdfm</p>
+            </div>
+            <div class="col-lg-5">
+                <div class="rocket">
+                    <img src="rocket.png">
+                </div>
+            </div>
+        </div>
+        <hr>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <h4>최근 등록된 게시글</h4>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <a href="" class="btn text-left custom-card">
+                        <div class="img-hover-zoom">
+                            <img src="1.png" class="card-img-top" alt="...">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">포트폴리오 명</h5>
+                            <p class="card-text">
+                                <img src="http://placehold.it/200" class="rounded-circle"
+                                    style="width: 50px; height:50px; display: inline;">
+                                유저네임
+                            </p>
+                            <p class="text-muted">조회 100, 하트200, 댓글수100 </p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <a href="" class="btn text-left custom-card"> <img src="2.png" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">포트폴리오 명</h5>
+                            <p class="card-text">
+                                <img src="http://placehold.it/200" class="rounded-circle"
+                                    style="width: 50px; height:50px; display: inline;">
+                                유저네임
+                            </p>
+                            <p class="text-muted">조회 100, 하트200, 댓글수100 </p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card ">
+                    <a href="" class="btn text-left custom-card"> <img src="3.png" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">포트폴리오 명</h5>
+                            <p class="card-text">
+                                <img src="http://placehold.it/200" class="rounded-circle"
+                                    style="width: 50px; height:50px; display: inline;">
+                                유저네임
+                            </p>
+                            <p class="text-muted">조회 100, 하트200, 댓글수100 </p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- footer -->
+    <footer>
+        <div class="container-fluid padding">
+            <div class="row text-center">
+                <div class="col-sm-6">footer</div>
+                <div class="col-sm-6">footer</div>
+            </div>
+            <div class="col-12">
+                <hr class="light">
+                <h5 class="text-center">&copy; PorGet</h5>
+            </div>
+        </div>
+    </footer>
+
+
+
+
+    <script src="/porget/js/jquery-3.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+</body>
+
+</html>
