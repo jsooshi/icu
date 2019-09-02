@@ -76,26 +76,8 @@ public class MainController {
 	@RequestMapping("/searchButton")
 	public String searchButton(String keyword, Model m) {//검색버튼 눌렀을시 검색결과 가져오기
 		System.out.println("키워드얌 검색창-->"+keyword);
-		Set<List<Map<String, Object>>> list4 = new HashSet<List<Map<String,Object>>>();
-		List<Map<String, Object>> list=null;
 		if(keyword.contains("#")) {
-			String[] keyword2 = keyword.split("#");
-			for (int i = 1; i < keyword2.length; i++) {
-				list4.add(dao.searchResult("#"+keyword2[i]));
-//				list = dao.searchResult("#"+keyword2[i]);
-				//list4.add(list);
-			}
-			System.out.println("쿼리문에서 distinct해도 중복 안사라짐 ㅜ");
-//			for (int j = 0; j < list4.size(); j++) {
-//				for (int j2 = 0; j2 < list4.size(); j2++) {
-//					if(!list4.get(j).equals(list4.get(j2))) {
-//						list4.add(list4.get(j));
-//					}
-//				}
-//			}
-			String hashTag = "hashTag";
-			m.addAttribute("hashTag", hashTag);
-			m.addAttribute("list4", list4);
+			m.addAttribute("keyword", keyword);
 			return "portfolio/searchResult";
 		}else {
 			
@@ -144,6 +126,39 @@ public class MainController {
 		list4.add(dao.searchTagList(input));
 		m.addAttribute("list4", list4);
 		return "portfolio/searchTagResult";
+	}
+	
+	@RequestMapping("/searchHashTagList")
+	public String searchHashTagList(Model m, String keyword, int base) {//검색시 태그에 검색어가 포함되어있을때
+		System.out.println("여기 들어왓닝~~");
+		System.out.println("base"+base);
+		Set<List<Map<String, Object>>> listSet = new HashSet<List<Map<String,Object>>>();
+		List<Map<String, Object>> list=null;
+		   //keyword="#java#django"
+		   //keyword2= {"","java","django"}
+			String[] keyword2 = keyword.split("#");  
+			for (int i = 1; i < keyword2.length; i++) {
+				list = dao.searchHashResult("#"+keyword2[i], base);
+				       //uname:"길동", pfname:"제목",pfnum:"글번호"..base...
+				       
+				listSet.add(list);
+		//		list4.add(dao.searchHashResult("#"+keyword2[i], base));
+//				list = dao.searchResult("#"+keyword2[i]);
+				//list4.add(list);
+			}
+			System.out.println("listSet>>>"+ listSet);
+			System.out.println("쿼리문에서 distinct해도 중복 안사라짐 ㅜ");
+//			for (int j = 0; j < list4.size(); j++) {
+//				for (int j2 = 0; j2 < list4.size(); j2++) {
+//					if(!list4.get(j).equals(list4.get(j2))) {
+//						list4.add(list4.get(j));
+//					}
+//				}
+//			}
+			String hashTag = "hashTag";
+			m.addAttribute("hashTag", hashTag);
+			m.addAttribute("listSet", listSet);
+		return "portfolio/searchHashResult";
 	}
 	
 

@@ -77,6 +77,14 @@ public class PortfolioDAOImpl implements PortfolioDAO{
 		System.out.println("#붙인 키워드"+keyword);
 		return sqlSession.selectList("portfolio.searchResult", "%"+keyword+"%");
 	}
+
+	@Override
+	public List<Map<String, Object>> searchHashResult(String keyword, int base) {
+		System.out.println("#붙인 키워드"+keyword);
+		System.out.println("DAO base>>"+base);
+		RowBounds bounds = new RowBounds((base-1)*6, 6);
+		return sqlSession.selectList("portfolio.searchResult", "%"+keyword+"%", bounds);
+	}
 	@Override
 	public List<Map<String, Object>> searchNameList(String keyword) {//제목으로 검색시
 		return sqlSession.selectList("portfolio.searchNameList", "%"+keyword+"%");
