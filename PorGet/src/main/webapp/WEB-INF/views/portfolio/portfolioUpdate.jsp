@@ -31,10 +31,19 @@
 				formData.append("tagname",$('input[name=tagname]:eq(0)').val())
 				
 				for(var i=0;i<fileCount;i++){
-					console.log(fileList.get($("#dataList tr").eq(i).children("td:eq(0)").html()).name)
-					formData.append("fileName",fileList.get($("#dataList tr").eq(i).children("td:eq(0)").html()).name)
-					console.log(fileList.get($("#dataList tr").eq(i).children("td:eq(0)").html()));
-					formData.append("uploadFile",fileList.get($("#dataList tr").eq(i).children("td:eq(0)").html()));
+					/////////////////////////////////////////
+					//업로드를 하는데 만약에 original 파일이라면 이름만 저장한다
+					var keyName = $("#dataList tr").eq(i).children("td:eq(0)").html();
+					console.log("새로 추가한거 확인 해주세요 : " +fileList.get(keyName).name);
+					if(formData.has(fileList.get(keyName))){
+						formData.append("keepFileName",fileList.get(keyName));
+						formData.delete(fileList.get(keyName).name);
+					}else{
+					/////////////////////////////////////////
+					//formData.append("fileName",fileList.get($("#dataList tr").eq(i).children("td:eq(0)").html()).name)
+						console.log(fileList.get($("#dataList tr").eq(i).children("td:eq(0)").html()));
+						formData.append("uploadFile",fileList.get($("#dataList tr").eq(i).children("td:eq(0)").html()));
+					}
 				}
 				
 				$.ajax({
@@ -55,7 +64,7 @@
 	    	$('#dataList').on('click','button',function(){
 				console.log("삭제하라우");
 				console.log($(this).closest('tr').children('td:eq(0)').html());
-				formData.append("removeNames",fileList.get($(this).closest('tr').children('td:eq(0)').html()));
+				//formData.append("removeNames",fileList.get($(this).closest('tr').children('td:eq(0)').html()));
 				fileList.delete($(this).closest('tr').children('td:eq(0)').html());
 				$(this).closest('tr').remove();
 				fileCount -= 1;
@@ -87,12 +96,14 @@
     	
 	    	for (var i in thumbs){
 	    		fileCount ++;
-	    		console.log(thumbs[i])
 	    		var viewName = thumbs[i].split("_")[1];
-	    		fileList.append(viewName,{"name":"uploadFile","originalFilename":thumbs[i],"contentType":"none","content":null});
-	    		console.log(thumbs[i]);
+	    		fileList.append(viewName,thumbs[i]);
+	    		console.log(fileList.get(viewName));
 	    		$('#dataList').html($('#dataList').html()+"<tr><td>"+viewName+"</td>"+
 				"<td><button>삭제</button></td></tr>");
+	    		
+	    		formData.append("originalFileName",thumbs[i]);
+	    		formData.append(thumbs[i],viewName);
 	    	}
     		
     	});//document.ready

@@ -147,7 +147,7 @@ public class PortfolioController {
 	}
 
 	@PostMapping("/update")
-	public String portfolioUpdate(MultipartFile[] uploadFile,String[] removeNames, PortfolioVO vo, HttpServletRequest request, Model m) {// 게시글 수정완료 후 본인글로 이동
+	public String portfolioUpdate(MultipartFile[] uploadFile,String[] originalFileName,String[] keepFileName, PortfolioVO vo, HttpServletRequest request, Model m) {// 게시글 수정완료 후 본인글로 이동
 
 		/* 임시로 추가하는 VO */
 		vo.setPffile("dog.jpg"); // 사진파일경로
@@ -155,13 +155,25 @@ public class PortfolioController {
 		String ptthumb="";
 		String uploadFolder = request.getSession().getServletContext().getRealPath("/resources/files");
 		System.out.println(uploadFolder);
-		System.out.println("파일이름리스트 보고 가 : " +removeNames[0]);
-		for(String removeName : removeNames) {
-			File removeFile = new File(uploadFolder,removeName);
-			System.out.println("파일 이름 보고 가 : "+removeName);
-			if(removeFile.isFile()) {
-				System.out.println("있으니까 지운다");
-				removeFile.delete();
+		for(String removeName : originalFileName) {
+			System.out.println(removeName);
+			int remove = 0;
+			if(keepFileName!=null) {
+				for(String keepName : keepFileName) {
+					if(removeName.equals(keepName)) {
+						ptthumb+=keepName+"|";
+						remove = 1;
+						break;
+					}
+				}
+			}
+			if(remove==0) {
+				File removeFile = new File(uploadFolder,removeName);
+				System.out.println("파일 이름 보고 가 : "+removeName);
+				if(removeFile.isFile()) {
+					System.out.println("있으니까 지운다");
+					removeFile.delete();
+				}
 			}
 		}
 		for(MultipartFile multipartFile : uploadFile) {
@@ -178,25 +190,25 @@ public class PortfolioController {
 			ptthumb += uploadFileName+"|";
 			System.out.println("only file name : "+ uploadFileName);
 			File saveFile = new File(uploadFolder,uploadFileName);
-			/*
+			
 			try {
 				multipartFile.transferTo(saveFile);
 				System.out.println("성공");
 			} catch (IllegalStateException | IOException e) {
 				System.out.println("icy...");
 				e.printStackTrace();
-			}*/
+			}
 			
 		}
-		
+		System.out.println(ptthumb);
 		vo.setPfthumb(ptthumb); // 썸네일
 		
-/*
+
 		if (dao.updatePortfolio(vo) == 1) {
 			System.out.println("수정성공");
 		} else {
 			System.out.println("수정실패");
-		}*/
+		}
 		return "redirect:/portfolio/view?pfnum=" + vo.getPfnum();
 	}
 
