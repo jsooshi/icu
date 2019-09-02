@@ -85,7 +85,7 @@ $(function(){ //jquery영역
 	});
 	
 	$('#recommendBtn').click(function(){ //좋아요버튼
-		var writeName = '${list.PFNAME}';
+		var writeName = '${list.UNAME}';
 		var uName = '${uname}';
 		
 		if(uName == ""){
