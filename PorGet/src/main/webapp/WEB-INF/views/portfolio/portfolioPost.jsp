@@ -35,7 +35,7 @@
 				type:'POST',
 				success:function(result){
 					alert("Uploaded");
-					$('#dataList').html("");
+					window.location = '/porget/portfolio'
 				}
 			});
 			//console.log($('input[name=pfname]:eq(0)').val());
