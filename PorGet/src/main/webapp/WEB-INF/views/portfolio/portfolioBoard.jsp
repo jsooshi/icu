@@ -6,12 +6,14 @@
 <jsp:include page="/WEB-INF/views/include/header.jsp" />
 
 <div class="container">
-	<h3>게시판</h3>
-	<hr>
-	<!-- <div id="div01"	style="text-align: center; border: 1px solid #5AAFFF; height: 500px; overflow-y: scroll;"> -->
-	<div class="wrap-loading"><img src="/porget/img/Spin-1s-200px.gif"/></div>
-	<div id="divContent" class="row"></div>
-	<!-- </div> -->
+	<div class="content">
+		<h3>게시판</h3>
+		<hr>
+		<!-- <div id="div01"	style="text-align: center; border: 1px solid #5AAFFF; height: 500px; overflow-y: scroll;"> -->
+		<div class="wrap-loading"><img src="/porget/img/Spin-1s-200px.gif"/></div>
+		<div id="divContent" class="row"></div>
+		<!-- </div> -->
+	</div>
 </div>
 
 <!-- 글생성 버튼 -->
