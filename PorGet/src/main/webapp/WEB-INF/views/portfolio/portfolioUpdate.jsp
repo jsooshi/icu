@@ -9,15 +9,17 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>포트폴리오 수정</title>
     <script src="/porget/js/jquery-3.js"></script>
+	<script src="/porget/js/portfolioPost.js"></script>
+	<link rel="stylesheet" href="/porget/css/portfolioPost.css">
     <script type="text/javascript">
     	var fileCount = 0;
     	var fileList = new FormData();
 		var formData = new FormData();
     	var thumbs = ${thumbs};
+    	var tags = "${p.tagname}".split("#");
     	//var fList=${fList};
     	console.log(thumbs[0]);
     	//console.log(fList);
-    	
     	$(function(){
 	    	$('#uploadBtn').on("click", function(e){
 				/*var inputFile = $("input[name='uploadFile']");
@@ -105,6 +107,10 @@
 	    		formData.append("originalFileName",thumbs[i]);
 	    		formData.append(thumbs[i],viewName);
 	    	}
+			
+			for (var i = 1; i < tags.length; i++) {
+				
+			}
     		
     	});//document.ready
     </script>

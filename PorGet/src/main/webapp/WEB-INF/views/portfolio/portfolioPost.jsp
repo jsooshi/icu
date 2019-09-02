@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,20 +9,59 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>포트폴리오 등록</title>
 <script src="/porget/js/jquery-3.js"></script>
+<script src="/porget/js/portfolioPost.js"></script>
+<link rel="stylesheet" href="/porget/css/portfolioPost.css">
 <script type="text/javascript">
 	var fileCount =0;
 	var fileList = new FormData();
+	var tagCount=0;
+	var tagNames="";
+	function tagremove(obj) {
+		console.log("빠이");
+		console.log($(obj).html());
+		$(obj).parents('span:eq(0)').remove();
+		tagCount--;
+		tagAdd();
+	}
+	
+	function tagAdd(){
+		tagNames="";
+		for (var i = 0; i < tagCount; i++) {
+			console.log($('#tags').find('span').eq(i).children().html());
+			tagNames+=$('#tags').find('span').eq(i).children().html();
+		}
+	}
 	$(function(){
-		console.log("하이");
 		$('#uploadBtn').on("click", function(e){
 			var formData = new FormData();
+			if($('input[name=pfname]:eq(0)').val().trim()===""){
+				alert('제목을 입력해주세요');
+				$('input[name=pfname]:eq(0)').focus();
+				return;
+			}else if($('input[name=pfurl]:eq(0)').val().trim()===""){
+				alert('포트폴리오 url을 입력해주세요');
+				$('input[name=pfurl]:eq(0)').focus();
+				return;
+			}else if($('input[name=pfposition]:eq(0)').val()===""){
+				alert('포지션을 입력해주세요');
+				$('input[name=pfposition]:eq(0)').focus();
+				return;
+			}else if(tagCount===0){
+				alert('태그를 하나 이상 입력해주세요');
+				$('#tagname').focus();
+				return;
+			}else if(fileCount===0){
+				alert('썸네일을 하나 이상 첨부해주세요');
+				$('#uploadFile').focus();
+				return;
+			}
 			/*var inputFile = $("input[name='uploadFile']");
 			var files = inputFile[0].files;
 			console.log(files); */
 			formData.append("pfname",$('input[name=pfname]:eq(0)').val())
 			formData.append("pfurl",$('input[name=pfurl]:eq(0)').val())
 			formData.append("pfposition",$('input[name=pfposition]:eq(0)').val())
-			formData.append("tagname",$('input[name=tagname]:eq(0)').val())
+			formData.append("tagname",tagNames)
 			
 			for(var i=0;i<fileCount;i++){
 				formData.append("uploadFile",fileList.get($("#dataList tr").eq(i).children("td:eq(0)").html()));
@@ -70,25 +110,64 @@
 				console.log("3 : "+$('#dataList tr:eq(0) td:eq(0)').html());
 			$(this).val("")
 		})
+		
+		$('#tagname').blur(function(){
+			if(!($('#tagname').val().trim()==="")){
+				$('#tags').append('<span><font style="background-color:skyblue;">#'+$('#tagname').val()+'</font><font style="background-color:skyblue;"> <a href="javascript:void(0);" onclick="tagremove(this);">X</a></font></span> ');
+				tagCount++;
+			}
+				$('#tagname').val("")
+				tagAdd();
+		});
+		
 	});
 </script>     
 </head>
 <body>
+	<div class="container" style="margin-left: 300px;">
+  <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">                        
+        <h2>Contact</h2>
+      </div>
+  </div>
+  <div class="row">
+      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xs-offset-3">
+          <form id="contact-form" class="form" action="#" method="POST" role="form">
+              <div class="form-group">
+              
+              
+              
+                  <label class="form-label" for="pfname">포트폴리오 제목</label>
+                  <input type="text" class="form-control" id="pfname" name="pfname" placeholder="포트폴리오 제목" tabindex="1" required>
+              </div>                            
+              <div class="form-group">
+                  <label class="form-label" for="pfurl">포트폴리오 url</label>
+                  <input type="text" class="form-control" id="pfurl" name="pfurl" placeholder="포트폴리오 url" tabindex="2">
+              </div>                            
+              <div class="form-group">
+                  <label class="form-label" for="pfposition">포지션</label>
+                  <input type="text" class="form-control" id="pfposition" name="pfposition" placeholder="포지션" tabindex="3">
+              </div>                            
+              <div class="form-group">
+                  <label class="form-label" for="tagname">tag</label>
+                  <span id="tags"></span><input type="text" class="form-control" id="tagname" name="tagname" placeholder="태그를 입력하세요" tabindex="4">
+              </div>
+              <div class="form-group">
+                  <label class="form-label" for="uploadFile">썸네일 등록</label>
+                  <input type="file" class="form-control" id="uploadFile" name="uploadFile" placeholder="썸네일 등록" tabindex="5" required multiple>
+                  <table><thead><tr><th width="500px">제목</th><th width="300px">삭제</th></tr></thead>
+				  <tbody id="dataList">
+				  </tbody>
+			</table><br>
+              </div>                            
+              <div class="text-center">
+                  <button type="button" class="btn btn-start-order" id='uploadBtn'>Send Message</button>
+              </div>
+          </form>
+      </div>
+  </div>
+</div>
 	
-	<div class="container">
-        제목: <input type="text" name="pfname"><br>
-		사진: <input type="file" name="uploadFile" multiple> 
-		<table>
-			<thead><tr><th>제목</th><th>삭제</th></tr></thead>
-			<tbody id="dataList">
-			</tbody>
-		</table><br>
-        포트폴리오주소: <input type="text" name="pfurl"><br>
-        포지션: <input type="text" name="pfposition"><br>
-        태그: <input type="text" name="tagname"><br>
-	<button id='uploadBtn' class="btn btn-primary">등록</button><br> 
-    
 	
-	</div>
 </body>
 </html>
