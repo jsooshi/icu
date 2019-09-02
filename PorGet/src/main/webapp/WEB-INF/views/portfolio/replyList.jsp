@@ -78,6 +78,34 @@ $(function(){
 });//ready
 </script>
 
+<script>
+var ws = new WebSocket("ws://localhost/porget/replyEcho?bno=1234");
+
+ws.onopen = function () {
+	 console.log('Info: connection opened');
+	 setTimeout( function (){connect();},1000); 
+	 
+	 
+};
+
+ws.onmessage = function (event) {
+	 console.log(event.data+'\n');
+}
+
+ws.onclose = function(event){ console.log('Info:connection closed')} 
+ws.onerror = function(err){console.log('Error:',err)}
+
+$('button[name=reReSave]').on('click', function(evt){
+	 evt.preventDefault();
+	if(socket.readyState==1)return;
+	 let msg = $('input#msg').val();
+	 ws.send(msg);
+	 
+	 
+})
+
+</script>
+
 <c:forEach items="${replyList }" var="reply">
 	<c:choose>
 		<c:when test="${reply.rdeep eq 0 }">
