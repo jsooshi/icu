@@ -54,8 +54,9 @@
 			});
 		});
 	});
-	</script>
 
+
+	</script>
 </head>
 
 <body>
