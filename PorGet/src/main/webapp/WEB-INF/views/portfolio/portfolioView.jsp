@@ -8,17 +8,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title></title>
-</head>
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-	crossorigin="anonymous">
-	<script src="/porget/js/jquery-3.js"></script>
-    <title>Document</title>
+	<link rel="stylesheet"
+		href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+		crossorigin="anonymous">
+<title>Document</title>
 <script src="/porget/js/jquery-3.js"></script>    
 <script type="text/javascript">
-
+var realPath = "${realPath}";
 $(function(){ //jquery영역
 	
 	$.ajax({ //조회수 업데이트 
@@ -107,16 +104,13 @@ $(function(){ //jquery영역
 	
 	})
 	
-}) //ready
-
-
+}); //ready
 </script>
 </head>
 <body>
 
 <div class="modal-dialog">
     <div class="modal-content">
-
       <!-- Modal Header -->
       <div class="modal-header">
         <h4 class="modal-title">${list.PFNAME }</h4>
@@ -133,6 +127,10 @@ $(function(){ //jquery영역
         </div>
 
         [스크린샷]<br>
+
+		<c:forEach items="${thumb}" var="thumbImg">
+			<img alt="하하하" src="/porget/files/${thumbImg}" style="max-height:390px;max-width:260px;">
+		</c:forEach>
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
                 <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>

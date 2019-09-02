@@ -48,7 +48,7 @@ CREATE TABLE portfolio
     pfnum         NUMBER           NOT NULL, 
     pfname        VARCHAR2(30)     NOT NULL, 
     pfdate        DATE             default sysdate not null, 
-    pfthumb       VARCHAR2(60)     NOT NULL, 
+    pfthumb       VARCHAR2(1000)     NOT NULL, 
     pfread        NUMBER           NOT NULL, 
     pfurl         VARCHAR2(200)    NULL, 
     pffile        VARCHAR2(200)    NULL, 
