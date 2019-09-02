@@ -16,9 +16,9 @@
 	</div>
 </div>
 
-<!-- 글생성 버튼 -->
+<!-- 글작성 버튼 -->
 <div class="bg-white p-4 rounded shadow-sm h-100">
-	<a href="portfolio/post" class="btn-post btn btn-primary btn-circle btn-circle-xl m-1">+</a>
+	<button class="btn-post btn btn-primary btn-circle btn-circle-xl m-1">+</button>
 </div>
 
 <!-- 모달창 -->
@@ -83,6 +83,16 @@
 				});
 			}
 		});
+		
+		// 글작성버튼 유효성
+		$('.btn-post').click(function(){
+			if('${uname}'===""){
+				alert('로그인 해주세요');
+				return;
+			}else {
+				location.href = 'portfolio/post';
+			}
+		})
 	});
 </script>
 

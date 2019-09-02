@@ -41,7 +41,6 @@ $(function(){ //jquery영역
 			 $('#replyArea').html(result);
 			 
 		 }
-		 
 	 })
 	 
 	}
@@ -58,8 +57,6 @@ $(function(){ //jquery영역
 				uname: "${uname}" //userID 
 							
 			}; 
-	
-		
 		$.ajax({
 			url: '../replies/save',
 			type: "post",
@@ -70,8 +67,6 @@ $(function(){ //jquery영역
 			error:function(xhr,staTxt){
 				alert("에러?"+staTxt+':'+xhr.status)
 			}
-			
-			
 		})//ajax	
 		
 		$("#replyContents").val(''); //댓글초기화
@@ -112,7 +107,6 @@ $(function(){ //jquery영역
 			})
 		}
 		
-		
 	});
 }); //ready
 </script>
@@ -150,8 +144,13 @@ $(function(){ //jquery영역
 		
 		<button class="btn btn-danger" id="recommendBtn">좋아요</button>
 	        좋아요수: <div class="recommend">${list.JOA }</div><br>		
-        <a href="update?pfnum=${list.PFNUM }">수정</a><br>
-        <a href="delete?pfnum=${list.PFNUM }">삭제</a><br>
+	        
+	    <c:choose>
+	    	<c:when test="${list.UNAME == uname }">
+		        <a href="update?pfnum=${list.PFNUM }">수정</a> | 
+		        <a href="delete?pfnum=${list.PFNUM }">삭제</a><br>
+	    	</c:when>
+	    </c:choose>
         <hr>
         
                 [댓글] <!-- 댓글작성 -->
