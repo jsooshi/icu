@@ -35,7 +35,7 @@
 				type:'POST',
 				success:function(result){
 					alert("Uploaded");
-					$('#dataList').html("");
+					window.location = '/porget/portfolio'
 				}
 			});
 			//console.log($('input[name=pfname]:eq(0)').val());
@@ -44,6 +44,7 @@
 		
 		$('#dataList').on('click','button',function(){
 			console.log("삭제하라우");
+			fileList.delete($(this).closest('tr').children('td:eq(0)').html());
 			$(this).closest('tr').remove();
 			fileCount -= 1;
 		});

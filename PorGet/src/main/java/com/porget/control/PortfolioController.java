@@ -1,6 +1,7 @@
 package com.porget.control;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,7 +45,7 @@ public class PortfolioController {
 	@PostMapping("/post")
 	public String portfolioInsert(MultipartFile[] uploadFile, PortfolioVO vo, HttpServletRequest request) { // 글 생성 후 포트폴리오 게시판으로 이동
 		// vo=> pfname, pfurl, pfposition, tagname
-		
+		System.out.println((String)request.getSession().getAttribute("uname"));
 		vo.setUname((String)request.getSession().getAttribute("uname"));
 		
 		String ptthumb="";
@@ -51,6 +53,7 @@ public class PortfolioController {
 		System.out.println(uploadFolder);
 		for(MultipartFile multipartFile : uploadFile) {
 			System.out.println("------------");
+			System.out.println("multiName : " + multipartFile.getName());
 			System.out.println("upload file name : " + multipartFile.getOriginalFilename());
 			System.out.println("upload file size : " + multipartFile.getSize());
 			
@@ -59,7 +62,7 @@ public class PortfolioController {
 			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\")+1);
 			
 			UUID uuid=UUID.randomUUID();
-//			uploadFileName=uuid.toString()+"_"+uploadFileName;
+			uploadFileName=uuid.toString()+"_"+uploadFileName;
 			ptthumb += uploadFileName+"|";
 			System.out.println("only file name : "+ uploadFileName);
 			File saveFile = new File(uploadFolder,uploadFileName);
@@ -77,7 +80,7 @@ public class PortfolioController {
 		vo.setPfthumb(ptthumb); // 썸네일
 		vo.setPffile("cat.jpg"); // 사진파일경로
 
-		System.out.println(vo);
+		System.out.println("포트폴리오 업로드 vo>>"+vo);
 		if (dao.insertPortfolio(vo) == 1) {
 			System.out.println("추가성공");
 		} else {
@@ -88,34 +91,100 @@ public class PortfolioController {
 
 
 	@GetMapping("/view")
-	public String portfolioView(int pfnum, Model m) {// 게시글 클릭시 포트폴리오 뷰
+	public String portfolioView(int pfnum,HttpServletRequest request) {// 게시글 클릭시 포트폴리오 뷰
 		List<Map> list = dao.selectPortfolio(pfnum);
-		m.addAttribute("list",list.get(0));
+		request.setAttribute("list",list.get(0));
+		request.setAttribute("realPath", request.getSession().getServletContext().getRealPath("/resources/files"));
+		request.setAttribute("thumb",((String)list.get(0).get("PFTHUMB")).split("\\|"));
 		return "portfolio/portfolioView";
 	}
 
 	@GetMapping("/update")
 	public String portfolioUpdateView(int pfnum, Model m) {// 게시글 수정뷰
 		
-		List<PortfolioVO> list = dao.selectUpdate(pfnum);
-		System.out.println(list.get(0));
-		m.addAttribute("p", list.get(0));
+		PortfolioVO vo = dao.selectUpdate(pfnum);
+		System.out.println(vo);
+		String[] thumbsList = vo.getPfthumb().split("\\|");
+		String thumbs = "[";
+		m.addAttribute("p", vo);
+		for (int i = 0; i < thumbsList.length; i++) {
+			thumbs+="\"";
+			System.out.println(thumbsList[i]);
+			thumbs+=thumbsList[i];
+			thumbs+="\"";
+			if(i+1<thumbsList.length) {
+				thumbs+=",";
+			}
+		}
+		thumbs+="]";
+		m.addAttribute("thumbs",thumbs);
 		return "portfolio/portfolioUpdate";
 	}
 
 	@PostMapping("/update")
-	public String portfolioUpdate(PortfolioVO vo, int pfnum, Model m) {// 게시글 수정완료 후 본인글로 이동
+	public String portfolioUpdate(MultipartFile[] uploadFile,String[] originalFileName,String[] keepFileName, PortfolioVO vo, HttpServletRequest request, Model m) {// 게시글 수정완료 후 본인글로 이동
 
 		/* 임시로 추가하는 VO */
-		vo.setPfthumb("dog.jpg"); // 썸네일
 		vo.setPffile("dog.jpg"); // 사진파일경로
+		
+		String ptthumb="";
+		String uploadFolder = request.getSession().getServletContext().getRealPath("/resources/files");
+		System.out.println(uploadFolder);
+		for(String removeName : originalFileName) {
+			System.out.println(removeName);
+			int remove = 0;
+			if(keepFileName!=null) {
+				for(String keepName : keepFileName) {
+					if(removeName.equals(keepName)) {
+						ptthumb+=keepName+"|";
+						remove = 1;
+						break;
+					}
+				}
+			}
+			if(remove==0) {
+				File removeFile = new File(uploadFolder,removeName);
+				System.out.println("파일 이름 보고 가 : "+removeName);
+				if(removeFile.isFile()) {
+					System.out.println("있으니까 지운다");
+					removeFile.delete();
+				}
+			}
+		}
+		for(MultipartFile multipartFile : uploadFile) {
+			System.out.println("------------");
+			System.out.println("upload file name : " + multipartFile.getOriginalFilename());
+			System.out.println("upload file size : " + multipartFile.getSize());
+			
+			String uploadFileName = multipartFile.getOriginalFilename();
+			
+			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\")+1);
+			
+			UUID uuid=UUID.randomUUID();
+			uploadFileName=uuid.toString()+"_"+uploadFileName;
+			ptthumb += uploadFileName+"|";
+			System.out.println("only file name : "+ uploadFileName);
+			File saveFile = new File(uploadFolder,uploadFileName);
+			
+			try {
+				multipartFile.transferTo(saveFile);
+				System.out.println("성공");
+			} catch (IllegalStateException | IOException e) {
+				System.out.println("icy...");
+				e.printStackTrace();
+			}
+			
+		}
+		System.out.println(ptthumb);
+		vo.setPfthumb(ptthumb); // 썸네일
+		
 
 		if (dao.updatePortfolio(vo) == 1) {
 			System.out.println("수정성공");
 		} else {
 			System.out.println("수정실패");
 		}
-		return "redirect:/portfolio/view?pfnum=" + pfnum;
+		return "redirect:/portfolio/view?pfnum=" + vo.getPfnum();
 	}
 
 	@RequestMapping("/delete")
@@ -129,17 +198,12 @@ public class PortfolioController {
 		return "redirect:/portfolio";
 	}
 	
-	/*
-	 * @RequestMapping("/popularView") public String showPopularView() { //인기포트폴리오
-	 * 게시판 뷰 보기 return "portfolio/popularBoard"; }
-	 */
-	
 	@RequestMapping("/partPopular")
 	public String showPopularPart(Model m, int base) { //인기포트폴리오 게시판 스크롤 내려가면 그 다음 목록 검색해서 뿌려주기
 		System.out.println("base"+base);
 		List<Map<String, Object>> list = dao.showPopularPart(base);
 		m.addAttribute("list", list);
-		return "portfolio/partPopular";
+		return "portfolio/cardPost";
 	}
 	
 	/*좋아요 기능*/

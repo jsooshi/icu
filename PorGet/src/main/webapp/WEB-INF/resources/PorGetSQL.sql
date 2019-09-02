@@ -8,7 +8,7 @@ drop table userList cascade CONSTRAINTS;
 CREATE TABLE userList
 (
     uname     VARCHAR2(30)    unique NOT NULL, 
-    upass     VARCHAR2(20)    NOT NULL, 
+    upass     VARCHAR2(30)    NOT NULL, 
     uemail    VARCHAR2(60)    NOT NULL, 
     uphoto    varchar2(1000)         NULL,
     ucheck     NUMBER          NULL,
@@ -48,7 +48,7 @@ CREATE TABLE portfolio
     pfnum         NUMBER           NOT NULL, 
     pfname        VARCHAR2(30)     NOT NULL, 
     pfdate        DATE             default sysdate not null, 
-    pfthumb       VARCHAR2(60)     NOT NULL, 
+    pfthumb       VARCHAR2(1000)     NOT NULL, 
     pfread        NUMBER           NOT NULL, 
     pfurl         VARCHAR2(200)    NULL, 
     pffile        VARCHAR2(200)    NULL, 
