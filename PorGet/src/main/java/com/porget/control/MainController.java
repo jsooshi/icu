@@ -56,10 +56,13 @@ public class MainController {
 	}
 	
 	@RequestMapping(value = "/userjoin", method = RequestMethod.POST)//구직자 DB 회원가입 
-	public String userJoin(UserVO vo) {
+	public String userJoin(UserVO vo, HttpServletResponse response) throws Exception {
 		System.out.println("구직자 회원가입vo="+vo);
 		userdao.insert(vo);//DB입력요청
-		
+		response.setCharacterEncoding("UTF-8");
+		PrintWriter out = response.getWriter();
+		response.getWriter().print("<script>alert('회원가입을 축하드립니다.');</script>");
+		out.flush();
 		return "main/index";
 	}
 	
@@ -70,12 +73,13 @@ public class MainController {
 	}
 	
 	@RequestMapping(value = "/recrujoin", method = RequestMethod.POST)//리쿠르터 DB 회원가입 
-	public String insertRecruit(RecruiterVO rvo) {
+	public String insertRecruit(RecruiterVO rvo, HttpServletResponse response) throws Exception {
 		System.out.println("리크루터 회원가입vo="+rvo);
 		recruiterdao.insert(rvo);
-		
-		
-		
+		response.setCharacterEncoding("UTF-8");
+		PrintWriter out = response.getWriter();
+		response.getWriter().print("<script>alert('회원가입을 축하드립니다.');</script>");
+		out.flush();
 		return "main/index";
 	}
 	
