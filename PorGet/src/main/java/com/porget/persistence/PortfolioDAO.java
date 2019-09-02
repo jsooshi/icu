@@ -17,6 +17,7 @@ public interface PortfolioDAO {// 포트폴리오 관련 DAO
 	public int insertRecommend(Map<String,Object> map);
 	public int deleteRecommend(Map<String,Object> map);
 	public int distinctRecommend(Map<String,Object> list);
+	public int selectRecommend(int pfnum);
 
 	/* 검색 */
 	public List<Map<String, Object>> showPopularPart(int base);
