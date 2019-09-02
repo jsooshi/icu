@@ -168,12 +168,6 @@ public class MainController {
 		}
 		return msg;
 	}
-	
-	@RequestMapping("myPage")
-	public String myPage() {
-		
-		return "main/myPage";
-	}
 
 	
 	@RequestMapping("/searchKey")

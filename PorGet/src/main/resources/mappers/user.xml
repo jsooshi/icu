@@ -28,5 +28,10 @@
 		where uemail = #{uemail}
 	</select>
 	
+	<!-- 마이페이지 -->
+	<select id="selectMyPage" resultType="UserVO">
+		SELECT * FROM userlist WHERE uname = #{uname}
+	</select>
+	
 
 </mapper>

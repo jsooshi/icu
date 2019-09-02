@@ -9,8 +9,7 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>PorGet</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<link rel="stylesheet" href="css/main.css">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" href="/porget/css/main.css">
 	<script src="/porget/js/jquery-3.js"></script>  
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script type="text/javascript">
@@ -144,10 +143,10 @@
 						
 						  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
 						    <div class="dropdown-item">${uname }님 환영합니다! </div>
-						    <a class="dropdown-item" href="#">프로필</a>
-						    <a class="dropdown-item" href="#">포트폴리오</a>
-						    <a class="dropdown-item" href="#">북마크</a>
-						    <a class="dropdown-item" href="#">마이페이지</a>
+						    <a class="dropdown-item" href="mypage#profile">프로필</a>
+						    <a class="dropdown-item" href="mypage#portfolio">포트폴리오</a>
+						    <a class="dropdown-item" href="mypage#bookmark">북마크</a>
+						    <a class="dropdown-item" href="mypage">마이페이지</a>
 						    <a class="dropdown-item" href="/porget/logout">로그아웃</a>
 						  </div>
 					</div>
