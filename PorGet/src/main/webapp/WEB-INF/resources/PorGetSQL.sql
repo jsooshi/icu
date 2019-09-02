@@ -8,7 +8,7 @@ drop table userList cascade CONSTRAINTS;
 CREATE TABLE userList
 (
     uname     VARCHAR2(30)    unique NOT NULL, 
-    upass     VARCHAR2(20)    NOT NULL, 
+    upass     VARCHAR2(30)    NOT NULL, 
     uemail    VARCHAR2(60)    NOT NULL, 
     uphoto    varchar2(1000)         NULL,
     ucheck     NUMBER          NULL,

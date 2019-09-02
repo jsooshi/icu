@@ -66,9 +66,10 @@
 		    }
 		});
 		$(document).scroll(function() {
-			var maxHeight = $(document).height();
-			var currentScroll = $(window).scrollTop() + $(window).height();
-			if (maxHeight <= currentScroll + 100) {
+
+		    var maxHeight = $(document).height();
+		    var currentScroll = $(window).scrollTop() + $(window).height();
+		    if (maxHeight <= currentScroll) {
 				$.ajax({
 					url : "/porget/portfolio/partPopular",
 					data : {
@@ -82,3 +83,4 @@
 		});
 	});
 </script>
+

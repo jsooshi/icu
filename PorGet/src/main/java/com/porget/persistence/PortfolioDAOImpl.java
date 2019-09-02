@@ -69,13 +69,41 @@ public class PortfolioDAOImpl implements PortfolioDAO{
 		return sqlSession.selectList("portfolio.portfolioList", null, bounds);
 	}
 
-	@Override
-	public List<String> searchKeyword(String keyword) {
-		return sqlSession.selectList("portfolio.searchKeyword", "%"+keyword+"%");
-	}
 
 	@Override
 	public List<Map<String, Object>> searchResult(String keyword) {
+		System.out.println("#붙인 키워드"+keyword);
+		return sqlSession.selectList("portfolio.searchResult", "%"+keyword+"%");
+	}
+
+	@Override
+	public List<Map<String, Object>> searchHashResult(String keyword, int base) {
+		System.out.println("#붙인 키워드"+keyword);
+		System.out.println("DAO base>>"+base);
+		RowBounds bounds = new RowBounds((base-1)*6, 6);
+		return sqlSession.selectList("portfolio.searchResult", "%"+keyword+"%", bounds);
+	}
+	@Override
+	public List<Map<String, Object>> searchNameList(String keyword) {//제목으로 검색시
+		return sqlSession.selectList("portfolio.searchNameList", "%"+keyword+"%");
+	}
+
+	@Override
+	public List<Map<String, Object>> searchKeyword(String keyword) {//에이작스 위한 샵없는 키워드 검색
+		return sqlSession.selectList("portfolio.searchKeyword", "%"+keyword+"%");
+	}
+	@Override
+	public List<String> searchTag(String keyword) {//샵있는 키워드 검색
+		return sqlSession.selectList("portfolio.searchTag", "%"+keyword+"%");
+	}
+
+	@Override
+	public List<String> searchName(String keyword) {
+		return sqlSession.selectList("portfolio.searchName", "%"+keyword+"%");
+	}
+
+	@Override
+	public List<Map<String, Object>> searchTagList(String keyword) {
 		return sqlSession.selectList("portfolio.searchResult", "%"+keyword+"%");
 	}
 	
