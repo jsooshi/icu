@@ -98,8 +98,8 @@ public class MainController {
 	@RequestMapping("/mainpopular")
 	public String mainPopular(Model m) {
 		List<Map> list = dao.mainPopular();
-		m.addAttribute("popular",list);
-		return "main/mainPopular";
+		m.addAttribute("list",list);
+		return "portfolio/cardPost";
 	}
 	
 	@RequestMapping("/mainrecent")
@@ -107,7 +107,7 @@ public class MainController {
 		List<Map> list = dao.mainRecent();
 		System.out.println(list);
 		m.addAttribute("list",list);
-		return "main/mainRecent";
+		return "portfolio/cardPost";
 	}
 	
 

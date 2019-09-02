@@ -1,0 +1,67 @@
+#logo {
+	width: 30px;
+}
+
+.nav-item {
+	padding: 10px;
+}
+
+.jumbotron {
+	background-image: url("/porget/img/main/whale.jpg");
+	height: 500px;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.wrap-loading{
+	width:20%;
+	text-align: center;
+}
+
+.display-none{
+	display:none;
+}
+
+
+
+.img-hover-zoom {
+	height: 230px;
+	overflow: hidden;
+}
+
+.img-hover-zoom img {
+	transition: transform .5s ease;
+}
+
+.img-hover-zoom:hover img {
+	transform: scale(1.2);
+}
+
+.btn-primary {
+	background-color: rgb(111, 181, 238);
+	border-color: rgb(111, 181, 238);
+}
+
+.btn-post {
+	position: fixed;
+	padding: 20px; 
+	right: 100px; 
+	bottom: 100px;
+}
+
+.btn-circle {
+  width: 45px;
+  height: 45px;
+  line-height: 45px;
+  text-align: center;
+  padding: 0;
+  border-radius: 50%;
+}
+
+.btn-circle-xl {
+  width: 70px;
+  height: 70px;
+  line-height: 70px;
+  font-size: 1.3rem;
+}
