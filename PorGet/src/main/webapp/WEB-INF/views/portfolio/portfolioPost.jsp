@@ -17,20 +17,42 @@
 	var tagCount=0;
 	var tagNames="";
 	function tagremove(obj) {
-		console.log("빠이");
-		console.log($(obj).html());
 		$(obj).parents('span:eq(0)').remove();
 		tagCount--;
 		tagAdd();
 	}
 	
 	function tagAdd(){
+		var re = /^[a-zA-Zㄱ-힣0-9.]+$/;
+		var tag = $('#tagname').val().trim();
+		if(tag===""){
+			$('#tagname').val("")
+			return;
+		}
+		if(!re.exec(tag)){
+			$('#tagname').val("")
+			alert("올바른 태그를 입력해주세요(특수문자 불가)")
+			return;			
+		}
+			$('#tags').append('<span><font style="background-color:skyblue;">#'+tag+'</font><font style="background-color:skyblue;"> <a href="javascript:void(0);" onclick="tagremove(this);">X</a></font></span> ');
+			tagCount++;
+			$('#tagname').val("")
 		tagNames="";
 		for (var i = 0; i < tagCount; i++) {
 			console.log($('#tags').find('span').eq(i).children().html());
 			tagNames+=$('#tags').find('span').eq(i).children().html();
 		}
-	}
+	}//태그 추가
+	
+	function isImageFile( fileName ) {
+	    var fileSuffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+	    fileSuffix = fileSuffix.toLowerCase();
+	    if ( "jpg" == fileSuffix || "jpeg" == fileSuffix  || "gif" == fileSuffix || "bmp" == fileSuffix || "png" == fileSuffix ) 
+	        return true;
+	    else 
+	        return false;
+	}//이미지 파일 확인
+	
 	$(function(){
 		$('#uploadBtn').on("click", function(e){
 			var formData = new FormData();
@@ -55,9 +77,6 @@
 				$('#uploadFile').focus();
 				return;
 			}
-			/*var inputFile = $("input[name='uploadFile']");
-			var files = inputFile[0].files;
-			console.log(files); */
 			formData.append("pfname",$('input[name=pfname]:eq(0)').val())
 			formData.append("pfurl",$('input[name=pfurl]:eq(0)').val())
 			formData.append("pfposition",$('input[name=pfposition]:eq(0)').val())
@@ -87,37 +106,49 @@
 			fileList.delete($(this).closest('tr').children('td:eq(0)').html());
 			$(this).closest('tr').remove();
 			fileCount -= 1;
-		});
+		});//삭제버튼
 		
 		$("input[name='uploadFile']:eq(0)").on("change",function(){
-			console.log("아앗 바꼈어요");
+			var alNum=0;
 			var inputFile = $("input[name='uploadFile']");
 			var files = inputFile[0].files;
-			var fileIn =0;
+			var fileIn =(parseFloat(files.length)+parseFloat(fileCount));
 			if(fileCount>2){
-				console.log("파일이 이미 3개있습니다");
+				alert("파일이 이미 3개있습니다");
 				$(this).val("");return;}
 			console.log("f+f : "+(files.length+fileCount));
-			fileIn = ((parseFloat(files.length)+parseFloat(fileCount))>3) ? (3-parseFloat(fileCount)) : files.length  ;
-			fileCount += fileIn;
+			if(fileIn>3){
+				alert("파일은 3개까지 등록됩니다");
+				fileIn = (3-parseFloat(fileCount));
+			}else{fileIn=files.length;}
 			console.log("filecount : "+ fileCount);
 			for(var i=0;i<fileIn;i++){
+				if(isImageFile(files[i].name)){
 				fileList.append(files[i].name,files[i]);
 				//$("input[name='uploadFile']:eq(0)").val().split("\\")
 				$('#dataList').html($('#dataList').html()+"<tr><td>"+files[i].name+"</td>"+
 					"<td><button>삭제</button></td></tr>");
+				fileCount ++;
+				}else{
+					if(alNum==0){
+						alert("이미지만 등록해주세요");
+						alNum=1;
+					}
+				}
 			}
 				console.log("3 : "+$('#dataList tr:eq(0) td:eq(0)').html());
 			$(this).val("")
 		})
 		
-		$('#tagname').blur(function(){
-			if(!($('#tagname').val().trim()==="")){
-				$('#tags').append('<span><font style="background-color:skyblue;">#'+$('#tagname').val()+'</font><font style="background-color:skyblue;"> <a href="javascript:void(0);" onclick="tagremove(this);">X</a></font></span> ');
-				tagCount++;
-			}
-				$('#tagname').val("")
+		$('#tagname').on("keyup",function(e){
+			if(e.keyCode==13 || e.keyCode==32){
 				tagAdd();
+			}
+		})
+		
+		$('#tagname').blur(function(){
+				tagAdd();
+			
 		});
 		
 	});
