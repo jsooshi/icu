@@ -36,6 +36,7 @@ public class ReplyController {
 	@RequestMapping("list")
 	public String replyList(int pfnum,  Model m) { //게시글 누르면 댓글작성창 및 댓글리스트보이기 
 		m.addAttribute("replyList",dao.replyList(pfnum));
+		
 		return "portfolio/replyList";
 	}
 	

@@ -4,6 +4,47 @@
 
 
 <jsp:include page="/WEB-INF/views/include/header.jsp" />
+<style>
+	.modal{
+	display: none;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	max-width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	width: auto;
+	overflow-y: auto; /* Enable scroll if needed */
+	background-color: rgb(0,0,0); /* Fallback color */
+	background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+	text-align: center;
+	}
+/*   @@media screen and (min-width: 768px) {
+  .modal:before {
+   display: inline-block;
+   vertical-align: middle;
+   content: " ";
+   height: 100%;
+          }
+    }
+  .modal-dialog {
+   display: inline-block;
+   text-align: left;
+   vertical-align: middle;
+   
+	overflow-y: initial !important;
+        }
+   .modal-content{
+   	
+   }
+   .modal-body{
+   
+   	  overflow-y: auto;
+   } */
+
+</style>
+
+
 
 <div class="container">
 	<div class="content">
@@ -22,7 +63,10 @@
 </div>
 
 <!-- 모달창 -->
-<div class="modal" id="myModal"></div>
+<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalTitle" aria-hidden="true">
+
+</div>
+
 
 
 <jsp:include page="/WEB-INF/views/include/footer.jsp" />
@@ -83,6 +127,23 @@
 				});
 			}
 		});
+	
+		
+	
 	});
+	
+	
+	function popupmodal(num){
+		$('#myModal').css("display","block")
+		$.ajax({
+			url : "/porget/portfolio/view?pfnum="+num,
+			success : function(data) {
+				$('#myModal').html(data);
+			}
+		});
+	}
+
+
+	
 </script>
 

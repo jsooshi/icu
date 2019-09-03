@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <c:forEach items="${list }" var="p">
             <div class="col-md-4">
-                <div class="card">
-                    <a href="portfolio/view?pfnum=${p.PFNUM }" class="btn text-left custom-card">
+            
+                   <div class="card">
+                    <a href="javascript:popupmodal(${p.PFNUM })" class="btn text-left custom-card"  >
                         <div class="img-hover-zoom">
                             <img src="${p.PFTHUMB }" class="card-img-top" alt="${p.PFNAME }">
                         </div>
@@ -19,4 +21,6 @@
                     </a>
                 </div>
             </div>
+
 </c:forEach>
+
