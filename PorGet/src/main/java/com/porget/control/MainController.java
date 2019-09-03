@@ -1,14 +1,13 @@
 package com.porget.control;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-
-import java.io.IOException;
+import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,12 +16,13 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.porget.domain.PortfolioVO;
 import com.porget.domain.RecruiterVO;
 import com.porget.domain.UserVO;
 import com.porget.persistence.PortfolioDAO;
@@ -59,8 +59,23 @@ public class MainController {
 	}
 	
 	@RequestMapping(value = "/userjoin", method = RequestMethod.POST)//구직자 DB 회원가입 
-	public String userJoin(UserVO vo, HttpServletResponse response) throws Exception {
+	public String userJoin(MultipartFile file,UserVO vo,  HttpServletRequest request, HttpServletResponse response) throws Exception {
 		System.out.println("구직자 회원가입vo="+vo);
+		
+		//프로필 이미지
+		String uploadPath =  request.getSession().getServletContext().getRealPath("/resources/files/profile");
+		System.out.println(uploadPath);
+		System.out.println(file.getOriginalFilename());
+		String fileName = file.getOriginalFilename();//파일이름
+		
+		//중복이름
+		UUID uuid = UUID.randomUUID();
+		String savedName = uuid.toString() + "_" + fileName;
+		File target = new File(uploadPath,savedName);
+		FileCopyUtils.copy(file.getBytes(), target);
+
+		vo.setUphoto(savedName);
+		
 		userdao.insert(vo);//DB입력요청
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out = response.getWriter();

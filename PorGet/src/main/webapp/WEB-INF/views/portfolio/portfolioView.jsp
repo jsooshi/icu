@@ -48,9 +48,13 @@ $(function(){ //jquery영역
 	
 	replyList(); //댓글리스트 로딩
 		
-	$('#replySave').click(function(){
+	$('#replySave').click(function(){ //댓글작성 클릭 
 		var replyCon = $("#replyContents").val(); //댓글내용 
-		
+		if(replyCon===""){
+			alert('내용을 입력하세요')
+			$('#replyContents').focus();
+			return; 
+		}
 		var replyData={
 				pfnum: ${param.pfnum},  //게시판번홈
 				rcontent: replyCon, //댓글내용
@@ -69,6 +73,7 @@ $(function(){ //jquery영역
 				alert("에러?"+staTxt+':'+xhr.status)
 			}
 		})//ajax	
+		
 		
 		$("#replyContents").val(''); //댓글초기화
 		
@@ -170,7 +175,7 @@ $(function(){ //jquery영역
         		<input type="button" value="저장" id="replySave">
         		</c:when>
         		<c:otherwise>
-        		<textarea id="replyContents" rows="3" cols="60" placeholder="로그인하세요" ></textarea>
+        		<textarea id="replyContents" rows="3" cols="60" placeholder="로그인하세요" readonly></textarea>
         		</c:otherwise>
         	</c:choose>	
         		
