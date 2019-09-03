@@ -6,6 +6,29 @@
 <script src="/porget/js/jquery-3.js"></script>
 <script>
 $(function(){
+	
+	var socket = null
+	connectWS()
+	
+	function connectWS (){
+		var ws = new WebSocket("ws://localhost/porget/replyEcho?bno=1234");
+		socket=ws;
+		ws.onopen = function () {
+		 console.log('Info: connection opened');
+		};
+
+		ws.onmessage = function (event) {
+		 console.log("ReceivedMessege: ",event.data+'\n');
+			$('#socketAlert').text(event.data)
+			$('#socketAlert').css("display","");
+		}
+
+		ws.onclose = function(event){ console.log('Info:connection closed')} 
+		ws.onerror = function(err){console.log('Error:',err)
+		setTimeout( function (){connect();},1000); 
+		}
+
+	}
 	var group=0;
 	$('[name=replyAgain]').on('click',function(){ //댓글 눌렀을 시 대댓글 입력 창 
 		
@@ -13,10 +36,13 @@ $(function(){
 		$('#replyReply').css("display","");
 		group = $(this).parent().children('input[name=re]').val(); //rgroup번호 (pk) 얻기 
 		
+		$('#test').val($(this).parent().children('.span').text());
+		console.log($('#test').val())
 										
 	})//click
 
 	$('button[name=reReSave]').on('click', function(){ //대댓글 작성 저장 클릭 
+		var message =  "reply,"+"${uname}"+","+$('#test').val()+","+${param.pfnum}+",에 댓글을 입력하셨습니다."
 		var reCon = $("#reReplyCon").val();
 		var concon =  {
 				pfnum: ${param.pfnum},
@@ -31,12 +57,18 @@ $(function(){
 			type: 'post',
 			data: concon,
 			success: function(result){
+				socket.send(message)
 				$('#replyArea').html(result);
+				
+				
 			}
 		
-		})
 		
+	
+		})
+	
 		$("#reReplyCon").val('');
+	
 	})//대댓글 저장 클릭 시 
 	
 	$('input[name=reReplyCancel]').on('click', function(){
@@ -75,36 +107,14 @@ $(function(){
 		
 	})
 	
+	
+
+	
+
 });//ready
 </script>
 
-<script>
-var ws = new WebSocket("ws://localhost/porget/replyEcho?bno=1234");
 
-ws.onopen = function () {
-	 console.log('Info: connection opened');
-	 setTimeout( function (){connect();},1000); 
-	 
-	 
-};
-
-ws.onmessage = function (event) {
-	 console.log(event.data+'\n');
-}
-
-ws.onclose = function(event){ console.log('Info:connection closed')} 
-ws.onerror = function(err){console.log('Error:',err)}
-
-$('button[name=reReSave]').on('click', function(evt){
-	 evt.preventDefault();
-	if(socket.readyState==1)return;
-	 let msg = $('input#msg').val();
-	 ws.send(msg);
-	 
-	 
-})
-
-</script>
 
 <c:forEach items="${replyList }" var="reply">
 	<c:choose>
@@ -116,20 +126,20 @@ $('button[name=reReSave]').on('click', function(evt){
 				<%--대댓글인경우 들여나오기 --%>
 		</c:otherwise>
 	</c:choose>
-		작성자: ${reply.uname }
+		작성자: <span class="span">${reply.uname }</span>
 		 작성날짜:<fmt:formatDate value="${reply.rdate }" pattern="yyyy-MM-dd" />
 	<br>
 	<textarea rows="3" cols="60" placeholder="comment" readonly><c:out
 			value="${reply.rcontent }"></c:out></textarea>
 	<br>
 	<c:if test="${!empty uname }">
-	<c:if test="${reply.uname eq uname }">
-		<input type="button" value="삭제" name="replyDelete">
-	</c:if>
-	<c:if test="${reply.rdeep eq 0 }">
-		<input type="button" value="댓글달기" name="replyAgain">
-		<br>
-	</c:if>
+		<c:if test="${reply.uname eq uname }">
+			<input type="button" value="삭제" name="replyDelete">
+		</c:if>
+		<c:if test="${reply.rdeep eq 0 }">
+			<input type="button" value="댓글달기" name="replyAgain">
+			<br>
+		</c:if>
 	</c:if>
 	<input type="hidden" name='re' value="${reply.rgroup }">
 	<input type="hidden" name="rn" value="${reply.rnum }">
@@ -138,6 +148,7 @@ $('button[name=reReSave]').on('click', function(evt){
 
 <!-- 대댓글 작성창 -->
 <div id='replyReply' style="display: none; margin-left: 20px">
+<input id="test" type="hidden" >
 	<!-- 대댓글창  -->
 
 	<br>
@@ -145,4 +156,9 @@ $('button[name=reReSave]').on('click', function(evt){
 	<br> <span style="color: #aaa;" id="counter2">(0/최대100자)</span>
 	<button name="reReSave">저장</button>
 	<input type="button" value="취소" name="reReplyCancel"><br>
+</div>
+
+<div class="well">
+ 	<input type="text" id="msg" value="1212" class="form-control"/>
+ 	<button id="btnSend" class="btn btn-primary">Send Message</button>
 </div>

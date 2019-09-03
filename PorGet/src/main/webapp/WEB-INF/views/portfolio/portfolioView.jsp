@@ -21,6 +21,10 @@
 
 $(function(){ //jquery영역
 	
+
+	
+	
+	
 	$.ajax({ //조회수 업데이트 
 		url: '../replies/read',
 		type: 'post',
@@ -111,9 +115,13 @@ $(function(){ //jquery영역
 
 
 </script>
+
+	
 </head>
 <body>
-
+	<div id="socketAlert" class="alert alert-success" role="alert" style="display:none">
+	
+	</div>
 <div class="modal-dialog">
     <div class="modal-content">
 
@@ -224,6 +232,7 @@ $(function(){ //jquery영역
     </div>
   </div>
 
+
 		<script
 			src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
 			integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
@@ -234,6 +243,7 @@ $(function(){ //jquery영역
 			src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 			integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 			crossorigin="anonymous">
+		
 
 </body>
 
