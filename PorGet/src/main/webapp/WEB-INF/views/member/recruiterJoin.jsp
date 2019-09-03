@@ -47,6 +47,43 @@
 				}
 			});
 		});
+	
+	$('#btnJoin').click(function(){
+		
+		if($('#companyName').val() == ""){
+			alert("회사명을 입력해주세요!");
+			$('#companyName').focus();
+			return false;
+		}else if(!/^[a-zA-Z0-9]{2,20}$/.test($('#companyName').val())){
+			alert("회사명은  한글, 영문 20글자 이내로 입력해주세요! (공백,특수문자X)");
+			return false;
+		}
+		
+		if($('#companyEmail').val() == ""){
+			alert("이메일을 입력해주세요!");
+			$('#companyEmail').focus();
+			return false;
+		}
+		
+		if($('#companyPass').val() == ""){
+			alert("비밀번호를 입력해주세요!");
+			$('#companyPass').focus();
+			return false;
+		}else if(!/^[a-zA-Z0-9]{6,10}$/.test($('#companyPass').val())){
+			alert("비밀번호는 영문, 숫자 6~10글자로 입력해주세요 ")
+			$('#companyPass').val("");
+			$('#companyPass').focus();
+			return false;
+		}else if($('#companyPass').val() != $('#companyPassCheck').val()){
+			alert("비밀번호가 일치하지 않습니다!");
+			$('#companyPass').val("");
+			$('#companyPassCheck').val("");
+			$('#companyPass').focus();
+			return false;
+		}
+	});
+	
+	
 	});
 	</script>
 
@@ -65,39 +102,50 @@
 					<div class="form-group">
 
 						<label for="cName">
-							회사명
+				회사명
 						</label>
 						<input type="text" class="form-control" id="companyName" name="cname">
 						<div id="companyNameMsg"></div>
 					</div>
 					
 					<div class="form-group">
+					<div class="check_font" id="email_check"></div>
 
 						<label for="cEmail">
-							이메일
+				이메일
 						</label>
 						<input type="email" class="form-control" id="companyEmail" name="cemail">
 						<div id="companyEmailMsg"></div>
+					</div>	
+									
+					
+					<div class="form-group">
+
+						<label for="cPass">
+				비밀번호
+						</label>
+						<input type="password" class="form-control" id="companyPass" name="cpass">
 					</div>
 					
 					<div class="form-group">
 
 						<label for="cPass">
-							비밀번호
+				비밀번호 확인
 						</label>
-						<input type="password" class="form-control" id="companyPass" name="cpass">
+						<input type="password" class="form-control" id="companyPassCheck" name="cpassCheck">
 					</div>
+					
 					<div class="form-group">
 
 						<label for="cdomain">
-							회사사이트
+				회사사이트
 						</label>
 						<input type="text" class="form-control" id="companyDomain" name="cdomain">
 					</div>
 					<div class="form-group">
 
 						<label for="cPhoto">
-							프로필사진
+				프로필사진
 						</label>
 
 
@@ -106,7 +154,7 @@
 
 					</div>
 
-					<button type="submit" class="btn btn-primary">
+					<button type="submit" class="btn btn-primary" id="btnJoin">
 						Submit
 					</button>
 				</form>

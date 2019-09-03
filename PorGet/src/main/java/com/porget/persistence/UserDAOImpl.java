@@ -14,6 +14,7 @@ public class UserDAOImpl implements UserDAO{
 
 	@Override
 	public void insert(UserVO vo) {
+		System.out.println("입력>"+vo);
 		sqlSession.insert("userList.insert",vo);
 		
 	}

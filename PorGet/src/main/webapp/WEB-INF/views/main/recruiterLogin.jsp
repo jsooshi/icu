@@ -12,15 +12,13 @@
 	
 	<script src="/porget/js/jquery-3.js"></script>
 	<script src="/porget/js/ajax.js"></script>
-	<script >
-	  var str = '${msg}';
-	  if(str!=''){
-	    alert(str);
-	    location.replace('login');
-	  }
-	
+	<script>
+		var str = '${msg}';
+		if(str!=''){
+			alert(str);
+			location.replace('recruiterLogin'); 
+		}
 	</script>
-
 </head>
 <body>
 	<br>
@@ -28,19 +26,19 @@
 	<form method="post">
 		<div class="container-fluid">
 			<div class="col-md-12">
-				<h3 class="text-center">Member 로그인</h3>
+				<h3 class="text-center">Recruiter 로그인</h3>
 				<h6>이메일</h6>
-				<input type="text" placeholder="이메일을 입력해주세요." name="uemail"
-					id="uemail"> <br> <br>
+				<input type="text" placeholder="이메일을 입력해주세요." name="cemail"
+					id="cemail"> <br> <br>
 				<h6>비밀번호</h6>
-				<input type="password" placeholder="비밀번호를 입력해주세요." name="upass"
-					id="upass"> <br> <br> <br>
-				<button type="submit" name="login" class="btn btn-primary btn-sm btn-block">로그인</button>
+				<input type="password" placeholder="비밀번호를 입력해주세요." name="cpass"
+					id="cpass"> <br> <br> <br>
+				<button type="submit" name="recruiterLogin" class="btn btn-primary btn-sm btn-block">로그인</button>
 			</div>
 		</div>
 	</form>
-				<br> <br> <input type="button" value="비밀번호 찾기"> <br>
-				<br> <input type="button" value="회원가입" onclick="location.href='join'">
+				<br> <br> <input type="submit" value="비밀번호 찾기"> <br>
+				<br> <input type="submit" value="회원가입" onclick="location.href='join'">
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
 		crossorigin="anonymous"></script>

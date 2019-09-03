@@ -14,7 +14,7 @@
 	<select id="login" resultType="String">
 		select cname
 		from recruiter
-		where cname=#{cname} and cpass=#{cpass}
+		where cemail=#{cemail} and cpass=#{cpass}
 	</select>
 	
 	<!-- 회사명 중복확인 -->
