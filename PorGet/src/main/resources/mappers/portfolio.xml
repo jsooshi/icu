@@ -44,6 +44,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT count(*) FROM recommend WHERE pfnum=#{pfnum} AND uname=#{uname}
 	</select>
 	
+	<select id="selectRecommend" resultType="int">
+		SELECT count(*) FROM recommend WHERE pfnum=#{pfnum}
+	</select>
+	
 	<delete id="deleteRecommend">
 		DELETE FROM recommend WHERE pfnum=#{pfnum} AND uname=#{uname}	
 	</delete>

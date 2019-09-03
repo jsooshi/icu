@@ -1,7 +1,6 @@
 package com.porget.control;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -12,12 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.porget.domain.PortfolioVO;
@@ -208,24 +207,18 @@ public class PortfolioController {
 	
 	/*좋아요 기능*/
 	@RequestMapping("/good")
-	public String insertGood(int pfnum,HttpSession session) {
+	public @ResponseBody int insertGood(int pfnum,HttpSession session) {
 		String uname = (String) session.getAttribute("uname");
 		Map<String,Object> recommend = new HashMap<String,Object>();
 		recommend.put("pfnum", pfnum);
 		recommend.put("uname", uname);
 		System.out.println(recommend);
 		if(dao.distinctRecommend(recommend)==0) {
-			System.out.println("ok");
-			if(dao.insertRecommend(recommend)==1) {
-				System.out.println("추가완료");
-			}else{
-				System.out.println("추가실패");
-			}
+			dao.insertRecommend(recommend);
 		}else {
-			System.out.println("no");
 			dao.deleteRecommend(recommend);
 		}
-		return "redirect:/portfolio/view?pfnum="+pfnum;
+		return dao.selectRecommend(pfnum);
 	}
 
 }

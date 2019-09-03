@@ -34,6 +34,9 @@ public class UserDAOImpl implements UserDAO{
 		return sqlSession.selectOne("userList.emailCheck",uemail);
 	}
 
+/* 마이페이지 */
 
-
+	public UserVO selectMyPage(String uname) {
+		return sqlSession.selectOne("userList.selectMyPage",uname);
+	}
 }

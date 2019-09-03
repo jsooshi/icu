@@ -12,6 +12,7 @@
 		href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 		crossorigin="anonymous">
+	<link rel="stylesheet" href="/porget/css/modal.css">
 <title>Document</title>
 <script src="/porget/js/jquery-3.js"></script>    
 <script type="text/javascript">
@@ -41,7 +42,6 @@ $(function(){ //jquery영역
 			 $('#replyArea').html(result);
 			 
 		 }
-		 
 	 })
 	 
 	}
@@ -62,8 +62,6 @@ $(function(){ //jquery영역
 				uname: "${uname}" //userID 
 							
 			}; 
-	
-		
 		$.ajax({
 			url: '../replies/save',
 			type: "post",
@@ -74,8 +72,6 @@ $(function(){ //jquery영역
 			error:function(xhr,staTxt){
 				alert("에러?"+staTxt+':'+xhr.status)
 			}
-			
-			
 		})//ajax	
 		
 		
@@ -92,23 +88,32 @@ $(function(){ //jquery영역
 			$(this).val(content.substring(0, 100));
 			$('#counter').html('(100/최대100자)')
 		}
+	});
 	
 	$('#recommendBtn').click(function(){ //좋아요버튼
+		var writeName = '${list.UNAME}';
+		var uName = '${uname}';
+		
+		if(uName == ""){
+			alert("로그인 해주세요");	
+			return;
+		}else if(writeName === uName){
+			alert('본인의 글을 추천하실 수 없습니다');
+			return;
+		}else {
 			 $.ajax({
 				 url : '../portfolio/good',
+				 type: 'post',
 				 data: {
-					 pfnum : boardNum,
-					 uname : accessName
+					 pfnum : ${param.pfnum}
 				 },
 				 success: function(result){
-					 var recommend = $(result).find('div.recommend:eq(0)').html();
-					 $('.recommend').html(recommend); 
-					 }
-				 })
-			 });
-	
-	})
-	
+					 $('.recommend').html(result); 
+				}
+			})
+		}
+		
+	});
 }); //ready
 </script>
 </head>
@@ -136,51 +141,22 @@ $(function(){ //jquery영역
 		<c:forEach items="${thumb}" var="thumbImg">
 			<img alt="하하하" src="/porget/files/${thumbImg}" style="max-height:390px;max-width:260px;">
 		</c:forEach>
-        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-            </ol>
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img class="d-block w-100"
-                        src="" alt="
-                        First slide">
-                </div>
-                <div class="carousel-item">
-                    <img class="d-block w-100"
-                        src="" alt="
-                        Second slide">
-                </div>
-                <div class="carousel-item">
-                    <img class="d-block w-100"
-                        src="" alt="
-                        Third slide">
-                </div>
-            </div>
-            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
-        </div>
 
-        조회수: <br>
+        조회수: ${list.PFREAD }<br>
 
         <a href="${list.PFURL }" class="btn btn-primary">
 		 포트폴리오 링크
         </a><br>
 		
 		<button class="btn btn-danger" id="recommendBtn">좋아요</button>
-		<div class="recommend">
-	        좋아요수: ${list.JOA }<br>
-		</div>		
-        <a href="update?pfnum=${list.PFNUM }">수정</a><br>
-        <a href="delete?pfnum=${list.PFNUM }">삭제</a><br>
+	        좋아요수: <div class="recommend">${list.JOA }</div><br>		
+	        
+	    <c:choose>
+	    	<c:when test="${list.UNAME == uname }">
+		        <a href="update?pfnum=${list.PFNUM }">수정</a> | 
+		        <a href="delete?pfnum=${list.PFNUM }">삭제</a><br>
+	    	</c:when>
+	    </c:choose>
         <hr>
         
                 [댓글] <!-- 댓글작성 -->

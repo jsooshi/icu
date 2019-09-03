@@ -68,48 +68,35 @@
                     Membership Join
                 </h3>
                 <hr>
-                <form role="form" method="post">
+                <form role="form" method="post" enctype="multipart/form-data">
                     <div class="form-group">
-
                         <label for="mName">
                             닉네임
                         </label>
                         <input type="text" class="form-control" id="userName" name="uname">
                         <div id="userNameMsg"></div>    
-                    </div>
                     
-                    <div class="form-group">
             		<div class="check_font" id="id_check"></div>
 
                         <label for="mEmail">
                             이메일
                         </label>
                         <input type="email" class="form-control" id="userEmail" name="uemail">
-                    </div>
                     
-                    <div class="form-group">
                     <div id="userEmailMsg"></div>
 
                         <label for="mPass">
                             비밀번호
                         </label>
                         <input type="password" class="form-control" id="userPass" name="upass">
-                    </div>
 
-                    <div class="form-group">
 
-                        <label for="mFile">
+                        <label for="file">
                             프로필사진
                         </label>
-
-
-                        <input type="file" class="form-control-file" id="memberPhoto" name="uphoto">
-
-
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">
-                        Submit
+                        <input type="file" class="form-control-file" id="file" name="file">
+                    <button id="uploadBtn" class="btn btn-primary">
+                        가입
                     </button>
                 </form>
             </div>
@@ -119,6 +106,34 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/scripts.js"></script>
+<!--      	<script>
+		$(function() {
+			var formData = new FormData();
+			formData.append("uname",$("input[name=uname]").val());
+			formData.append("uemail",$("input[name=uemail]").val());
+			formData.append("upass",$("input[name=upass]").val());
+			
+			$("#uploadBtn").on("click", function(event) {
+				var inputFile = $("input[name='file']").val();
+				console.log(inputFile);
+
+				formData.append("file", inputFile);
+			})
+
+			$.ajax({
+				url : "/porget/userjoin",
+				type: "post",
+				processData : false,
+				contentType : false,
+				data : formData,
+				type : 'post',
+				success : function(result) {
+					console.log(result);
+					alert("Uploaded");
+				}
+			})// ajax
+		})
+	</script> --> 
 </body>
 
 </html>
