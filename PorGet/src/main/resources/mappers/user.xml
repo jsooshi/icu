@@ -28,9 +28,19 @@
 	</select>
 	
 	<!-- 마이페이지 -->
-	<select id="selectMyPage" resultType="UserVO">
+	<select id="selectUser" resultType="UserVO">
 		SELECT * FROM userlist WHERE uname = #{uname}
 	</select>
+	
+	<update id="changeUname">
+		UPDATE userlist SET uname = #{uname}
+	</update>
+	
+	
+	<select id="selectPortfolio" resultType="Map">
+		SELECT * FROM portfolio WHERE uname= #{uname}
+	</select>
+	
 	
 
 </mapper>
