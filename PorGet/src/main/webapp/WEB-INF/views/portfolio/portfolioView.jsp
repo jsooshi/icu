@@ -8,16 +8,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<link rel="stylesheet"
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	
+	<!-- <link rel="stylesheet"
 		href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+<<<<<<< HEAD
 		crossorigin="anonymous">
 	<link rel="stylesheet" href="/porget/css/modal.css">
+=======
+		crossorigin="anonymous"> -->
+>>>>>>> feature/portfolio
 <title>Document</title>
-<script src="/porget/js/jquery-3.js"></script>    
+<script src="/porget/js/jquery-3.js"></script>
 <script type="text/javascript">
 var realPath = "${realPath}";
 $(function(){ //jquery영역
+	
+	$(".carousel-indicators").children('li').eq(0).addClass("active");
+	$(".carousel-inner").children('div').eq(0).addClass("active");
+	$('.carousel').carousel()
 	
 	$.ajax({ //조회수 업데이트 
 		url: '../replies/read',
@@ -138,9 +148,30 @@ $(function(){ //jquery영역
 
         [스크린샷]<br>
 
-		<c:forEach items="${thumb}" var="thumbImg">
-			<img alt="하하하" src="/porget/files/${thumbImg}" style="max-height:390px;max-width:260px;">
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+		<c:forEach items="${thumb}" var="thumbImg" varStatus="status">
+                <li data-target="#carouselExampleIndicators" data-slide-to="${status.count-1 }"></li>
 		</c:forEach>
+            </ol>
+            <div class="carousel-inner">
+				<c:forEach items="${thumb}" var="thumbImg" varStatus="status">
+	                <div class="carousel-item">
+	                    <img class="d-block w-100"
+	                        src="/porget/files/${thumbImg }" alt="
+	                        slide">
+	                </div>
+				</c:forEach>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
 
         조회수: ${list.PFREAD }<br>
 
@@ -193,17 +224,10 @@ $(function(){ //jquery영역
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
       </div>
-
-
-
-
-
-
-
     </div>
   </div>
 
-		<script
+	<script
 			src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
 			integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
 			crossorigin="anonymous">
@@ -212,7 +236,7 @@ $(function(){ //jquery영역
 		<script
 			src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 			integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-			crossorigin="anonymous">
+			crossorigin="anonymous"></script>
 
 </body>
 

@@ -2,12 +2,14 @@ package com.porget.control;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,7 +92,21 @@ public class PortfolioController {
 
 
 	@GetMapping("/view")
-	public String portfolioView(int pfnum,HttpServletRequest request) {// 게시글 클릭시 포트폴리오 뷰
+	public String portfolioView(int pfnum,HttpServletRequest request, HttpServletResponse response) {// 게시글 클릭시 포트폴리오 뷰
+		if(request.getSession().getAttribute("uname")==""||request.getSession().getAttribute("uname")==null) {
+			PrintWriter out;
+			try {
+				//request.setCharacterEncoding("UTF-8");
+				//response.setCharacterEncoding("UTF-8");
+				response.setContentType("text/html; charset=UTF-8");
+				out = response.getWriter();
+				out.println("<script>history.go(-1);alert('권한이 없습니다.');</script>");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return null;
+		};
+		
 		List<Map> list = dao.selectPortfolio(pfnum);
 		request.setAttribute("list",list.get(0));
 		request.setAttribute("realPath", request.getSession().getServletContext().getRealPath("/resources/files"));
