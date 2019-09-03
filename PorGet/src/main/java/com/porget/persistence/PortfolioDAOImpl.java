@@ -82,7 +82,7 @@ public class PortfolioDAOImpl implements PortfolioDAO{
 		System.out.println("DAO base>>"+base);
 		RowBounds bounds = new RowBounds((base-1)*6, 6);
 		System.out.println("Bounds>>"+bounds);
-		return sqlSession.selectList("portfolio.searchResult", "%"+keyword+"%", bounds);
+		return sqlSession.selectList("portfolio.searchResult", keyword, bounds);
 	}
 	@Override
 	public List<Map<String, Object>> searchNameList(String keyword) {//제목으로 검색시

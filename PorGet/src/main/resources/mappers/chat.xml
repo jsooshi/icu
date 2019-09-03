@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- portfolio 관련 sql문 -->
+<mapper namespace="chat"> 
+
+	<select id="getChatList" resultType="chatVO"> 
+		select *
+		from chat
+		where (fromID=#{fromID} and toID=#{toID}) or (fromID=#{toID} and toID=#{fromID})
+		and chatID>#{chatID}
+		order by chatTime desc
+	</select>
+
+	<!-- <select id="chatListRecent" resultType="chatVO"> 
+		select *
+		from chat
+		where (fromID=${fromID} and toID=${toID}) or (fromID=${toID} and toID=${fromID})
+		and chatID>(select max(chatID))
+		order by chatTime 
+		
+		최근의 몇개만 뽑아서 가져오기
+	</select> -->
+	
+	<insert id="sendMessage">
+		insert into chat (chatID, fromID, toID, chatContent, chatTime)
+		values (chat_SEQ.nextval, #{fromID}, #{toID}, #{chatContent}, to_date(sysdate,'yyyy.mm.dd hh24:mi'))
+	</insert>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</mapper>

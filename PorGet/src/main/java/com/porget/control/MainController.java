@@ -240,34 +240,17 @@ public class MainController {
 	
 	@RequestMapping("/searchHashTagList")
 	public String searchHashTagList(Model m, String keyword, int base) {//검색시 태그에 검색어가 포함되어있을때
-		System.out.println("여기 들어왓닝~~");
-		System.out.println("base"+base);
-		Set<List<Map<String, Object>>> listSet = new HashSet<List<Map<String,Object>>>();
-		List<Map<String, Object>> list=null;
-		   //keyword="#java#django"
-		   //keyword2= {"","java","django"}
 			String[] keyword2 = keyword.split("#");  
-			for (int i = 1; i < keyword2.length; i++) {
-				list = dao.searchHashResult("#"+keyword2[i], base);
-				       //uname:"길동", pfname:"제목",pfnum:"글번호"..base...
-				       
-				listSet.add(list);
-		//		list4.add(dao.searchHashResult("#"+keyword2[i], base));
-//				list = dao.searchResult("#"+keyword2[i]);
-				//list4.add(list);
+			String keyword3 = null;
+			for (int i = 0; i < keyword2.length; i++) {
+				for (int j = i+1; j < keyword2.length; j++) {
+					keyword3 = keyword2[i]+"|"+keyword2[j];
+				}
 			}
-			System.out.println("listSet>>>"+ listSet);
-			System.out.println("쿼리문에서 distinct해도 중복 안사라짐 ㅜ");
-//			for (int j = 0; j < list4.size(); j++) {
-//				for (int j2 = 0; j2 < list4.size(); j2++) {
-//					if(!list4.get(j).equals(list4.get(j2))) {
-//						list4.add(list4.get(j));
-//					}
-//				}
-//			}
-			String hashTag = "hashTag";
-			m.addAttribute("hashTag", hashTag);
-			m.addAttribute("listSet", listSet);
+			System.out.println("keyword33>>>"+keyword3);
+			List<Map<String, Object>> list = dao.searchHashResult(keyword3, base);
+			System.out.println("list 0903>>>"+ list);
+			m.addAttribute("list", list);
 		return "portfolio/searchHashResult";
 	}
 	
