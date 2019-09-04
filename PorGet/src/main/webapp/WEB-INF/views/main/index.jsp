@@ -11,8 +11,6 @@
 
 <!-- Banner -->
     <div class="jumbotron">
-        <h1 class="display-4 text-center text-white">ProPy Item</h1>
-        <hr>
     </div>	
 
 <!-- Popular Content -->
