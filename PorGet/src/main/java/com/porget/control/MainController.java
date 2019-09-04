@@ -180,7 +180,7 @@ public class MainController {
 	public String searchKeyword(Model m, String keyword) { //검색창에서 연관검색어 가져오기
 		List<Map<String, Object>> list = dao.searchKeyword(keyword);
 		m.addAttribute("list", list);
-		return "portfolio/searchInputPartTest";
+		return "search/searchInputPartTest";
 	}
 	
 	@RequestMapping("/searchButton")
@@ -188,26 +188,26 @@ public class MainController {
 		System.out.println("키워드얌 검색창-->"+keyword);
 		if(keyword.contains("#")) {
 			m.addAttribute("keyword", keyword);
-			return "portfolio/searchResult";
+			return "search/searchResult";
 		}else {
 			
 			if(!dao.searchName(keyword).isEmpty()&&!dao.searchTag(keyword).isEmpty()) {
 			m.addAttribute("tagOrName", "both");
 			m.addAttribute("input", keyword);
-			return "portfolio/searchResultAll";
+			return "search/searchResultAll";
 			
 			}else if(!dao.searchTag(keyword).isEmpty()&&dao.searchName(keyword).isEmpty()) {
 			m.addAttribute("tagOrName", "tag");
 			m.addAttribute("input", keyword);
-			return "portfolio/searchResultAll";
+			return "search/searchResultAll";
 			
 			}else if(!dao.searchName(keyword).isEmpty()&&dao.searchTag(keyword).isEmpty()) {
 			System.out.println("dao.searchName(keyword)"+dao.searchName(keyword));
 			m.addAttribute("tagOrName", "name");
 			m.addAttribute("input", keyword);
-			return "portfolio/searchResultAll";	
+			return "search/searchResultAll";	
 			}
-			return "portfolio/searchResultAll";
+			return "search/searchResultAll";
 		}
 		
 	}
@@ -217,7 +217,7 @@ public class MainController {
 		List<String> list = dao.searchTag(keyword);
 		m.addAttribute("list", list);
 		m.addAttribute("keyword",keyword);
-		return "portfolio/searchTagBox";
+		return "search/searchTagBox";
 	}
 	
 	@RequestMapping("/searchNameList")
@@ -226,7 +226,7 @@ public class MainController {
 		List<Map<String, Object>> list=null;
 			list4.add(dao.searchNameList(input));
 			m.addAttribute("list4", list4);
-		return "portfolio/searchNameResult";
+		return "search/searchNameResult";
 	}
 
 	@RequestMapping("/searchTagList")
@@ -235,7 +235,7 @@ public class MainController {
 		List<Map<String, Object>> list=null;
 		list4.add(dao.searchTagList(input));
 		m.addAttribute("list4", list4);
-		return "portfolio/searchTagResult";
+		return "search/searchTagResult";
 	}
 	
 	@RequestMapping("/searchHashTagList")
@@ -256,7 +256,7 @@ public class MainController {
 			}
 			System.out.println("list 0903>>>"+ list);
 			m.addAttribute("list", list);
-		return "portfolio/searchHashResult";
+		return "search/searchHashResult";
 	}
 	
 
