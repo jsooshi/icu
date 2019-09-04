@@ -138,11 +138,11 @@ INSERT INTO userList values ('ghrnak','1q2w3e6y','ghrnak@gmail.com','의사.png'
 INSERT INTO userList values ('새우우','1q2w3e6y','todndn@gmail.com','동석.jpg',2,'사용자5입니다');
 
 
-INSERT INTO portfolio VALUES ('afterup',portfolio_SEQ.nextval, '이렇게 만들었습니다',to_date(sysdate,'yyyy.mm.dd hh24:mi'),'이렇게 만든다.jpg',2,'https://www.youtube.com/watch?v=RQSUnhri518',null,'웹개발자','#JAVA#JAVASCRIPT');
-INSERT INTO portfolio VALUES ('jsooshi',portfolio_SEQ.nextval, '무조건 뽑힙니다',to_date(sysdate,'yyyy.mm.dd hh24:mi'),'무조건뽑히는포트폴리오.jpg',2,'https://www.youtube.com/watch?v=SvKCs-80uk4',null,'백엔드','#파이썬');
-INSERT INTO portfolio VALUES ('yunajo',portfolio_SEQ.nextval, '열정이 가득',to_date(sysdate,'yyyy.mm.dd hh24:mi'),'열정이 가득.jpg',2,'https://www.youtube.com/watch?v=UJwU85tTevI',null,'백엔드','#java#SPRING#websocket');
-INSERT INTO portfolio VALUES ('jinju',portfolio_SEQ.nextval, '클린합니다',to_date(sysdate,'yyyy.mm.dd hh24:mi'),'클린.jpg',2,'https://www.youtube.com/watch?v=yYOVnZts0Ns',null,'프론트엔드','#javascript#spring');
-INSERT INTO portfolio VALUES ('jihwan',portfolio_SEQ.nextval, '공략법',to_date(sysdate,'yyyy.mm.dd hh24:mi'),'공략법.png',2,'https://www.youtube.com/watch?v=x60mB0zXZ38',null,'웹개발자','#WEB#INFO');
-INSERT INTO portfolio VALUES ('bonjin',portfolio_SEQ.nextval, '이정도다',to_date(sysdate,'yyyy.mm.dd hh24:mi'),'문의.png',2,'https://www.youtube.com/watch?v=fwjyFSbFkT0',null,'웹개발자','#JAVA#JAVASCRIPT');
-INSERT INTO portfolio VALUES ('rhrnak',portfolio_SEQ.nextval, '자소서가아니다',to_date(sysdate,'yyyy.mm.dd hh24:mi'),'자소서가아니다.png',2,'https://www.youtube.com/watch?v=50uiNkGLfHI',null,'웹개발자','#JAVA#JAVASCRIPT');
-INSERT INTO portfolio VALUES ('ekdrms',portfolio_SEQ.nextval, '당근의 포트폴리오입니다',to_date(sysdate,'yyyy.mm.dd hh24:mi'),'20171124171320_SEU.jpg',2,'https://www.youtube.com/watch?v=YnLtR9HT52U',null,'웹개발자','#당근');
+INSERT INTO portfolio VALUES ('afterup',portfolio_SEQ.nextval, '이렇게 만들었습니다',sysdate,'이렇게 만든다.jpg|',2,'https://www.youtube.com/watch?v=RQSUnhri518',null,'웹개발자','#JAVA#JAVASCRIPT');
+INSERT INTO portfolio VALUES ('jsooshi',portfolio_SEQ.nextval, '무조건 뽑힙니다',sysdate,'무조건뽑히는포트폴리오.jpg|',2,'https://www.youtube.com/watch?v=SvKCs-80uk4',null,'백엔드','#파이썬');
+INSERT INTO portfolio VALUES ('yunajo',portfolio_SEQ.nextval, '열정이 가득',sysdate,'열정이 가득.jpg|',2,'https://www.youtube.com/watch?v=UJwU85tTevI',null,'백엔드','#java#SPRING#websocket');
+INSERT INTO portfolio VALUES ('jinju',portfolio_SEQ.nextval, '클린합니다',sysdate,'클린.jpg|',2,'https://www.youtube.com/watch?v=yYOVnZts0Ns',null,'프론트엔드','#javascript#spring');
+INSERT INTO portfolio VALUES ('jihwan',portfolio_SEQ.nextval, '공략법',sysdate,'공략법.png|',2,'https://www.youtube.com/watch?v=x60mB0zXZ38',null,'웹개발자','#WEB#INFO');
+INSERT INTO portfolio VALUES ('bonjin',portfolio_SEQ.nextval, '이정도다',sysdate,'문의.png|',2,'https://www.youtube.com/watch?v=fwjyFSbFkT0',null,'웹개발자','#JAVA#JAVASCRIPT');
+INSERT INTO portfolio VALUES ('rhrnak',portfolio_SEQ.nextval, '자소서가아니다',sysdate,'자소서가아니다.png|',2,'https://www.youtube.com/watch?v=50uiNkGLfHI',null,'웹개발자','#JAVA#JAVASCRIPT');
+INSERT INTO portfolio VALUES ('ekdrms',portfolio_SEQ.nextval, '당근의 포트폴리오입니다',sysdate,'20171124171320_SEU.jpg|',2,'https://www.youtube.com/watch?v=YnLtR9HT52U',null,'웹개발자','#당근');
