@@ -147,7 +147,6 @@
 						    <a class="dropdown-item" href="#">프로필</a>
 						    <a class="dropdown-item" href="#">포트폴리오</a>
 						    <a class="dropdown-item" href="#">북마크</a>
-						    <a class="dropdown-item" href="/porget/chatting">채팅하기</a>
 						    <a class="dropdown-item" href="#">마이페이지</a>
 						    <a class="dropdown-item" href="/porget/logout">로그아웃</a>
 						  </div>
