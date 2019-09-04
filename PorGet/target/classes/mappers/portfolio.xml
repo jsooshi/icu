@@ -117,9 +117,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id = "recentPortfolio" resultType="Map"> 
 		<![CDATA[
-			select p.uname, p.pfnum, p.pfname, SUBSTR(p.pfthumb, 1, INSTR(p.pfthumb, '|')-1) AS pfthumb, p.pfread, u.uphoto, (select count(*) from recommend rc where p.pfnum=rc.pfnum) as joa, (select count(*) from reply r where p.pfnum=r.pfnum) as replyNum
-			from portfolio p inner join userList u on p.uname = u.uname
-			order by p.pfdate desc
+			select p.uname, p.pfnum, p.pfname,SUBSTR(p.pfthumb, 1, INSTR(p.pfthumb, '|')-1) AS pfthumb, p.pfread, u.uphoto, (select count(*) from recommend rc where p.pfnum=rc.pfnum) as joa, (select count(*) from reply r where p.pfnum=r.pfnum) as replyNum
+			from (select * from portfolio order by pfdate desc) p inner join userList u 
+			on p.uname = u.uname where rownum <= 3
 		]]>
 	</select>
 	
