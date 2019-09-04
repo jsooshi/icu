@@ -20,4 +20,6 @@ public interface PorgetDAO {
 	
 	public void delete(String uemail);
 	public void deleteRec(String cemail);
+	
+	public List<Portget_ordinaryVO> listAll(int base);
 }

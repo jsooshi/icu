@@ -14,34 +14,54 @@
         <!--부트스트랩 기초설정완료 / 부트스트랩 사이트에서 복붙-->
     <title>관리자 전체회원 조회창</title>
     <script src="/porget/js/jquery-3.js"></script>
-    <script>
-    ///////////////////////////////////////////////자바스크립트 영역 (jquery)
+    <script type="text/javascript">
+    var i=2;
+    $(document).ready(function() {
+  		$.ajax({
+  			url : "/porget/admin/listAll",
+  			data : {
+  				base : 1
+  			},
+  			success : function(data) {
+  				$('#d1').append(data);
+  			}
+  		});
+  		});
+  		$(document).scroll(function() {
+
+  		    var maxHeight = $(document).height();
+  		    var currentScroll = $(window).scrollTop() + $(window).height();
+  		    if (maxHeight <= currentScroll+1) {
+  				$.ajax({
+  					url : "/porget/admin/listAll",
+  					data : {
+  						base : i++
+  					},
+  					success : function(data) {
+  						$('#d1').append(data);
+  					}
+  				});
+  			}
+  		});
     
     $(function(){
     	$('#ordinary').click(function(){
-    		//var data = "여기에 ajax 삽입할거야";
-    		//alert(">check")
     		var uname = $('[name=uname]').val();
-    		//////////////////////////////////////ajax 옮기고 싶은 내용이 다른파일에 있을 경우에!!
     		$.ajax({
     			url: "/porget/admin/list",
-    			//컨트롤러에!!!★★★ 검색한 이름 데이터로 같이 줌
     			data:{
 						uname:uname,
 					},
-    			success: function(data){	//--이 저장되는 데이터의 이름은 아무거나 적어
-		    		$('#d1').html(data);  	//--그대로 여기다 적어줘
+    			success: function(data){
+		    		$('#d1').html(data);  
     			}
     		});
-    		///////////////////////////////////////////////////////////ajax	
     	});
-		///////////////////////////////////////////////////////////jquery	
     });
    
     
     $(function(){
     	$('#recruiter').click(function(){
-    		//alert(">check");
     		var cname = $('[name=cname]').val();
     		$.ajax({
     			url: "/porget/admin/listR",
@@ -78,9 +98,18 @@
         </div>
     </div>
     <br>
-
-    <div id="d1"></div>
-   
+    <hr>
+		<table border="3" class="table text-center table-hover">
+		<thead>
+			<tr>
+				<th>ID(이메일)</th>
+				<th>닉네임</th>
+				<th>관리자여부</th>
+			</tr>
+	 	</thead>
+		<tbody id="d1">
+   		</tbody>
+	</table>
     
 </body>
 </html>
