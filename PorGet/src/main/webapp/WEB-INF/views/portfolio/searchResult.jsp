@@ -22,7 +22,6 @@
 	var keyword = '<%= request.getAttribute("keyword") %>';
 	$(document).ready(function() {
 		$.ajax({
-			//type: "POST",
 			url : "/porget/searchHashTagList",
 			data : {"base" : 1, "keyword":keyword},
 			success : function(data) {
@@ -33,9 +32,8 @@
 		$(document).scroll(function() {
 		    var maxHeight = $(document).height();
 		    var currentScroll = $(window).scrollTop() + $(window).height();
-		    if (maxHeight <= currentScroll) {
+		    if (maxHeight <= currentScroll+1) {
 				$.ajax({
-					//type: "POST",
 					url : "/porget/searchHashTagList",
 					data : {"base" : i++, "keyword":keyword},
 					success : function(data) {
