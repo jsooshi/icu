@@ -6,6 +6,7 @@
 <html lang="en">
 
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -51,6 +52,10 @@
 var realPath = "${realPath}";
 $(function(){ //jquery영역
 	
+	$(".carousel-indicators").children('li').eq(0).addClass("active");
+	$(".carousel-inner").children('div').eq(0).addClass("active");
+	$('.carousel').carousel()
+	
 	$.ajax({ //조회수 업데이트 
 		url: '/porget/replies/read',
 		type: 'post',
@@ -74,7 +79,6 @@ $(function(){ //jquery영역
 			 $('#replyArea').html(result);
 			 
 		 }
-		 
 	 })
 	 
 	}
@@ -109,8 +113,6 @@ $(function(){ //jquery영역
 			error:function(xhr,staTxt){
 				alert("에러?"+staTxt+':'+xhr.status)
 			}
-			
-			
 		})//ajax	
 		
 		
@@ -127,94 +129,154 @@ $(function(){ //jquery영역
 			$(this).val(content.substring(0, 100));
 			$('#counter').html('(100/최대100자)')
 		}
+	});
 	
 	$('#recommendBtn').click(function(){ //좋아요버튼
+		var writeName = '${list.UNAME}';
+		var uName = '${uname}';
+		
+		if(uName == ""){
+			alert("로그인 해주세요");	
+			return;
+		}else if(writeName === uName){
+			alert('본인의 글을 추천하실 수 없습니다');
+			return;
+		}else {
 			 $.ajax({
 				 url : '../portfolio/good',
+				 type: 'post',
 				 data: {
-					 pfnum : boardNum,
-					 uname : accessName
+					 pfnum : ${param.pfnum}
 				 },
 				 success: function(result){
-					 var recommend = $(result).find('div.recommend:eq(0)').html();
-					 $('.recommend').html(recommend); 
-					 }
-				 })
-			 });
-	
-	})
-	
+					 $('.recommend').html("좋아요수: "+result); 
+				}
+			})
+		}
+		
+	});
 }); //ready
-
-
 </script>
-
-
 </head>
 <body>
-	<div id="socketAlert" class="alert alert-success" role="alert" style="display:none"></div>
-	<div class="modal-dialog" role="document">
-	
-	   <div class="modal-content">
-	     <div class="modal-header">
-	      <h4 class="modal-title" id="myModalTitle">${list.PFNAME }</h4>
-			<button type="button" class="close" data-dismiss="modal">&times;</button>
-	     </div><!-- header -->
-	     <div class="modal-body">
-	       <img src="http://placehold.it/200" class="rounded-circle"
-					style="width: 20%;">
-				<div class="d-inline">
-					닉네임: ${list.UNAME }<br> 포지션: ${list.PFPOSITION }<br> 태그:
-					${list.TAGNAME }
-				</div>
 
-				[스크린샷]<br>
+	<jsp:include page="/WEB-INF/views/include/header.jsp"/>	
 
-				<c:forEach items="${thumb}" var="thumbImg">
-					<img alt="하하하" src="/porget/files/${thumbImg}"
-						style="max-height: 390px; max-width: 260px;">
-				</c:forEach>
 
-				조회수: <br> <a href="${list.PFURL }" class="btn btn-primary">
-					포트폴리오 링크 </a><br>
+    <!-- Page Content -->
+    <div class="container">
+        <div class="row">
+            <!-- Post Content Column -->
+            <div class="col-sm-12">
+                <!-- Title -->
+                <h1 class="mt-4">${list.PFNAME }</h1>
+                <!-- Author -->
+                <hr>
+                <!-- Date/Time -->
+                <p>${list.PFDATE}</p>
+                <hr>            
+            </div>
+            <div class="col-lg-8">
+                <!-- Preview Image -->
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <c:forEach items="${thumb}" var="thumbImg" varStatus="status">
+                            <li data-target="#carouselExampleIndicators" data-slide-to="${status.count-1 }"></li>
+                        </c:forEach>
+                    </ol>
+                    <div class="carousel-inner">
+                        <c:forEach items="${thumb}" var="thumbImg" varStatus="status">
+                            <div class="carousel-item">
+                                <img class="d-block w-100" src="/porget/files/${thumbImg }" alt="
+                                        slide">
+                            </div>
+                        </c:forEach>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+                <hr>
 
-				<button class="btn btn-danger" id="recommendBtn">좋아요</button>
-				<div class="recommend">
-					좋아요수: ${list.JOA }<br>
-				</div>
-				<a href="update?pfnum=${list.PFNUM }">수정</a><br> <a
-					href="delete?pfnum=${list.PFNUM }">삭제</a><br>
-				<hr>
-				<img src="http://placehold.it/200" class="rounded-circle"
-					style="width: 20%; display: inline;">
-				<div class="box-header with-border">
-					<h3 class="box-title">Comment</h3>
-					댓글 수: ${list.REPLYNUM }
-				</div>
-				<div class="box-body">
-						<c:choose>
-							<c:when test="${!empty uname }">
-								<textarea id="replyContents" rows="3" cols="60"
-									placeholder="내용을입력하세요"></textarea>
-								<br>
-								<span style="color: #aaa;" id="counter">(0/최대100자)</span>
-								<input type="button" value="저장" id="replySave">
-							</c:when>
-							<c:otherwise>
-								<textarea id="replyContents" rows="3" cols="60"
-									placeholder="로그인하세요" readonly></textarea>
-							</c:otherwise>
-						</c:choose>
-					</div>
-					<div id="replyArea">
-					<!-- 댓글 뿌려주기 -->
-				</div>
-	     </div><!-- modal body -->
-	     <div class="modal-footer">
-	      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-	     </div>
-	   </div>
-	 </div>
+                <!-- Post Content -->
+                <hr>
+                <c:choose>
+                        <c:when test="${list.UNAME == uname }">
+                            <a href="update?pfnum=${list.PFNUM }">수정</a> | 
+                            <a href="delete?pfnum=${list.PFNUM }">삭제</a><br>
+                        </c:when>
+                </c:choose>
+
+                <!-- Comments Form -->
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Comment</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                            <c:choose>
+                                <c:when test="${!empty uname }">
+                                    <textarea id="replyContents" rows="3" cols="60" placeholder="내용을입력하세요"></textarea>
+                                    <br>
+                                    <span style="color:#aaa;" id="counter">(0/최대100자)</span>
+                                    <input type="button" value="저장" id="replySave">
+                                </c:when>
+                                <c:otherwise>
+                                    <textarea id="replyContents" rows="3" cols="60" placeholder="로그인하세요"
+                                        readonly></textarea>
+                                </c:otherwise>
+                            </c:choose>
+
+
+                        </div>
+                    </div>
+                    <div class="box-footer" id="replyArea">
+                        <!-- 댓글 뿌려주기 -->
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Sidebar Widgets Column -->
+            <div class="col-md-4">
+                <div class="card my-4">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <img src="http://placehold.it/200" class="rounded-circle" style="width:50px;">
+                        </div>
+                        <div class="col-lg-8">
+                            <ul class="list-unstyled mb-0">
+                                <li>
+                                    ${list.UNAME }
+                                </li>
+                                <li>
+                                    ${list.PFPOSITION }
+                                </li>
+                                <li>
+                                    ${list.TAGNAME }
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="card my-4">
+                    <a href="${list.PFURL }" class="btn btn-primary pd-4">
+                            포트폴리오 링크
+                    </a>
+                    <button class="btn btn-danger" id="recommendBtn">좋아요</button>
+                </div>
+                <div class="card my-4">
+                    조회수: ${list.PFREAD }<br>
+                    <span class="recommend">좋아요수: ${list.JOA }</span>
+                </div>
+            </div>
+        </div>
+     </div>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
 		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"

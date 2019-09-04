@@ -1,3 +1,6 @@
+var xhr = null;
+
+
 function getXMLHttpRequest() { //XMLHttpRequest객체생성함수
 	if (window.ActiveXObject) {
 		try {
@@ -14,10 +17,8 @@ function getXMLHttpRequest() { //XMLHttpRequest객체생성함수
 	}
 }
 
-var xhr = null;
-
-function sendRequest(url, params, callback, method) {
-	xhr = getXMLHttpRequest(); //xhr: 비동기 서버 통신 객체!!
+function sendRequest(url, params, callback, method) {//사용자 정의 함수
+	xhr = getXMLHttpRequest();//xhr: 비동기 서버통신 객체!!
 	var httpMethod = method ? method : 'GET';
 	if (httpMethod != 'GET' && httpMethod != 'POST') {
 		httpMethod = 'GET';

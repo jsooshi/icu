@@ -7,6 +7,4 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	<typeAliases>
 		<package name="com.porget.domain"/>
 	</typeAliases>
-
-	
 </configuration>
