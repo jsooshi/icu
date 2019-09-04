@@ -1,114 +1,71 @@
 ﻿-- 테이블 순서는 관계를 고려하여 한 번에 실행해도 에러가 발생하지 않게 정렬되었습니다.
 
 -- user Table Create SQL
+DROP TRIGGER recommend_trg;
+drop table recommend;
+DROP TRIGGER reply_trg;
+DROP SEQUENCE reply_SEQ;
+drop table reply cascade CONSTRAINTS;
+DROP TRIGGER portfolio_trg;
+drop sequence portfolio_SEQ;
+drop table portfolio cascade CONSTRAINTS;
 drop table userList cascade CONSTRAINTS;
-
-
 
 CREATE TABLE userList
 (
-    uname     VARCHAR2(30)    unique NOT NULL, 
+    uname     VARCHAR2(30)    NOT NULL, 
     upass     VARCHAR2(30)    NOT NULL, 
-    uemail    VARCHAR2(60)    NOT NULL, 
-    uphoto    varchar2(1000)         NULL,
+    uemail    VARCHAR2(100)    NOT NULL, 
+    uphoto    varchar2(500)         NULL,
     ucheck     NUMBER          NULL,
-    CONSTRAINT userList_PK PRIMARY KEY (uemail)
+    uinfo     varchar2(500)         NULL,
+    CONSTRAINT userList_PK PRIMARY KEY (uname)
 );
 
-INSERT INTO userList VALUES ('afterup','1234','afterup@naver.com',userList_SEQ.nextval,0);
 
-drop sequence userList_SEQ;
-CREATE SEQUENCE userList_SEQ
-START WITH 1
-INCREMENT BY 1;
-
-COMMENT ON TABLE userList IS '회원'
-;
-
-COMMENT ON COLUMN userList.uname IS '닉네임(U)'
-;
-
-COMMENT ON COLUMN userList.upass IS '비밀번호'
-;
-
-COMMENT ON COLUMN userList.uemail IS '이메일'
-;
-
-COMMENT ON COLUMN userList.uphoto IS '프로필사진'
-;
-
-COMMENT ON COLUMN userList.ucheck IS '관리자 체크'
-;
-
-
-drop table portfolio cascade CONSTRAINTS;
 CREATE TABLE portfolio
 (
     uname         VARCHAR2(30)     NOT NULL, 
     pfnum         NUMBER           NOT NULL, 
-    pfname        VARCHAR2(30)     NOT NULL, 
+    pfname        VARCHAR2(90)     NOT NULL, 
     pfdate        DATE             default sysdate not null, 
     pfthumb       VARCHAR2(1000)     NOT NULL, 
     pfread        NUMBER           NOT NULL, 
-    pfurl         VARCHAR2(200)    NULL, 
-    pffile        VARCHAR2(200)    NULL, 
-    pfposition    VARCHAR2(30)     NOT NULL,
-    tagname       VARCHAR2(100)    NULL,
+    pfurl         VARCHAR2(500)    NULL, 
+    pffile        VARCHAR2(500)    NULL, 
+    pfposition    VARCHAR2(90)     NOT NULL,
+    tagname       VARCHAR2(250)    NULL,
     CONSTRAINT PORTFOLIO_PK PRIMARY KEY (pfnum)
 )
 ;
 
 
-INSERT INTO portfolio VALUES ('afterup',portfolio_SEQ.nextval, '포트폴리오명',to_date(sysdate,'yyyy.mm.dd hh24:mi'),'cat.jpg',0,null,null,'웹개발자','JAVA, JAVASCRIPT')
-
-drop sequence portfolio_SEQ;
 CREATE SEQUENCE portfolio_SEQ
 START WITH 1
 INCREMENT BY 1;
 
-COMMENT ON TABLE portfolio IS '포트폴리오'
-;
-
-COMMENT ON COLUMN portfolio.uname IS '닉네임(U)'
-;
-
-COMMENT ON COLUMN portfolio.pfnum IS '게시글 넘버'
-;
-
-COMMENT ON COLUMN portfolio.pfname IS '제목'
-;
-
-COMMENT ON COLUMN portfolio.pfdate IS '등록일'
-;
-
-COMMENT ON COLUMN portfolio.pfthumb IS '썸네일'
-;
-
-COMMENT ON COLUMN portfolio.pfread IS '조회수'
-;
-
-COMMENT ON COLUMN portfolio.pfurl IS '내용url'
-;
-
-COMMENT ON COLUMN portfolio.pffile IS '파일url'
-;
-
-COMMENT ON COLUMN portfolio.pfposition IS '포지션'
-;
-COMMENT ON COLUMN portfolio.tagname IS '태그명'
-;
 
 ALTER TABLE portfolio
     ADD CONSTRAINT FK_portfolio_uname FOREIGN KEY (uname)
-        REFERENCES userList (uname)ON DELETE CASCADE;
+        REFERENCES userList (uname)ON DELETE CASCADE
+;
+
+CREATE OR REPLACE TRIGGER portfolio_trg
+    AFTER UPDATE ON userList FOR EACH ROW
+    BEGIN
+        UPDATE portfolio
+        SET uname = :NEW.uname
+        WHERE uname = :OLD.uname;
+    END;
+/
+        
 
 
-drop table reply cascade CONSTRAINTS;
 CREATE TABLE reply
 (
     pfnum       NUMBER           NOT NULL, 
     rcontent    VARCHAR2(300)    NOT NULL, 
-    uname       VARCHAR2(30)     NOT NULL, 
+    uname       VARCHAR2(30)     NULL, 
     rdate       DATE             default sysdate NOT NULL, 
     rnum        NUMBER           NOT NULL,
     rdeep       NUMBER           NOT NULL, 
@@ -117,80 +74,30 @@ CREATE TABLE reply
 )
 ;
 
-DROP SEQUENCE reply_SEQ;
+
 CREATE SEQUENCE reply_SEQ
 START WITH 1
 INCREMENT BY 1;
-
-
-COMMENT ON TABLE reply IS '댓글'
-;
-
-COMMENT ON COLUMN reply.pfnum IS '게시글 넘버'
-;
-
-COMMENT ON COLUMN reply.rcontent IS '댓글내용'
-;
-
-COMMENT ON COLUMN reply.uname IS '닉네임(U)'
-;
-
-COMMENT ON COLUMN reply.rdate IS '댓글게시일'
-;
-
-COMMENT ON COLUMN reply.rnum IS '댓글번호'
-;
-
-COMMENT ON COLUMN reply.rdeep IS '댓글 깊이'
-;
-
-COMMENT ON COLUMN reply.rgroup IS '댓글 그룹'
-;
 
 ALTER TABLE reply
     ADD CONSTRAINT FK_reply_pfnum FOREIGN KEY (pfnum)
         REFERENCES portfolio (pfnum)on delete cascade
 ;
-
-
-drop table recruiter cascade CONSTRAINTS;
-CREATE TABLE recruiter
-(
-    cname      VARCHAR2(60)    NOT NULL, 
-    cemail     VARCHAR2(40)    NOT NULL, 
-    cdomain    VARCHAR2(60)    NULL, 
-    cphoto     varchar2(1000)   NULL, 
-    cpass      VARCHAR2(20)    NOT NULL, 
-    CONSTRAINT RECRUITER_PK PRIMARY KEY (cemail)
-)
-;
-
-DROP SEQUENCE recruiter_SEQ;
-CREATE SEQUENCE recruiter_SEQ
-START WITH 1
-INCREMENT BY 1;
-
-COMMENT ON TABLE recruiter IS '채용담당자'
-;
-
-COMMENT ON COLUMN recruiter.cname IS '회사명'
-;
-
-COMMENT ON COLUMN recruiter.cemail IS '회사이메일'
-;
-
-COMMENT ON COLUMN recruiter.cdomain IS '회사도메인'
-;
-
-COMMENT ON COLUMN recruiter.cphoto IS '프로필사진(ex 로고)'
-;
-
-COMMENT ON COLUMN recruiter.cpass IS '비밀번호'
+ALTER TABLE reply
+    ADD CONSTRAINT FK_reply_uname FOREIGN KEY (uname)
+        REFERENCES userList (uname)on delete set null
 ;
 
 
-drop table recommend;
-;
+CREATE OR REPLACE TRIGGER reply_trg
+    AFTER UPDATE ON userList FOR EACH ROW
+    BEGIN
+        UPDATE reply
+        SET uname = :NEW.uname
+        WHERE uname = :OLD.uname;
+    END;
+/
+
 CREATE TABLE recommend
 (
     pfnum    NUMBER          NOT NULL, 
@@ -198,19 +105,44 @@ CREATE TABLE recommend
 )
 ;
 
-
-COMMENT ON TABLE recommend IS '추천수'
-;
-
-COMMENT ON COLUMN recommend.pfnum IS '게시글 넘버'
-;
-
-COMMENT ON COLUMN recommend.uname IS '닉네임(U)'
-;
-
 ALTER TABLE recommend
     ADD CONSTRAINT FK_recommend_pfnum FOREIGN KEY (pfnum)
         REFERENCES portfolio (pfnum)ON DELETE CASCADE
 ;
+ALTER TABLE recommend
+    ADD CONSTRAINT FK_recommend_uname FOREIGN KEY (uname)
+        REFERENCES userList (uname)on delete set null
+;
 
-select * from userList;
+
+CREATE OR REPLACE TRIGGER recommend_trg
+    AFTER UPDATE ON userList FOR EACH ROW
+    BEGIN
+        UPDATE recommend
+        SET uname = :NEW.uname
+        WHERE uname = :OLD.uname;
+    END;
+/
+      
+--user 추가
+INSERT INTO userList VALUES ('gildong','1a2s3d4f','gildong@naver.com','yellow.png',4,null);
+INSERT INTO userList VALUES ('afterup','asd1234','afterup@naver.com','girl.png',0,'심아영입니다.');
+INSERT INTO userList values ('jsooshi','1q2w3e4r','jsooshi@gmail.com','수염.png',0,'박종수입니다.');
+INSERT INTO userList values ('yunajo','1q2w1q2w','yunajo@gmail.com','라이언.jpg',0,'조윤아입니다.');
+INSERT INTO userList values ('jinju','1q2w3e5t','jinju@gmail.com','어피치.jpg',0,'이진주입니다');
+INSERT INTO userList values ('jihwan','1q2w3e6y','jihwan@gmail.com','상담원.png',0,'최지환입니다');
+INSERT INTO userList values ('bonjin','1q2w3e6y','bonjin@gmail.com','ugi.png',0,'구본진입니다');
+INSERT INTO userList values ('rhrnak','1q2w3e6y','rhrnak@gmail.com','who.jpg',0,'사용자2입니다');
+INSERT INTO userList values ('ekdrms','1q2w3e6y','ekdrms@gmail.com','하이.png',0,'사용자3입니다');
+INSERT INTO userList values ('ghrnak','1q2w3e6y','ghrnak@gmail.com','의사.png',2,'사용자4입니다');
+INSERT INTO userList values ('새우우','1q2w3e6y','todndn@gmail.com','동석.jpg',2,'사용자5입니다');
+
+
+INSERT INTO portfolio VALUES ('afterup',portfolio_SEQ.nextval, '이렇게 만들었습니다',to_date(sysdate,'yyyy.mm.dd hh24:mi'),'이렇게 만든다.jpg',2,'https://www.youtube.com/watch?v=RQSUnhri518',null,'웹개발자','#JAVA#JAVASCRIPT');
+INSERT INTO portfolio VALUES ('jsooshi',portfolio_SEQ.nextval, '무조건 뽑힙니다',to_date(sysdate,'yyyy.mm.dd hh24:mi'),'무조건뽑히는포트폴리오.jpg',2,'https://www.youtube.com/watch?v=SvKCs-80uk4',null,'백엔드','#파이썬');
+INSERT INTO portfolio VALUES ('yunajo',portfolio_SEQ.nextval, '열정이 가득',to_date(sysdate,'yyyy.mm.dd hh24:mi'),'열정이 가득.jpg',2,'https://www.youtube.com/watch?v=UJwU85tTevI',null,'백엔드','#java#SPRING#websocket');
+INSERT INTO portfolio VALUES ('jinju',portfolio_SEQ.nextval, '클린합니다',to_date(sysdate,'yyyy.mm.dd hh24:mi'),'클린.jpg',2,'https://www.youtube.com/watch?v=yYOVnZts0Ns',null,'프론트엔드','#javascript#spring');
+INSERT INTO portfolio VALUES ('jihwan',portfolio_SEQ.nextval, '공략법',to_date(sysdate,'yyyy.mm.dd hh24:mi'),'공략법.png',2,'https://www.youtube.com/watch?v=x60mB0zXZ38',null,'웹개발자','#WEB#INFO');
+INSERT INTO portfolio VALUES ('bonjin',portfolio_SEQ.nextval, '이정도다',to_date(sysdate,'yyyy.mm.dd hh24:mi'),'문의.png',2,'https://www.youtube.com/watch?v=fwjyFSbFkT0',null,'웹개발자','#JAVA#JAVASCRIPT');
+INSERT INTO portfolio VALUES ('rhrnak',portfolio_SEQ.nextval, '자소서가아니다',to_date(sysdate,'yyyy.mm.dd hh24:mi'),'자소서가아니다.png',2,'https://www.youtube.com/watch?v=50uiNkGLfHI',null,'웹개발자','#JAVA#JAVASCRIPT');
+INSERT INTO portfolio VALUES ('ekdrms',portfolio_SEQ.nextval, '당근의 포트폴리오입니다',to_date(sysdate,'yyyy.mm.dd hh24:mi'),'20171124171320_SEU.jpg',2,'https://www.youtube.com/watch?v=YnLtR9HT52U',null,'웹개발자','#당근');

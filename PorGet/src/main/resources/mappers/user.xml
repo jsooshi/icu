@@ -5,8 +5,7 @@
 <mapper namespace="userList">    
 	<!-- 회원가입 -->
 	<insert id="insert">
-		insert into userList (uname, upass, uemail)
-		values (#{uname}, #{upass}, #{uemail})
+		insert into userList values (#{uname}, #{upass}, #{uemail},#{uphoto},0)
 	</insert>
 	
 	<!-- 로그인 -->
@@ -27,6 +26,21 @@
 		select count(*) from userList
 		where uemail = #{uemail}
 	</select>
+	
+	<!-- 마이페이지 -->
+	<select id="selectUser" resultType="UserVO">
+		SELECT * FROM userlist WHERE uname = #{uname}
+	</select>
+	
+	<update id="changeUname">
+		UPDATE userlist SET uname = #{uname}
+	</update>
+	
+	
+	<select id="selectPortfolio" resultType="Map">
+		SELECT * FROM portfolio WHERE uname= #{uname}
+	</select>
+	
 	
 
 </mapper>

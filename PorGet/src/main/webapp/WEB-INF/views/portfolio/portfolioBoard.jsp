@@ -6,17 +6,19 @@
 <jsp:include page="/WEB-INF/views/include/header.jsp" />
 
 <div class="container">
-	<h3>게시판</h3>
-	<hr>
-	<!-- <div id="div01"	style="text-align: center; border: 1px solid #5AAFFF; height: 500px; overflow-y: scroll;"> -->
-	<div class="wrap-loading"><img src="/porget/img/Spin-1s-200px.gif"/></div>
-	<div id="divContent" class="row"></div>
-	<!-- </div> -->
+	<div class="content">
+		<h3>게시판</h3>
+		<hr>
+		<!-- <div id="div01"	style="text-align: center; border: 1px solid #5AAFFF; height: 500px; overflow-y: scroll;"> -->
+		<div class="wrap-loading"><img src="/porget/img/Spin-1s-200px.gif"/></div>
+		<div id="divContent" class="row"></div>
+		<!-- </div> -->
+	</div>
 </div>
 
-<!-- 글생성 버튼 -->
+<!-- 글작성 버튼 -->
 <div class="bg-white p-4 rounded shadow-sm h-100">
-	<a href="portfolio/post" class="btn-post btn btn-primary btn-circle btn-circle-xl m-1">+</a>
+	<button class="btn-post btn btn-primary btn-circle btn-circle-xl m-1">+</button>
 </div>
 
 <!-- 모달창 -->
@@ -69,7 +71,7 @@
 
 		    var maxHeight = $(document).height();
 		    var currentScroll = $(window).scrollTop() + $(window).height();
-		    if (maxHeight <= currentScroll) {
+		    if (maxHeight <= currentScroll+1) {
 				$.ajax({
 					url : "/porget/portfolio/partPopular",
 					data : {
@@ -81,6 +83,16 @@
 				});
 			}
 		});
+		
+		// 글작성버튼 유효성
+		$('.btn-post').click(function(){
+			if('${uname}'===""){
+				alert('로그인 해주세요');
+				return;
+			}else {
+				location.href = 'portfolio/post';
+			}
+		})
 	});
 </script>
 

@@ -1,23 +1,24 @@
 package com.porget.control;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.porget.domain.PortfolioVO;
@@ -91,7 +92,21 @@ public class PortfolioController {
 
 
 	@GetMapping("/view")
-	public String portfolioView(int pfnum,HttpServletRequest request) {// 게시글 클릭시 포트폴리오 뷰
+	public String portfolioView(int pfnum,HttpServletRequest request, HttpServletResponse response) {// 게시글 클릭시 포트폴리오 뷰
+		if(request.getSession().getAttribute("uname")==""||request.getSession().getAttribute("uname")==null) {
+			PrintWriter out;
+			try {
+				//request.setCharacterEncoding("UTF-8");
+				//response.setCharacterEncoding("UTF-8");
+				response.setContentType("text/html; charset=UTF-8");
+				out = response.getWriter();
+				out.println("<script>history.go(-1);alert('권한이 없습니다.');</script>");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return null;
+		};
+		
 		List<Map> list = dao.selectPortfolio(pfnum);
 		request.setAttribute("list",list.get(0));
 		request.setAttribute("realPath", request.getSession().getServletContext().getRealPath("/resources/files"));
@@ -208,24 +223,18 @@ public class PortfolioController {
 	
 	/*좋아요 기능*/
 	@RequestMapping("/good")
-	public String insertGood(int pfnum,HttpSession session) {
+	public @ResponseBody int insertGood(int pfnum,HttpSession session) {
 		String uname = (String) session.getAttribute("uname");
 		Map<String,Object> recommend = new HashMap<String,Object>();
 		recommend.put("pfnum", pfnum);
 		recommend.put("uname", uname);
 		System.out.println(recommend);
 		if(dao.distinctRecommend(recommend)==0) {
-			System.out.println("ok");
-			if(dao.insertRecommend(recommend)==1) {
-				System.out.println("추가완료");
-			}else{
-				System.out.println("추가실패");
-			}
+			dao.insertRecommend(recommend);
 		}else {
-			System.out.println("no");
 			dao.deleteRecommend(recommend);
 		}
-		return "redirect:/portfolio/view?pfnum="+pfnum;
+		return dao.selectRecommend(pfnum);
 	}
 
 }

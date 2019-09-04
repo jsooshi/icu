@@ -9,8 +9,7 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>PorGet</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<link rel="stylesheet" href="css/main.css">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" href="/porget/css/main.css">
 	<script src="/porget/js/jquery-3.js"></script>  
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script type="text/javascript">
@@ -107,6 +106,8 @@
 
 <body>
 <!-- Navigation -->
+<!-- 상단에  알람바 변경 -->
+<div id="socketAlert" class="alert alert-success" role="alert" style="display:none"></div> 
 <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
 	<a href="/porget" class="navbar-brand">
 	    <img id="logo" class="d-inline-block mr-1" alt="Logo" src="/porget/img/main/dotty.svg">
@@ -140,15 +141,14 @@
 					<!-- <button onclick="location.href='portfolio/post'" class="btn btn-primary">Posting!</button> -->
 					<div class="dropdown show">
 						  <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						  	<img src="http://placehold.it/200" class="rounded-circle" style="width: 20%;">
+ 						  	<img src="/porget/files/profile/${uphoto }" class="rounded-circle" style="width: 50px; height:50px;"> 
 						  </a>
 						
-						  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+						  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
 						    <div class="dropdown-item">${uname }님 환영합니다! </div>
-						    <a class="dropdown-item" href="#">프로필</a>
-						    <a class="dropdown-item" href="#">포트폴리오</a>
-						    <a class="dropdown-item" href="#">북마크</a>
-						    <a class="dropdown-item" href="#">마이페이지</a>
+						    <a class="dropdown-item" href="/porget/mypage#portfolio">포트폴리오</a>
+						    <a class="dropdown-item" href="/porget/mypage#bookmark">북마크</a>
+						    <a class="dropdown-item" href="/porget/mypage">마이페이지</a>
 						    <a class="dropdown-item" href="/porget/logout">로그아웃</a>
 						  </div>
 					</div>
