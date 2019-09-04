@@ -3,6 +3,7 @@ package com.porget.persistence;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -61,6 +62,12 @@ public class PorgetDAOImpl implements PorgetDAO {
 	public void deleteRec(String cemail) {
 		sqlSession.delete("porget.deleteRec", cemail);
 		
+	}
+
+	@Override
+	public List<Portget_ordinaryVO> listAll(int base) {
+		RowBounds bounds = new RowBounds((base-1)*10, 10);
+		return sqlSession.selectList("porget.listAll", null, bounds);
 	}
 	
 	

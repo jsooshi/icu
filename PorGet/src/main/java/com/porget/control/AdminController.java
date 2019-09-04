@@ -114,7 +114,11 @@ public class AdminController {
 		
 	}
 	
-	
+	@RequestMapping("/listAll")
+	public String listAll(Model m, int base) {	
+		m.addAttribute("list", porgetDAO.listAll(base));
+		return "admin/member_ordinary";	
+	}
 	
 	
 	
