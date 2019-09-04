@@ -47,7 +47,7 @@
 							무료로 가입하세요
 						</p>
 
-						<button type="button" class="btn btn-block btn-lg btn-primary">
+						<button type="button" class="btn btn-block btn-lg btn-primary" onclick="location.href='/porget/recrujoin'">>
 							Join
 						</button>
 					</div>
@@ -66,7 +66,7 @@
 
 						</p>
 
-						<button type="button" class="btn btn-block btn-lg btn-primary"">
+						<button type="button" class="btn btn-block btn-lg btn-primary" onclick="location.href='/porget/userjoin'">
 							join
 						</button>
 					</div>

@@ -1,23 +1,41 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>회원 상세정보</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<style type="text/css">
+label {font-size: 30px;}
+</style>
 </head>
 <body>
 <br><br>
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12">
-		<img alt="Bootstrap Image Preview" src="https://ifh.cc/g/LKsPb.png" class="rounded-circle" />
-		&nbsp;&nbsp;&nbsp;<input type="text" value="하늘다람쥐" style="font-weight: bold"  width="100" height="100">
+		<img alt="Bootstrap Image Preview" src="/porget/img/member/${uphoto}" class="rounded-circle" />
+		<!-- 이미지 사이즈 조정해야함  -->
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label for="uName" style="font-weight: bold">${uname }</label>
 		<br>
 		<br>
 		<br>
-		<h6>포트폴리오</h6>
+		<h4>포트폴리오</h4>
+		<br>
+		<br>
+		<c:forEach items="${list }" var="my">
+		<div>
+		${my.UNAME },
+		${my.PFNAME },
+		${my.REPLYNUM },
+		${my.PFTHUMB },
+		${my.PFREAD },
+		${my.UPHOTO },
+		${my.JOA }
+		</div>
+		</c:forEach> 
 		</div>
 	</div>
 </div>

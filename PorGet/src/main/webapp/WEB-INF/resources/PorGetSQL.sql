@@ -3,16 +3,19 @@
 -- user Table Create SQL
 drop table userList cascade CONSTRAINTS;
 
+
+
 CREATE TABLE userList
 (
     uname     VARCHAR2(30)    unique NOT NULL, 
-    upass     VARCHAR2(20)    NOT NULL, 
+    upass     VARCHAR2(30)    NOT NULL, 
     uemail    VARCHAR2(60)    NOT NULL, 
-    uphoto    NUMBER          NULL,
+    uphoto    varchar2(1000)         NULL,
     ucheck     NUMBER          NULL,
     CONSTRAINT userList_PK PRIMARY KEY (uemail)
 );
 
+INSERT INTO userList VALUES ('afterup','1234','afterup@naver.com',userList_SEQ.nextval,0);
 
 drop sequence userList_SEQ;
 CREATE SEQUENCE userList_SEQ
@@ -45,7 +48,7 @@ CREATE TABLE portfolio
     pfnum         NUMBER           NOT NULL, 
     pfname        VARCHAR2(30)     NOT NULL, 
     pfdate        DATE             default sysdate not null, 
-    pfthumb       VARCHAR2(60)     NOT NULL, 
+    pfthumb       VARCHAR2(1000)     NOT NULL, 
     pfread        NUMBER           NOT NULL, 
     pfurl         VARCHAR2(200)    NULL, 
     pffile        VARCHAR2(200)    NULL, 
@@ -54,6 +57,9 @@ CREATE TABLE portfolio
     CONSTRAINT PORTFOLIO_PK PRIMARY KEY (pfnum)
 )
 ;
+
+
+INSERT INTO portfolio VALUES ('afterup',portfolio_SEQ.nextval, '포트폴리오명',to_date(sysdate,'yyyy.mm.dd hh24:mi'),'cat.jpg',0,null,null,'웹개발자','JAVA, JAVASCRIPT')
 
 drop sequence portfolio_SEQ;
 CREATE SEQUENCE portfolio_SEQ
@@ -153,7 +159,7 @@ CREATE TABLE recruiter
     cname      VARCHAR2(60)    NOT NULL, 
     cemail     VARCHAR2(40)    NOT NULL, 
     cdomain    VARCHAR2(60)    NULL, 
-    cphoto     NUMBER          NULL, 
+    cphoto     varchar2(1000)   NULL, 
     cpass      VARCHAR2(20)    NOT NULL, 
     CONSTRAINT RECRUITER_PK PRIMARY KEY (cemail)
 )
@@ -188,17 +194,10 @@ drop table recommend;
 CREATE TABLE recommend
 (
     pfnum    NUMBER          NOT NULL, 
-    uname    VARCHAR2(30)    NULL, 
-    CONSTRAINT recommend_PK PRIMARY KEY (pfnum)
+    uname    VARCHAR2(30)    NULL
 )
 ;
 
-DROP SEQUENCE recommend_SEQ;
-;
-CREATE SEQUENCE recommend_SEQ
-START WITH 1
-INCREMENT BY 1;
-;
 
 COMMENT ON TABLE recommend IS '추천수'
 ;
@@ -214,6 +213,7 @@ ALTER TABLE recommend
         REFERENCES portfolio (pfnum)ON DELETE CASCADE
 ;
 
+<<<<<<< HEAD
      VARCHAR2(30)    unique NOT NULL, 
          VARCHAR2(20)    NOT NULL, 
       
@@ -232,3 +232,6 @@ insert into recruiter (cname, cemail, cdomain, cpass) values ('ecne', 'ecnen@gma
 insert into recruiter (cname, cemail, cdomain, cpass) values ('econike', 'econike@gmail.com', 'www.nike.com',8888);
 
 
+=======
+select * from userList;
+>>>>>>> 92610d53a9e8831240c448bcca7695b6a6428208
