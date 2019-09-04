@@ -102,12 +102,42 @@
 		}	
 	
 	</script>  
+	<script>
+	var socket = null;
+	$(document).ready(function(){
+		connectWS();	
+	})
+	
+	function connectWS(){
+		var ws = new WebSocket("ws://192.168.0.124/porget/replyEcho?pfnum=1");
+		socket = ws
+		ws.onopen = function(){
+		console.log('Info: connection opened')
+	};
+	
+		ws.onmessage = function (event) {
+		console.log(event.data+'\n');
+		$('#socketAlert').html(event.data);
+		$('#socketAlert').css("display","block");
+		setTimeout(function(){
+			$('#socketAlert').css("display","none");
+		},7000)
+	}	
+	
+		ws.onclose = function (event) {
+			console.log('Info: connecion closed')
+			setTimeout(function () {connect()},1000); //retry connection	
+	}
+		ws.onerror = function (err) { console.log('error: ', err)}
+	
+	}	
+</script>
 </head>
 
 <body>
 <!-- Navigation -->
 <!-- 상단에  알람바 변경 -->
-<div id="socketAlert" class="alert alert-success" role="alert" style="display:none"></div> 
+<div id="socketAlert" class="alert alert-success" role="alert" style="display:none;left:0px ;top:100px; position: fixed; z-index: 1;"></div> 
 <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
 	<a href="/porget" class="navbar-brand">
 	    <img id="logo" class="d-inline-block mr-1" alt="Logo" src="/porget/img/main/dotty.svg">
