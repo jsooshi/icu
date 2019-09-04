@@ -10,14 +10,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	
-	<!-- <link rel="stylesheet"
+	<link rel="stylesheet"
 		href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-<<<<<<< HEAD
 		crossorigin="anonymous">
 	<link rel="stylesheet" href="/porget/css/modal.css">
-=======
-		crossorigin="anonymous"> -->
 >>>>>>> feature/portfolio
 <title>Document</title>
 <script src="/porget/js/jquery-3.js"></script>
@@ -188,7 +185,7 @@ $(function(){ //jquery영역
 		        <a href="delete?pfnum=${list.PFNUM }">삭제</a><br>
 	    	</c:when>
 	    </c:choose>
-        <hr>
+       <hr>
         
                 [댓글] <!-- 댓글작성 -->
         <img src="http://placehold.it/200" class="rounded-circle" style="width:20%; display:inline;">
