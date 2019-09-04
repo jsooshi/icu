@@ -60,8 +60,8 @@
 				alert("닉네임을 입력해주세요!");
 				$('#userName').focus();
 				return false;
-			}else if(!/^[a-zA-Z0-9]{3,6}$/.test($('#userName').val())){
-				alert("닉네임은 한글, 영문 3~6글자로 입력해주세요! (공백,특수문자X)");
+			}else if(!/^[a-zA-Z0-9]{3,10}$/.test($('#userName').val())){
+				alert("닉네임은 한글, 영문 3~10글자로 입력해주세요! (공백,특수문자X)");
 				return false;
 			}
 			
@@ -76,7 +76,7 @@
 				$("#userPass").focus();
 				return false;
 			}else if(!/^[a-zA-Z0-9]{6,10}$/.test($('#userPass').val())){
-				alert("비밀번호는 영문, 숫자 6~10글자로 입력해주세요 ")
+				alert("비밀번호는 영문, 숫자 6~10글자로 입력해주세요! (공백,특수문자X)")
 				$('#userPass').val("");
 				$('#userPass').focus();
 				return false;

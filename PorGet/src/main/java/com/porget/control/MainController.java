@@ -186,10 +186,10 @@ public class MainController {
 		return msg;
 	}
 	
-	@RequestMapping("myPage")
-	public String myPage() {
+	@RequestMapping("findPass")
+	public String findPass() {
 		
-		return "main/myPage";
+		return "main/findPass";
 	}
 
 	@RequestMapping("/searchKey")
