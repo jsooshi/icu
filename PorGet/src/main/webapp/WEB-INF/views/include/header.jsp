@@ -106,6 +106,8 @@
 
 <body>
 <!-- Navigation -->
+<!-- 상단에  알람바 변경 -->
+<div id="socketAlert" class="alert alert-success" role="alert" style="display:none"></div> 
 <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
 	<a href="/porget" class="navbar-brand">
 	    <img id="logo" class="d-inline-block mr-1" alt="Logo" src="/porget/img/main/dotty.svg">

@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-
 <!-- footer -->
 <footer>
 	<div class="container-fluid padding">
@@ -15,6 +14,37 @@
 		</div>
 	</div>
 </footer>
+<script>
+	var socket = null;
+	$(document).ready(function(){
+		connectWS();	
+	})
+	
+	function connectWS(){
+		var ws = new WebSocket("ws://localhost/porget/replyEcho?pfnum=1");
+		socket = ws
+		ws.onopen = function(){
+		console.log('Info: connection opened')
+	};
+	
+		ws.onmessage = function (event) {
+		console.log(event.data+'\n');
+		$('#socketAlert').html(event.data);
+		$('#socketAlert').css("display","block");
+		setTimeout(function(){
+			$('#socketAlert').css("display","none");
+		},7000)
+	}	
+	
+		ws.onclose = function (event) {
+			console.log('Info: connecion closed')
+			setTimeout(function () {connect()},1000); //retry connection	
+	}
+		ws.onerror = function (err) { console.log('error: ', err)}
+	
+	}	
+</script>	
+
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
 	<script
