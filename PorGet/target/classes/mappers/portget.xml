@@ -64,4 +64,10 @@
    		delete from recruiter
    		where cemail = #{cemail}
    </delete>
+   
+   <select id="listAll" resultType="Portget_ordinaryVO">
+   		select uemail, uname, ucheck
+   		from userList
+   		order by uname
+   </select>
 </mapper>

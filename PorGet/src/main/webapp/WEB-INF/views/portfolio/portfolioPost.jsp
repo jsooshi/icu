@@ -1,15 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>포트폴리오 등록</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>포트폴리오 등록</title>
 <script src="/porget/js/jquery-3.js"></script>
-<script src="/porget/js/portfolioPost.js"></script>
 <link rel="stylesheet" href="/porget/css/portfolioPost.css">
 <script type="text/javascript">
 	var fileCount =0;
@@ -77,10 +76,11 @@
 				$('#uploadFile').focus();
 				return;
 			}
-			formData.append("pfname",$('input[name=pfname]:eq(0)').val())
-			formData.append("pfurl",$('input[name=pfurl]:eq(0)').val())
-			formData.append("pfposition",$('input[name=pfposition]:eq(0)').val())
-			formData.append("tagname",tagNames)
+			
+			formData.append("pfname",$('input[name=pfname]:eq(0)').val().replace("<", "&lt;").replace(">", "&gt;"))
+			formData.append("pfurl",$('input[name=pfurl]:eq(0)').val(.replace("<", "&lt;").replace(">", "&gt;")))
+			formData.append("pfposition",$('input[name=pfposition]:eq(0)').val().replace("<", "&lt;").replace(">", "&gt;"))
+			formData.append("tagname",tagNames.replace("<", "&lt;").replace(">", "&gt;"))
 			
 			for(var i=0;i<fileCount;i++){
 				formData.append("uploadFile",fileList.get($("#dataList tr").eq(i).children("td:eq(0)").html()));
@@ -152,53 +152,67 @@
 		});
 		
 	});
-</script>     
+</script>
+
 </head>
 <body>
-	<div class="container" style="margin-left: 300px;">
-  <div class="row">
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">                        
-        <h2>Contact</h2>
-      </div>
-  </div>
-  <div class="row">
-      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xs-offset-3">
-          <form id="contact-form" class="form" action="#" method="POST" role="form">
-              <div class="form-group">
-              
-              
-              
-                  <label class="form-label" for="pfname">포트폴리오 제목</label>
-                  <input type="text" class="form-control" id="pfname" name="pfname" placeholder="포트폴리오 제목" tabindex="1" required>
-              </div>                            
-              <div class="form-group">
-                  <label class="form-label" for="pfurl">포트폴리오 url</label>
-                  <input type="text" class="form-control" id="pfurl" name="pfurl" placeholder="포트폴리오 url" tabindex="2">
-              </div>                            
-              <div class="form-group">
-                  <label class="form-label" for="pfposition">포지션</label>
-                  <input type="text" class="form-control" id="pfposition" name="pfposition" placeholder="포지션" tabindex="3">
-              </div>                            
-              <div class="form-group">
-                  <label class="form-label" for="tagname">tag</label>
-                  <span id="tags"></span><input type="text" class="form-control" id="tagname" name="tagname" placeholder="태그를 입력하세요" tabindex="4">
-              </div>
-              <div class="form-group">
-                  <label class="form-label" for="uploadFile">썸네일 등록</label>
-                  <input type="file" class="form-control" id="uploadFile" name="uploadFile" placeholder="썸네일 등록" tabindex="5" required multiple>
-                  <table><thead><tr><th width="500px">제목</th><th width="300px">삭제</th></tr></thead>
-				  <tbody id="dataList">
-				  </tbody>
-			</table><br>
-              </div>                            
-              <div class="text-center">
-                  <button type="button" class="btn btn-start-order" id='uploadBtn'>Send Message</button>
-              </div>
-          </form>
-      </div>
-  </div>
-</div>
+
+	<jsp:include page="/WEB-INF/views/include/header.jsp" />
+
+	<div class="container">
+				<h3>포트폴리오 등록</h3>
+		<div class="row">
+		
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xs-offset-3">
+				<form id="contact-form" class="form" action="#" method="POST"
+					role="form">
+					<div class="form-group">
+						<label for="pfname">제목</label> <input
+							type="text" class="form-control" id="pfname" name="pfname"
+							placeholder="제목" tabindex="1" required>
+					</div>
+					<div class="form-group">
+						<label for="pfurl">포트폴리오 주소</label> <input
+							type="text" class="form-control" id="pfurl" name="pfurl"
+							placeholder="포트폴리오 주소" tabindex="2">
+					</div>
+					<div class="form-group">
+						<label for="pfposition">포지션</label> <input
+							type="text" class="form-control" id="pfposition"
+							name="pfposition" placeholder="포지션" tabindex="3">
+					</div>
+					<div class="form-group">
+						<label for="tagname">태그</label> <span
+							id="tags"></span><input type="text" class="form-control"
+							id="tagname" name="tagname" placeholder="태그" tabindex="4">
+					</div>
+					<div class="form-group">
+						<label for="uploadFile">사진 등록</label> <input
+							type="file" class="form-control" id="uploadFile"
+							name="uploadFile" placeholder="썸네일 등록" tabindex="5" required
+							multiple>
+						<table class="table">
+							<thead>
+								<tr>
+									<th width="500px">사진제목</th>
+									<th width="300px">삭제</th>
+								</tr>
+							</thead>
+							<tbody id="dataList">
+							</tbody>
+						</table>
+						<br>
+					</div>
+					<div class="text-center">
+						<button type="button" class="btn btn-primary" id='uploadBtn'>등록</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 	
-	
+	<jsp:include page="/WEB-INF/views/include/footer.jsp"/>	
+
+
 </body>
 </html>

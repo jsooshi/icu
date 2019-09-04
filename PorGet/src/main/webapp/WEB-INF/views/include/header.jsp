@@ -106,6 +106,8 @@
 
 <body>
 <!-- Navigation -->
+<!-- 상단에  알람바 변경 -->
+<div id="socketAlert" class="alert alert-success" role="alert" style="display:none"></div> 
 <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
 	<a href="/porget" class="navbar-brand">
 	    <img id="logo" class="d-inline-block mr-1" alt="Logo" src="/porget/img/main/dotty.svg">
@@ -143,9 +145,9 @@
 						
 						  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
 						    <div class="dropdown-item">${uname }님 환영합니다! </div>
-						    <a class="dropdown-item" href="mypage#portfolio">포트폴리오</a>
-						    <a class="dropdown-item" href="mypage#bookmark">북마크</a>
-						    <a class="dropdown-item" href="mypage">마이페이지</a>
+						    <a class="dropdown-item" href="/porget/mypage#portfolio">포트폴리오</a>
+						    <a class="dropdown-item" href="/porget/mypage#bookmark">북마크</a>
+						    <a class="dropdown-item" href="/porget/mypage">마이페이지</a>
 						    <a class="dropdown-item" href="/porget/logout">로그아웃</a>
 						  </div>
 					</div>
