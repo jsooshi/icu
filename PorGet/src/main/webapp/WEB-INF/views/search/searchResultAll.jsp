@@ -44,7 +44,7 @@
 				$('#content1').append(data);
 			}
 		});
-		$('#content2').html('<h4>태그로 검색한 결과가 없습니다.</h4>');
+		$('#content2').html('&nbsp;&nbsp;<h4>태그로 검색한 결과가 없습니다.</h4>');
 	
 	}else if(tagOrName=='tag'){
 		$.ajax({
@@ -54,7 +54,7 @@
 				$('#content2').append(data);
 			}
 		});
-		$('#content1').html('<h4>제목으로 검색한 결과가 없습니다.</h4>');
+		$('#content1').html('&nbsp;&nbsp;<h4>제목으로 검색한 결과가 없습니다.</h4>');
 	}else if(tagOrName=='both'){
 		$.ajax({
 			url : "/porget/searchNameList",

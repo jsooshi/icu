@@ -110,7 +110,7 @@ public class PortfolioDAOImpl implements PortfolioDAO{
 
 	@Override
 	public List<Map<String, Object>> searchTagList(String keyword) {
-		return sqlSession.selectList("portfolio.searchResult", "%"+keyword+"%");
+		return sqlSession.selectList("portfolio.searchTagList", "%"+keyword+"%");
 	}
 	
 	@Override

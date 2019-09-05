@@ -74,7 +74,7 @@ public class MainController {
         FileCopyUtils.copy(file.getBytes(), target);
 
         vo.setUphoto(savedName);
-        
+        userdao.insert(vo);
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		response.getWriter().print("<script>alert('회원가입을 축하드립니다.');</script>");
