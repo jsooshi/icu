@@ -268,8 +268,8 @@ $(function(){ //jquery영역
             <div class="col-md-4">
                 <div class="card my-4">
                     <div class="row">
-                        <div class="col-lg-4">
-                            <img src="http://placehold.it/200" class="rounded-circle" style="width:50px;">
+                        <div class="col-lg-4 text-center">
+                            <img src="/porget/img/profile/${ list.UPHOTO}" class="rounded-circle" style="width:50px;">
                         </div>
                         <div class="col-lg-8">
                             <ul class="list-unstyled mb-0">
@@ -306,6 +306,8 @@ $(function(){ //jquery영역
             </div>
         </div>
      </div>
+     
+	<jsp:include page="/WEB-INF/views/include/footer.jsp"/>	
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
 		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"

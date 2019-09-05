@@ -5,7 +5,7 @@
 <mapper namespace="userList">    
 	<!-- 회원가입 -->
 	<insert id="insert">
-		insert into userList values (#{uname}, #{upass}, #{uemail},#{uphoto},0)
+		insert into userList values (#{uname}, #{upass}, #{uemail},#{uphoto},0,null)
 	</insert>
 	
 	<!-- 로그인 -->
