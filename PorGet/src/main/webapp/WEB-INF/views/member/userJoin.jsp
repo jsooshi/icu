@@ -53,9 +53,54 @@
 				}
 			});
 		});
-	});
-
-
+		
+		
+		$('#btnJoin').click(function(){			
+			if($('#userName').val() == ""){
+				alert("닉네임을 입력해주세요!");
+				$('#userName').focus();
+				return false;
+			}else if(!/^[a-zA-Z0-9]{3,10}$/.test($('#userName').val())){
+				alert("닉네임은 한글, 영문 3~10글자로 입력해주세요! (공백,특수문자X)");
+				return false;
+			}
+			
+			if($('#userEmail').val() == ""){
+				alert("이메일을 입력해주세요!");
+				$('#userEmail').focus();
+				return false;
+			}
+			
+			if($('#userPass').val() == ""){
+				alert("비밀번호를 입력해주세요!")
+				$("#userPass").focus();
+				return false;
+			}else if(!/^[a-zA-Z0-9]{6,10}$/.test($('#userPass').val())){
+				alert("비밀번호는 영문, 숫자 6~10글자로 입력해주세요! (공백,특수문자X)")
+				$('#userPass').val("");
+				$('#userPass').focus();
+				return false;
+			}else if($('#userPass').val() != $('#userPassCheck').val()){
+				alert("비밀번호가 일치하지 않습니다!");
+				$('#userPass').val("");
+				$('#userPassCheck').val("");
+				$('#userPass').focus();
+				return false;
+			}
+			
+			if($('#userName').val() == $('#userPass').val() ){
+				alert("같은 아이디와 비밀번호는 사용불가능합니다.");
+				$('#userPass').val("");
+				$('#userPass').focus();
+				return false;
+			}else if(!unamePattern($('#userName').val())){
+				alert("확인");
+				return false;
+			}
+		});
+    
+	});//document
+	
 	</script>
 </head>
 
@@ -82,19 +127,33 @@
                             이메일
                         </label>
                         <input type="email" class="form-control" id="userEmail" name="uemail">
+                    	<div id="userEmailMsg"></div>
+                    </div>
                     
-                    <div id="userEmailMsg"></div>
+                    
+                    <div class="form-group">
 
                         <label for="mPass">
                             비밀번호
                         </label>
                         <input type="password" class="form-control" id="userPass" name="upass">
+                    </div>
+                    
+                    <div class="form-group">
+
+                        <label for="mPass">
+                            비밀번호 확인
+                        </label>
+                        <input type="password" class="form-control" id="userPassCheck" name="upassCheck">
+                    </div>
+
 
 
                         <label for="file">
                             프로필사진
                         </label>
-                        <input type="file" class="form-control-file" id="file" name="file">
+
+                        <input type="file" class="form-control-file" id="file" name="file" accept=".jpg,.jpeg,.gif,.bmp,.png">
                     <button id="uploadBtn" class="btn btn-primary">
                         가입
                     </button>

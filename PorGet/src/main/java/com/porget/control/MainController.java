@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.porget.domain.RecruiterVO;
 import com.porget.domain.UserVO;
@@ -74,7 +75,7 @@ public class MainController {
 
         vo.setUphoto(savedName);
         
-		response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		response.getWriter().print("<script>alert('회원가입을 축하드립니다.');</script>");
 		out.flush();
@@ -106,30 +107,48 @@ public class MainController {
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String loginSuccess(UserVO vo, HttpSession session, HttpServletResponse response) throws Exception {//로그인시 세션 저장
-		String uname = userdao.login(vo);
-		if(uname != null) {
-			session.setAttribute("uname",uname);
-			System.out.println("성공");
+	public String loginSuccess(UserVO vo, HttpSession session, RedirectAttributes attrs){//로그인시 세션 저장
+		Map<String,String> map = (Map<String, String>) userdao.login(vo);
+		if(map != null) {
+			session.setAttribute("uname",map.get("UNAME"));
+			System.out.println(map.get("UNAME"));
+			session.setAttribute("uphoto",map.get("UPHOTO"));
+			System.out.println("멤버 로그인 성공");
 			return "redirect:/";
 		}else {
-			System.out.println("실패");
-			response.setCharacterEncoding("UTF-8");
-			PrintWriter out = response.getWriter();
-			response.getWriter().print("<script>alert('이메일과 비밀번호를 확인해주세요');</script>");
-			out.flush();
-			return "/main/login";
+			System.out.println("멤버 로그인 실패");
+			attrs.addFlashAttribute("msg", "이메일과 비밀번호를 확인해주세요");
+			return "redirect:/login";
 		}
 	}
 	
+	@RequestMapping(value = "/recruiterLogin", method = RequestMethod.GET)//로그인창 보여주기
+	public String recruiter() {
+		
+		
+		return "main/recruiterLogin";
+	}
+	
+	@RequestMapping(value = "/recruiterLogin", method = RequestMethod.POST)//로그인창 보여주기
+	public String recruiterLoginSuccess(RecruiterVO rvo, HttpSession session, RedirectAttributes attrs) {
+		String cname = recruiterdao.login(rvo);
+		System.out.println("로그인>"+rvo);
+		if(cname != null) {
+			session.setAttribute("cname", cname);
+			System.out.println("리크루터 로그인 성공");
+			return "redirect:/";
+		}else {
+			System.out.println("리쿠르터 로그인 실패");
+			attrs.addFlashAttribute("msg", "이메일과 비밀번호를 확인해주세요");
+			return "redirect:/login";		
+		}
+	}
 
 	@RequestMapping(value="/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "redirect:/";
 	}
-	
-	
 
 	@RequestMapping("checkId")
 	public @ResponseBody String checkId(String nickName) {
@@ -181,13 +200,12 @@ public class MainController {
 		return msg;
 	}
 	
-	@RequestMapping("myPage")
-	public String myPage() {
+	@RequestMapping("findPass")
+	public String findPass() {
 		
-		return "main/myPage";
+		return "main/findPass";
 	}
 
-	
 	@RequestMapping("/searchKey")
 	public String searchKeyword(Model m, String keyword) { //검색창에서 연관검색어 가져오기
 		List<Map<String, Object>> list = dao.searchKeyword(keyword);
