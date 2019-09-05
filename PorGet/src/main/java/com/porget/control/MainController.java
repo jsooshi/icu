@@ -275,11 +275,9 @@ public class MainController {
 			if(keyword2.length==2) {
 				list = dao.searchHashResult(keyword2[1], base);
 			}else {
-				String keyword3 = null;
-				for (int i = 0; i < keyword2.length; i++) {
-					for (int j = i+1; j < keyword2.length; j++) {
-						keyword3 = keyword2[i]+"|"+keyword2[j];
-					}
+				String keyword3 = keyword2[1];
+				for (int i = 2; i < keyword2.length; i++) {
+						keyword3 = keyword3 +"|"+ keyword2[i];
 				}
 				System.out.println("keyword33>>>"+keyword3);
 				list = dao.searchHashResult(keyword3, base);
