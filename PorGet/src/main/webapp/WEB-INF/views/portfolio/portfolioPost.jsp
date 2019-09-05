@@ -15,6 +15,7 @@
 	var fileList = new FormData();
 	var tagCount=0;
 	var tagNames="";
+	var formData = new FormData();
 	function tagremove(obj) {
 		$(obj).parents('span:eq(0)').remove();
 		tagCount--;
@@ -52,15 +53,23 @@
 	        return false;
 	}//이미지 파일 확인
 	
+	function isConfirmFile( fileName ) {
+	    var fileSuffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+	    fileSuffix = fileSuffix.toLowerCase();
+	    if ( "pdf" == fileSuffix || "ppt" == fileSuffix  || "pptx" == fileSuffix || "docx" == fileSuffix) 
+	        return true;
+	    else 
+	        return false;
+	}//포트폴리오 파일 확인
+	
 	$(function(){
 		$('#uploadBtn').on("click", function(e){
-			var formData = new FormData();
 			if($('input[name=pfname]:eq(0)').val().trim()===""){
 				alert('제목을 입력해주세요');
 				$('input[name=pfname]:eq(0)').focus();
 				return;
-			}else if($('input[name=pfurl]:eq(0)').val().trim()===""){
-				alert('포트폴리오 url을 입력해주세요');
+			}else if(!($('input[name=pfurl]:eq(0)').val().trim()!="" || formData.has("uploadPortfolio"))){
+				alert('포트폴리오 url 입력 혹은 포트폴리오 파일을 첨부해주세요');
 				$('input[name=pfurl]:eq(0)').focus();
 				return;
 			}else if($('input[name=pfposition]:eq(0)').val()===""){
@@ -78,9 +87,10 @@
 			}
 			
 			formData.append("pfname",$('input[name=pfname]:eq(0)').val().replace("<", "&lt;").replace(">", "&gt;"))
-			formData.append("pfurl",$('input[name=pfurl]:eq(0)').val(.replace("<", "&lt;").replace(">", "&gt;")))
+			formData.append("pfurl",$('input[name=pfurl]:eq(0)').val().replace("<", "&lt;").replace(">", "&gt;"))
 			formData.append("pfposition",$('input[name=pfposition]:eq(0)').val().replace("<", "&lt;").replace(">", "&gt;"))
 			formData.append("tagname",tagNames.replace("<", "&lt;").replace(">", "&gt;"))
+			formData.append("pffile",$('#pffile').val())
 			
 			for(var i=0;i<fileCount;i++){
 				formData.append("uploadFile",fileList.get($("#dataList tr").eq(i).children("td:eq(0)").html()));
@@ -138,7 +148,24 @@
 			}
 				console.log("3 : "+$('#dataList tr:eq(0) td:eq(0)').html());
 			$(this).val("")
-		})
+		})//썸네일 목록 등록
+		
+		
+		$("#pffile").on("change",function(){
+			formData.delete("uploadPortfolio");
+			var inputFile = $('#pffile');
+			var pfFile = inputFile[0].files;
+			console.log(pfFile);
+			if(pfFile.length == 0){
+				$(this).parent().children('label').eq(1).html("선택된 파일 없음")
+			}else if(!isConfirmFile(pfFile[0].name)){
+				alert('지정된 확장자만 등록해주세요');
+				$(this).parent().children('label').eq(1).html("선택된 파일 없음")
+			}else{
+				formData.append("uploadPortfolio",pfFile[0])
+				$(this).parent().children('label').eq(1).html(pfFile[0].name)
+			}
+		})//포트폴리오 등록
 		
 		$('#tagname').on("keyup",function(e){
 			if(e.keyCode==13 || e.keyCode==32){
@@ -190,7 +217,7 @@
 						<label for="uploadFile">사진 등록</label> <input
 							type="file" class="form-control" id="uploadFile"
 							name="uploadFile" placeholder="썸네일 등록" tabindex="5" required
-							multiple>
+							multiple accept=".jpg,.jpeg,.gif,.bmp,.png" style="width:110px;">
 						<table class="table">
 							<thead>
 								<tr>
@@ -202,6 +229,12 @@
 							</tbody>
 						</table>
 						<br>
+					</div>
+					<div class="form-group">
+						<label for="pffile">포트폴리오 첨부(.pdf/.ppt/.pptx/.docx)</label>
+						<input type="file" class="form-control"
+							id="pffile" name="pffile" placeholder="파일첨부" tabindex="6" accept=".pdf,.ppt,.pptx,.docx" title="파일등록" hidden>  
+						<label for="pffile" class="form-control">선택된 파일 없음</label>
 					</div>
 					<div class="text-center">
 						<button type="button" class="btn btn-primary" id='uploadBtn'>등록</button>
