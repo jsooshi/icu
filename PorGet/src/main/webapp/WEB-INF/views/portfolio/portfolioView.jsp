@@ -269,7 +269,7 @@ $(function(){ //jquery영역
                 <div class="card my-4">
                     <div class="row">
                         <div class="col-lg-4">
-                            <img src="http://placehold.it/200" class="rounded-circle" style="width:50px;">
+                            <img src="/porget/files/profile/${list.UPHOTO } " class="rounded-circle" style="width:50px;">
                         </div>
                         <div class="col-lg-8">
                             <ul class="list-unstyled mb-0">
@@ -288,7 +288,7 @@ $(function(){ //jquery영역
                 </div>
                 <div class="card my-4">
                 <c:if test="${not empty list.PFURL}">
-                    <a href="${list.PFURL }" class="btn btn-primary pd-4">
+                    <a href="${list.PFURL }" class="btn btn-primary pd-4" target="_blank">
                             포트폴리오 링크
                     </a>
                 </c:if>
