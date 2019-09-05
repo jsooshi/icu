@@ -10,7 +10,7 @@
                             <img src="/porget/files/${p.PFTHUMB }" class="card-img-top" alt="${p.PFNAME }">
                         </div>
                         <div class="card-body" >
-                            <div style="display: block; max-height:1.5rem; overflow: hidden; text-overflow:ellipsis;white-space:pre; word-break:break-all;"><h5 class="card-title"><c:out value="${p.PFNAME }"/></h5></div>
+                            <div style="display: block; white-space:pre; word-break:break-all;"><h5 class="card-title" style="overflow: hidden; text-overflow:ellipsis;"><c:out value="${p.PFNAME }"/></h5></div>
                             <p class="card-text">
                                 <img src="/porget/files/profile/${p.UPHOTO}" class="rounded-circle" style="width: 50px; height:50px; display: inline;">
                                 ${p.UNAME }
