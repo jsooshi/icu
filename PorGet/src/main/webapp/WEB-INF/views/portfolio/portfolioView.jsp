@@ -265,9 +265,16 @@ $(function(){ //jquery영역
                     </div>
                 </div>
                 <div class="card my-4">
+                <c:if test="${not empty list.PFURL}">
                     <a href="${list.PFURL }" class="btn btn-primary pd-4">
                             포트폴리오 링크
                     </a>
+                </c:if>
+                <c:if test="${not empty list.PFFILE}">
+                    <a href="/porget/portfolio/download?fileName=${list.PFFILE }" class="btn btn-info pd-4">
+                            포트폴리오 다운로드
+                    </a>
+                </c:if>
                     <button class="btn btn-danger" id="recommendBtn">좋아요</button>
                 </div>
                 <div class="card my-4">

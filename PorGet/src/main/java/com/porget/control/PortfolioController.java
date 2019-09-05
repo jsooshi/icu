@@ -3,6 +3,7 @@ package com.porget.control;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +13,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,7 +52,7 @@ public class PortfolioController {
 	}
 	
 	@PostMapping("/post")
-	public String portfolioInsert(MultipartFile[] uploadFile, PortfolioVO vo, HttpServletRequest request) { // 글 생성 후 포트폴리오 게시판으로 이동
+	public String portfolioInsert(MultipartFile[] uploadFile, MultipartFile uploadPortfolio, PortfolioVO vo, HttpServletRequest request) { // 글 생성 후 포트폴리오 게시판으로 이동
 		// vo=> pfname, pfurl, pfposition, tagname
 		System.out.println((String)request.getSession().getAttribute("uname"));
 		vo.setUname((String)request.getSession().getAttribute("uname"));
@@ -77,9 +85,20 @@ public class PortfolioController {
 			
 		}
 		
-	
+		String portfolioFileName = uploadPortfolio.getOriginalFilename();
+		portfolioFileName = portfolioFileName.substring(portfolioFileName.lastIndexOf("\\")+1);
+		UUID uuid = UUID.randomUUID();
+		portfolioFileName = uuid.toString()+"_"+portfolioFileName;
+		File saveFile = new File(request.getSession().getServletContext().getRealPath("/resources/files/userportfolio"),portfolioFileName);
+		try {
+			uploadPortfolio.transferTo(saveFile);
+		} catch (IllegalStateException | IOException e) {
+			System.out.println("icy...");
+			e.printStackTrace();
+		}
+		
+		vo.setPffile(portfolioFileName);
 		vo.setPfthumb(ptthumb); // 썸네일
-		vo.setPffile("cat.jpg"); // 사진파일경로
 
 		System.out.println("포트폴리오 업로드 vo>>"+vo);
 		if (dao.insertPortfolio(vo) == 1) {
@@ -137,10 +156,9 @@ public class PortfolioController {
 	}
 
 	@PostMapping("/update")
-	public String portfolioUpdate(MultipartFile[] uploadFile,String[] originalFileName,String[] keepFileName, PortfolioVO vo, HttpServletRequest request, Model m) {// 게시글 수정완료 후 본인글로 이동
+	public String portfolioUpdate(MultipartFile[] uploadFile,String[] originalFileName,String[] keepFileName, MultipartFile uploadPortfolio, PortfolioVO vo, HttpServletRequest request, Model m) {// 게시글 수정완료 후 본인글로 이동
 
 		/* 임시로 추가하는 VO */
-		vo.setPffile("dog.jpg"); // 사진파일경로
 		
 		String ptthumb="";
 		String uploadFolder = request.getSession().getServletContext().getRealPath("/resources/files");
@@ -190,6 +208,26 @@ public class PortfolioController {
 			}
 			
 		}
+		
+		if(uploadPortfolio!=null) {
+			File removeFile = new File(uploadFolder,vo.getPffile());
+			if(removeFile.isFile()) {
+				removeFile.delete();
+			}
+			String portfolioFileName = uploadPortfolio.getOriginalFilename();
+			portfolioFileName = portfolioFileName.substring(portfolioFileName.lastIndexOf("\\")+1);
+			UUID uuid = UUID.randomUUID();
+			portfolioFileName = uuid.toString()+"_"+portfolioFileName;
+			File saveFile = new File(request.getSession().getServletContext().getRealPath("/resources/files/userportfolio"),portfolioFileName);
+			try {
+				uploadPortfolio.transferTo(saveFile);
+			} catch (IllegalStateException | IOException e) {
+				System.out.println("icy...");
+				e.printStackTrace();
+			}
+			
+			vo.setPffile(portfolioFileName);
+		}
 		System.out.println(ptthumb);
 		vo.setPfthumb(ptthumb); // 썸네일
 		
@@ -237,4 +275,27 @@ public class PortfolioController {
 		return dao.selectRecommend(pfnum);
 	}
 
+	
+	/*포트폴리오 다운로드 기능*/
+	@GetMapping(value="/download",produces=MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	@ResponseBody
+	public ResponseEntity<Resource> downloadFile(String fileName,HttpServletRequest request){
+		String path = request.getSession().getServletContext().getRealPath("/resources/files/userportfolio/");
+		Resource resource = new FileSystemResource(path+fileName);
+		if(!resource.exists()) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		String resourceName = resource.getFilename().substring(resource.getFilename().indexOf("_")+1);
+		System.out.println("실행되니?");
+		System.out.println(path);
+		System.out.println(resourceName);
+		HttpHeaders headers = new HttpHeaders();
+		try {
+			headers.add("Content-Disposition", "attachment; filename="+new String(resourceName.getBytes("UTF-8"),"ISO-8859-1"));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<Resource>(resource,headers,HttpStatus.OK);
+	}
+	
 }
