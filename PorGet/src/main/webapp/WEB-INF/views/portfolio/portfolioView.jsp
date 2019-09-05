@@ -153,7 +153,7 @@ $(function(){ //jquery영역
 		}
 	});
 	
-	$('#recommendBtn').click(function(){ //좋아요버튼
+	$('#recommendimg').click(function(){//좋아요버튼
 		var writeName = '${list.UNAME}';
 		var uName = '${uname}';
 		
@@ -171,6 +171,15 @@ $(function(){ //jquery영역
 					 pfnum : ${param.pfnum}
 				 },
 				 success: function(result){
+					 var flag=0;
+				    if(flag == 0) {
+				        $("#recommendImg").attr("src","/porget/");
+				        flag = 1;
+				      }
+				      else if(flag == 1) {
+				        $("#recommendImg").attr("src","http://dummyimage.com/450x255/");
+				        flag = 0;
+				      }
 					 $('.recommend').html("좋아요수: "+result); 
 				}
 			})
@@ -297,7 +306,20 @@ $(function(){ //jquery영역
                             포트폴리오 다운로드
                     </a>
                 </c:if>
-                    <button class="btn btn-danger" id="recommendBtn">좋아요</button>
+                
+				<c:choose>
+					<c:when test="${like eq 0 }">
+<!--                     <button class="btn btn-danger" id="recommendBtn">좋아요</button> -->
+					<div id="recommendimg">
+						<img src="/porget/img/heart.png">
+					</div>
+					</c:when>
+					<c:otherwise>
+					<div id="recommendimg">
+						<img src="/porget/img/heartfull.png">
+					</div>
+					</c:otherwise>
+				</c:choose>                
                 </div>
                 <div class="card my-4">
                     조회수: ${list.PFREAD }<br>

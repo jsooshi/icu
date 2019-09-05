@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -112,7 +111,8 @@ public class PortfolioController {
 
 	@GetMapping("/view")
 	public String portfolioView(int pfnum,HttpServletRequest request, HttpServletResponse response) {// 게시글 클릭시 포트폴리오 뷰
-		if(request.getSession().getAttribute("uname")==""||request.getSession().getAttribute("uname")==null) {
+		String uname = (String)request.getSession().getAttribute("uname");
+		if(uname==""||uname==null) {
 			PrintWriter out;
 			try {
 				//request.setCharacterEncoding("UTF-8");
@@ -125,6 +125,11 @@ public class PortfolioController {
 			}
 			return null;
 		};
+		
+		Map<String,Object> recommend = new HashMap<String,Object>();
+		recommend.put("pfnum", pfnum);
+		recommend.put("uname", uname);
+		request.setAttribute("like", dao.distinctRecommend(recommend));
 		
 		List<Map> list = dao.selectPortfolio(pfnum);
 		request.setAttribute("list",list.get(0));
