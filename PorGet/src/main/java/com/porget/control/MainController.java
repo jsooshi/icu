@@ -96,9 +96,11 @@ public class MainController {
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String loginSuccess(UserVO vo, HttpSession session, RedirectAttributes attrs){//로그인시 세션 저장
-		String uname = userdao.login(vo);
-		if(uname != null) {
-			session.setAttribute("uname",uname);
+		Map<String,String> map = (Map<String, String>) userdao.login(vo);
+		if(map != null) {
+			session.setAttribute("uname",map.get("UNAME"));
+			System.out.println(map.get("UNAME"));
+			session.setAttribute("uphoto",map.get("UPHOTO"));
 			System.out.println("멤버 로그인 성공");
 			return "redirect:/";
 		}else {
