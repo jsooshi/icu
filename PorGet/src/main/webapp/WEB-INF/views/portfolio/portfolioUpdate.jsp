@@ -9,7 +9,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>포트폴리오 수정</title>
     <script src="/porget/js/jquery-3.js"></script>
-	<script src="/porget/js/portfolioPost.js"></script>
 	<link rel="stylesheet" href="/porget/css/portfolioPost.css">
     <script type="text/javascript">
     	var fileCount = 0;
@@ -60,6 +59,14 @@
 		        return false;
 		}//이미지 파일 확인
     	
+		function isConfirmFile( fileName ) {
+		    var fileSuffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+		    fileSuffix = fileSuffix.toLowerCase();
+		    if ( "pdf" == fileSuffix || "ppt" == fileSuffix  || "pptx" == fileSuffix || "docx" == fileSuffix) 
+		        return true;
+		    else 
+		        return false;
+		}//포트폴리오 파일 확인
     	
     	$(function(){
 	    	$('#uploadBtn').on("click", function(e){
@@ -67,8 +74,8 @@
 					alert('제목을 입력해주세요');
 					$('input[name=pfname]:eq(0)').focus();
 					return;
-				}else if($('input[name=pfurl]:eq(0)').val().trim()===""){
-					alert('포트폴리오 url을 입력해주세요');
+	    		}else if(!($('input[name=pfurl]:eq(0)').val().trim()!="" || formData.has("uploadPortfolio"))){
+					alert('포트폴리오 url 입력 혹은 포트폴리오 파일을 첨부해주세요');
 					$('input[name=pfurl]:eq(0)').focus();
 					return;
 				}else if($('input[name=pfposition]:eq(0)').val()===""){
@@ -90,6 +97,7 @@
 				formData.append("pfurl",$('input[name=pfurl]:eq(0)').val())
 				formData.append("pfposition",$('input[name=pfposition]:eq(0)').val())
 				formData.append("tagname",$('input[name=tagname]:eq(0)').val())
+				formData.append("pffile","${p.pffile }")
 				
 				for(var i=0;i<fileCount;i++){
 					/////////////////////////////////////////
@@ -159,8 +167,23 @@
 				}
 					console.log("3 : "+$('#dataList tr:eq(0) td:eq(0)').html());
 				$(this).val("")
-			});//파일 insert
-		
+			});//썸네일 목록 등록
+			
+			$("#pffile").on("change",function(){
+				formData.delete("uploadPortfolio");
+				var inputFile = $('#pffile');
+				var pfFile = inputFile[0].files;
+				console.log(pfFile);
+				if(pfFile.length == 0){
+					$(this).parent().children('label').eq(1).html("${p.pffile }")
+				}else if(!isConfirmFile(pfFile[0].name)){
+					alert('지정된 확장자만 등록해주세요');
+					$(this).parent().children('label').eq(1).html("${p.pffile }")
+				}else{
+					formData.append("uploadPortfolio",pfFile[0])
+					$(this).parent().children('label').eq(1).html(pfFile[0].name)
+				}
+			})//포트폴리오 등록
 			
 			$('#tagname').on("keyup",function(e){
 				if(e.keyCode==13 || e.keyCode==32){
@@ -195,6 +218,7 @@
     </script>
 </head>
 <body>
+<jsp:include page="/WEB-INF/views/include/header.jsp" />
 <%--
         <div class="container">
 		사진: <input type="file" name="uploadFile" multiple> 
@@ -207,24 +231,17 @@
         태그: <input type="text" name="tagname" value="${p.tagname	 }"><br>
 	<button id='uploadBtn' class="btn btn-primary">등록</button><br> 
  --%>
-<div class="container" style="margin-left: 300px;">
-  <div class="row">
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">                        
-        <h2>Contact</h2>
-      </div>
-  </div>
-  <div class="row">
+<div class="container">
+				<h3>포트폴리오 수정</h3>
+		<div class="row">
       <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xs-offset-3">
           <form id="contact-form" class="form" action="#" method="POST" role="form">
               <div class="form-group">
-              
-              
-              
-                  <label class="form-label" for="pfname">포트폴리오 제목</label>
-                  <input type="text" class="form-control" id="pfname" name="pfname" placeholder="포트폴리오 제목" tabindex="1" required value="${p.pfname }">
+                  <label class="form-label" for="pfname">제목</label>
+                  <input type="text" class="form-control" id="pfname" name="pfname" placeholder="포트폴리오 제목" tabindex="1" required value="<c:out value="${p.pfname }"/>">
               </div>                            
               <div class="form-group">
-                  <label class="form-label" for="pfurl">포트폴리오 url</label>
+                  <label class="form-label" for="pfurl">포트폴리오 주소</label>
                   <input type="text" class="form-control" id="pfurl" name="pfurl" placeholder="포트폴리오 url" tabindex="2" value="${p.pfurl }">
               </div>                            
               <div class="form-group">
@@ -236,13 +253,19 @@
                   <span id="tags"></span><input type="text" class="form-control" id="tagname" name="tagname" placeholder="태그를 입력하세요" tabindex="4">
               </div>
               <div class="form-group">
-                  <label class="form-label" for="uploadFile">썸네일 등록</label>
-                  <input type="file" class="form-control" id="uploadFile" name="uploadFile" placeholder="썸네일 등록" tabindex="5" required multiple>
-                  <table><thead><tr><th width="500px">제목</th><th width="300px">삭제</th></tr></thead>
+                  <label class="form-label" for="uploadFile">사진 등록</label>
+                  <input type="file" class="form-control" id="uploadFile" name="uploadFile" placeholder="썸네일 등록" tabindex="5" required multiple accept=".jpg,.jpeg,.gif,.bmp,.png" style="width:110px;">
+                  <table><thead><tr><th width="500px">사진 제목</th><th width="300px">삭제</th></tr></thead>
 				  <tbody id="dataList">
 				  </tbody>
 			</table><br>
-              </div>                            
+              </div>
+              <div class="form-group">
+						<label for="pffile">포트폴리오 첨부(.pdf/.ppt/.pptx/.docx)</label>
+						<input type="file" class="form-control"
+							id="pffile" name="pffile" placeholder="파일첨부" tabindex="6" accept=".pdf,.ppt,.pptx,.docx" title="파일등록" hidden>  
+						<label for="pffile" class="form-control">${p.pffile }</label>
+					</div>                            
               <div class="text-center">
                   <button type="button" class="btn btn-start-order" id='uploadBtn'>Send Message</button>
               </div>

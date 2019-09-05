@@ -17,14 +17,19 @@
 	<div class="container">
         <h4>인기 게시글</h4>
         <hr>
-        <div class="row" id="popular"></div>
+        <div class="row" >
+        <div class="card-deck" id="popular">
+        </div>
+        </div>
    	</div>
+   	<br>
 	
 <!-- Recent Content -->
 	<div class="container">
         <h4>최근 등록 게시글</h4>
         <hr>
-        <div class="row" id="recent">
+        <div class="row" >
+        <div class="card-deck" id="recent"></div>
         </div>
    	</div>
 

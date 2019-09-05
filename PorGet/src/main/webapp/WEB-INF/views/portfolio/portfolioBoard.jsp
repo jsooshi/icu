@@ -4,7 +4,7 @@
 
 
 <jsp:include page="/WEB-INF/views/include/header.jsp" />
-
+<br>
 <div class="container">
 	<div class="content">
 		<h3>게시판</h3>

@@ -9,8 +9,8 @@
 	</insert>
 	
 	<!-- 로그인 -->
-	<select id="login" resultType="String"> <!-- count(*) -> sql 관련된 함수/ 갯수를 세어주는 함수 ///현재는1,0  -->
-		select uname
+	<select id="login" resultType="HashMap"> <!-- count(*) -> sql 관련된 함수/ 갯수를 세어주는 함수 ///현재는1,0  -->
+		select uname, uphoto
 		from userList
 		where uemail=#{uemail} and upass=#{upass}
 	</select>
@@ -37,10 +37,13 @@
 	</update>
 	
 	
-	<select id="selectPortfolio" resultType="Map">
+	<select id="selectPortfolio" resultType="PortfolioVO">
 		SELECT * FROM portfolio WHERE uname= #{uname}
 	</select>
 	
+	<update id="changeUphotho">
+		update userlist set uphoto=#{uphoto} where uname=#{uname}
+	</update>
 	
 
 </mapper>

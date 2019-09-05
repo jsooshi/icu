@@ -1,5 +1,6 @@
 package com.porget.persistence;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +31,10 @@ public class MyPageDAOImpl implements MyPageDAO {
 	@Override
 	public List<PortfolioVO> userPortfolio(String uname) {
 		return sqlSession.selectList("userList.selectPortfolio",uname);
+	}
+	@Override
+	public int changeUphoto(HashMap<String, String> photoName) {
+		return sqlSession.update("userList.changeUphotho", photoName);
 	}
 
 }
