@@ -13,8 +13,8 @@ public class RecruiterDAOImpl implements RecruiterDAO{
 	private SqlSession sqlSession;
 
 	@Override
-	public void insert(RecruiterVO rvo) {
-		sqlSession.insert("recruiter.insert",rvo);
+	public void insertRecruiter(RecruiterVO rvo) {
+		sqlSession.insert("userList.insertRecruiter",rvo);
 		
 	}
 

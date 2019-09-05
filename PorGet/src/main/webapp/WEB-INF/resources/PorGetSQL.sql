@@ -39,7 +39,7 @@ CREATE TABLE portfolio
 )
 ;
 
-
+select * from userList;
 CREATE SEQUENCE portfolio_SEQ
 START WITH 1
 INCREMENT BY 1;
