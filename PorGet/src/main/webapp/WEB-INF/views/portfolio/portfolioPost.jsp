@@ -78,7 +78,7 @@
 			}
 			
 			formData.append("pfname",$('input[name=pfname]:eq(0)').val().replace("<", "&lt;").replace(">", "&gt;"))
-			formData.append("pfurl",$('input[name=pfurl]:eq(0)').val(.replace("<", "&lt;").replace(">", "&gt;")))
+			formData.append("pfurl",$('input[name=pfurl]:eq(0)').val().replace("<", "&lt;").replace(">", "&gt;"))
 			formData.append("pfposition",$('input[name=pfposition]:eq(0)').val().replace("<", "&lt;").replace(">", "&gt;"))
 			formData.append("tagname",tagNames.replace("<", "&lt;").replace(">", "&gt;"))
 			
