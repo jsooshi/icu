@@ -11,6 +11,7 @@ $(function(){
 		
 		$(this).parent('div[name=reply]').after($('#replyReply'));
 		$('#replyReply').css("display","");
+		$('#reReplyCon').focus();
 		group = $(this).parent().children('input[name=re]').val(); //rgroup번호 (pk) 얻기 
 		
 										
