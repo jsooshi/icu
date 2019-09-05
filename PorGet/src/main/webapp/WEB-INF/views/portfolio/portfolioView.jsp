@@ -14,6 +14,22 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
+<style type="text/css">
+	 .maxSize{
+		width: 925px;
+		height: 500px;
+	}
+	.imgMaxSize{
+		position:absolute;
+		top:0;
+		left:0;
+		right:0;
+		bottom:0;
+		max-width:100%;
+		max-height:100%;
+		margin: auto;
+	} 
+</style>
 <title>Document</title>
 <script src="/porget/js/jquery-3.js"></script>
 
@@ -50,6 +66,12 @@
 <script type="text/javascript">
 
 var realPath = "${realPath}";
+
+function delPortfolio(num){
+	if(confirm("정말 삭제하시겠습니까?")){
+		location.replace("delete?pfnum="+num);
+	}
+}
 $(function(){ //jquery영역
 	
 	$(".carousel-indicators").children('li').eq(0).addClass("active");
@@ -186,8 +208,8 @@ $(function(){ //jquery영역
                     </ol>
                     <div class="carousel-inner">
                         <c:forEach items="${thumb}" var="thumbImg" varStatus="status">
-                            <div class="carousel-item">
-                                <img class="d-block w-100" src="/porget/files/${thumbImg }" alt="
+                            <div class="carousel-item maxSize">
+                                <img class="d-block imgMaxSize" src="/porget/files/${thumbImg }" alt="
                                         slide">
                             </div>
                         </c:forEach>
@@ -208,7 +230,7 @@ $(function(){ //jquery영역
                 <c:choose>
                         <c:when test="${list.UNAME == uname }">
                             <a href="update?pfnum=${list.PFNUM }">수정</a> | 
-                            <a href="delete?pfnum=${list.PFNUM }">삭제</a><br>
+                            <a href="javascript:delPortfolio(${list.PFNUM })">삭제</a><br>
                         </c:when>
                 </c:choose>
 

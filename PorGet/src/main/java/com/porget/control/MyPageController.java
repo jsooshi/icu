@@ -1,5 +1,7 @@
 package com.porget.control;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -31,6 +33,10 @@ public class MyPageController {
 		
 		List<PortfolioVO> portfolioVO = dao.userPortfolio(uname);
 		System.out.println(portfolioVO);
+		for (int i=0;i<portfolioVO.size();i++) {
+			PortfolioVO pvo =portfolioVO.get(i);
+			pvo.setPfthumb(pvo.getPfthumb().split("\\|")[0]);
+		}
 		m.addAttribute("pvo",portfolioVO);
 		return "member/myPage";
 	}
