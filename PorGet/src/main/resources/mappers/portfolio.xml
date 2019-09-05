@@ -68,7 +68,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="searchTag" parameterType="String" resultType="String">
 		select distinct tagname from portfolio 
-		where upper(tagname) like upper(#{keyword})
+		where tagname like #{keyword}
 		and tagname like '%#%'
 	</select>
 	
