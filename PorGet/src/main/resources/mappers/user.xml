@@ -5,12 +5,7 @@
 <mapper namespace="userList">    
 	<!-- 회원가입 -->
 	<insert id="insert">
-		insert into userList values (#{uname}, #{upass}, #{uemail},#{uphoto},0,null)
-	</insert>
-	
-	<!-- 리쿠르터 회원가입 -->
-	<insert id="insertRecruiter">
-		insert into userList values (#{uname}, #{upass}, #{uemail}, #{uphoto},1,#{uinfo})
+		insert into userList values (#{uname}, #{upass}, #{uemail},#{uphoto},#{ucheck},null)
 	</insert>
 	
 	<!-- 로그인 -->
@@ -19,8 +14,6 @@
 		from userList
 		where uemail=#{uemail} and upass=#{upass}
 	</select>
-	
-	
 	
 	<select id="loginRecruiter" resultType="String">
 		select uname 
