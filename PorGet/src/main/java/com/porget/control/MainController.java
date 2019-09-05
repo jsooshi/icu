@@ -64,10 +64,6 @@ public class MainController {
 		System.out.println("구직자 회원가입vo="+vo);
 		vo.setUphoto("하이.jpg");
 		userdao.insert(vo);//DB입력요청
-		response.setCharacterEncoding("UTF-8");
-		PrintWriter out = response.getWriter();
-		response.getWriter().print("<script>alert('회원가입을 축하드립니다.');</script>");
-		out.flush();
 		return "main/index";
 	}
 	
@@ -78,9 +74,9 @@ public class MainController {
 	}
 	
 	@RequestMapping(value = "/recrujoin", method = RequestMethod.POST)//리쿠르터 DB 회원가입 
-	public String insertRecruit(RecruiterVO rvo) {
-		System.out.println("리크루터 회원가입vo="+rvo);
-		recruiterdao.insertRecruiter(rvo);
+	public String insertRecruit(UserVO vo) {
+		System.out.println("리크루터 회원가입vo="+vo);
+		recruiterdao.insertRecruiter(vo);
 		return "main/index";
 	}
 	
@@ -113,11 +109,11 @@ public class MainController {
 	}
 	
 	@RequestMapping(value = "/recruiterLogin", method = RequestMethod.POST)//로그인창 보여주기
-	public String recruiterLoginSuccess(RecruiterVO rvo, HttpSession session, RedirectAttributes attrs) {
-		String cname = recruiterdao.login(rvo);
-		System.out.println("로그인>"+rvo);
-		if(cname != null) {
-			session.setAttribute("cname", cname);
+	public String recruiterLoginSuccess(UserVO vo, HttpSession session, RedirectAttributes attrs) {
+		String uname = recruiterdao.loginRecruiter(vo);
+		System.out.println("로그인>"+vo);
+		if(uname != null) {
+			session.setAttribute("uname", uname);
 			System.out.println("리크루터 로그인 성공");
 			return "redirect:/";
 		}else {

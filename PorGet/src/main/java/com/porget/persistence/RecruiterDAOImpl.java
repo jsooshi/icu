@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.porget.domain.RecruiterVO;
+import com.porget.domain.UserVO;
 
 @Repository
 public class RecruiterDAOImpl implements RecruiterDAO{
@@ -13,14 +14,14 @@ public class RecruiterDAOImpl implements RecruiterDAO{
 	private SqlSession sqlSession;
 
 	@Override
-	public void insertRecruiter(RecruiterVO rvo) {
-		sqlSession.insert("userList.insertRecruiter",rvo);
+	public void insertRecruiter(UserVO vo) {
+		sqlSession.insert("userList.insertRecruiter",vo);
 		
 	}
 
 	@Override
-	public String login(RecruiterVO rvo) {
-		return sqlSession.selectOne("recruiter.login",rvo);
+	public String loginRecruiter(UserVO vo) {
+		return sqlSession.selectOne("userList.loginRecruiter",vo);
 	}
 
 	@Override
