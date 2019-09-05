@@ -41,6 +41,9 @@
 		SELECT * FROM portfolio WHERE uname= #{uname}
 	</select>
 	
+	<update id="changeUphotho">
+		update userlist set uphoto=#{uphoto} where uname=#{uname}
+	</update>
 	
 
 </mapper>

@@ -153,7 +153,7 @@
                             프로필사진
                         </label>
 
-                        <input type="file" class="form-control-file" id="file" name="file">
+                        <input type="file" class="form-control-file" id="file" name="file" accept=".jpg,.jpeg,.gif,.bmp,.png">
                     <button id="uploadBtn" class="btn btn-primary">
                         가입
                     </button>

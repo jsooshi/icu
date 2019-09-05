@@ -253,9 +253,9 @@
                   <span id="tags"></span><input type="text" class="form-control" id="tagname" name="tagname" placeholder="태그를 입력하세요" tabindex="4">
               </div>
               <div class="form-group">
-                  <label class="form-label" for="uploadFile">썸네일 등록</label>
-                  <input type="file" class="form-control" id="uploadFile" name="uploadFile" placeholder="썸네일 등록" tabindex="5" required multiple>
-                  <table><thead><tr><th width="500px">제목</th><th width="300px">삭제</th></tr></thead>
+                  <label class="form-label" for="uploadFile">사진 등록</label>
+                  <input type="file" class="form-control" id="uploadFile" name="uploadFile" placeholder="썸네일 등록" tabindex="5" required multiple accept=".jpg,.jpeg,.gif,.bmp,.png" style="width:110px;">
+                  <table><thead><tr><th width="500px">사진 제목</th><th width="300px">삭제</th></tr></thead>
 				  <tbody id="dataList">
 				  </tbody>
 			</table><br>

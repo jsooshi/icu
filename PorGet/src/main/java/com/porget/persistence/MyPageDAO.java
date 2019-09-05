@@ -1,5 +1,6 @@
 package com.porget.persistence;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.porget.domain.PortfolioVO;
@@ -12,5 +13,6 @@ public interface MyPageDAO {
 	//북마크 출력
 	
 	public int changeUname(String uname);//닉네임변경
+	public int changeUphoto(HashMap<String,String> photoName);
 	
 }

@@ -81,11 +81,11 @@
 					<div class="row">
 						<div class="col-sm-5">
 						<div class="form-group">
-							<label for="uphoto">프로필 사진 변경(.jpg/.jpeg/.png/.gif)</label>
+							<label for="uphotoFile">프로필 사진 변경(.jpg/.jpeg/.png/.gif)</label>
 							<input type="file" class="form-control"
-								id="uphoto" name="uphoto" placeholder="파일첨부" tabindex="6" accept=".jpg,.png,.gif,.jpeg" title="파일등록" hidden>  
-							<label for="uphoto" class="form-control">사진을 선택하세요</label>
-							<button type="button" class="btn btn-start-order" id='uploadBtn'>프로필 사진 변경</button>
+								id="uphotoFile" name="uphotoFile" placeholder="파일첨부" tabindex="6" accept=".jpg,.png,.gif,.jpeg" title="파일등록" hidden>  
+							<label for="uphotoFile" class="form-control">사진을 선택하세요</label>
+							<button type="button" class="btn btn-start-order" id='changeUphoto'>프로필 사진 변경</button>
 						</div>
 						</div>
 					</div>
@@ -131,6 +131,16 @@
 
 	<jsp:include page="/WEB-INF/views/include/footer.jsp" />
 	<script>
+		function isImageFile( fileName ) {
+		    var fileSuffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+		    fileSuffix = fileSuffix.toLowerCase();
+		    if ( "jpg" == fileSuffix || "jpeg" == fileSuffix  || "gif" == fileSuffix || "bmp" == fileSuffix || "png" == fileSuffix ) 
+		        return true;
+		    else 
+		        return false;
+		}//이미지 파일 확인
+		var formData = new FormData();
+	
 		$(document).ready(function() {
 
 			$(".nav-tabs a").click(function() {
@@ -150,7 +160,47 @@
 						alert("변경완료");
 					}
 				});
-			})
+			});
+			$("#uphotoFile").on("change",function(){
+					formData.delete("photo");
+					var inputFile = $('#uphotoFile');
+					var changeUphoto = inputFile[0].files;
+					if(changeUphoto.length == 0){
+						$(this).parent().children('label').eq(1).html("사진을 선택하세요")
+					}else if(!isImageFile(changeUphoto[0].name)){
+						alert('지정된 확장자만 등록해주세요');
+						$(this).parent().children('label').eq(1).html("사진을 선택하세요")
+					}else{
+						formData.append("photo",changeUphoto[0]);
+						console.log(changeUphoto[0]);
+						$(this).parent().children('label').eq(1).html(changeUphoto[0].name)
+					}
+			});
+			$("#changeUphoto").on("click",function(){
+				var inputFile = $('#uphotoFile');
+				var changeUphoto = inputFile[0].files;
+				if(changeUphoto.length != 0){
+					if(confirm("정말 사진을 변경하시겠습니까")){
+						console.log(formData.get("photo"))
+						$.ajax({
+							url : "mypage/changeuphoto",
+							processData:false,
+							contentType:false,
+							type : "post",
+							data : formData,
+							success : function(result) {
+								if(result =="success"){
+									alert("변경완료");
+									location.reload();
+								}else{
+									alert("변경실패");
+								}
+							}
+						});
+					}
+				}
+			});
+			
 
 		});
 	</script>
