@@ -46,7 +46,19 @@ public class PortfolioController {
 
 
 	@GetMapping("/post")
-	public String portfolioPost() { // 글생성 창
+	public String portfolioPost(HttpServletRequest request,HttpServletResponse response) { // 글생성 창
+		String uname = (String) request.getSession().getAttribute("uname");
+		if(uname==""||uname==null) {
+			PrintWriter out;
+			try {
+				response.setContentType("text/html; charset=UTF-8");
+				out = response.getWriter();
+				out.println("<script>alert('권한이 없습니다.');history.go(-1);</script>");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return null;
+		};
 		return "portfolio/portfolioPost";
 	}
 	
@@ -83,20 +95,21 @@ public class PortfolioController {
 			}
 			
 		}
-		
-		String portfolioFileName = uploadPortfolio.getOriginalFilename();
-		portfolioFileName = portfolioFileName.substring(portfolioFileName.lastIndexOf("\\")+1);
-		UUID uuid = UUID.randomUUID();
-		portfolioFileName = uuid.toString()+"_"+portfolioFileName;
-		File saveFile = new File(request.getSession().getServletContext().getRealPath("/resources/files/userportfolio"),portfolioFileName);
-		try {
-			uploadPortfolio.transferTo(saveFile);
-		} catch (IllegalStateException | IOException e) {
-			System.out.println("icy...");
-			e.printStackTrace();
+		if(uploadPortfolio != null) {
+			String portfolioFileName = uploadPortfolio.getOriginalFilename();
+			portfolioFileName = portfolioFileName.substring(portfolioFileName.lastIndexOf("\\")+1);
+			UUID uuid = UUID.randomUUID();
+			portfolioFileName = uuid.toString()+"_"+portfolioFileName;
+			File saveFile = new File(request.getSession().getServletContext().getRealPath("/resources/files/userportfolio"),portfolioFileName);
+			try {
+				uploadPortfolio.transferTo(saveFile);
+			} catch (IllegalStateException | IOException e) {
+				System.out.println("icy...");
+				e.printStackTrace();
+			}
+			
+			vo.setPffile(portfolioFileName);
 		}
-		
-		vo.setPffile(portfolioFileName);
 		vo.setPfthumb(ptthumb); // 썸네일
 
 		System.out.println("포트폴리오 업로드 vo>>"+vo);
@@ -119,7 +132,7 @@ public class PortfolioController {
 				//response.setCharacterEncoding("UTF-8");
 				response.setContentType("text/html; charset=UTF-8");
 				out = response.getWriter();
-				out.println("<script>history.go(-1);alert('권한이 없습니다.');</script>");
+				out.println("<script>alert('권한이 없습니다.');history.go(-1);</script>");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -291,7 +304,6 @@ public class PortfolioController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		String resourceName = resource.getFilename().substring(resource.getFilename().indexOf("_")+1);
-		System.out.println("실행되니?");
 		System.out.println(path);
 		System.out.println(resourceName);
 		HttpHeaders headers = new HttpHeaders();

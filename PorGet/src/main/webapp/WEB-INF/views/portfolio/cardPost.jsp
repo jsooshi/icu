@@ -4,13 +4,13 @@
 <c:forEach items="${list }" var="p">
 
             <div class="col-md-4">
-                <div class="card" style="display: flex">
+                <div class="card" style="display: flex;">
                     <a href="portfolio/view?pfnum=${p.PFNUM }" class="btn text-left custom-card">
                         <div class="img-hover-zoom">
                             <img src="/porget/files/${p.PFTHUMB }" class="card-img-top" alt="${p.PFNAME }">
                         </div>
                         <div class="card-body" >
-                            <h5 class="card-title">${p.PFNAME }</h5>
+                            <div style="display: block; white-space:pre; word-break:break-all;"><h5 class="card-title" style="overflow: hidden; text-overflow:ellipsis;"><c:out value="${p.PFNAME }"/></h5></div>
                             <p class="card-text">
                                 <img src="/porget/files/profile/${p.UPHOTO}" class="rounded-circle" style="width: 50px; height:50px; display: inline;">
                                 ${p.UNAME }

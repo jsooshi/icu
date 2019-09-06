@@ -3,6 +3,7 @@ package com.porget.control;
 import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -36,9 +37,6 @@ public class MainController {
 	
 	@Autowired
 	private UserDAO userdao;
-	
-	@Autowired
-	private RecruiterDAO recruiterdao;
 
 	@GetMapping("/")
 	public String index() {
@@ -72,7 +70,7 @@ public class MainController {
         String savedName = uuid.toString() + "_" + fileName;
         File target = new File(uploadPath,savedName);
         FileCopyUtils.copy(file.getBytes(), target);
-
+        vo.setUcheck(0);
         vo.setUphoto(savedName);
         userdao.insert(vo);
 		response.setContentType("text/html; charset=UTF-8");
@@ -89,13 +87,10 @@ public class MainController {
 	}
 	
 	@RequestMapping(value = "/recrujoin", method = RequestMethod.POST)//리쿠르터 DB 회원가입 
-	public String insertRecruit(RecruiterVO rvo, HttpServletResponse response) throws Exception {
-		System.out.println("리크루터 회원가입vo="+rvo);
-		recruiterdao.insert(rvo);
-		response.setCharacterEncoding("UTF-8");
-		PrintWriter out = response.getWriter();
-		response.getWriter().print("<script>alert('회원가입을 축하드립니다.');</script>");
-		out.flush();
+	public String insertRecruit(UserVO vo) {
+		System.out.println("리크루터 회원가입vo="+vo);
+		vo.setUcheck(1);
+		userdao.insert(vo);
 		return "main/index";
 	}
 	
@@ -118,7 +113,7 @@ public class MainController {
 		}else {
 			System.out.println("멤버 로그인 실패");
 			attrs.addFlashAttribute("msg", "이메일과 비밀번호를 확인해주세요");
-			return "redirect:/login";
+			return "redirect:/";
 		}
 	}
 	
@@ -129,20 +124,16 @@ public class MainController {
 		return "main/recruiterLogin";
 	}
 	
-	@RequestMapping(value = "/recruiterLogin", method = RequestMethod.POST)//로그인창 보여주기
-	public String recruiterLoginSuccess(RecruiterVO rvo, HttpSession session, RedirectAttributes attrs) {
-		String cname = recruiterdao.login(rvo);
-		System.out.println("로그인>"+rvo);
-		if(cname != null) {
-			session.setAttribute("cname", cname);
-			System.out.println("리크루터 로그인 성공");
-			return "redirect:/";
-		}else {
-			System.out.println("리쿠르터 로그인 실패");
-			attrs.addFlashAttribute("msg", "이메일과 비밀번호를 확인해주세요");
-			return "redirect:/login";		
-		}
-	}
+	/*
+	 * @RequestMapping(value = "/recruiterLogin", method = RequestMethod.POST)//로그인창
+	 * 보여주기 public String recruiterLoginSuccess(UserVO vo, HttpSession session,
+	 * RedirectAttributes attrs) { String uname = recruiterdao.loginRecruiter(vo);
+	 * System.out.println("로그인>"+vo); if(uname != null) {
+	 * session.setAttribute("uname", uname); System.out.println("리크루터 로그인 성공");
+	 * return "redirect:/"; }else { System.out.println("리쿠르터 로그인 실패");
+	 * attrs.addFlashAttribute("msg", "이메일과 비밀번호를 확인해주세요"); return
+	 * "redirect:/login"; } }
+	 */
 
 	@RequestMapping(value="/logout")
 	public String logout(HttpSession session) {
@@ -176,29 +167,21 @@ public class MainController {
 		return msg;
 	}
 	
-	@RequestMapping("checkCname")
-	public @ResponseBody String checkCname(String companyName) {
-		System.out.println("checkcname>>"+companyName);
-		String msg;
-		if(recruiterdao.cidCheck(companyName)==0) {
-			msg="<font color=blue>사용가능한 회사명입니다</font>";
-		}else {
-			msg="<font color=red>사용불가능한 회사명입니다</font>";	
-		}
-		return msg;
-	}
+	/*
+	 * @RequestMapping("checkCname") public @ResponseBody String checkCname(String
+	 * companyName) { System.out.println("checkcname>>"+companyName); String msg;
+	 * if(recruiterdao.cidCheck(companyName)==0) {
+	 * msg="<font color=blue>사용가능한 회사명입니다</font>"; }else {
+	 * msg="<font color=red>사용불가능한 회사명입니다</font>"; } return msg; }
+	 */
 	
-	@RequestMapping("checkCemail")
-	public @ResponseBody String checkCemail(String companyEmail) {
-		System.out.println("checkcname>>"+companyEmail);
-		String msg;
-		if(recruiterdao.cemailCheck(companyEmail)==0) {
-			msg="<font color=blue>사용가능한 이메일입니다</font>";
-		}else {
-			msg="<font color=red>사용불가능한 이메일입니다</font>";	
-		}
-		return msg;
-	}
+	/*
+	 * @RequestMapping("checkCemail") public @ResponseBody String checkCemail(String
+	 * companyEmail) { System.out.println("checkcname>>"+companyEmail); String msg;
+	 * if(recruiterdao.cemailCheck(companyEmail)==0) {
+	 * msg="<font color=blue>사용가능한 이메일입니다</font>"; }else {
+	 * msg="<font color=red>사용불가능한 이메일입니다</font>"; } return msg; }
+	 */
 	
 	@RequestMapping("findPass")
 	public String findPass() {
@@ -255,6 +238,12 @@ public class MainController {
 		List<List<Map<String, Object>>> list4 = new ArrayList<List<Map<String,Object>>>();
 		List<Map<String, Object>> list=null;
 			list4.add(dao.searchNameList(input));
+			for (int i = 0; i < list4.size(); i++) {
+				for (int j = 0; j < list4.get(i).size(); j++) {
+					Map<String,Object> map = list4.get(i).get(j);
+					map.put("PFTHUMB",((String)map.get("PFTHUMB")).split("\\|")[0]);				
+				}
+			}
 			m.addAttribute("list4", list4);
 		return "search/searchNameResult";
 	}
@@ -264,6 +253,12 @@ public class MainController {
 		List<List<Map<String, Object>>> list4 = new ArrayList<List<Map<String,Object>>>();
 		List<Map<String, Object>> list=null;
 		list4.add(dao.searchTagList(input));
+		for (int i = 0; i < list4.size(); i++) {
+			for (int j = 0; j < list4.get(i).size(); j++) {
+				Map<String,Object> map = list4.get(i).get(j);
+				map.put("PFTHUMB",((String)map.get("PFTHUMB")).split("\\|")[0]);				
+			}
+		}
 		m.addAttribute("list4", list4);
 		return "search/searchTagResult";
 	}
@@ -283,6 +278,10 @@ public class MainController {
 				list = dao.searchHashResult(keyword3, base);
 			}
 			System.out.println("list 0903>>>"+ list);
+			for (int i = 0; i < list.size(); i++) {
+				Map<String,Object> map = list.get(i);
+				map.put("PFTHUMB",((String)map.get("PFTHUMB")).split("\\|")[0]);
+			}
 			m.addAttribute("list", list);
 		return "search/searchHashResult";
 	}

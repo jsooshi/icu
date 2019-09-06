@@ -62,6 +62,8 @@
 				return false;
 			}else if(!/^[a-zA-Z0-9]{3,10}$/.test($('#userName').val())){
 				alert("닉네임은 한글, 영문 3~10글자로 입력해주세요! (공백,특수문자X)");
+				$('#userName').val("");
+				$('#userName').focus();
 				return false;
 			}
 			
@@ -97,6 +99,7 @@
 				alert("확인");
 				return false;
 			}
+			document.getElementById("userJoinForm").submit();
 		});
     
 	});//document
@@ -113,7 +116,7 @@
                     Membership Join
                 </h3>
                 <hr>
-                <form role="form" method="post" enctype="multipart/form-data">
+                <form id="userJoinForm" role="form" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="mName">
                             닉네임
@@ -154,7 +157,7 @@
                         </label>
 
                         <input type="file" class="form-control-file" id="file" name="file" accept=".jpg,.jpeg,.gif,.bmp,.png">
-                    <button id="uploadBtn" class="btn btn-primary">
+                    <button type="button" id="btnJoin" class="btn btn-primary">
                         가입
                     </button>
                 </form>

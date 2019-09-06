@@ -40,7 +40,7 @@ public class ReplyEchoHandler extends TextWebSocketHandler {
 			
 			WebSocketSession boardWriterSession = userSessions.get(boardWriter);
 			if("reply".equals(cmd) && boardWriterSession != null ) {
-				TextMessage txtMsg = new TextMessage(replywriter + "님께서 " + 
+				TextMessage txtMsg = new TextMessage("<font color=pink>"+replywriter + "</font>님께서 " + 
 							"<a href='/porget/portfolio/view?pfnum="+bno+ "'>" + bno + "</a>번 글에 댓글을 달았습니다.");
 				boardWriterSession.sendMessage(txtMsg);
 			}

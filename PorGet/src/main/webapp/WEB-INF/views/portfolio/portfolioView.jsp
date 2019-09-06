@@ -90,7 +90,7 @@ $(function(){ //jquery영역
 	
 	replyList(); //댓글리스트 로딩
 		
-	$('#replySave').click(function(){ //댓글작성 클릭 
+	$('a[name=replySave]').click(function(){ //댓글작성 클릭 
 		var replyCon = $("#replyContents").val(); //댓글내용 
 		if(replyCon===""){
 			alert('내용을 입력하세요')
@@ -121,7 +121,7 @@ $(function(){ //jquery영역
 		})//ajax	
 		
 		
-		$("#replyContents").val(''); //댓글초기화
+		$('#replyContents').val(''); //댓글초기화
 		
 	})//replySave click
 
@@ -240,18 +240,22 @@ $(function(){ //jquery영역
                 <div class="box">
                     <div class="box-header with-border">
                         <h3 class="box-title">Comment</h3>
+                        <hr>
                     </div>
                     <div class="box-body">
                         <div class="form-group">
                             <c:choose>
                                 <c:when test="${!empty uname }">
-                                    <textarea id="replyContents" rows="3" cols="60" placeholder="내용을입력하세요"></textarea>
+                                    <textarea id="replyContents" rows="3" cols="80" placeholder="내용을입력하세요" style="border: none"></textarea>
                                     <br>
-                                    <span style="color:#aaa;" id="counter">(0/최대100자)</span>
-                                    <input type="button" value="저장" id="replySave">
+                                    <font size="2px"><span style="color:#aaa;" id="counter">(0/최대100자)</span></font>
+                                    <a name="replySave"  style="cursor: pointer;">
+                                    <font color="blue" size="2px">저장</font></a>
+                                    <hr>
+                                   <!--  <input type="button" value="저장" id="replySave"> -->
                                 </c:when>
                                 <c:otherwise>
-                                    <textarea id="replyContents" rows="3" cols="60" placeholder="로그인하세요"
+                                    <textarea id="replyContents" rows="3" cols="60" placeholder="로그인하세요" style="border: none"
                                         readonly></textarea>
                                 </c:otherwise>
                             </c:choose>
@@ -270,8 +274,8 @@ $(function(){ //jquery영역
             <div class="col-md-4">
                 <div class="card my-4">
                     <div class="row">
-                        <div class="col-lg-4 text-center">
-                            <img src="/porget/img/profile/${ list.UPHOTO}" class="rounded-circle" style="width:50px;">
+                        <div class="col-lg-4">
+                            <img src="/porget/files/profile/${list.UPHOTO } " class="rounded-circle" style="width:50px;">
                         </div>
                         <div class="col-lg-8">
                             <ul class="list-unstyled mb-0">
@@ -290,7 +294,7 @@ $(function(){ //jquery영역
                 </div>
                 <div class="card my-4">
                 <c:if test="${not empty list.PFURL}">
-                    <a href="${list.PFURL }" class="btn btn-primary pd-4">
+                    <a href="${list.PFURL }" class="btn btn-primary pd-4" target="_blank">
                             포트폴리오 링크
                     </a>
                 </c:if>
