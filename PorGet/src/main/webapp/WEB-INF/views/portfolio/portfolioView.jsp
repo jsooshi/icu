@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -52,16 +53,13 @@
 		$('#socketAlert').css("display","block");
 		setTimeout(function(){
 			$('#socketAlert').css("display","none");
-		},3000)
-	}	
+		},3000)	}	
 	
 		ws.onclose = function (event) {
 			console.log('Info: connecion closed')
 			setTimeout(function () {connect()},1000); //retry connection	
 	}
-		ws.onerror = function (err) { console.log('error: ', err)}
-	
-	}	
+		ws.onerror = function (err) { console.log('error: ', err)}}	
 </script>	
 <script type="text/javascript">
 
@@ -280,7 +278,9 @@ $(function(){ //jquery영역
                                     ${list.PFPOSITION }
                                 </li>
                                 <li>
-                                    ${list.TAGNAME }
+									<c:forTokens items="${list.TAGNAME }" delims="#" var="item">
+									   <a href="/porget/searchHashTagList2?keyword=${item}">#${item}</a> &nbsp;
+									</c:forTokens>
                                 </li>
                             </ul>
                         </div>

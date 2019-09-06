@@ -122,4 +122,10 @@ public class PortfolioDAOImpl implements PortfolioDAO{
 	public List<Map> mainRecent() {
 		return sqlSession.selectList("portfolio.recentPortfolio");
 	}
+
+
+	@Override
+	public List<Map<String, Object>> searchHashResult2(String keyword) {
+		return sqlSession.selectList("portfolio.searchResultOnly", keyword);
+	}
 }

@@ -28,6 +28,7 @@ public interface PortfolioDAO {// 포트폴리오 관련 DAO
 	public List<Map> mainPopular();
 	public List<Map> mainRecent();
 	public List<Map<String, Object>> searchHashResult(String keyword, int base);
+	public List<Map<String, Object>> searchHashResult2(String keyword);
 	public List<String> searchTag(String keyword);
 	public List<String> searchName(String keyword);
 	public List<Map<String, Object>> searchNameList(String keyword);

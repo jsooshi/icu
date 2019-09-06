@@ -286,6 +286,18 @@ public class MainController {
 		return "search/searchHashResult";
 	}
 	
+	@RequestMapping("/searchHashTagList2")
+	public String searchHashTagList2(Model m, String keyword) {//게시물에서 해시태그 클릭시
+		List<Map<String, Object>> list = dao.searchHashResult2(keyword);
+		for (int i = 0; i < list.size(); i++) {
+			Map<String,Object> map = list.get(i);
+			map.put("PFTHUMB",((String)map.get("PFTHUMB")).split("\\|")[0]);
+		}
+		m.addAttribute("list", list);
+		m.addAttribute("HashTag", keyword);
+		return "search/searchHashResult2";
+	}
+	
 
 	/*메인 popular*/
 	@RequestMapping("/mainpopular")
