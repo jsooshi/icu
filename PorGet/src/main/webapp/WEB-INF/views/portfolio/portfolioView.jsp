@@ -14,22 +14,7 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
-<style type="text/css">
-	 .maxSize{
-		width: 925px;
-		height: 500px;
-	}
-	.imgMaxSize{
-		position:absolute;
-		top:0;
-		left:0;
-		right:0;
-		bottom:0;
-		max-width:100%;
-		max-height:100%;
-		margin: auto;
-	} 
-</style>
+
 <title>Document</title>
 <script src="/porget/js/jquery-3.js"></script>
 
@@ -62,8 +47,6 @@
 		ws.onerror = function (err) { console.log('error: ', err)}
 	
 	}	
-</script>	
-<script type="text/javascript">
 
 var realPath = "${realPath}";
 
@@ -153,15 +136,13 @@ $(function(){ //jquery영역
 		}
 	});
 	
-	$('#recommendimg').click(function(){//좋아요버튼
-		var writeName = '${list.UNAME}';
+	$('a .recA').click(function(event){//좋아요버튼
+		event.preventDefault();
+		alert('check');
 		var uName = '${uname}';
 		
 		if(uName == ""){
 			alert("로그인 해주세요");	
-			return;
-		}else if(writeName === uName){
-			alert('본인의 글을 추천하실 수 없습니다');
 			return;
 		}else {
 			 $.ajax({
@@ -171,23 +152,37 @@ $(function(){ //jquery영역
 					 pfnum : ${param.pfnum}
 				 },
 				 success: function(result){
-					 var flag=0;
-				    if(flag == 0) {
-				        $("#recommendImg").attr("src","/porget/");
-				        flag = 1;
-				      }
-				      else if(flag == 1) {
-				        $("#recommendImg").attr("src","http://dummyimage.com/450x255/");
-				        flag = 0;
-				      }
-					 $('.recommend').html("좋아요수: "+result); 
+					 console.log(result);
+					 $('#recommend').html(result); 
 				}
 			})
 		}
-		
 	});
 }); //ready
 </script>
+<style>
+
+	.maxSize{
+		width: 925px;
+		height: 500px;
+	}
+	.imgMaxSize{
+		position:absolute;
+		top:0;
+		left:0;
+		right:0;
+		bottom:0;
+		max-width:100%;
+		max-height:100%;
+		margin: auto;
+	} 
+
+	.recommendimg {
+		width: 50px;
+	}
+
+
+</style>
 </head>
 <body>
 
@@ -307,23 +302,26 @@ $(function(){ //jquery영역
                     </a>
                 </c:if>
                 
-				<c:choose>
-					<c:when test="${like eq 0 }">
-<!--                     <button class="btn btn-danger" id="recommendBtn">좋아요</button> -->
-					<div id="recommendimg">
-						<img src="/porget/img/heart.png">
-					</div>
-					</c:when>
-					<c:otherwise>
-					<div id="recommendimg">
-						<img src="/porget/img/heartfull.png">
-					</div>
-					</c:otherwise>
-				</c:choose>                
+	                <div id="recommend">
+						<c:choose>
+							<c:when test="${like eq 0 }">
+		<!--                     <button class="btn btn-danger" id="recommendBtn">좋아요</button> -->
+								<a href="#" class="recA">
+									<img src="/porget/img/heart.png" class="recommendimg"> 
+								</a>
+									${list.JOA }
+							</c:when>
+							<c:otherwise>
+								<a href="#" class="recA">
+									<img src="/porget/img/heartfull.png" class="recommendimg"> 
+								</a>
+									${list.JOA }
+							</c:otherwise>
+						</c:choose>                
+	                </div>
                 </div>
                 <div class="card my-4">
                     조회수: ${list.PFREAD }<br>
-                    <span class="recommend">좋아요수: ${list.JOA }</span>
                 </div>
             </div>
         </div>

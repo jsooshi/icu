@@ -265,19 +265,24 @@ public class PortfolioController {
 	}
 	
 	/*좋아요 기능*/
-	@RequestMapping("/good")
-	public @ResponseBody int insertGood(int pfnum,HttpSession session) {
+	@PostMapping("/good")
+	public String insertGood(int pfnum,HttpSession session, Model m) {
 		String uname = (String) session.getAttribute("uname");
+		System.out.println(uname);
 		Map<String,Object> recommend = new HashMap<String,Object>();
 		recommend.put("pfnum", pfnum);
 		recommend.put("uname", uname);
 		System.out.println(recommend);
 		if(dao.distinctRecommend(recommend)==0) {
+			m.addAttribute("recommend",0);
 			dao.insertRecommend(recommend);
 		}else {
+			m.addAttribute("recommend",1);
 			dao.deleteRecommend(recommend);
 		}
-		return dao.selectRecommend(pfnum);
+		m.addAttribute("recnum",dao.selectRecommend(pfnum));
+		
+		return "portfolio/view?pfnum="+pfnum;
 	}
 
 	
