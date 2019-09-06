@@ -136,24 +136,22 @@ $(function(){ //jquery영역
 		}
 	});
 	
-	$('a .recA').click(function(event){//좋아요버튼
-		event.preventDefault();
-		alert('check');
+	$('#recommend').on('click',"a",function(event){//좋아요버튼
 		var uName = '${uname}';
-		
+		event.preventDefault();
 		if(uName == ""){
 			alert("로그인 해주세요");	
 			return;
 		}else {
 			 $.ajax({
-				 url : '../portfolio/good',
+				 url : '/porget/portfolio/good',
 				 type: 'post',
 				 data: {
 					 pfnum : ${param.pfnum}
 				 },
 				 success: function(result){
-					 console.log(result);
-					 $('#recommend').html(result); 
+					 var rec = $(result).find('#recommend').html();
+					 $('#recommend').html(rec); 
 				}
 			})
 		}
@@ -304,18 +302,12 @@ $(function(){ //jquery영역
                 
 	                <div id="recommend">
 						<c:choose>
-							<c:when test="${like eq 0 }">
+							<c:when test="${recommend eq 0 }">
 		<!--                     <button class="btn btn-danger" id="recommendBtn">좋아요</button> -->
-								<a href="#" class="recA">
-									<img src="/porget/img/heart.png" class="recommendimg"> 
-								</a>
-									${list.JOA }
+								<a href="#"><img src="/porget/img/heart.png" class="recommendimg"></a>${list.JOA }
 							</c:when>
 							<c:otherwise>
-								<a href="#" class="recA">
-									<img src="/porget/img/heartfull.png" class="recommendimg"> 
-								</a>
-									${list.JOA }
+								<a href="#"><img src="/porget/img/heartfull.png" class="recommendimg"></a>${list.JOA }
 							</c:otherwise>
 						</c:choose>                
 	                </div>
@@ -328,7 +320,7 @@ $(function(){ //jquery영역
      </div>
      
 	<jsp:include page="/WEB-INF/views/include/footer.jsp"/>	
-	<script
+ 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
 		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
 		crossorigin="anonymous"></script>
@@ -337,7 +329,7 @@ $(function(){ //jquery영역
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-		crossorigin="anonymous"></script>
+		crossorigin="anonymous"></script> 
 
 </body>
 
