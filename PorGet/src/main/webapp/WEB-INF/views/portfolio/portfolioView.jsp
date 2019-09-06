@@ -279,7 +279,7 @@ $(function(){ //jquery영역
                                 </li>
                                 <li>
 									<c:forTokens items="${list.TAGNAME }" delims="#" var="item">
-									   <a href="/porget/searchHashTagList2?keyword=${item}">#${item}</a> &nbsp;
+									   <a href="/porget/searchHashClick?keyword=${item}">#${item}</a> &nbsp;
 									</c:forTokens>
                                 </li>
                             </ul>

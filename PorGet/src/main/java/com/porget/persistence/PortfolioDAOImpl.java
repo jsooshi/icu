@@ -83,10 +83,7 @@ public class PortfolioDAOImpl implements PortfolioDAO{
 
 	@Override
 	public List<Map<String, Object>> searchHashResult(String keyword, int base) {
-		System.out.println("#붙인 키워드"+keyword);
-		System.out.println("DAO base>>"+base);
 		RowBounds bounds = new RowBounds((base-1)*6, 6);
-		System.out.println("Bounds>>"+bounds);
 		return sqlSession.selectList("portfolio.searchResult", keyword, bounds);
 	}
 	@Override
@@ -123,9 +120,9 @@ public class PortfolioDAOImpl implements PortfolioDAO{
 		return sqlSession.selectList("portfolio.recentPortfolio");
 	}
 
-
 	@Override
-	public List<Map<String, Object>> searchHashResult2(String keyword) {
-		return sqlSession.selectList("portfolio.searchResultOnly", keyword);
+	public List<Map<String, Object>> searchHashClickContent(String keyword, int base) {
+		RowBounds bounds = new RowBounds((base-1)*6, 6);
+		return sqlSession.selectList("portfolio.searchResultOnly", keyword, bounds);
 	}
 }
