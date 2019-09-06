@@ -7,7 +7,7 @@
 <script>
 $(function(){
 	var group=0;
-	$('[name=replyAgain]').on('click',function(){ //댓글 눌렀을 시 대댓글 입력 창 
+	$('a[name=replyAgain]').on('click',function(){ //댓글 눌렀을 시 대댓글 입력 창 
 		
 		$(this).parent('div[name=reply]').after($('#replyReply'));
 		$('#replyReply').css("display","");
@@ -17,7 +17,7 @@ $(function(){
 										
 	})//click
 
-	$('button[name=reReSave]').on('click', function(){ //대댓글 작성 저장 클릭 
+	$('a[name=reReSave]').on('click', function(){ //대댓글 작성 저장 클릭 
 		var reCon = $("#reReplyCon").val();
 		if(reCon===""){
 			alert('내용을입력하세요')
@@ -45,12 +45,12 @@ $(function(){
 		$("#reReplyCon").val('');
 	})//대댓글 저장 클릭 시 
 	
-	$('input[name=reReplyCancel]').on('click', function(){
+	$('a[name=reReplyCancel]').on('click', function(){
 		$('#replyReply').css("display","none");
 	})//대댓글 작성 취소 시 
 	
 	
-	$('input[name=replyDelete]').on('click', function(){
+	$('a[name=replyDelete]').on('click', function(){
 		if(confirm('삭제하시겠습니까? '))
 		var number = $(this).parent().children('input[name=rn]').val();
 		$.ajax({
@@ -91,24 +91,27 @@ $(function(){
 		</c:when>
 		<c:otherwise>
 			<div name="reReply" style="margin-left: 20px">
+			<img src="/porget/img/comment.PNG" height="20px" width="25px">
 				<%--대댓글인경우 들여나오기 --%>
 		</c:otherwise>
 	</c:choose>
-		작성자: ${reply.uname }
-		 작성날짜:<fmt:formatDate value="${reply.rdate }" pattern="yyyy-MM-dd" />
-	<br>
-	<textarea rows="3" cols="60" placeholder="comment" readonly><c:out
-			value="${reply.rcontent }"></c:out></textarea>
-	<br>
+		<strong>${reply.uname }</strong>
+	<font size="2px">	<fmt:formatDate value="${reply.rdate }" pattern="yyyy-MM-dd" /></font>
 	<c:if test="${!empty uname }">
-	<c:if test="${reply.uname eq uname }">
-		<input type="button" value="삭제" name="replyDelete">
-	</c:if>
 	<c:if test="${reply.rdeep eq 0 }">
-		<input type="button" value="댓글달기" name="replyAgain">
-		<br>
+		<a name="replyAgain"  style="cursor: pointer;"><font color="blue" size="1px">댓글</font></a>
+		<!-- <input type="button" value="댓글달기" name="replyAgain"> -->
+		
 	</c:if>
+	<c:if test="${reply.uname eq uname }">
+	<!-- 	<input type="button" value="삭제" name="replyDelete"> -->
+	<a name="replyDelete"  style="cursor: pointer;"><font color="red" size="1px">삭제</font></a>
 	</c:if>
+	
+	</c:if>
+	<br>${reply.rcontent }
+	<hr>
+	
 	<input type="hidden" name='re' value="${reply.rgroup }">
 	<input type="hidden" name="rn" value="${reply.rnum }">
 	</div>
@@ -117,10 +120,13 @@ $(function(){
 <!-- 대댓글 작성창 -->
 <div id='replyReply' style="display: none; margin-left: 20px">
 	<!-- 대댓글창  -->
-
 	<br>
-	<textarea id="reReplyCon" row=3 cols=57 placeholder="내용을 입력하세요"></textarea>
-	<br> <span style="color: #aaa;" id="counter2">(0/최대100자)</span>
-	<button name="reReSave">저장</button>
-	<input type="button" value="취소" name="reReplyCancel"><br>
+	<textarea id="reReplyCon" row=3 cols=57  style="border: 0" placeholder="comment">
+	</textarea>
+	<br> <font size="2px"><span style="color: #aaa;" id="counter2">(0/최대100자)</span></font>
+	
+	<a name="reReplyCancel"  style="cursor: pointer;"><font color="blue" size="2px">저장</font></a>
+	<a name="reReSave"  style="cursor: pointer;"><font color="red" size="2px">취소</font></a>
+	
+	
 </div>
