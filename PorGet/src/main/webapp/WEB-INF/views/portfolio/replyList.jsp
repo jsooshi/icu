@@ -125,8 +125,8 @@ $(function(){
 	</textarea>
 	<br> <font size="2px"><span style="color: #aaa;" id="counter2">(0/최대100자)</span></font>
 	
-	<a name="reReplyCancel"  style="cursor: pointer;"><font color="blue" size="2px">저장</font></a>
-	<a name="reReSave"  style="cursor: pointer;"><font color="red" size="2px">취소</font></a>
+	<a name="reReSave"  style="cursor: pointer;"><font color="blue" size="2px">저장</font></a>
+	<a name="reReplyCancel"  style="cursor: pointer;"><font color="red" size="2px">취소</font></a>
 	
 	
 </div>
