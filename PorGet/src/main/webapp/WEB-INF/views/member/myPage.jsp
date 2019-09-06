@@ -40,8 +40,8 @@
 				<ul class="nav nav-tabs">
 					<li class="nav-item"><a class="nav-link active"
 						data-toggle="tab" href="#portfolio">포트폴리오</a></li>
-					<li class="nav-item"><a class="nav-link" data-toggle="tab"
-						href="#bookmark">북마크</a></li>
+<!-- 					<li class="nav-item"><a class="nav-link" data-toggle="tab"
+						href="#bookmark">북마크</a></li> -->
 					<li class="nav-item"><a class="nav-link" data-toggle="tab"
 						href="#setting">설정</a></li>
 				</ul>
@@ -71,7 +71,6 @@
 							</div>
 						</c:forEach>
 					</div>
-				</div>
 				<!-- bookmark -->
 				<div class="tab-pane" id="bookmark"></div>
 				<!--/tab-pane-->
@@ -95,6 +94,7 @@
 					</button> --%>
 
 
+				</div>
 				</div>
 
 
@@ -144,6 +144,7 @@
 		$(document).ready(function() {
 
 			$(".nav-tabs a").click(function() {
+				$('#portfolio').removeClass('active');
 				$(this).tab('show');
 			});
 
