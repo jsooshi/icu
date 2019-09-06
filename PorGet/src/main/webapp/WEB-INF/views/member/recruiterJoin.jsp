@@ -22,6 +22,96 @@
 	
 	<script src="/porget/js/jquery-3.js"></script>
 	<script src="/porget/js/ajax.js"></script>
+	<style type="text/css">
+body {
+	color: #fff;
+		background: #344a71;
+		font-family: 'Roboto', sans-serif;
+}
+
+.form-control {
+	border-color: #eee;
+	min-height: 41px;
+	box-shadow: none !important;
+}
+
+.form-control:focus {
+	border-color: #5cd3b4;
+}
+
+.form-control, .btn {
+	border-radius: 3px;
+}
+
+.signup-form {
+	width: 500px;
+	margin: 0 auto;
+	padding: 30px 0;
+}
+
+.signup-form h2 {
+	color: #333;
+	margin: 0 0 30px 0;
+	display: inline-block;
+	padding: 0 30px 10px 0;
+	border-bottom: 3px solid #5cd3b4;
+}
+
+.signup-form form {
+	color: #999;
+	border-radius: 3px;
+	margin-bottom: 15px;
+	background: #fff;
+	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+	padding: 30px;
+}
+
+.signup-form .form-group {
+	margin-bottom: 20px;
+}
+
+.signup-form label {
+	font-weight: normal;
+	font-size: 13px;
+}
+
+.signup-form input[type="checkbox"] {
+	margin-top: 2px;
+}
+
+.signup-form .btn {
+	font-size: 16px;
+	font-weight: bold;
+	background: #5cd3b4;
+	border: none;
+	margin-top: 20px;
+	min-width: 140px;
+}
+
+.signup-form .btn:hover, .signup-form .btn:focus {
+	background: #41cba9;
+	outline: none !important;
+}
+
+.signup-form a {
+	color: #5cd3b4;
+	text-decoration: underline;
+}
+
+.signup-form a:hover {
+	text-decoration: none;
+}
+
+.signup-form form a {
+	color: #5cd3b4;
+	text-decoration: none;
+}
+
+.signup-form form a:hover {
+	text-decoration: underline;
+}
+</style>
+	
 	
 	<script>
 	$(function(){
@@ -60,7 +150,7 @@
 				alert("닉네임을 입력해주세요!");
 				$('#userName').focus();
 				return false;
-			}else if(!/^[a-zA-Z0-9]{3,10}$/.test($('#userName').val())){
+			}else if(!/^[a-zA-Z0-9ㄱ-힣]{3,10}$/.test($('#userName').val())){
 				alert("닉네임은 한글, 영문 3~10글자로 입력해주세요! (공백,특수문자X)");
 				return false;
 			}
@@ -93,10 +183,9 @@
 				$('#userPass').val("");
 				$('#userPass').focus();
 				return false;
-			}else if(!unamePattern($('#userName').val())){
-				alert("확인");
-				return false;
 			}
+			document.getElementById("userJoinForm").submit();
+			
 		});
     
 	});//document
@@ -106,65 +195,71 @@
 
 <body>
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <h3>
-                    Membership Join
-                </h3>
-                <hr>
-                <form role="form" method="post" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label for="mName">
-                            닉네임
-                        </label>
-                        <input type="text" class="form-control" id="userName" name="uname">
+<div class="signup-form">
+		<form id="userJoinForm" role="form" method="post"
+			enctype="multipart/form-data">
+			<div class="col-xs-8 col-xs-offset-4">
+				<h2>Sign Up</h2>
+			</div>
+			<div class="form-group">
+				<label for="mName" class="control-label col-xs-4">Username</label>
+				<div class="col-xs-8">
+					<input type="text" class="form-control" id="userName" name="uname">
                         <div id="userNameMsg"></div>    
-                    
-            		<div class="check_font" id="id_check"></div>
-
-                        <label for="mEmail">
-                            이메일
-                        </label>
-                        <input type="email" class="form-control" id="userEmail" name="uemail">
+				</div>
+					<div id="userNameMsg"></div>
+						<div class="check_font" id="id_check"></div>
+				
+			</div>
+			<div class="form-group">
+				<label for="mEmail" class="control-label col-xs-4">Email Address</label>
+				<div class="col-xs-8">
+					 <input type="email" class="form-control" id="userEmail" name="uemail">
                     	<div id="userEmailMsg"></div>
-                    </div>
-                    
-                    
-                    <div class="form-group">
+				</div>
+			</div>
+			<div class="form-group">
+				<label  for="mPass" class="control-label col-xs-4">Password</label>
+				<div class="col-xs-8">
+					 <input type="password" class="form-control" id="userPass" name="upass">
+				</div>
+			</div>
+			<div class="form-group">
+				<label  for="mPass" class="control-label col-xs-4">Confirm Password</label>
+				<div class="col-xs-8">
+					 <input type="password" class="form-control" id="userPassCheck" name="upassCheck">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-xs-4">프로필사진</label>
+				<div class="col-xs-8 col-xs-offset-4">
+					<input type="file" class="form-control-file" id="file" name="file"
+						accept=".jpg,.jpeg,.gif,.bmp,.png">
+				</div>
+			</div>
 
-                        <label for="mPass">
-                            비밀번호
-                        </label>
-                        <input type="password" class="form-control" id="userPass" name="upass">
-                    </div>
-                    
-                    <div class="form-group">
+			<div class="form-group">
+				<div class="col-xs-8 col-xs-offset-4">
+					<p>
+						<label class="checkbox-inline"><input type="checkbox"
+							required="required"> I accept the <a href="#">Terms
+								of Use</a> &amp; <a href="#">Privacy Policy</a>.</label>
+					</p>
+					<button type="button" id="btnJoin" class="btn btn-primary btn-lg">Sign
+						Up</button>
+				</div>
+			</div>
 
-                        <label for="mPass">
-                            비밀번호 확인
-                        </label>
-                        <input type="password" class="form-control" id="userPassCheck" name="upassCheck">
-                    </div>
+		</form>
+		<div class="text-center">
+			Already have an account? <a href="/porget/">Login here</a>
+		</div>
+	</div>
+	
+	
 
 
 
-                        <label for="file">
-                            프로필사진
-                        </label>
-
-                        <input type="file" class="form-control-file" id="file" name="file">
-                    <button id="uploadBtn" class="btn btn-primary">
-                        가입
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/scripts.js"></script>
 <!--      	<script>
 		$(function() {
 			var formData = new FormData();

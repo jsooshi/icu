@@ -15,7 +15,26 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
-
+<style type="text/css">
+	 .maxSize{
+		width: 925px;
+		height: 500px;
+	}
+	.imgMaxSize{
+		position:absolute;
+		top:0;
+		left:0;
+		right:0;
+		bottom:0;
+		max-width:100%;
+		max-height:100%;
+		margin: auto;
+	} 
+	
+	
+	
+	
+</style>
 <title>Document</title>
 <script src="/porget/js/jquery-3.js"></script>
 
@@ -47,6 +66,8 @@
 		ws.onerror = function (err) { console.log('error: ', err)}
 	
 	}	
+
+
 
 var realPath = "${realPath}";
 

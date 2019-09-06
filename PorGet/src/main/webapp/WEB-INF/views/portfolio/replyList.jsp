@@ -31,7 +31,7 @@ $(function(){
 				rgroup : group,
 				rdeep: 1
 			}
-			console.log(concon)
+			
 		$.ajax({
 			url: '../replies/save',
 			type: 'post',

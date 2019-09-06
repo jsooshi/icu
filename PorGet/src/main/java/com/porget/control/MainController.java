@@ -87,10 +87,27 @@ public class MainController {
 	}
 	
 	@RequestMapping(value = "/recrujoin", method = RequestMethod.POST)//리쿠르터 DB 회원가입 
-	public String insertRecruit(UserVO vo) {
+	public String insertRecruit(MultipartFile file, UserVO vo,HttpServletRequest request, HttpServletResponse response) throws Exception {
 		System.out.println("리크루터 회원가입vo="+vo);
-		vo.setUcheck(1);
-		userdao.insert(vo);
+		
+		//프로필 이미지
+        String uploadPath =  request.getSession().getServletContext().getRealPath("/resources/files/profile");
+        System.out.println(uploadPath);
+        System.out.println(file.getOriginalFilename());
+        String fileName = file.getOriginalFilename();//파일이름
+        
+        //중복이름
+        UUID uuid = UUID.randomUUID();
+        String savedName = uuid.toString() + "_" + fileName;
+        File target = new File(uploadPath,savedName);
+        FileCopyUtils.copy(file.getBytes(), target);
+        vo.setUcheck(1);
+        vo.setUphoto(savedName);
+        userdao.insert(vo);
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		response.getWriter().print("<script>alert('회원가입을 축하드립니다.');</script>");
+		out.flush();
 		return "main/index";
 	}
 	
