@@ -246,7 +246,6 @@
 			<c:choose>
 				<c:when test="${empty uname}">
 					<li class="nav-item"><a href="#myModal" class="nav-link" data-toggle="modal">login</a></li>
-					<li class="nav-item"><a href="/porget/recruiterLogin" class="nav-link">recruiter login</a></li>
 					<button onclick="location.href='join'" class="btn btn-primary">Sign in</button>
 				</c:when>
 				<c:otherwise>
