@@ -15,22 +15,7 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
-<style type="text/css">
-	 .maxSize{
-		width: 925px;
-		height: 500px;
-	}
-	.imgMaxSize{
-		position:absolute;
-		top:0;
-		left:0;
-		right:0;
-		bottom:0;
-		max-width:100%;
-		max-height:100%;
-		margin: auto;
-	} 
-</style>
+
 <title>Document</title>
 <script src="/porget/js/jquery-3.js"></script>
 
@@ -59,9 +44,9 @@
 			console.log('Info: connecion closed')
 			setTimeout(function () {connect()},1000); //retry connection	
 	}
-		ws.onerror = function (err) { console.log('error: ', err)}}	
-</script>	
-<script type="text/javascript">
+		ws.onerror = function (err) { console.log('error: ', err)}
+	
+	}	
 
 var realPath = "${realPath}";
 
@@ -105,7 +90,7 @@ $(function(){ //jquery영역
 	
 	replyList(); //댓글리스트 로딩
 		
-	$('#replySave').click(function(){ //댓글작성 클릭 
+	$('a[name=replySave]').click(function(){ //댓글작성 클릭 
 		var replyCon = $("#replyContents").val(); //댓글내용 
 		if(replyCon===""){
 			alert('내용을 입력하세요')
@@ -136,7 +121,7 @@ $(function(){ //jquery영역
 		})//ajax	
 		
 		
-		$("#replyContents").val(''); //댓글초기화
+		$('#replyContents').val(''); //댓글초기화
 		
 	})//replySave click
 
@@ -151,32 +136,51 @@ $(function(){ //jquery영역
 		}
 	});
 	
-	$('#recommendBtn').click(function(){ //좋아요버튼
-		var writeName = '${list.UNAME}';
+	$('#recommend').on('click',"a",function(event){//좋아요버튼
 		var uName = '${uname}';
-		
+		event.preventDefault();
 		if(uName == ""){
 			alert("로그인 해주세요");	
 			return;
-		}else if(writeName === uName){
-			alert('본인의 글을 추천하실 수 없습니다');
-			return;
 		}else {
 			 $.ajax({
-				 url : '../portfolio/good',
+				 url : '/porget/portfolio/good',
 				 type: 'post',
 				 data: {
 					 pfnum : ${param.pfnum}
 				 },
 				 success: function(result){
-					 $('.recommend').html("좋아요수: "+result); 
+					 var rec = $(result).find('#recommend').html();
+					 $('#recommend').html(rec); 
 				}
 			})
 		}
-		
 	});
 }); //ready
 </script>
+<style>
+
+	.maxSize{
+		width: 925px;
+		height: 500px;
+	}
+	.imgMaxSize{
+		position:absolute;
+		top:0;
+		left:0;
+		right:0;
+		bottom:0;
+		max-width:100%;
+		max-height:100%;
+		margin: auto;
+	} 
+
+	.recommendimg {
+		width: 50px;
+	}
+
+
+</style>
 </head>
 <body>
 
@@ -236,18 +240,22 @@ $(function(){ //jquery영역
                 <div class="box">
                     <div class="box-header with-border">
                         <h3 class="box-title">Comment</h3>
+                        <hr>
                     </div>
                     <div class="box-body">
                         <div class="form-group">
                             <c:choose>
                                 <c:when test="${!empty uname }">
-                                    <textarea id="replyContents" rows="3" cols="60" placeholder="내용을입력하세요"></textarea>
+                                    <textarea id="replyContents" rows="3" cols="80" placeholder="내용을입력하세요" style="border: none"></textarea>
                                     <br>
-                                    <span style="color:#aaa;" id="counter">(0/최대100자)</span>
-                                    <input type="button" value="저장" id="replySave">
+                                    <font size="2px"><span style="color:#aaa;" id="counter">(0/최대100자)</span></font>
+                                    <a name="replySave"  style="cursor: pointer;">
+                                    <font color="blue" size="2px">저장</font></a>
+                                    <hr>
+                                   <!--  <input type="button" value="저장" id="replySave"> -->
                                 </c:when>
                                 <c:otherwise>
-                                    <textarea id="replyContents" rows="3" cols="60" placeholder="로그인하세요"
+                                    <textarea id="replyContents" rows="3" cols="60" placeholder="로그인하세요" style="border: none"
                                         readonly></textarea>
                                 </c:otherwise>
                             </c:choose>
@@ -297,18 +305,28 @@ $(function(){ //jquery영역
                             포트폴리오 다운로드
                     </a>
                 </c:if>
-                    <button class="btn btn-danger" id="recommendBtn">좋아요</button>
+                
+	                <div id="recommend">
+						<c:choose>
+							<c:when test="${recommend eq 0 }">
+		<!--                     <button class="btn btn-danger" id="recommendBtn">좋아요</button> -->
+								<a href="#"><img src="/porget/img/heart.png" class="recommendimg"></a>${list.JOA }
+							</c:when>
+							<c:otherwise>
+								<a href="#"><img src="/porget/img/heartfull.png" class="recommendimg"></a>${list.JOA }
+							</c:otherwise>
+						</c:choose>                
+	                </div>
                 </div>
                 <div class="card my-4">
                     조회수: ${list.PFREAD }<br>
-                    <span class="recommend">좋아요수: ${list.JOA }</span>
                 </div>
             </div>
         </div>
      </div>
      
 	<jsp:include page="/WEB-INF/views/include/footer.jsp"/>	
-	<script
+ 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
 		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
 		crossorigin="anonymous"></script>
@@ -317,7 +335,7 @@ $(function(){ //jquery영역
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-		crossorigin="anonymous"></script>
+		crossorigin="anonymous"></script> 
 
 </body>
 
