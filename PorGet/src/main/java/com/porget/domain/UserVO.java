@@ -6,8 +6,17 @@ public class UserVO {
 	private String upass;
 	private String uemail;
 	private String uphoto;
+	private int ucheck;
 	
 	
+	
+	
+	public int getUcheck() {
+		return ucheck;
+	}
+	public void setUcheck(int ucheck) {
+		this.ucheck = ucheck;
+	}
 	public String getUname() {
 		return uname;
 	}
@@ -35,8 +44,10 @@ public class UserVO {
 	}
 	@Override
 	public String toString() {
-		return "UserVO [uname=" + uname + ", upass=" + upass + ", uemail=" + uemail + ", uphoto=" + uphoto + "]";
+		return "UserVO [uname=" + uname + ", upass=" + upass + ", uemail=" + uemail + ", uphoto=" + uphoto + ", ucheck="
+				+ ucheck + "]";
 	}
+	
 	
 	
 	

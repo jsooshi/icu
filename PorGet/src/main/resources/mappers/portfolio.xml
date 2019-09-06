@@ -11,8 +11,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="insertPortfolio">
 		INSERT INTO portfolio 
 		VALUES (#{uname},portfolio_SEQ.nextval,#{pfname},
-				to_date(sysdate,'yyyy.mm.dd hh24:mi'),#{pfthumb},
-				0,#{pfurl},#{pffile},#{pfposition},#{tagname})
+				sysdate,#{pfthumb},
+				0,
+				<choose><when test="pfurl != null">#{pfurl},</when><otherwise>null,</otherwise></choose>
+				<choose><when test="pffile != null">#{pffile},</when><otherwise>null,</otherwise></choose>
+				#{pfposition},#{tagname})
 	</insert>
 	
 	<select id="portfolioView" resultType="Map"> 

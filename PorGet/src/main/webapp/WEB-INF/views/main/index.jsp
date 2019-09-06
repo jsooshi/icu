@@ -18,7 +18,7 @@
         <h4>인기 게시글</h4>
         <hr>
         <div class="row" >
-        <div class="card-deck" id="popular">
+        <div class="card-deck" id="popular" style="min-width: 100%">
         </div>
         </div>
    	</div>
@@ -29,7 +29,7 @@
         <h4>최근 등록 게시글</h4>
         <hr>
         <div class="row" >
-        <div class="card-deck" id="recent"></div>
+        <div class="card-deck" id="recent" style="min-width: 100%"></div>
         </div>
    	</div>
 
