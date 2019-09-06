@@ -120,9 +120,4 @@ public class PortfolioDAOImpl implements PortfolioDAO{
 		return sqlSession.selectList("portfolio.recentPortfolio");
 	}
 
-	@Override
-	public List<Map<String, Object>> searchHashClickContent(String keyword, int base) {
-		RowBounds bounds = new RowBounds((base-1)*6, 6);
-		return sqlSession.selectList("portfolio.searchResultOnly", keyword, bounds);
-	}
 }
