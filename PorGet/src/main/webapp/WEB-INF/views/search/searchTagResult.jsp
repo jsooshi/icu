@@ -12,7 +12,7 @@
                <div class="card-body">
                    <h5 class="card-title">${result.PFNAME }</h5>
                    <p class="card-text">
-                       <img src="http://placehold.it/200" class="rounded-circle" style="width: 50px; height:50px; display: inline;">
+                       <img src="/porget/files/profile/${result.UPHOTO }" class="rounded-circle" style="width: 50px; height:50px; display: inline;">
                        ${result.UNAME }
                    </p>
                    <p class="text-muted">조회 ${result.PFREAD }, 하트 ${result.JOA}, 댓글수 ${result.REPLYNUM } </p>
