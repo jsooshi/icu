@@ -7,7 +7,7 @@
        <div class="card">
            <a href="portfolio/view?pfnum=${result.PFNUM }" class="btn text-left custom-card">
                <div class="img-hover-zoom">
-                   <img src="${result.PFTHUMB }" class="card-img-top" alt="${result.PFNAME }">
+                   <img src="/porget/files/${result.PFTHUMB }" class="card-img-top" alt="${result.PFNAME }">
                </div>
                <div class="card-body">
                    <h5 class="card-title">${result.PFNAME }</h5>

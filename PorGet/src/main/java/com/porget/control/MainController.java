@@ -3,6 +3,7 @@ package com.porget.control;
 import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -112,7 +113,7 @@ public class MainController {
 		}else {
 			System.out.println("멤버 로그인 실패");
 			attrs.addFlashAttribute("msg", "이메일과 비밀번호를 확인해주세요");
-			return "redirect:/login";
+			return "redirect:/";
 		}
 	}
 	
@@ -237,6 +238,12 @@ public class MainController {
 		List<List<Map<String, Object>>> list4 = new ArrayList<List<Map<String,Object>>>();
 		List<Map<String, Object>> list=null;
 			list4.add(dao.searchNameList(input));
+			for (int i = 0; i < list4.size(); i++) {
+				for (int j = 0; j < list4.get(i).size(); j++) {
+					Map<String,Object> map = list4.get(i).get(j);
+					map.put("PFTHUMB",((String)map.get("PFTHUMB")).split("\\|")[0]);				
+				}
+			}
 			m.addAttribute("list4", list4);
 		return "search/searchNameResult";
 	}
@@ -246,6 +253,12 @@ public class MainController {
 		List<List<Map<String, Object>>> list4 = new ArrayList<List<Map<String,Object>>>();
 		List<Map<String, Object>> list=null;
 		list4.add(dao.searchTagList(input));
+		for (int i = 0; i < list4.size(); i++) {
+			for (int j = 0; j < list4.get(i).size(); j++) {
+				Map<String,Object> map = list4.get(i).get(j);
+				map.put("PFTHUMB",((String)map.get("PFTHUMB")).split("\\|")[0]);				
+			}
+		}
 		m.addAttribute("list4", list4);
 		return "search/searchTagResult";
 	}
@@ -265,6 +278,10 @@ public class MainController {
 				list = dao.searchHashResult(keyword3, base);
 			}
 			System.out.println("list 0903>>>"+ list);
+			for (int i = 0; i < list.size(); i++) {
+				Map<String,Object> map = list.get(i);
+				map.put("PFTHUMB",((String)map.get("PFTHUMB")).split("\\|")[0]);
+			}
 			m.addAttribute("list", list);
 		return "search/searchHashResult";
 	}
