@@ -131,6 +131,16 @@
 		ws.onerror = function (err) { console.log('error: ', err)}
 	
 	}	
+	
+	
+
+	  var str = '${msg}';
+	  if(str!=''){
+	    alert(str);
+	    location.replace('/porget');
+	  }
+	
+
 </script>
 <style>
  body {
