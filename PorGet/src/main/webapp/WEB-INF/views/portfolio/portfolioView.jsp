@@ -342,6 +342,9 @@ $(function(){ //jquery영역
                 <div class="card my-4">
                     조회수: ${list.PFREAD }<br>
                 </div>
+                <div class="card my-4">
+			<a href="/porget/chatting?toUname=${list.UNAME }">채팅하기</a>                
+                </div>
             </div>
         </div>
      </div>
