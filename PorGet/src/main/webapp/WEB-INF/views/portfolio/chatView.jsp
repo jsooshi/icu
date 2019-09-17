@@ -34,7 +34,7 @@
 
 <body>
 
-<c:set var="profile" value='<%=session.getAttribute("login")%>' />
+<c:set var="profile" value='<%=session.getAttribute("uname")%>' />
 
 
 
@@ -115,7 +115,7 @@
 
  function send() {
   var msg = $("#message").val();
-  if(msg != ""){
+/*   if(msg != ""){
 	  message = {};
 	  message.message_content = $("#message").val()
   	  message.TUTOR_USER_user_id = '${TUTOR_USER_user_id}'
@@ -123,7 +123,7 @@
   	  message.CLASS_class_id = '${class_id}'
   	  message.message_sender = '${profile.user_id}'
   }
-
+ */
 
 
 
