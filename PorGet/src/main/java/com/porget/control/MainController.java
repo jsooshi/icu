@@ -38,7 +38,7 @@ public class MainController {
 	@Autowired
 	private UserDAO userdao;
 
-	@GetMapping("/")
+	@GetMapping(value= {"/",""})
 	public String index() {
 		return "main/index";
 	}
