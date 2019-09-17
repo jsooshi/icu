@@ -15,28 +15,33 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
+
 <style type="text/css">
-	 .maxSize{
-		width: 925px;
-		height: 500px;
-	}
-	.imgMaxSize{
-		position:absolute;
-		top:0;
-		left:0;
-		right:0;
-		bottom:0;
-		max-width:100%;
-		max-height:100%;
-		margin: auto;
-	} 
-	
-	
-	
-	
+.maxSize {
+	width: 925px;
+	height: 500px;
+}
+
+.imgMaxSize {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	max-width: 100%;
+	max-height: 100%;
+	margin: auto;
+}
 </style>
 <title>Document</title>
 <script src="/porget/js/jquery-3.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
 
 <script>
 	var socket = null;
@@ -177,187 +182,229 @@ $(function(){ //jquery영역
 			})
 		}
 	});
+	
+	
+		  $("#reportBtn").click(function(){
+		    $("#myModal").modal();
+		  });
+		});
 }); //ready
 </script>
 <style>
+.maxSize {
+	width: 925px;
+	height: 500px;
+}
 
-	.maxSize{
-		width: 925px;
-		height: 500px;
-	}
-	.imgMaxSize{
-		position:absolute;
-		top:0;
-		left:0;
-		right:0;
-		bottom:0;
-		max-width:100%;
-		max-height:100%;
-		margin: auto;
-	} 
+.imgMaxSize {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	max-width: 100%;
+	max-height: 100%;
+	margin: auto;
+}
 
-	.recommendimg {
-		width: 50px;
-	}
-
-
+.recommendimg {
+	width: 50px;
+}
 </style>
 </head>
 <body>
 
-	<jsp:include page="/WEB-INF/views/include/header.jsp"/>	
+	<jsp:include page="/WEB-INF/views/include/header.jsp" />
 
 
-    <!-- Page Content -->
-    <div class="container">
-        <div class="row">
-            <!-- Post Content Column -->
-            <div class="col-sm-12">
-                <!-- Title -->
-                <h1 class="mt-4">${list.PFNAME }</h1>
-                <!-- Author -->
-                <hr>
-                <!-- Date/Time -->
-                <p>${list.PFDATE}</p>
-                <hr>            
-            </div>
-            <div class="col-lg-8">
-                <!-- Preview Image -->
-                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                    <ol class="carousel-indicators">
-                        <c:forEach items="${thumb}" var="thumbImg" varStatus="status">
-                            <li data-target="#carouselExampleIndicators" data-slide-to="${status.count-1 }"></li>
-                        </c:forEach>
-                    </ol>
-                    <div class="carousel-inner">
-                        <c:forEach items="${thumb}" var="thumbImg" varStatus="status">
-                            <div class="carousel-item maxSize">
-                                <img class="d-block imgMaxSize" src="/porget/files/${thumbImg }" alt="
+	<!-- Page Content -->
+	<div class="container">
+		<div class="row">
+			<!-- Post Content Column -->
+			<div class="col-sm-12">
+				<!-- Title -->
+				<h1 class="mt-4">${list.PFNAME }</h1>
+				<!-- Author -->
+				<hr>
+				<!-- Date/Time -->
+				<p>${list.PFDATE}</p>
+				<hr>
+			</div>
+			<div class="col-lg-8">
+				<!-- Preview Image -->
+				<div id="carouselExampleIndicators" class="carousel slide"
+					data-ride="carousel">
+					<ol class="carousel-indicators">
+						<c:forEach items="${thumb}" var="thumbImg" varStatus="status">
+							<li data-target="#carouselExampleIndicators"
+								data-slide-to="${status.count-1 }"></li>
+						</c:forEach>
+					</ol>
+					<div class="carousel-inner">
+						<c:forEach items="${thumb}" var="thumbImg" varStatus="status">
+							<div class="carousel-item maxSize">
+								<img class="d-block imgMaxSize" src="/porget/files/${thumbImg }"
+									alt="
                                         slide">
-                            </div>
-                        </c:forEach>
-                    </div>
-                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </div>
-                <hr>
+							</div>
+						</c:forEach>
+					</div>
+					<a class="carousel-control-prev" href="#carouselExampleIndicators"
+						role="button" data-slide="prev"> <span
+						class="carousel-control-prev-icon" aria-hidden="true"></span> <span
+						class="sr-only">Previous</span>
+					</a> <a class="carousel-control-next" href="#carouselExampleIndicators"
+						role="button" data-slide="next"> <span
+						class="carousel-control-next-icon" aria-hidden="true"></span> <span
+						class="sr-only">Next</span>
+					</a>
+				</div>
+				<hr>
 
-                <!-- Post Content -->
-                <hr>
-                <c:choose>
-                        <c:when test="${list.UNAME == uname }">
-                            <a href="update?pfnum=${list.PFNUM }">수정</a> | 
-                            <a href="javascript:delPortfolio(${list.PFNUM })">삭제</a><br>
-                        </c:when>
-                </c:choose>
+				<!-- Post Content -->
+				<hr>
+				<c:choose>
+					<c:when test="${list.UNAME == uname }">
+						<a href="update?pfnum=${list.PFNUM }">수정</a> | 
+                            <a
+							href="javascript:delPortfolio(${list.PFNUM })">삭제</a>
+						<br>
+					</c:when>
+				</c:choose>
 
-                <!-- Comments Form -->
-                <div class="box">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Comment</h3>
-                        <hr>
-                    </div>
-                    <div class="box-body">
-                        <div class="form-group">
-                            <c:choose>
-                                <c:when test="${!empty uname }">
-                                    <textarea id="replyContents" rows="3" cols="80" placeholder="내용을입력하세요" style="border: none"></textarea>
-                                    <br>
-                                    <font size="2px"><span style="color:#aaa;" id="counter">(0/최대100자)</span></font>
-                                    <a name="replySave"  style="cursor: pointer;">
-                                    <font color="blue" size="2px">저장</font></a>
-                                    <hr>
-                                   <!--  <input type="button" value="저장" id="replySave"> -->
-                                </c:when>
-                                <c:otherwise>
-                                    <textarea id="replyContents" rows="3" cols="60" placeholder="로그인하세요" style="border: none"
-                                        readonly></textarea>
-                                </c:otherwise>
-                            </c:choose>
+				<!-- Comments Form -->
+				<div class="box">
+					<div class="box-header with-border">
+						<h3 class="box-title">Comment</h3>
+						<hr>
+					</div>
+					<div class="box-body">
+						<div class="form-group">
+							<c:choose>
+								<c:when test="${!empty uname }">
+									<textarea id="replyContents" rows="3" cols="80"
+										placeholder="내용을입력하세요" style="border: none"></textarea>
+									<br>
+									<font size="2px"><span style="color: #aaa;" id="counter">(0/최대100자)</span></font>
+									<a name="replySave" style="cursor: pointer;"> <font
+										color="blue" size="2px">저장</font></a>
+									<hr>
+									<!--  <input type="button" value="저장" id="replySave"> -->
+								</c:when>
+								<c:otherwise>
+									<textarea id="replyContents" rows="3" cols="60"
+										placeholder="로그인하세요" style="border: none" readonly></textarea>
+								</c:otherwise>
+							</c:choose>
 
 
-                        </div>
-                    </div>
-                    <div class="box-footer" id="replyArea">
-                        <!-- 댓글 뿌려주기 -->
-                    </div>
+						</div>
+					</div>
+					<div class="box-footer" id="replyArea">
+						<!-- 댓글 뿌려주기 -->
+					</div>
 
-                </div>
-            </div>
+				</div>
+			</div>
 
-            <!-- Sidebar Widgets Column -->
-            <div class="col-md-4">
-                <div class="card my-4">
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <img src="/porget/files/profile/${list.UPHOTO } " class="rounded-circle" style="width:50px;">
-                        </div>
-                        <div class="col-lg-8">
-                            <ul class="list-unstyled mb-0">
-                                <li>
-                                    ${list.UNAME }
-                                </li>
-                                <li>
-                                    ${list.PFPOSITION }
-                                </li>
-                                <li>
-									<c:forTokens items="${list.TAGNAME }" delims="#" var="item">
-									   <a href="/porget/searchHashClick?keyword=${item}">#${item}</a> &nbsp;
-									</c:forTokens>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="card my-4">
-                <c:if test="${not empty list.PFURL}">
-                    <a href="${list.PFURL }" class="btn btn-primary pd-4" target="_blank">
-                            포트폴리오 링크
-                    </a>
-                </c:if>
-                <c:if test="${not empty list.PFFILE}">
-                    <a href="/porget/portfolio/download?fileName=${list.PFFILE }" class="btn btn-info pd-4">
-                            포트폴리오 다운로드
-                    </a>
-                </c:if>
-                
-	                <div id="recommend">
+			<!-- Sidebar Widgets Column -->
+			<div class="col-md-4">
+				<div class="card my-4">
+					<div class="row">
+						<div class="col-lg-4">
+							<img src="/porget/files/profile/${list.UPHOTO } "
+								class="rounded-circle" style="width: 50px;">
+						</div>
+						<div class="col-lg-8">
+							<ul class="list-unstyled mb-0">
+								<li>${list.UNAME }</li>
+								<li>${list.PFPOSITION }</li>
+								<li><c:forTokens items="${list.TAGNAME }" delims="#"
+										var="item">
+										<a href="/porget/searchHashClick?keyword=${item}">#${item}</a> &nbsp;
+									</c:forTokens></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="card my-4">
+					<c:if test="${not empty list.PFURL}">
+						<a href="${list.PFURL }" class="btn btn-primary pd-4"
+							target="_blank"> 포트폴리오 링크 </a>
+					</c:if>
+					<c:if test="${not empty list.PFFILE}">
+						<a href="/porget/portfolio/download?fileName=${list.PFFILE }"
+							class="btn btn-info pd-4"> 포트폴리오 다운로드 </a>
+					</c:if>
+
+					<!-- Modal -->
+
+					<div class="container">
+						<h2>Activate Modal with JavaScript</h2>
+						<!-- Trigger the modal with a button -->
+					<button type="button" class="btn btn-info btn-lg" id="reportBtn">포트폴리오 신고</button>
+				
+
+						<!-- Modal -->
+						<div class="modal fade" id="myModal" role="dialog">
+							<div class="modal-dialog">
+
+								<!-- Modal content-->
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal">&times;</button>
+										<h4 class="modal-title">Modal Header</h4>
+									</div>
+									<div class="modal-body">
+										<p>Some text in the modal.</p>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default"
+											data-dismiss="modal">Close</button>
+									</div>
+								</div>
+
+							</div>
+						</div>
+
+					</div>
+
+					<!-- /.modal -->
+
+
+
+					<div id="recommend">
 						<c:choose>
 							<c:when test="${recommend eq 0 }">
-		<!--                     <button class="btn btn-danger" id="recommendBtn">좋아요</button> -->
-								<a href="#"><img src="/porget/img/heart.png" class="recommendimg"></a>${list.JOA }
+								<!--                     <button class="btn btn-danger" id="recommendBtn">좋아요</button> -->
+								<a href="#"><img src="/porget/img/heart.png"
+									class="recommendimg"></a>${list.JOA }
 							</c:when>
 							<c:otherwise>
-								<a href="#"><img src="/porget/img/heartfull.png" class="recommendimg"></a>${list.JOA }
+								<a href="#"><img src="/porget/img/heartfull.png"
+									class="recommendimg"></a>${list.JOA }
 							</c:otherwise>
-						</c:choose>                
-	                </div>
-                </div>
-                <div class="card my-4">
-                    조회수: ${list.PFREAD }<br>
-                </div>
-            </div>
-        </div>
-     </div>
-     
-	<jsp:include page="/WEB-INF/views/include/footer.jsp"/>	
- 	<script
+						</c:choose>
+					</div>
+				</div>
+				<div class="card my-4">
+					조회수: ${list.PFREAD }<br>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<jsp:include page="/WEB-INF/views/include/footer.jsp" />
+	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
 		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
 		crossorigin="anonymous"></script>
-			
-		
+
+
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-		crossorigin="anonymous"></script> 
-
+		crossorigin="anonymous"></script>
 </body>
 
 </html>
