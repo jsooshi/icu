@@ -150,13 +150,6 @@ public class PortfolioController {
 		request.setAttribute("thumb",((String)list.get(0).get("PFTHUMB")).split("\\|"));
 		return "portfolio/portfolioView";
 	}
-
-	@GetMapping("chatting")
-	public String chattingView(String toUname, Model m) {
-		m.addAttribute("toUname", toUname);
-		return "portfolio/chatView";
-	}
-	
 	
 	@GetMapping("/update")
 	public String portfolioUpdateView(int pfnum, Model m) {// 게시글 수정뷰
