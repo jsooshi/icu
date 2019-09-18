@@ -19,8 +19,14 @@ public class AdminDAOImpl implements AdminDAO {
 	
 	@Override
 	public List<UserVO> selectAll(Criteria cri) {
-		return sqlSession.selectList("admin.selectAll");
+		return sqlSession.selectList("admin.selectAll",cri);
 	}
+	
+	@Override
+	public int getTotal() {
+		return sqlSession.selectOne("admin.getTotal");
+	}
+	
 
 	
 	@Override

@@ -5,8 +5,20 @@
 <mapper namespace="admin"> 
 
    <select id="selectAll" resultType="UserVO">
-   		select uemail, uname, ucheck from userList
+   	<![CDATA[
+   		select uemail, uname, ucheck from (
+   			select /*+INDEX_DESC(userlist pk_user) */
+   					rownum rn, uemail, uname, ucheck from userlist 
+   			where rownum <= #{pageNum} * #{amount})
+   			where rn > (#{pageNum}-1) * #{amount}
+   		]]>
    </select>
+   
+   <select id="getTotal" resultType="int">
+   		select count(*) from userlist
+   </select>
+   
+   
    
    <select id="select" resultType="UserVO">
    		select uemail, uname, upass from userList where uname = #{uname}

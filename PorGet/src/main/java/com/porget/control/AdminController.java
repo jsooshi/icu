@@ -3,14 +3,12 @@ package com.porget.control;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.porget.domain.Criteria;
 import com.porget.domain.PageDTO;
-import com.porget.persistence.AdminDAO;
+import com.porget.service.AdminService;
 
 import lombok.extern.log4j.Log4j;
 
@@ -21,7 +19,7 @@ import lombok.extern.log4j.Log4j;
 public class AdminController {
 	
 	@Autowired
-	private AdminDAO adminDAO;
+	private AdminService service;
 	
 	@GetMapping(value= {"/",""})
 	public String all() {
@@ -32,31 +30,32 @@ public class AdminController {
 	}
 	
 	@GetMapping("/member")
-	public String memberList(Model m,Criteria cri) {
+	public String selectAll(Model m,Criteria cri) {
 		
-		log.info("member:"+cri);
+		log.info("member:"+cri.toString());
 		
-		m.addAttribute("list",adminDAO.selectAll(cri));
-		m.addAttribute("pageMaker",new PageDTO(cri,123));
-		return "admin/memberTable";
+		m.addAttribute("list",service.selectAll(cri));
+		m.addAttribute("pageMaker",new PageDTO(cri,service.getTotal()));
+		return "admin/adminMember";
 	}
 	
-	@DeleteMapping("/member/{uname}")
-	public String delete(@PathVariable("uname")String uname) {
-		
-		log.info("delete"+uname);
-		
-		adminDAO.delete(uname);
-		return "redirect:/admin";
-	}	
 	
-	@GetMapping("/member/{uname}")
-	public String selectMember(@PathVariable("uname")String uname, Model m) {
-		
-		m.addAttribute("list",adminDAO.select(uname));
-		return "admin/memberPage";
-	}
-	
+//	@DeleteMapping("/member/{uname}")
+//	public String delete(@PathVariable("uname")String uname) {
+//		
+//		log.info("delete"+uname);
+//		
+//		adminDAO.delete(uname);
+//		return "redirect:/admin";
+//	}	
+//	
+//	@GetMapping("/member/{uname}")
+//	public String selectMember(@PathVariable("uname")String uname, Model m) {
+//		
+//		m.addAttribute("list",adminDAO.select(uname));
+//		return "admin/memberPage";
+//	}
+//	
 	
 	
 //

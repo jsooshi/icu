@@ -12,7 +12,7 @@ public class PageDTO {
 	public PageDTO(Criteria cri, int total) {
 		this.cri = cri;
 		this.total = total;
-
+ 
 		endPage = (int) (Math.ceil(cri.getPageNum() / 10.0)) * 10;
 		startPage = endPage - 9;// 31
 

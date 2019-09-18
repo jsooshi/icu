@@ -9,6 +9,11 @@ public interface AdminDAO {
 	
 	public List<UserVO> selectAll(Criteria cri);
 
+	public int getTotal();
+	
+	
+	
+	
 	public UserVO select(String uemail);
 	
 	public void update(UserVO vo);
