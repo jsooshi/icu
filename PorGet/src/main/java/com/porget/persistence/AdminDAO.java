@@ -9,7 +9,7 @@ public interface AdminDAO {
 	
 	public List<UserVO> selectAll(Criteria cri);
 
-	public int getTotal();
+	public int getTotal(Criteria cri);
 	
 	
 	
@@ -21,4 +21,5 @@ public interface AdminDAO {
 	public void delete(String uname);
 	
 	public List<UserVO> listAll(int base);
+
 }

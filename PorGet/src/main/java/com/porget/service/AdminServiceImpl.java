@@ -24,8 +24,9 @@ public class AdminServiceImpl implements AdminService{
 		return dao.selectAll(cri);
 	}
 	
-	public int getTotal() {
-		return dao.getTotal();
+	@Override
+	public int getTotal(Criteria cri) {
+		return dao.getTotal(cri);
 	}
 	
 	

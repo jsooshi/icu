@@ -10,57 +10,22 @@
 	width: 1000px;
 }
 </style>
-<script>
-	$(document).ready(function() {
-
-		for (var i = 1; i <= 5; i++) {
-			var option = $("<option value="+i*10+">" + i * 10
-					+ "</option>");
-			$("#amount").append(option);
-		}
-
-		var pageForm = $("#pageForm");
-
-		$(".page-item a").on(
-				"click",
-				function(e) {
-					e.preventDefault();
-					pageForm.find("input[name='pageNum']").val($(this).attr("href"));
-					pageForm.find("input[name='amount']").val($("#amount option:selected").text());
-					pageForm.submit();
-				});
-		
-		$('#amount').on('change',function(e){
-			console.log("sdf");
-			var pageNum = $("input[name='pageNum']").val();
-			var amount = $("#amount option:selected").text();
-
-			$.ajax({
-				url : "/porget/admin/member",
-				data : {
-					"pageNum" : pageNum,
-					"amount" : amount
-				},
-				success : function(result) {
-					$('.memberTable').html($(result).find('.memberTable'));
-				}
-			});
-		})
-		
-	})
-</script>
+<script src="/porget/js/adminMember.js"></script>
 
 <div class="col-9">
-	<h2>회원 관리</h2>
-	<hr>
+
+	<h2>회원 관리</h2><hr>
 	출력 갯수: <select id="amount"></select>
+	<button class="changeAmount btn btn-light">변경</button>
+	
 	<div class="memberTable">
 		<table class="table table-spriped">
 			<thead>
 				<tr>
-					<th>이름</th>
+					<th>닉네임</th>
 					<th>이메일</th>
 					<th>회원등급</th>
+					<th>가입일</th>
 					<th>신고누적수</th>
 					<th>정보</th>
 				</tr>
@@ -72,17 +37,32 @@
 						<td>${list.uemail }</td>
 						<td>${list.ucheck }</td>
 						<td></td>
-						<td><button class="info btn-sm btn btn-light">info</button></td>
+						<td></td>
+						<td><a href="#" class="info btn-sm btn btn-light">info</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
-		<select>
-			<option value="uname">이름</option>
-			<option value="uemail">이메일</option>
-			<option value="ucheck">회원등급</option>
-		</select> <input type="text" name="search"> <input type="button"
-			class="btn btn-primary" value="검색">
+		
+		<form id="pageForm" action="/porget/admin/member" method="get">
+		<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
+		<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+		</form>
+	</div>
+	
+	<form id="searchForm" action="/porget/admin/member" method="get">
+		<select name="type">
+			<option value="N" <c:out value="${pageMaker.cri.type eq'N' ?'selected':''}"/>>닉네임</option>
+			<option value="E" <c:out value="${pageMaker.cri.type eq'E'? 'selected':''}"/>>이메일</option>
+			<option value="C" <c:out value="${pageMaker.cri.type eq'C'? 'selected':''}"/>>회원등급</option>
+		</select> 
+		<input type="text" name="keyword"> 
+		<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
+		<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+		<input type="submit" class="btn btn-primary" value="검색">
+	</form>
+		<input type="hidden" name="type" value="${pageMaker.cri.type}">
+		<input type="hidden" name="keyword2" value="${pageMaker.cri.keyword}"> 
 		<nav aria-label="Page navigation example">
 			<ul class="pagination">
 				<c:if test="${pageMaker.prev }">
@@ -102,12 +82,8 @@
 				</c:if>
 			</ul>
 		</nav>
-	</div>
 </div>
 
-	<form id="pageForm" action="/porget/admin/member" method="get">
-		<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
-		<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
-	</form>
+
 
 <jsp:include page="/WEB-INF/views/include/adminFooter.jsp" />

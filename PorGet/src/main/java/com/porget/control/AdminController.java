@@ -32,10 +32,11 @@ public class AdminController {
 	@GetMapping("/member")
 	public String selectAll(Model m,Criteria cri) {
 		
-		log.info("member:"+cri.toString());
+		log.info("member:"+cri.getPageNum());
+		log.info(cri.getAmount());
 		
 		m.addAttribute("list",service.selectAll(cri));
-		m.addAttribute("pageMaker",new PageDTO(cri,service.getTotal()));
+		m.addAttribute("pageMaker",new PageDTO(cri,service.getTotal(cri)));
 		return "admin/adminMember";
 	}
 	

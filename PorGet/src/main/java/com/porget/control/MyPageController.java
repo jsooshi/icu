@@ -2,8 +2,6 @@ package com.porget.control;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -15,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -35,7 +34,6 @@ public class MyPageController {
 	public String selectMyPage(HttpSession session, Model m) {
 		String uname = (String)session.getAttribute("uname");
 		UserVO vo = dao.selectUser(uname);
-		System.out.println(vo);
 		m.addAttribute("vo",vo);
 		
 		List<PortfolioVO> portfolioVO = dao.userPortfolio(uname);
@@ -87,5 +85,6 @@ public class MyPageController {
 		}
 		return "fail";
 	}
+	
 	
 }

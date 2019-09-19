@@ -23,8 +23,8 @@ public class AdminDAOImpl implements AdminDAO {
 	}
 	
 	@Override
-	public int getTotal() {
-		return sqlSession.selectOne("admin.getTotal");
+	public int getTotal(Criteria cri) {
+		return sqlSession.selectOne("admin.getTotal",cri);
 	}
 	
 

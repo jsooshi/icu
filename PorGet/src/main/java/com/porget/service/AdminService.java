@@ -9,6 +9,7 @@ public interface AdminService {
 
 	public List<UserVO> selectAll(Criteria cri);
 	
-	public int getTotal();
+	public int getTotal(Criteria cri);
+
 
 }

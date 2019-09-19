@@ -2,45 +2,69 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="admin"> 
+<mapper namespace="admin">
 
-   <select id="selectAll" resultType="UserVO">
+
+
+	<select id="selectAll" resultType="UserVO">
    	<![CDATA[
    		select uemail, uname, ucheck from (
    			select /*+INDEX_DESC(userlist pk_user) */
    					rownum rn, uemail, uname, ucheck from userlist 
-   			where rownum <= #{pageNum} * #{amount})
-   			where rn > (#{pageNum}-1) * #{amount}
-   		]]>
-   </select>
-   
-   <select id="getTotal" resultType="int">
-   		select count(*) from userlist
-   </select>
-   
-   
-   
-   <select id="select" resultType="UserVO">
-   		select uemail, uname, upass from userList where uname = #{uname}
-   </select>
-   
-   <delete id="delete">
-   		delete from userList where uname=#{uname}
-   </delete>
-   
-   
-   
-   
-   <!-- 일반회원(상세폼에 입력된)글 수정 -->
-   <update id="update">
-   		update userList
-   		set uemail=#{uemail}, uname=#{uname}, ucheck=#{ucheck}
-   		where uemail = #{uemail}
-   </update>
+   			where
+   	]]>
+		<if test="type == 'N'.toString()">
+			uname like '%'||#{keyword}||'%' and
+		</if>
+		<if test="type == 'E'.toString()">
+			uemail like '%'||#{keyword}||'%' and
+		</if>
+		<if test="type == 'C'.toString()">
+			ucheck like '%'||#{keyword}||'%' and
+		</if>
+	<![CDATA[
+  		 rownum <= #{pageNum} * #{amount})
+ 		where rn > (#{pageNum}-1) * #{amount}
+	]]>
+	</select>
 
-   <select id="listAll" resultType="UserVO">
-   		select uemail, uname, ucheck
-   		from userList
-   		order by uname
-   </select>
+	<select id="getTotal" resultType="int">
+		select count(*) from userlist
+		<if test="type == 'N'.toString()">
+			where uname like '%'||#{keyword}||'%'
+		</if>
+		<if test="type == 'E'.toString()">
+			where uemail like '%'||#{keyword}||'%'
+		</if>
+		<if test="type == 'C'.toString()">
+			where ucheck like '%'||#{keyword}||'%'
+		</if>
+
+	</select>
+
+
+
+
+
+
+
+	<select id="select" resultType="UserVO">
+		select uemail, uname, upass from userList where uname = #{uname}
+	</select>
+
+	<delete id="delete">
+		delete from userList where uname=#{uname}
+	</delete>
+
+	<update id="update">
+		update userList
+		set uemail=#{uemail}, uname=#{uname}, ucheck=#{ucheck}
+		where uemail = #{uemail}
+	</update>
+
+	<select id="listAll" resultType="UserVO">
+		select uemail, uname, ucheck
+		from userList
+		order by uname
+	</select>
 </mapper>
