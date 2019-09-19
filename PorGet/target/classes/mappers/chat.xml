@@ -11,5 +11,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		VALUES (#{senderUname}, #{toUname}, #{chatContext}, 0, sysdate)
 	</insert>
 	
+	<select id="chatList" resultType="Map"> 
+		select senderUname, toUname, chatContext, mCheck, sendDate
+		from chat
+		where senderUname=#{senderUname} and toUname=#{toUname}
+		order by sendDate 
+	</select>
 	
 </mapper>

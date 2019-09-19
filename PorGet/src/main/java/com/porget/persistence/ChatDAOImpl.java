@@ -23,6 +23,11 @@ public class ChatDAOImpl implements ChatDAO{
 		return sqlSession.insert("chat.insertChat", vo);
 	}
 
+	@Override
+	public List<Map<String, Object>> chatList(ChatVO vo) {
+		return sqlSession.selectList("chat.chatList", vo);
+	}
+
 //	@Override
 //	public String selectUphoto() {
 //		// TODO Auto-generated method stub

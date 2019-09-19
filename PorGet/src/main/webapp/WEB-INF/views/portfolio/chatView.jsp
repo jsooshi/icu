@@ -91,8 +91,6 @@
 	var socket = null;
 	connect();
  
-	 function connect() {
-		 connect();
 
 		 function connect() {
 			 	var ws = new WebSocket("ws://localhost/porget/chat");
@@ -112,7 +110,6 @@
 			        console.log('close');
 			    };
 			}
-		}
 	
 	
 	
