@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="chatList" resultType="Map"> 
 		select senderUname, toUname, chatContext, mCheck, sendDate
 		from chat
-		where senderUname=#{senderUname} and toUname=#{toUname}
+		where (senderUname=#{senderUname} and toUname=#{toUname}) or (senderUname=#{toUname} and toUname=#{senderUname})
 		order by sendDate 
 	</select>
 	

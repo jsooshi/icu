@@ -1,5 +1,6 @@
 package com.porget.control;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -32,9 +33,11 @@ public class ChatController {
 		ChatVO vo = new ChatVO();
 		vo.setToUname(toUname);
 		vo.setSenderUname(uname);
-		List<Map<String, Object>> list = dao.chatList(vo);
-		System.out.println("List<>>>"+list.get(0));
-		m.addAttribute("list", list);
+		List<List<Map<String, Object>>> list4 = new ArrayList<List<Map<String,Object>>>();
+		//List<Map<String, Object>> list=null;
+		list4.add(dao.chatList(vo));
+		System.out.println("List4 >>>"+list4 );
+		m.addAttribute("list4", list4);
 		return "portfolio/chatList";
 	}
 	

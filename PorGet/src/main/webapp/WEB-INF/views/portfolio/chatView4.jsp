@@ -9,17 +9,18 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!-- <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script> -->
 <!------ Include the above in your HEAD tag ---------->
 
 
 <!DOCTYPE html>
 <html class=''>
 <head>
-<script src='//production-assets.codepen.io/assets/editor/live/console_runner-079c09a0e3b9ff743e39ee2d5637b9216b3545af0de366d4b9aad9dc87e26bfd.js'></script><script src='//production-assets.codepen.io/assets/editor/live/events_runner-73716630c22bbc8cff4bd0f07b135f00a0bdc5d14629260c3ec49e5606f98fdd.js'></script><script src='//production-assets.codepen.io/assets/editor/live/css_live_reload_init-2c0dc5167d60a5af3ee189d570b1835129687ea2a61bee3513dee3a50c115a77.js'></script><meta charset='UTF-8'><meta name="robots" content="noindex"><link rel="shortcut icon" type="image/x-icon" href="//production-assets.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico" /><link rel="mask-icon" type="" href="//production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111" /><link rel="canonical" href="https://codepen.io/emilcarlsson/pen/ZOQZaV?limit=all&page=74&q=contact+" />
-<script src="/porget/js/sockjs.min.js"></script>  
+<!-- <script src='//production-assets.codepen.io/assets/editor/live/console_runner-079c09a0e3b9ff743e39ee2d5637b9216b3545af0de366d4b9aad9dc87e26bfd.js'></script><script src='//production-assets.codepen.io/assets/editor/live/events_runner-73716630c22bbc8cff4bd0f07b135f00a0bdc5d14629260c3ec49e5606f98fdd.js'></script><script src='//production-assets.codepen.io/assets/editor/live/css_live_reload_init-2c0dc5167d60a5af3ee189d570b1835129687ea2a61bee3513dee3a50c115a77.js'></script><meta charset='UTF-8'><meta name="robots" content="noindex"><link rel="shortcut icon" type="image/x-icon" href="//production-assets.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico" /><link rel="mask-icon" type="" href="//production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111" /><link rel="canonical" href="https://codepen.io/emilcarlsson/pen/ZOQZaV?limit=all&page=74&q=contact+" />
+ -->
+ <script src="/porget/js/sockjs.min.js"></script>  
 
 <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,300' rel='stylesheet' type='text/css'>
 
@@ -695,20 +696,28 @@
 #frame .content .message-input .wrap button:focus {
   outline: none;
 }
-</style></head><body>
-<!-- 
+</style>
 
-A concept for a chat interface. 
+<script type="text/javascript">
+$(document).ready(function() {
+	console.log('여긴 드러왓닝');
+	var toUname = '<%= request.getAttribute("toUname") %>';
+	var uname = '<%=session.getAttribute("uname")%>';
+		 $.ajax({
+			url : "/porget/chatList",
+			data : {toUname:toUname, uname:uname},
+			success : function(data) {
+				console.log(data);
+				$(data).appendTo($('.messages ul'));
+			}
+			
+		}); 
+});
+</script>
 
-Try writing a new message! :)
+</head>
+<body>
 
-
-Follow me here:
-Twitter: https://twitter.com/thatguyemil
-Codepen: https://codepen.io/emilcarlsson/
-Website: http://emilcarlsson.se/
-
--->
 
 <div id="frame">
 	<div id="sidepanel">
@@ -882,18 +891,18 @@ Website: http://emilcarlsson.se/
 <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>	
 <script type="text/javascript">
-var socket = null;
+var sock = null;
 connect();
 
 
 	 function connect() {
-		 	var ws = new WebSocket("ws://localhost/porget/chat");
+		 	var ws = new WebSocket("ws://192.168.0.54/porget/chat");
 		 	sock = ws
 		    sock.onopen = function() {
 		        console.log('open');
 		    };
 		    sock.onmessage = function(evt) {
-	    	 var data = evt.data;
+	    	   var data = evt.data;
 	    	   console.log(data)
 	  		   var obj = JSON.parse(data)  	   
 	    	   console.log(obj)
@@ -1027,15 +1036,6 @@ $("#status-options ul li").click(function() {
 
 $(document).ready(function() {
 	
-		/* $.ajax({
-			url : "/porget/chatList",
-			data : {"toUname" : '${toUname}', "uname":'${uname}'},
-			success : function(data) {
-				$('#messages').append(data);
-			}
-			
-		}); */
-	
 	  $('#textInput').keypress(function(event){
 	   var keycode = (event.keyCode ? event.keyCode : event.which);
 	   if(keycode == '13'){
@@ -1049,7 +1049,6 @@ $(document).ready(function() {
 		});
 });
 	
-//# sourceURL=pen.js
 </script>
 </body>
 </html>
