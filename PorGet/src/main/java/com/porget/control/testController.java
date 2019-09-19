@@ -84,4 +84,9 @@ public class testController {
 		return vo;
 	}
 	
+	@RequestMapping("/reportChatting")
+	public String reportChatting() {
+		return "admin/report/reportChatting";
+	}
+	
 }
