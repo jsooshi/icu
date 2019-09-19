@@ -3,7 +3,7 @@ package com.porget.domain;
 import java.util.Date;
 
 public class ReportVO {
-	
+
 	private int reportNum;
 	private String reportContext;
 	private String reportPath;
@@ -13,6 +13,7 @@ public class ReportVO {
 	private String reporter;
 	private String defendant;
 	private String reportResult;
+
 
 	public ReportVO() {
 		
@@ -114,5 +115,6 @@ public class ReportVO {
 				+ ", reportType=" + reportType + ", reportDate=" + reportDate + ", reportResultDate=" + reportResultDate
 				+ ", reporter=" + reporter + ", defendant=" + defendant + ", reportResult=" + reportResult + "]";
 	}
+
 	
 }

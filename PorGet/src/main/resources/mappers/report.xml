@@ -1,10 +1,41 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-    
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="report">
+<!-- reportNum, reportContext, reportPath, reportType, reportDate, reportResultDate, reporter, defendant, reportResult -->
+	<!-- 공통으로 사용할 부분 SQL문 저장하는 용도 -->
+	  <sql id="criCondition">
+	      <if test="type=='W'.toString()">
+	         where reportType like '%'|| #{keyword} ||'%'
+	      </if>
+	      <if test="type=='T'.toString()">
+	         where reportResult like '%'|| #{keyword} ||'%'
+	      </if>
+	  </sql>
 
+	<select id="selectReportPage" resultType="ReportVO">
+		select /*+  INDEX_DESC(report report_pk)*/
+		reportNum, reportType, reportDate, reportResultDate, reportResult
+		from report
+	</select>
+
+	<select id="selectReport" resultType="ReportVO">
+		select reportNum, reportContext, reportPath, reportType, reportDate, reportResultDate, reporter, defendant, reportResult
+		from report
+		where reportNum=#{reportNum} 
+	</select>	
+
+
+	<update id="updateReport">
+		update report set reportResult = #{reportResult}, reportResultDate = sysdate where reportNum=#{reportNum}
+	</update>
+	
+	<select id="reportTotal" resultType="int">
+		select count(*) from report
+		<include refid="criCondition"></include>
+	</select>
+	
 	<select id="selectReportNum" resultType="int">
 		select report_seq.nextval from dual
 	</select>
@@ -13,4 +44,5 @@
 		insert into report(reportNum,reportContext,reportPath,reportType,reportDate,reporter,defendant,reportResult) 
 		values ( #{reportNum}, #{reportContext}, #{reportPath}, #{reportType}, sysdate, #{reporter},'dldldl','처리중' )
 	</insert>
+	
 </mapper>
