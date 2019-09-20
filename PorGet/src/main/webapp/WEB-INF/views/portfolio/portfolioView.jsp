@@ -43,37 +43,8 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
 
+
 <script>
-	var socket = null;
-	$(document).ready(function(){
-		connectWS();	
-	})
-	
-	function connectWS(){
-		var ws = new WebSocket("ws://localhost/porget/replyEcho?pfnum=1");
-		socket = ws
-		ws.onopen = function(){
-		console.log('Info: connection opened')
-	};
-	
-		ws.onmessage = function (event) {
-		console.log(event.data+'\n');
-		$('#socketAlert').html(event.data);
-		$('#socketAlert').css("display","block");
-		setTimeout(function(){
-			$('#socketAlert').css("display","none");
-		},3000)	}	
-	
-		ws.onclose = function (event) {
-			console.log('Info: connecion closed')
-			setTimeout(function () {connect()},1000); //retry connection	
-	}
-		ws.onerror = function (err) { console.log('error: ', err)}
-	
-	}	
-
-
-
 var realPath = "${realPath}";
 
 function delPortfolio(num){
@@ -81,6 +52,7 @@ function delPortfolio(num){
 		location.replace("delete?pfnum="+num);
 	}
 }
+<<<<<<< HEAD
 $(function(){ //jquery영역
 	
 	$(".carousel-indicators").children('li').eq(0).addClass("active");
@@ -202,7 +174,13 @@ $(function(){ //jquery영역
 	    }
 	});
 }); //ready
+=======
+var pfnum=${param.pfnum}
+var uname="${uname}"
+var writer="${list.UNAME }"
+>>>>>>> 448e2ffbc01ffa6e00b659f90c61870a55d1f5b5
 </script>
+<script src="/porget/js/reply.js"></script>
 <style>
 .maxSize {
 	width: 925px;
@@ -444,7 +422,12 @@ $(function(){ //jquery영역
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-		crossorigin="anonymous"></script>
+
+		crossorigin="anonymous"></script> 
+		
+	
+
+>>>>>>> 448e2ffbc01ffa6e00b659f90c61870a55d1f5b5
 </body>
 
 </html>
