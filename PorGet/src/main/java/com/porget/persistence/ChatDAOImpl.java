@@ -28,11 +28,11 @@ public class ChatDAOImpl implements ChatDAO{
 		return sqlSession.selectList("chat.chatList", vo);
 	}
 
-//	@Override
-//	public String selectUphoto() {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
+	@Override
+	public String selectUphoto(String uname) {
+		return sqlSession.selectOne("chat.selectUphoto", uname);
+	}
+
 
 
 }

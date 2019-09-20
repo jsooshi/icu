@@ -9,12 +9,12 @@
 			
 				<c:choose>
 					<c:when test="${uname eq result.SENDERUNAME}">
-						<li class="replies"><img src="http://emilcarlsson.se/assets/mikeross.png" alt="" /><p>${result.CHATCONTEXT}</p></li>
+						<li class="replies"><img src="/porget/files/profile/${uphoto}" alt="" /><p>${result.CHATCONTEXT}</p><div>${result.SENDDATE}&nbsp;&nbsp;</div></li>
 					</c:when>
 				
 					<c:otherwise>
 				
-						<li class="sent"><img src="http://emilcarlsson.se/assets/mikeross.png" alt="" /><p>${result.CHATCONTEXT}</p></li>
+						<li class="sent"><img src="/porget/files/profile/${toUphoto}" alt="" /><p>${result.CHATCONTEXT}</p>&nbsp;&nbsp;${result.SENDDATE}</li>
 				
 					</c:otherwise>
 				

@@ -8,7 +8,7 @@ import com.porget.domain.ChatVO;
 public interface ChatDAO {
 	
 	public int insertChat(ChatVO vo);
-	//public String selectUphoto(String )
+	public String selectUphoto(String uname);
 	
 	public List<Map<String, Object>> chatList(ChatVO vo);
 }

@@ -18,4 +18,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		order by sendDate 
 	</select>
 	
+	<select id="selectUphoto" resultType="String">
+		select uphoto from userList where uname=#{uname}
+	</select>
+	
 </mapper>

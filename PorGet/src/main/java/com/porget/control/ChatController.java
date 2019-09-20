@@ -19,10 +19,11 @@ public class ChatController {
 	private ChatDAO dao;
 	
 	@RequestMapping("chatting")
-	public String chattingView(String toUname, Model m) {
+	public String chattingView(String toUname, String uname, Model m) {
 		System.out.println("toUname>>>"+toUname);
-		
 		m.addAttribute("toUname", toUname);
+		String toUphoto = dao.selectUphoto(toUname);
+		m.addAttribute("toUphoto",toUphoto);
 		return "portfolio/chatView4";
 	}
 	
@@ -38,6 +39,8 @@ public class ChatController {
 		list4.add(dao.chatList(vo));
 		System.out.println("List4 >>>"+list4 );
 		m.addAttribute("list4", list4);
+		String toUphoto = dao.selectUphoto(toUname);
+		m.addAttribute("toUphoto",toUphoto);
 		return "portfolio/chatList";
 	}
 	

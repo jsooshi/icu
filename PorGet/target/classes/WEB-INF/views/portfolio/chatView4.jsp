@@ -614,6 +614,10 @@
   background: #f5f5f5;
   float: right;
 }
+#frame .content .messages ul li.replies div {
+  float: right;
+  margin: 6px 0 0 8px;
+}
 #frame .content .messages ul li img {
   width: 22px;
   border-radius: 50%;
@@ -696,10 +700,13 @@
 #frame .content .message-input .wrap button:focus {
   outline: none;
 }
+
 </style>
 
 <script type="text/javascript">
 $(document).ready(function() {
+	$('#scrollDiv').scrollTop($('#scrollDiv').prop('scrollHeight'));
+
 	console.log('여긴 드러왓닝');
 	var toUname = '<%= request.getAttribute("toUname") %>';
 	var uname = '<%=session.getAttribute("uname")%>';
@@ -707,11 +714,19 @@ $(document).ready(function() {
 			url : "/porget/chatList",
 			data : {toUname:toUname, uname:uname},
 			success : function(data) {
-				console.log(data);
 				$(data).appendTo($('.messages ul'));
 			}
 			
 		}); 
+		 /* $.ajax({
+				url : "/porget/chatList",
+				data : {uname:uname},
+				success : function(data) {
+					console.log(data);
+					$(data).appendTo($('.messages ul'));
+				}
+				
+			});  */
 });
 </script>
 
@@ -723,8 +738,8 @@ $(document).ready(function() {
 	<div id="sidepanel">
 		<div id="profile">
 			<div class="wrap">
-				<img id="profile-img" src="http://emilcarlsson.se/assets/mikeross.png" class="online" alt="" />
-				<p>Mike Ross</p>
+				<img id="profile-img" src="/porget/files/profile/${uphoto} " class="online" alt="" />
+				<p>${uname }</p>
 				<i class="fa fa-chevron-down expand-button" aria-hidden="true"></i>
 				<div id="status-options">
 					<ul>
@@ -859,7 +874,7 @@ $(document).ready(function() {
 	</div>
 	<div class="content">
 		<div class="contact-profile">
-			<img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
+			<img src="/porget/files/profile/${toUphoto}" alt="" />
 			<p>${toUname }</p>
 			<div class="social-media">
 				<i class="fa fa-facebook" aria-hidden="true"></i>
@@ -867,7 +882,7 @@ $(document).ready(function() {
 				 <i class="fa fa-instagram" aria-hidden="true"></i>
 			</div>
 		</div>
-		<div class="messages" id="messages">
+		<div class="messages" id="messages"  style="overflow:auto">
 			<ul>
 				<!-- <li class="sent">
 				</li>
@@ -891,12 +906,15 @@ $(document).ready(function() {
 <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>	
 <script type="text/javascript">
+$('#scrollDiv').scrollTop($('#scrollDiv').prop('scrollHeight'));
+
+
 var sock = null;
 connect();
 
 
 	 function connect() {
-		 	var ws = new WebSocket("ws://192.168.0.54/porget/chat");
+		 	var ws = new WebSocket("ws://192.168.0.62/porget/chat");
 		 	sock = ws
 		    sock.onopen = function() {
 		        console.log('open');
@@ -1002,19 +1020,19 @@ $("#status-options ul li").click(function() {
 		 var t = getTimeStamp();
 		 
 		 if(senderUname==uname){
-		 $('<li class="replies"><img src="http://emilcarlsson.se/assets/mikeross.png" alt="" /><p>' + msg + '</p></li>').appendTo($('.messages ul'));
+		 $('<li class="replies"><img src="/porget/files/profile/${uphoto}" alt="" /><p>' + msg + '</p><div>'+t+'&nbsp;&nbsp;</div></li>').appendTo($('.messages ul'));
 		 $('.message-input input').val(null);
 		 
-		/*  var chatAreaHeight = $("#chat-right").height();
-		  var maxScroll = $("#chatAreaHeight").height() - chatAreaHeight;
-		  $("#chat-right").scrollTop(maxScroll); */
+		/*  var chatAreaHeight = $("#replies").height();
+		  var maxScroll = $("#messages").height() - chatAreaHeight;
+		  $("#replies").scrollTop(maxScroll);  */
 		 }else{
-		 $('<li class="sent"><img src="http://emilcarlsson.se/assets/mikeross.png" alt="" /><p>' + msg + '</p></li>').appendTo($('.messages ul'));
+		 $('<li class="sent"><img src="/porget/files/profile/${toUphoto}" alt="" /><p>' + msg + '</p>&nbsp;'+t+'</li>').appendTo($('.messages ul'));
 		 $('.message-input input').val(null);
 		 
-	/*  var chatAreaHeight = $("#chat-left").height();
-		  var maxScroll = $("#chatAreaHeight").height() - chatAreaHeight;
-		  $("#chat-left").scrollTop(maxScroll); */
+/* 	var chatAreaHeight = $("#sent").height();
+		  var maxScroll = $("#messages").height() - chatAreaHeight;
+		  $("#sent").scrollTop(maxScroll);  */
 		 }
 	
 		 }
