@@ -31,5 +31,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		set pfread = pfread+1
 		where pfnum = #{pfnum}
 	</update>
+	<select id="unread" resultType="int">
+		select count(*) from reply
+		where reply_read=1 and pfnum in (select pfnum from portfolio where uname=#{uname})
+	</select>
+		<select id="notification" resultType="ReplyVO">
+		select uname,pfnum from reply
+		where reply_read=1 and pfnum in (select pfnum from portfolio where uname=#{uname})
+	</select>
+	<update id="checked">
+		update reply set reply_read = 0
+		where pfnum in (select pfnum from portfolio where uname=#{uname})
+	</update>
 	
 </mapper>

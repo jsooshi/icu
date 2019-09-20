@@ -12,6 +12,7 @@
     }
   },
   "libs": [
-    "browser"
+    "browser",
+    "jquery"
   ]
 }

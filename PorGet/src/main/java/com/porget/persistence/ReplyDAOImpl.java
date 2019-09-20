@@ -39,5 +39,8 @@ public class ReplyDAOImpl implements ReplyDAO {
 		sqlSession.update("reply.readUpdate",pfnum);
 		
 	}
+
+	
+	
 	
 }
