@@ -17,5 +17,7 @@ public interface ReportDAO {
 	public void insert(ReportVO rvo);
 	
 	public int selectReportNum();
-
+	public int delete(int pfnum);
+	
+	
 }

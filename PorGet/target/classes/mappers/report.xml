@@ -16,8 +16,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="selectReportPage" resultType="ReportVO">
 		select /*+  INDEX_DESC(report report_pk)*/
-		reportNum, reportType, reportDate, reportResultDate, reportResult
-		from report
+		reportNum, reportType, reportDate, reportResultDate, reportResult, pfnum
+		from report, portfolio
+		where portfolio.uname = report.defendant
 	</select>
 
 	<select id="selectReport" resultType="ReportVO">
@@ -44,5 +45,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into report(reportNum,reportContext,reportPath,reportType,reportDate,reporter,defendant,reportResult) 
 		values ( #{reportNum}, #{reportContext}, #{reportPath}, #{reportType}, sysdate, #{reporter},'dldldl','처리중' )
 	</insert>
+	
+	<delete id="deletePf">
+		delete from portfolio
+		where pfnum=#{pfnum}
+	</delete>
+	
 	
 </mapper>

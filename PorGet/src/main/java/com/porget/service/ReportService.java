@@ -21,4 +21,6 @@ public interface ReportService {
 	public boolean updateReport(ReportVO vo);
 	
 	public int reportTotal(Criteria cri);
+	
+	public boolean removePortpolio(int pfnum);
 }

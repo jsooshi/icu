@@ -16,22 +16,22 @@
     <title>SB Admin 2 - Bootstrap Admin Theme</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/porget/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
-    <link href="/resources/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+    <link href="/porget/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
 
     <!-- DataTables CSS -->
-    <link href="/resources/vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="/porget/vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
 
     <!-- DataTables Responsive CSS -->
-    <link href="/resources/vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
+    <link href="/porget/vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="/resources/dist/css/sb-admin-2.css" rel="stylesheet">
+    <link href="/porget/dist/css/sb-admin-2.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="/resources/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="/porget/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -41,6 +41,11 @@
     <![endif]-->
 <script src="/porget/js/jquery-3.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<style type="text/css">
+	body{
+		overflow: scroll;
+	}
+</style>
 </head>
 
 <!-- ////////////////////////////////////////////////////////////////////////////////////////// -->
@@ -75,7 +80,7 @@
 					</thead>
 					<tbody>
 					<c:forEach items="${list}" var="board">
-						<tr>
+						<tr data-pfnum="${board.pfnum }" >  <!-- 포트폴리오 주소 가져옴 -->
 							<td><c:out value="${board.reportNum}" /></td>
 
 							<td><c:out value="${board.reportType}" /></td>
@@ -84,7 +89,7 @@
 									value="${board.reportDate}" /></td>
 							<td><fmt:formatDate pattern="yyyy-MM-dd"
 									value="${board.reportResultDate}" /></td>
-							<td><c:out value="${board.reportResult}" /></td>
+							<td><c:out value="${board.reportResult}" /></td>							
 						</tr>
 					</c:forEach>
 					</tbody>
@@ -148,7 +153,7 @@
 
 						<c:forEach var="num" begin="${pageMaker.startPage}"
 							end="${pageMaker.endPage}">
-							<li class="paginate_button  ${pageMaker.cri.pageNum == num ? "active":""} ">
+							<li class='paginate_button  ${pageMaker.cri.pageNum == num ? "active":""} '>
 								<a href="${num}">${num}</a>
 							</li>
 						</c:forEach>
@@ -178,6 +183,7 @@
 			<!-- Modal  추가 -->
 			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 				aria-labelledby="myModalLabel" aria-hidden="true">
+				<div id="dddd"></div>
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
@@ -188,7 +194,8 @@
 						<div class="modal-body">처리가 완료되었습니다.</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default"
-								data-dismiss="modal">Close</button>
+								data-dismiss="modal">닫기</button>
+							<button type="button" class="btn btn-primary" id="postConfirm" data-no="0">게시글 확인</button>	<!-- 버튼에 data-no 속성을 줌 -->			
 							<button type="button" class="btn btn-primary">Save
 								changes</button>
 						</div>
@@ -217,11 +224,17 @@
 	$(document)
 			.ready(
 					function() {
+						$('#postConfirm').click(function(){		
+							//alert($(this).attr("data-no"));
+							var pfnum = $(this).attr('data-no');//8							
+							location.href='/porget/portfolio/view?pfnum='+ pfnum;
+						});
 						
 						$(".reportTable tbody tr").on("click",function(){
-							alert("하이"+$(this).find("td").eq(0).html()+"]");
+							alert("ㅇㅇㅇㅇㅇ"+$(this).find("td").eq(0).html()+"]");
 							var reportNum = parseInt($(this).find("td").eq(0).html());
 							$("#myModalLabel").html(reportNum+"번 신고입니다");
+							$('#postConfirm').attr("data-no", $(this).attr("data-pfnum")); //버튼 클릭시 
 							$.ajax({
 								url: "/porget/test/selectReport",
 								type: "POST",

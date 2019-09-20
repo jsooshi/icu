@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!DOCTYPE html>
@@ -188,6 +188,19 @@ $(function(){ //jquery영역
 		    $("#myModal").modal();
 		  });
 		});
+	
+	$('button').on("click", function(e){
+	    
+	    e.preventDefault(); 
+	    
+	    var operation = $(this).data("oper");
+	    
+	    console.log(operation);
+	    
+	    if(operation == 'remove'){
+	    	location.href="/porget/remove?pfnum?${pfnum}";
+	    }
+	});
 }); //ready
 </script>
 <style>
@@ -224,6 +237,8 @@ $(function(){ //jquery영역
 			<div class="col-sm-12">
 				<!-- Title -->
 				<h1 class="mt-4">${list.PFNAME }</h1>
+				<button type="button" data-oper="remove" class="btn btn-danger">게시믈
+					삭제</button>
 				<!-- Author -->
 				<hr>
 				<!-- Date/Time -->
@@ -341,58 +356,58 @@ $(function(){ //jquery영역
 						data-toggle="modal">포트폴리오 신고</a></li>
 					<!-- Modal -->
 					<div class="container">
-					<form role="form" method="post" action="/porget/report/insert">
-						<!-- Modal -->
-						<input type="hidden" name="reportPath" value="P${param.pfnum }">
-						<input type="hidden" name="reporter" value="${uname }">
-						<div class="modal fade" id="reportModal" role="dialog">
-							<div class="modal-dialog">
+						<form role="form" method="post" action="/porget/report/insert">
+							<!-- Modal -->
+							<input type="hidden" name="reportPath" value="P${param.pfnum }">
+							<input type="hidden" name="reporter" value="${uname }">
+							<div class="modal fade" id="reportModal" role="dialog">
+								<div class="modal-dialog">
 
-								<!-- Modal content-->
-								<div class="modal-content">
-									<div class="modal-header">
-										<button type="button" class="close" data-dismiss="modal">&times;</button>
-										<h4 class="modal-title">신고하기</h4>
-									</div>
-									<div class="modal-body">
-										<table>
-											<tr>
-												<td><label>게시글:</label></td>
-												<td><input type="text" class="form-control"
-													name="pfname"></td>
-											</tr>
-										</table>
-										<br>
-										<div class="input-group mb-3">
-											<div class="input-group-prepend">
-												<label class="input-group-text" for="inputGroupSelect01">사유</label>
-											</div>
-											<select class="custom-select" name="reportType">
-												<option selected>신고 유형을 선택해주세요.</option>
-												<option value="1">부적절한 홍보 게시물</option>
-												<option value="2">폭언, 욕설 사용</option>
-												<option value="3">저작권 침해</option>
-											</select>
+									<!-- Modal content-->
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal">&times;</button>
+											<h4 class="modal-title">신고하기</h4>
 										</div>
-										<div class="input-group">
-											<div class="input-group-prepend">
-												<span class="input-group-text">신고 내용</span>
+										<div class="modal-body">
+											<table>
+												<tr>
+													<td><label>게시글:</label></td>
+													<td><input type="text" class="form-control"
+														name="pfname"></td>
+												</tr>
+											</table>
+											<br>
+											<div class="input-group mb-3">
+												<div class="input-group-prepend">
+													<label class="input-group-text" for="inputGroupSelect01">사유</label>
+												</div>
+												<select class="custom-select" name="reportType">
+													<option selected>신고 유형을 선택해주세요.</option>
+													<option value="1">부적절한 홍보 게시물</option>
+													<option value="2">폭언, 욕설 사용</option>
+													<option value="3">저작권 침해</option>
+												</select>
 											</div>
-											<textarea class="form-control" aria-label="With textarea" name="reportContext"></textarea>
+											<div class="input-group">
+												<div class="input-group-prepend">
+													<span class="input-group-text">신고 내용</span>
+												</div>
+												<textarea class="form-control" aria-label="With textarea"
+													name="reportContext"></textarea>
+											</div>
 										</div>
-									</div>
-							
-									
-									<div class="modal-footer">
-										<button type="submit" class="btn btn-default" 
-											>신고 접수</button>
-										<button type="reset" class="btn btn-default"
-											>닫기</button>
+
+
+										<div class="modal-footer">
+											<button type="submit" class="btn btn-default">신고
+												접수</button>
+											<button type="reset" class="btn btn-default">닫기</button>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-					</form>
+						</form>
 					</div>
 					<!-- /.modal -->
 

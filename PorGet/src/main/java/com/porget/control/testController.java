@@ -10,15 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.porget.domain.Criteria;
 import com.porget.domain.PageDTO;
 import com.porget.domain.ReportVO;
+import com.porget.persistence.ReportDAO;
 import com.porget.service.ReportService;
 
 @Controller
@@ -27,6 +30,9 @@ public class testController {
 	
 	@Inject
 	private ReportService service;
+	
+	@Inject
+	private ReportDAO dao;
 	
 	@RequestMapping(value = "input", method = RequestMethod.GET)
 	public String input() {
@@ -72,6 +78,8 @@ public class testController {
 	public String reportList(Model model,Criteria cri) {
 		model.addAttribute("list", service.selectReportPage(cri));
 		model.addAttribute("pageMaker",new PageDTO(cri, service.reportTotal(cri)));
+		model.addAttribute("pfnum", 7);
+		
 		return "admin/report/reportList";
 	}
 	
@@ -84,4 +92,13 @@ public class testController {
 		return vo;
 	}
 	
+	@RequestMapping("/remove")
+	public String portfolioDelete(int pfnum, RedirectAttributes attr) {// 게시글 삭제후 게시판으로 이동
+
+		if(service.removePortpolio(pfnum)) {
+			attr.addFlashAttribute("result","success");
+		}
+		return "redirect:/portfolio";
+	}
+
 }

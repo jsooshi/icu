@@ -53,4 +53,12 @@ public class ReportServiceImpl implements ReportService{
 		return dao.reportTotal(cri);
 	}
 
+	
+
+	@Override
+	public boolean removePortpolio(int pfnum) {
+		if(dao.delete(pfnum)==1) return true;
+		return false;
+	}
+
 }

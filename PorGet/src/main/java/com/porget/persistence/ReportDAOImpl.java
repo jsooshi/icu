@@ -52,4 +52,13 @@ public class ReportDAOImpl implements ReportDAO{
 		return sqlSession.selectOne("report.reportTotal",cri);
 	}
 
+	@Override
+	public int delete(int pfnum) {
+		return sqlSession.delete("report.deletePf",pfnum);
+	}
+
+	
+	
+
+
 }
