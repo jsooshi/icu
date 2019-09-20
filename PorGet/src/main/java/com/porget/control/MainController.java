@@ -3,16 +3,18 @@ package com.porget.control;
 import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.social.oauth2.GrantType;
+import org.springframework.social.oauth2.OAuth2Operations;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
@@ -23,10 +25,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.porget.domain.RecruiterVO;
+import com.porget.auth.SNSLogin;
+import com.porget.auth.SnsValue;
 import com.porget.domain.UserVO;
 import com.porget.persistence.PortfolioDAO;
-import com.porget.persistence.RecruiterDAO;
 import com.porget.persistence.UserDAO;
 
 @Controller
@@ -37,6 +39,8 @@ public class MainController {
 	
 	@Autowired
 	private UserDAO userdao;
+	
+
 
 	@GetMapping("/")
 	public String index() {
@@ -112,11 +116,7 @@ public class MainController {
 	}
 	
 	
-	@RequestMapping(value = "/login", method = RequestMethod.GET)//로그인창 보여주기
-	public String login() {
-		
-		return "main/login";
-	}
+
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String loginSuccess(UserVO vo, HttpSession session, RedirectAttributes attrs){//로그인시 세션 저장

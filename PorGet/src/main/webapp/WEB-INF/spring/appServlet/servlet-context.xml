@@ -43,7 +43,23 @@
 			 <beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
 		</websocket:handshake-interceptors>
 	</websocket:handlers>
+	
+	<!-- oAuth2 naver Login -->
+	<beans:bean id="naverClientID" class="java.lang.String">
+		<beans:constructor-arg value="GrL0wFOFWFJPUBEPHgpc" />
+	</beans:bean>
+	<beans:bean id="naverClientSecret" class="java.lang.String">
+		<beans:constructor-arg value="YoMvcwWmyB" />
+	</beans:bean>
+	<beans:bean id="naverRedirectUrl" class="java.lang.String">
+		<beans:constructor-arg value="http://localhost:8080/porget/auth/naver/callback" />
+	</beans:bean>
+	
+	<beans:bean id="naverLoginVO" class="com.porget.auth.SnsValue"></beans:bean>
+	
+	
 	<context:component-scan base-package="com.porget.control" />
+	<context:component-scan base-package="com.porget.auth" />
 	<context:component-scan base-package="com.porget.test" />
 	
 	
