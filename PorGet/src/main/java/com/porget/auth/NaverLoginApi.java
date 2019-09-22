@@ -1,4 +1,4 @@
-package com.porget.test;
+package com.porget.auth;
 
 import com.github.scribejava.core.builder.api.DefaultApi20;
 

@@ -29,10 +29,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
+import com.porget.auth.NaverLoginBO;
 import com.porget.domain.UserVO;
 import com.porget.persistence.PortfolioDAO;
 import com.porget.persistence.UserDAO;
-import com.porget.test.NaverLoginBO;
 
 @Controller
 public class MainController {

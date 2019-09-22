@@ -1,0 +1,13 @@
+diff a/PorGet/src/main/java/com/porget/domain/UserVO.java b/PorGet/src/main/java/com/porget/domain/UserVO.java	(rejected hunks)
+@@ -8,9 +8,8 @@
+ 	private String uphoto;
+ 	private int ucheck;
+ 	
+-	
+-	
+-	
++
++
+ 	public int getUcheck() {
+ 		return ucheck;
+ 	}

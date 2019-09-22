@@ -1,4 +1,4 @@
-package com.porget.test;
+package com.porget.auth;
 
 import java.io.IOException;
 import java.util.UUID;

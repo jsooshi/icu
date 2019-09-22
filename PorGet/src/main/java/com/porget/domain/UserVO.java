@@ -8,8 +8,9 @@ public class UserVO {
 	private String uphoto;
 	private int ucheck;
 	
-
-
+	
+	
+	
 	public int getUcheck() {
 		return ucheck;
 	}
