@@ -41,8 +41,8 @@ public class UserDAOImpl implements UserDAO{
 
 /* 마이페이지 */
 
-	public UserVO selectMyPage(String uname) {
-		return sqlSession.selectOne("userList.selectMyPage",uname);
+	public UserVO selectUser(String uname) {
+		return sqlSession.selectOne("userList.selectUser",uname);
 	}
 
 	@Override

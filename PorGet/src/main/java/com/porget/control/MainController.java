@@ -1,9 +1,9 @@
 package com.porget.control;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,15 +23,16 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.porget.domain.RecruiterVO;
+import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.porget.domain.UserVO;
 import com.porget.persistence.PortfolioDAO;
-import com.porget.persistence.RecruiterDAO;
 import com.porget.persistence.UserDAO;
+import com.porget.test.NaverLoginBO;
 
 @Controller
 public class MainController {
@@ -38,9 +42,23 @@ public class MainController {
 	
 	@Autowired
 	private UserDAO userdao;
-
+	
+	
+	private NaverLoginBO naverLoginBO;
+	private String apiResult = null;
+	
+	@Autowired
+	private void setNaverLoginBO(NaverLoginBO naverLoginBO) {
+		this.naverLoginBO = naverLoginBO;
+	}
+	
 	@GetMapping("/")
-	public String index() {
+	public String index(Model model,HttpSession session) {
+		
+		String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
+		System.out.println("네이버:" + naverAuthUrl);
+		model.addAttribute("url", naverAuthUrl);
+		
 		return "main/index";
 	}
 	
@@ -112,13 +130,7 @@ public class MainController {
 		return "main/index";
 	}
 	
-	
-	@RequestMapping(value = "/login", method = RequestMethod.GET)//로그인창 보여주기
-	public String login() {
-		
-		return "main/login";
-	}
-	
+
 	@Transactional
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String loginSuccess(UserVO vo, HttpSession session, RedirectAttributes attrs){//로그인시 세션 저장
@@ -135,6 +147,55 @@ public class MainController {
 			attrs.addFlashAttribute("msg", "이메일과 비밀번호를 확인해주세요");
 			return "redirect:/";
 		}
+	}
+	
+	//네이버 로그인시 callback호출 메소드
+	@RequestMapping(value = "/naver/callback", method = { RequestMethod.GET, RequestMethod.POST })
+	public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session)
+			throws IOException, ParseException {
+		System.out.println("네이버 callback");
+		OAuth2AccessToken oauthToken;
+		oauthToken = naverLoginBO.getAccessToken(session, code, state);
+		apiResult = naverLoginBO.getUserProfile(oauthToken); // String형식의 json데이터
+
+		//String형식인 apiResult를 json형태로 바꿈
+		JSONParser parser = new JSONParser();
+		Object obj = parser.parse(apiResult);
+		JSONObject jsonObj = (JSONObject) obj;
+		
+		System.out.println(obj);
+		
+		JSONObject response_obj = (JSONObject) jsonObj.get("response");
+		String uname = (String) response_obj.get("nickname");
+		String uemail = (String) response_obj.get("email");
+		System.out.println(uname);
+		System.out.println(uemail);
+		
+		//회원 유무 확인
+		if(userdao.emailCheck(uemail)==1 || userdao.idCheck(uname)==1) {
+			//동일한 아이디, 이메일 있을시 가입 안됨
+			
+			UserVO vo = userdao.selectUser(uname);
+			session.setAttribute("uname", uname); // 세션 생성
+			session.setAttribute("uphoto",vo.getUphoto());
+			session.setAttribute("unread",userdao.countUnread(vo.getUname()));
+			session.setAttribute("notification", userdao.replyNotification(vo.getUname()));
+			System.out.println("가입x");
+		}else {
+			UserVO vo = new UserVO();
+			vo.setUemail(uemail);
+			vo.setUname(uname);
+			vo.setUpass("naver"); //임시
+			vo.setUphoto("임시");
+			
+			userdao.insert(vo);
+			session.setAttribute("uname", uname);
+			System.out.println(vo);
+			System.out.println("가입");
+		}
+		
+		model.addAttribute("result", apiResult);
+		return "redirect:/";
 	}
 	
 	@RequestMapping(value = "/recruiterLogin", method = RequestMethod.GET)//로그인창 보여주기

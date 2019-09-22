@@ -13,7 +13,7 @@ public interface UserDAO {
 	public int emailCheck(String uemail);
 	
 	/* 마이페이지 */
-	public UserVO selectMyPage(String uname);
+	public UserVO selectUser(String uname);
 	public int countUnread(String uname);
 	public List<ReplyVO> replyNotification(String uname);
 	public void checked(String uname);
