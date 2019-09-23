@@ -245,6 +245,69 @@
   outline: none;
 }
 </style>
+
+<script>
+
+	var chatList;
+	
+	function chattingList(list){
+		console.log(list.length);
+		console.log(list);
+		console.log(list[0]['senderUname']);
+		for(var i=0;i<list.length;i++){
+			if(list[i]['senderUname']=='jsooshi'){
+				$('#messages').children().append('<li class="sent"><p>'+list[i]['chatContext']+'</p></li>')
+			}else{
+				$('#messages').children().append('<li class="replies"><p>'+list[i]['chatContext']+'</p></li>')
+			}
+		}
+	}
+	
+	function chatLogDown(){
+		var chatLog = "";
+		for(var i=0;i<chatList.length;i++){
+			var sendDate= new Date(chatList[i]['sendDate']);
+			chatLog += sendDate + ", " + chatList[i]['senderUname']+" : "+chatList[i]['chatContext']+"\n"
+		}
+		var blob = new Blob([chatLog],{ type: 'text/plain' });
+		
+		objURL = window.URL.createObjectURL(blob);
+	            
+	    // 이전에 생성된 메모리 해제
+	    if (window.__Xr_objURL_forCreatingFile__) {
+	        window.URL.revokeObjectURL(window.__Xr_objURL_forCreatingFile__);
+	    }
+	    window.__Xr_objURL_forCreatingFile__ = objURL;
+	 
+	    var a = document.createElement('a');
+	 
+	    a.download = 'jsooshi 신고';
+	    a.href = objURL;
+	    a.click()
+		
+	}
+	
+
+	$(function(){
+		
+		$.ajax({
+			url:"/porget/test/selectChatContext",
+			data:{
+				reporter:'jsooshi',
+				defendant:'afterup'
+			},
+			success:function(list){
+				chatList=list;
+				console.log("성공!");
+				chattingList(list);
+			}
+		});
+		
+		$('#chatLogDown').on('click',function(){
+			chatLogDown()
+		})		
+	})
+</script>
 </head>
 <body>
 	<div id="frame">
@@ -278,5 +341,7 @@
 			</div>
 		</div>
 	</div>
+	<button type="button" id="chatLogDown">다운로드</button>
+	
 </body>
 </html>

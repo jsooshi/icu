@@ -45,4 +45,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values ( #{reportNum}, #{reportContext}, #{reportPath}, #{reportType}, sysdate, #{reporter},'dldldl','처리중' )
 	</insert>
 	
+	<select id="selectChatContext" resultType="ChatVO">
+		select senderUname, toUname,chatContext,mCheck,sendDate from chat
+		where senderUname in (#{reporter},#{defendant}) and toUname in (#{defendant},#{reporter})
+	</select>
+	
 </mapper>

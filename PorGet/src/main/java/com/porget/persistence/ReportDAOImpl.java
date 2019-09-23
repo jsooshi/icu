@@ -2,6 +2,7 @@ package com.porget.persistence;
 
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -9,6 +10,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.porget.domain.ChatVO;
 import com.porget.domain.Criteria;
 
 import com.porget.domain.ReportVO;
@@ -50,6 +52,11 @@ public class ReportDAOImpl implements ReportDAO{
 	@Override
 	public int reportTotal(Criteria cri) {
 		return sqlSession.selectOne("report.reportTotal",cri);
+	}
+
+	@Override
+	public List<ChatVO> selectChatContext(Map map) {
+		return sqlSession.selectList("report.selectChatContext",map);
 	}
 
 }
