@@ -316,9 +316,7 @@
 				<img src="" alt="" />
 				<p>${toUname }</p>
 				<div class="social-media">
-					<i class="fa fa-facebook" aria-hidden="true"></i>
-					<i class="fa fa-twitter" aria-hidden="true"></i>
-					 <i class="fa fa-instagram" aria-hidden="true"></i>
+					<button type="button" class="btn btn-primary" id="chatLogDown">다운로드</button>
 				</div>
 			</div>
 			<div class="messages" id="messages">
@@ -341,7 +339,6 @@
 			</div>
 		</div>
 	</div>
-	<button type="button" id="chatLogDown">다운로드</button>
 	
 </body>
 </html>

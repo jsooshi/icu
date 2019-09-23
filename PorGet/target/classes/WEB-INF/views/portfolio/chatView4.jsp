@@ -877,6 +877,7 @@ $(document).ready(function() {
 			<img src="/porget/files/profile/${toUphoto}" alt="" />
 			<p>${toUname }</p>
 			<div class="social-media">
+				<button class="btn btn-danger" id="chatReportButton" data-toggle="modal" data-target="#reportModal">신고</button>
 				<i class="fa fa-facebook" aria-hidden="true"></i>
 				<i class="fa fa-twitter" aria-hidden="true"></i>
 				 <i class="fa fa-instagram" aria-hidden="true"></i>
@@ -902,6 +903,63 @@ $(document).ready(function() {
 		</div>
 	</div>
 </div>
+
+
+<!-- Modal -->
+					<form role="form" method="post" action="/porget/report/insert">
+						<!-- Modal -->
+						<input type="hidden" name="reportPath" value="chat">
+						<input type="hidden" name="reporter" value="${uname }">
+						<input type="hidden" name="defendant" value="">
+						<div class="modal fade" id="reportModal" role="dialog">
+							<div class="modal-dialog">
+
+								<!-- Modal content-->
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal">&times;</button>
+										<h4 class="modal-title">신고하기</h4>
+									</div>
+									<div class="modal-body">
+										<table>
+											<tr>
+												<td><label>게시글:</label></td>
+												<td><input type="text" class="form-control"
+													name="pfname"></td>
+											</tr>
+										</table>
+										<br>
+										<div class="input-group mb-3">
+											<div class="input-group-prepend">
+												<label class="input-group-text" for="inputGroupSelect01">사유</label>
+											</div>
+											<select class="custom-select" name="reportType">
+												<option value="" disabled selected>신고 유형을 선택해주세요.</option>
+												<option value="1">부적절한 홍보 게시물</option>
+												<option value="2">폭언, 욕설 사용</option>
+												<option value="3">저작권 침해</option>
+											</select>
+										</div>
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<span class="input-group-text">신고 내용</span>
+											</div>
+											<textarea class="form-control" aria-label="With textarea" name="reportContext"></textarea>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="submit" class="btn btn-default" 
+											>신고 접수</button>
+										<button type="reset" class="btn btn-default"
+											>닫기</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+					<!-- /.modal -->
+
+
 <script src='//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js'></script>
 <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>	
@@ -1065,6 +1123,11 @@ $(document).ready(function() {
 	  $('.submit').click(function() {
 			send();
 		});
+	  $('#chatReportButton').on("click",function(){
+		  $('input[name="reporter"]').attr('value','afterup')
+		  $('input[name="defendant"]').attr('value',$('#frame .contact-profile p').html())
+		  console.log($('input[name="defendant"]').attr('value'))
+	  })
 });
 	
 </script>

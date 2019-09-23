@@ -183,11 +183,9 @@ $(function(){ //jquery영역
 		}
 	});
 	
-	$(document).ready(function(){
-		  $("#myBtn").click(function(){
-		    $("#myModal").modal();
-		  });
-		});
+	  $("#myBtn").click(function(){
+	    $("#myModal").modal();
+	  });
 }); //ready
 </script>
 <style>
@@ -368,7 +366,7 @@ $(function(){ //jquery영역
 												<label class="input-group-text" for="inputGroupSelect01">사유</label>
 											</div>
 											<select class="custom-select" name="reportType">
-												<option selected>신고 유형을 선택해주세요.</option>
+												<option value="" disabled selected>신고 유형을 선택해주세요.</option>
 												<option value="1">부적절한 홍보 게시물</option>
 												<option value="2">폭언, 욕설 사용</option>
 												<option value="3">저작권 침해</option>

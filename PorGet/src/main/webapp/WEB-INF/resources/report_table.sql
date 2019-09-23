@@ -61,4 +61,4 @@ ALTER TABLE report
 select * from report
 
 insert into report (reportNum, reportContext, reportPath, reportType, reportDate, reportResultDate, reporter, defendant, reportResult)
-values(report_seq.nextval,'욕했어요 시바','P1','폭언,욕설',sysdate,null,'jsooshi','ekdrms','처리중')
+values(report_seq.nextval,'욕했습니다 저 사람이','chat','폭언,욕설',sysdate,null,'jsooshi','ekdrms','처리중')
