@@ -123,8 +123,12 @@ public class PortfolioController {
 
 
 	@GetMapping("/view")
-	public String portfolioView(int pfnum,HttpServletRequest request, HttpServletResponse response) {// 게시글 클릭시 포트폴리오 뷰
+	public String portfolioView(int pfnum,String defendant,HttpServletRequest request, HttpServletResponse response) {// 게시글 클릭시 포트폴리오 뷰
 		String uname = (String)request.getSession().getAttribute("uname");
+		if(defendant!=null) {
+			uname=defendant;
+			request.setAttribute("defendant", defendant);;
+		}
 		if(uname==""||uname==null) {
 			PrintWriter out;
 			try {

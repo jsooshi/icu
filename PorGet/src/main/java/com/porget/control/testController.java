@@ -6,6 +6,8 @@ import java.util.UUID;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.porget.domain.Criteria;
 import com.porget.domain.PageDTO;
 import com.porget.domain.ReportVO;
+import com.porget.domain.UserVO;
 import com.porget.persistence.ReportDAO;
 import com.porget.service.ReportService;
 
@@ -78,8 +81,8 @@ public class testController {
 	public String reportList(Model model,Criteria cri) {
 		model.addAttribute("list", service.selectReportPage(cri));
 		model.addAttribute("pageMaker",new PageDTO(cri, service.reportTotal(cri)));
-		model.addAttribute("pfnum", 7);
-		
+		model.addAttribute("pfnum", 8);
+	
 		return "admin/report/reportList";
 	}
 	

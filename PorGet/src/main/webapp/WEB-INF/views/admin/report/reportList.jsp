@@ -221,13 +221,14 @@
 
 
 <script type="text/javascript">
+var defendant="";
 	$(document)
 			.ready(
 					function() {
 						$('#postConfirm').click(function(){		
 							//alert($(this).attr("data-no"));
-							var pfnum = $(this).attr('data-no');//8							
-							location.href='/porget/portfolio/view?pfnum='+ pfnum;
+							var pfnum = $(this).attr('data-no');
+							location.href='/porget/portfolio/view?pfnum='+ pfnum+'&defendant='+defendant;
 						});
 						
 						$(".reportTable tbody tr").on("click",function(){
@@ -242,6 +243,13 @@
 								data: {reportNum:reportNum},
 								success: function(result){
 									$(".modal-body").html(result.reportContext);
+									console.log("리포트 경로  : "+result.reportPath)
+									var pageNum = result.reportPath
+									if(pageNum !== 'chat'){
+										pageNum=pageNum.substring(1)
+									}
+									defendant=result.defendant;
+									$('#postConfirm').attr("data-no", pageNum); //버튼 클릭시
 								}
 							})
 							

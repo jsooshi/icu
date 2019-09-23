@@ -60,5 +60,7 @@ ALTER TABLE report
 
 select * from report
 
+update report set defendant='ekdrms'
+
 insert into report (reportNum, reportContext, reportPath, reportType, reportDate, reportResultDate, reporter, defendant, reportResult)
 values(report_seq.nextval,'욕했어요 시바','P1','폭언,욕설',sysdate,null,'jsooshi','ekdrms','처리중')

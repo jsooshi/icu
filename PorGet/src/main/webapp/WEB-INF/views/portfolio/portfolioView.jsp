@@ -52,7 +52,6 @@ function delPortfolio(num){
 		location.replace("delete?pfnum="+num);
 	}
 }
-<<<<<<< HEAD
 $(function(){ //jquery영역
 	
 	$(".carousel-indicators").children('li').eq(0).addClass("active");
@@ -155,30 +154,17 @@ $(function(){ //jquery영역
 		}
 	});
 	
-	$(document).ready(function(){
-		  $("#myBtn").click(function(){
-		    $("#myModal").modal();
-		  });
-		});
+	  $("#myBtn").click(function(){
+	    $("#myModal").modal();
+	  });
 	
-	$('button').on("click", function(e){
-	    
-	    e.preventDefault(); 
-	    
-	    var operation = $(this).data("oper");
-	    
-	    console.log(operation);
-	    
-	    if(operation == 'remove'){
-	    	location.href="/porget/remove?pfnum?${pfnum}";
-	    }
-	});
+
 }); //ready
-=======
+
 var pfnum=${param.pfnum}
 var uname="${uname}"
 var writer="${list.UNAME }"
->>>>>>> 448e2ffbc01ffa6e00b659f90c61870a55d1f5b5
+
 </script>
 <script src="/porget/js/reply.js"></script>
 <style>
@@ -202,6 +188,9 @@ var writer="${list.UNAME }"
 	width: 50px;
 }
 </style>
+<script>
+console.log("pppppppppppp+ ${param.defendant}")
+</script>
 </head>
 <body>
 
@@ -215,8 +204,10 @@ var writer="${list.UNAME }"
 			<div class="col-sm-12">
 				<!-- Title -->
 				<h1 class="mt-4">${list.PFNAME }</h1>
-				<button type="button" data-oper="remove" class="btn btn-danger">게시믈
-					삭제</button>
+				<c:if test="${list.UNAME == param.defendant }">
+				<button type="button" data-oper="remove" class="btn btn-danger" onclick="delPortfolio(${list.PFNUM })">게시물
+					삭제</button>	
+					</c:if>
 				<!-- Author -->
 				<hr>
 				<!-- Date/Time -->
@@ -375,10 +366,8 @@ var writer="${list.UNAME }"
 													name="reportContext"></textarea>
 											</div>
 										</div>
-
-
 										<div class="modal-footer">
-											<button type="submit" class="btn btn-default">신고
+											<button type="submit" class="btn btn-default" id="singo">신고
 												접수</button>
 											<button type="reset" class="btn btn-default">닫기</button>
 										</div>
@@ -427,7 +416,6 @@ var writer="${list.UNAME }"
 		
 	
 
->>>>>>> 448e2ffbc01ffa6e00b659f90c61870a55d1f5b5
 </body>
 
 </html>
