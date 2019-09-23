@@ -121,11 +121,10 @@
 					</c:if>
 				</div>
 			</div>
-			<c:if test="${sessionScope.ucheck == 4 }">
+<%-- 			<c:if test="${sessionScope.ucheck == 4 }"> --%>
 				<div class="col-sm-6">
 					<button id="deleteMember"  class=" btn btn-danger">강퇴</button>
 				</div>
-			</c:if>
 		</div>
 		<!--/row-->
 	</div>
@@ -211,11 +210,8 @@
 			$("#deleteMember").on("click",function(){
 				if(confirm("정말로 강퇴하시겠습니까?")){
 					$.ajax({
-						url: "/porget/admin/member/delete",
-						type:"post",
-						data: {
-							"uname": uname
-						},
+						url: "/porget/admin/member/"+uname,
+						type:"delete",
 						success: function(result){
 							if(result == "success"){
 								alert("강퇴 완료");
@@ -231,11 +227,8 @@
 			$("#breakMember").on("click",function(){
 				if(confirm("정말로 탈퇴하시겠습니까?")){
 					$.ajax({
-						url:"/porget/mypage/break",
-						type:"post",
-						data:{
-							"uname": uname
-						},
+						url:"/porget/mypage/"+uname,
+						type:"delete",
 						success: function(result){
 							if(result == "success"){
 								alert("탈퇴 완료되었습니다.");

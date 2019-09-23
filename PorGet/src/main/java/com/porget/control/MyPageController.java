@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -91,13 +92,12 @@ public class MyPageController {
 		return "fail";
 	}
 	
-	@PostMapping("/mypage/break")
-	public ResponseEntity<String> breakMember(String uname) {
+	@DeleteMapping("/mypage/{uname}")
+	public ResponseEntity<String> breakMember(@PathVariable("uname")String uname) {
 		
 		int delCnt = dao.breakMember(uname);
 		return (delCnt == 1) ? new ResponseEntity<>("success",HttpStatus.OK)
 				: new ResponseEntity<>("fail",HttpStatus.INTERNAL_SERVER_ERROR);
-		
 	}
 	
 	
