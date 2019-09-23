@@ -33,6 +33,11 @@ public class ChatDAOImpl implements ChatDAO{
 		return sqlSession.selectOne("chat.selectUphoto", uname);
 	}
 
+	@Override
+	public List<Map<String, Object>> chatListAll(String uname) {
+		return sqlSession.selectList("chat.chatListAll", uname);
+	}
+
 
 
 }

@@ -17,6 +17,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where (senderUname=#{senderUname} and toUname=#{toUname}) or (senderUname=#{toUname} and toUname=#{senderUname})
 		order by sendDate 
 	</select>
+
+	<select id="chatListAll" resultType="Map"> 
+		select c.senderUname, c.toUname, c.chatContext, c.mCheck, c.sendDate, u.uphoto from chat c inner join userList u
+		on c.toUname=u.uname
+		where (toUname, sendDate) in (select toUname, max (sendDate) from chat where senderUname=#{senderUname} group by toUname) 
+		order by sendDate desc
+	</select>
 	
 	<select id="selectUphoto" resultType="String">
 		select uphoto from userList where uname=#{uname}

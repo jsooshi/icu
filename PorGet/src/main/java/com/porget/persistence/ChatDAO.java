@@ -11,4 +11,5 @@ public interface ChatDAO {
 	public String selectUphoto(String uname);
 	
 	public List<Map<String, Object>> chatList(ChatVO vo);
+	public List<Map<String, Object>> chatListAll(String uname);
 }
