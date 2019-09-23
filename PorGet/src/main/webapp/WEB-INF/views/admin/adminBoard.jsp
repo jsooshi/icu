@@ -14,7 +14,7 @@
 
 <div class="col-9">
 
-	<h2>회원 관리</h2><hr>
+	<h2>게시글 관리</h2><hr>
 	출력 갯수: <select id="amount"></select>
 	<button class="changeAmount btn btn-light">변경</button>
 	
@@ -22,23 +22,23 @@
 		<table class="table table-spriped">
 			<thead>
 				<tr>
+					<th>번호</th>
 					<th>닉네임</th>
-					<th>이메일</th>
-					<th>회원등급</th>
-					<th>가입일</th>
-					<th>신고누적수</th>
+					<th>제목</th>
+					<th>등록일</th>
+					<th>태그명</th>
 					<th>정보</th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach items="${list}" var="list">
 					<tr>
-						<td>${list.uname }</td>
-						<td>${list.uemail }</td>
-						<td>${list.ucheck }</td>
-						<td></td>
-						<td></td>
-						<td><a href="/porget/member/${list.uname}" class="info btn-sm btn btn-light">info</a></td>
+						<td>${list.pfnum}</td>
+						<td>${list.uname}</td>
+						<td>${list.pfname}</td>
+						<td>${list.pfdate}</td>
+						<td>${list.tagname}</td>
+						<td><a href="/porget/portfolio/view?pfnum=${list.pfnum}" class="info btn-sm btn btn-light">info</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>

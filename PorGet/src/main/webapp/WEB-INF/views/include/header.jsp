@@ -177,7 +177,7 @@
 				class="portfolio nav-link">Portfolio</a></li>
 
 			<c:choose>
-				<c:when test="${empty uname}">
+				<c:when test="${empty sessionScope.uname}">
 					<li class="nav-item"><a href="#myModal" class="nav-link" data-toggle="modal">login</a></li>
 					<button onclick="location.href='join'" class="btn btn-primary">Sign in</button>
 				</c:when>
@@ -185,11 +185,11 @@
 					<!-- <button onclick="location.href='portfolio/post'" class="btn btn-primary">Posting!</button> -->
 					<div class="dropdown show">
 						  <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
- 						  	<img src="/porget/files/profile/${uphoto }" class="rounded-circle" style="width: 50px; height:50px;"> 
+ 						  	<img src="/porget/files/profile/${sessionScope.uphoto }" class="rounded-circle" style="width: 50px; height:50px;"> 
 						  </a>
 						
 						  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-						    <div class="dropdown-item">${uname }님 환영합니다! </div>
+						    <div class="dropdown-item">${sessionScope.uname }님 환영합니다! </div>
 						    <a class="dropdown-item" href="/porget/mypage#portfolio">포트폴리오</a>
 						    <a class="dropdown-item" href="/porget/mypage#bookmark">북마크</a>
 						    <a class="dropdown-item" href="/porget/mypage">마이페이지</a>

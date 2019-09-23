@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,13 +26,12 @@ import com.porget.domain.UserVO;
 import com.porget.persistence.MyPageDAO;
 
 @Controller
-@RequestMapping("/mypage")
 public class MyPageController {
 	
 	@Autowired
 	private MyPageDAO dao;
 	
-	@GetMapping(value={"","/"})
+	@GetMapping(value={"/mypage","/mypage/"})
 	public String selectMyPage(HttpSession session, Model m) {
 		String uname = (String)session.getAttribute("uname");
 		UserVO vo = dao.selectUser(uname);
@@ -43,10 +44,14 @@ public class MyPageController {
 			pvo.setPfthumb(pvo.getPfthumb().split("\\|")[0]);
 		}
 		m.addAttribute("pvo",portfolioVO);
+		
+		List<PortfolioVO> portfolioVO2 = dao.likePortfolio(uname);
+		m.addAttribute("like",portfolioVO2);
+		
 		return "member/myPage";
 	}
 	
-	@PostMapping("/changeuname")
+	@PostMapping("/mypage/changeuname")
 	public String changeUname(String uname) { //추후 변경
 		System.out.println(uname);
 		if(dao.changeUname(uname)==1) {
@@ -56,7 +61,7 @@ public class MyPageController {
 		}
 	}
 	
-	@RequestMapping("/changeuphoto")
+	@RequestMapping("/mypage/changeuphoto")
 	public @ResponseBody String changeUphoto(HttpServletRequest request,MultipartFile photo) {
 		String removeName = (String) request.getSession().getAttribute("uphoto");
 		String uname = (String) request.getSession().getAttribute("uname");
@@ -86,5 +91,24 @@ public class MyPageController {
 		return "fail";
 	}
 	
+	@PostMapping("/mypage/break")
+	public ResponseEntity<String> breakMember(String uname) {
+		
+		int delCnt = dao.breakMember(uname);
+		return (delCnt == 1) ? new ResponseEntity<>("success",HttpStatus.OK)
+				: new ResponseEntity<>("fail",HttpStatus.INTERNAL_SERVER_ERROR);
+		
+	}
+	
+	
+	/* 유저페이지*/
+	@GetMapping("/member/{uname}")
+	public String showUserPage(@PathVariable("uname")String uname,Model model) {
+		
+		UserVO vo = dao.selectUser(uname);
+		model.addAttribute("vo",vo);
+		
+		return "member/myPage";
+	}
 	
 }

@@ -52,5 +52,16 @@
 		update userlist set uphoto=#{uphoto} where uname=#{uname}
 	</update>
 	
+	<select id="likePortfolio" resultType="PortfolioVO">
+		select pfname, pfdate, pfthumb, uname
+		from portfolio where 
+		pfnum IN(select pfnum from recommend where uname = #{uname})
+	</select>
+	
+	<delete id="breakMember">
+		delete from userlist where uname = #{uname}
+	</delete>
+	
+	
 
 </mapper>

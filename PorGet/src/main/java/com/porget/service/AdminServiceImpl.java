@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.porget.domain.Criteria;
+import com.porget.domain.PortfolioVO;
 import com.porget.domain.UserVO;
 import com.porget.persistence.AdminDAO;
 
@@ -29,5 +30,13 @@ public class AdminServiceImpl implements AdminService{
 		return dao.getTotal(cri);
 	}
 	
+	@Override
+	public int delete(String uname) {
+		return dao.delete(uname);
+	}
 	
+	@Override
+	public List<PortfolioVO> selectPortfolio() {
+		return dao.selectPortfolio();
+	}
 }

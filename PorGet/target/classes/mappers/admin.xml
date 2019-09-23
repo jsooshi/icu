@@ -42,29 +42,13 @@
 
 	</select>
 
-
-
-
-
-
-
-	<select id="select" resultType="UserVO">
-		select uemail, uname, upass from userList where uname = #{uname}
-	</select>
-
 	<delete id="delete">
 		delete from userList where uname=#{uname}
 	</delete>
 
-	<update id="update">
-		update userList
-		set uemail=#{uemail}, uname=#{uname}, ucheck=#{ucheck}
-		where uemail = #{uemail}
-	</update>
-
-	<select id="listAll" resultType="UserVO">
-		select uemail, uname, ucheck
-		from userList
-		order by uname
+	<select id="selectPortfolio" resultType="PortfolioVO">
+		select pfnum, uname, pfname, pfdate, tagname from portfolio
 	</select>
+	
+
 </mapper>

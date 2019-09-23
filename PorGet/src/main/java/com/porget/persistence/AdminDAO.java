@@ -3,6 +3,7 @@ package com.porget.persistence;
 import java.util.List;
 
 import com.porget.domain.Criteria;
+import com.porget.domain.PortfolioVO;
 import com.porget.domain.UserVO;
 
 public interface AdminDAO {
@@ -11,15 +12,9 @@ public interface AdminDAO {
 
 	public int getTotal(Criteria cri);
 	
+	public int delete(String uname);
+
+	public List<PortfolioVO> selectPortfolio();
 	
-	
-	
-	public UserVO select(String uemail);
-	
-	public void update(UserVO vo);
-	
-	public void delete(String uname);
-	
-	public List<UserVO> listAll(int base);
 
 }
