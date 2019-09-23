@@ -9,17 +9,18 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!-- <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script> -->
 <!------ Include the above in your HEAD tag ---------->
 
 
 <!DOCTYPE html>
 <html class=''>
 <head>
-<script src='//production-assets.codepen.io/assets/editor/live/console_runner-079c09a0e3b9ff743e39ee2d5637b9216b3545af0de366d4b9aad9dc87e26bfd.js'></script><script src='//production-assets.codepen.io/assets/editor/live/events_runner-73716630c22bbc8cff4bd0f07b135f00a0bdc5d14629260c3ec49e5606f98fdd.js'></script><script src='//production-assets.codepen.io/assets/editor/live/css_live_reload_init-2c0dc5167d60a5af3ee189d570b1835129687ea2a61bee3513dee3a50c115a77.js'></script><meta charset='UTF-8'><meta name="robots" content="noindex"><link rel="shortcut icon" type="image/x-icon" href="//production-assets.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico" /><link rel="mask-icon" type="" href="//production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111" /><link rel="canonical" href="https://codepen.io/emilcarlsson/pen/ZOQZaV?limit=all&page=74&q=contact+" />
-<script src="/porget/js/sockjs.min.js"></script>  
+<!-- <script src='//production-assets.codepen.io/assets/editor/live/console_runner-079c09a0e3b9ff743e39ee2d5637b9216b3545af0de366d4b9aad9dc87e26bfd.js'></script><script src='//production-assets.codepen.io/assets/editor/live/events_runner-73716630c22bbc8cff4bd0f07b135f00a0bdc5d14629260c3ec49e5606f98fdd.js'></script><script src='//production-assets.codepen.io/assets/editor/live/css_live_reload_init-2c0dc5167d60a5af3ee189d570b1835129687ea2a61bee3513dee3a50c115a77.js'></script><meta charset='UTF-8'><meta name="robots" content="noindex"><link rel="shortcut icon" type="image/x-icon" href="//production-assets.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico" /><link rel="mask-icon" type="" href="//production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111" /><link rel="canonical" href="https://codepen.io/emilcarlsson/pen/ZOQZaV?limit=all&page=74&q=contact+" />
+ -->
+ <script src="/porget/js/sockjs.min.js"></script>  
 
 <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,300' rel='stylesheet' type='text/css'>
 
@@ -613,6 +614,10 @@
   background: #f5f5f5;
   float: right;
 }
+#frame .content .messages ul li.replies div {
+  float: right;
+  margin: 6px 0 0 8px;
+}
 #frame .content .messages ul li img {
   width: 22px;
   border-radius: 50%;
@@ -695,27 +700,46 @@
 #frame .content .message-input .wrap button:focus {
   outline: none;
 }
-</style></head><body>
-<!-- 
 
-A concept for a chat interface. 
+</style>
 
-Try writing a new message! :)
+<script type="text/javascript">
+$(document).ready(function() {
+	$('#scrollDiv').scrollTop($('#scrollDiv').prop('scrollHeight'));
 
+	console.log('여긴 드러왓닝');
+	var toUname = '<%= request.getAttribute("toUname") %>';
+	var uname = '<%=session.getAttribute("uname")%>';
+		 $.ajax({
+			url : "/porget/chatList",
+			data : {toUname:toUname, uname:uname},
+			success : function(data) {
+				$(data).appendTo($('.messages ul'));
+			}
+			
+		}); 
+		 /* $.ajax({
+				url : "/porget/chatList",
+				data : {uname:uname},
+				success : function(data) {
+					console.log(data);
+					$(data).appendTo($('.messages ul'));
+				}
+				
+			});  */
+});
+</script>
 
-Follow me here:
-Twitter: https://twitter.com/thatguyemil
-Codepen: https://codepen.io/emilcarlsson/
-Website: http://emilcarlsson.se/
+</head>
+<body>
 
--->
 
 <div id="frame">
 	<div id="sidepanel">
 		<div id="profile">
 			<div class="wrap">
-				<img id="profile-img" src="http://emilcarlsson.se/assets/mikeross.png" class="online" alt="" />
-				<p>Mike Ross</p>
+				<img id="profile-img" src="/porget/files/profile/${uphoto} " class="online" alt="" />
+				<p>${uname }</p>
 				<i class="fa fa-chevron-down expand-button" aria-hidden="true"></i>
 				<div id="status-options">
 					<ul>
@@ -850,7 +874,7 @@ Website: http://emilcarlsson.se/
 	</div>
 	<div class="content">
 		<div class="contact-profile">
-			<img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
+			<img src="/porget/files/profile/${toUphoto}" alt="" />
 			<p>${toUname }</p>
 			<div class="social-media">
 				<i class="fa fa-facebook" aria-hidden="true"></i>
@@ -858,7 +882,7 @@ Website: http://emilcarlsson.se/
 				 <i class="fa fa-instagram" aria-hidden="true"></i>
 			</div>
 		</div>
-		<div class="messages" id="messages">
+		<div class="messages" id="messages"  style="overflow:auto">
 			<ul>
 				<!-- <li class="sent">
 				</li>
@@ -882,18 +906,21 @@ Website: http://emilcarlsson.se/
 <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>	
 <script type="text/javascript">
-var socket = null;
+$('#scrollDiv').scrollTop($('#scrollDiv').prop('scrollHeight'));
+
+
+var sock = null;
 connect();
 
 
 	 function connect() {
-		 	var ws = new WebSocket("ws://localhost/porget/chat");
+		 	var ws = new WebSocket("ws://192.168.0.62/porget/chat");
 		 	sock = ws
 		    sock.onopen = function() {
 		        console.log('open');
 		    };
 		    sock.onmessage = function(evt) {
-	    	 var data = evt.data;
+	    	   var data = evt.data;
 	    	   console.log(data)
 	  		   var obj = JSON.parse(data)  	   
 	    	   console.log(obj)
@@ -993,19 +1020,19 @@ $("#status-options ul li").click(function() {
 		 var t = getTimeStamp();
 		 
 		 if(senderUname==uname){
-		 $('<li class="replies"><img src="http://emilcarlsson.se/assets/mikeross.png" alt="" /><p>' + msg + '</p></li>').appendTo($('.messages ul'));
+		 $('<li class="replies"><img src="/porget/files/profile/${uphoto}" alt="" /><p>' + msg + '</p><div>'+t+'&nbsp;&nbsp;</div></li>').appendTo($('.messages ul'));
 		 $('.message-input input').val(null);
 		 
-		/*  var chatAreaHeight = $("#chat-right").height();
-		  var maxScroll = $("#chatAreaHeight").height() - chatAreaHeight;
-		  $("#chat-right").scrollTop(maxScroll); */
+		/*  var chatAreaHeight = $("#replies").height();
+		  var maxScroll = $("#messages").height() - chatAreaHeight;
+		  $("#replies").scrollTop(maxScroll);  */
 		 }else{
-		 $('<li class="sent"><img src="http://emilcarlsson.se/assets/mikeross.png" alt="" /><p>' + msg + '</p></li>').appendTo($('.messages ul'));
+		 $('<li class="sent"><img src="/porget/files/profile/${toUphoto}" alt="" /><p>' + msg + '</p>&nbsp;'+t+'</li>').appendTo($('.messages ul'));
 		 $('.message-input input').val(null);
 		 
-	/*  var chatAreaHeight = $("#chat-left").height();
-		  var maxScroll = $("#chatAreaHeight").height() - chatAreaHeight;
-		  $("#chat-left").scrollTop(maxScroll); */
+/* 	var chatAreaHeight = $("#sent").height();
+		  var maxScroll = $("#messages").height() - chatAreaHeight;
+		  $("#sent").scrollTop(maxScroll);  */
 		 }
 	
 		 }
@@ -1027,15 +1054,6 @@ $("#status-options ul li").click(function() {
 
 $(document).ready(function() {
 	
-		/* $.ajax({
-			url : "/porget/chatList",
-			data : {"toUname" : '${toUname}', "uname":'${uname}'},
-			success : function(data) {
-				$('#messages').append(data);
-			}
-			
-		}); */
-	
 	  $('#textInput').keypress(function(event){
 	   var keycode = (event.keyCode ? event.keyCode : event.which);
 	   if(keycode == '13'){
@@ -1049,7 +1067,6 @@ $(document).ready(function() {
 		});
 });
 	
-//# sourceURL=pen.js
 </script>
 </body>
 </html>
