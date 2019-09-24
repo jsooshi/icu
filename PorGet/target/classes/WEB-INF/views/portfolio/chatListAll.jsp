@@ -17,16 +17,20 @@
 			<c:forEach items="${list4 }" var="list">
 			<c:forEach items="${list }" var="result">
 					
-			<li class="contact">
-				<div class="wrap">
-					<span class="contact-status online"></span>
-					<img src="/porget/files/profile/${result.UPHOTO}" alt="" />
-					<div class="meta">
-						<p class="name">${result.TOUNAME}</p>
-						<p class="preview">${result.CHATCONTEXT}</p>
-					</div>
-				</div>
-			</li>
+						<li class="contact">
+							<div class="wrap">
+								<span class="contact-status online"></span>
+								<img src="/porget/files/profile/${result.UPHOTO}" alt="" />
+								<div class="meta">
+									<p class="name">${result.CHATUSER}</p>
+									<p class="preview">${result.SENDCONTENT}</p>
+								</div>
+							</div>
+						</li>
+				
+					
+					
+			
 					
 			</c:forEach>	
 			</c:forEach>	

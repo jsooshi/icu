@@ -19,10 +19,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="chatListAll" resultType="Map"> 
-		select c.senderUname, c.toUname, c.chatContext, c.mCheck, c.sendDate, u.uphoto from chat c inner join userList u
+		<!-- select c.senderUname, c.toUname, c.chatContext, c.mCheck, c.sendDate, u.uphoto from chat c inner join userList u
 		on c.toUname=u.uname
-		where (toUname, sendDate) in (select toUname, max (sendDate) from chat where senderUname=#{senderUname} group by toUname) 
-		order by sendDate desc
+		where (senderUname, toUname, sendDate) in (select senderUname, toUname, max (sendDate) from chat group by senderUname, toUname) 
+		and  (senderUname=#{senderUname} or toUname=#{senderUname}) 
+		order by sendDate desc -->
+		
+		select c.chatuser, d.chatuser, CASE when d.sendDate is null then c.chatContext
+		when c.sendDate is null then d.chatContext
+		when d.sendDate > c.sendDate then d.chatContext else c.chatContext end as sendContent
+		from
+		(select toUname chatuser, sendDate, chatContext from CHAT
+		where sendDate in (select max(sendDate) from CHAT where senderUname=#{senderUname} group by toUname)) c full outer join
+		(select senderUname chatuser, sendDate, chatContext from CHAT
+		where sendDate in (select max(sendDate) from CHAT where toUname=#{senderUname} group by senderUname)) d on c.chatuser=d.chatuser
 	</select>
 	
 	<select id="selectUphoto" resultType="String">
