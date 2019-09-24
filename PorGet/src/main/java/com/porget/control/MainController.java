@@ -3,7 +3,6 @@ package com.porget.control;
 import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -13,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
@@ -21,15 +21,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.porget.domain.RecruiterVO;
 import com.porget.domain.UserVO;
 import com.porget.persistence.PortfolioDAO;
-import com.porget.persistence.RecruiterDAO;
 import com.porget.persistence.UserDAO;
 
+import lombok.extern.log4j.Log4j;
+
 @Controller
+@Log4j
 public class MainController {
 	
 	@Autowired
@@ -37,6 +37,9 @@ public class MainController {
 	
 	@Autowired
 	private UserDAO userdao;
+	
+	@Autowired
+	private BCryptPasswordEncoder bcryptPasswordEncoder;
 
 	@GetMapping(value= {"/",""})
 	public String index() {
@@ -56,7 +59,8 @@ public class MainController {
 	}
 	
 	@RequestMapping(value = "/userjoin", method = RequestMethod.POST)//구직자 DB 회원가입 
-    public String userJoin(MultipartFile file,UserVO vo,  HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public String userJoin(MultipartFile file,UserVO vo,  
+    				HttpServletRequest request, HttpServletResponse response) throws Exception {
         System.out.println("구직자 회원가입vo="+vo);
         
         //프로필 이미지
@@ -70,8 +74,12 @@ public class MainController {
         String savedName = uuid.toString() + "_" + fileName;
         File target = new File(uploadPath,savedName);
         FileCopyUtils.copy(file.getBytes(), target);
-        vo.setUcheck(0);
+//        vo.setAuthority("ROLE_USER");
         vo.setUphoto(savedName);
+        
+        //비밀번호 암호화
+        vo.setUpass(this.bcryptPasswordEncoder.encode(vo.getUpass()));
+        
         userdao.insert(vo);
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
@@ -101,7 +109,7 @@ public class MainController {
         String savedName = uuid.toString() + "_" + fileName;
         File target = new File(uploadPath,savedName);
         FileCopyUtils.copy(file.getBytes(), target);
-        vo.setUcheck(1);
+//        vo.setAuthority("ROLE_RECRU");
         vo.setUphoto(savedName);
         userdao.insert(vo);
 		response.setContentType("text/html; charset=UTF-8");
@@ -115,23 +123,41 @@ public class MainController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)//로그인창 보여주기
 	public String login() {
 		
-		return "main/login";
+		return "common/login";
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String loginSuccess(UserVO vo, HttpSession session, RedirectAttributes attrs){//로그인시 세션 저장
-		Map<String,String> map = (Map<String, String>) userdao.login(vo);
-		if(map != null) {
-			session.setAttribute("uname",map.get("UNAME"));
-			System.out.println(map.get("UNAME"));
-			session.setAttribute("uphoto",map.get("UPHOTO"));
-			System.out.println("멤버 로그인 성공");
-			return "redirect:/";
-		}else {
-			System.out.println("멤버 로그인 실패");
-			attrs.addFlashAttribute("msg", "이메일과 비밀번호를 확인해주세요");
-			return "redirect:/";
+	public String loginSuccess(String uemail,String error, String logout, Model model){//로그인시 세션 저장
+		
+		log.info(uemail);
+		
+		log.info("login------");
+		log.info("error:"+error);
+		log.info("logout:"+logout);
+		
+		if(error!=null) {
+			model.addAttribute("error","Login Error");
 		}
+		
+		if(logout != null) {
+			model.addAttribute("logout", "logout");
+		}
+		
+		
+		return "redirect:/";
+		
+//		Map<String,String> map = (Map<String, String>) userdao.login(vo);
+//		if(map != null) {
+//			session.setAttribute("uname",map.get("UNAME"));
+//			System.out.println(map.get("UNAME"));
+//			session.setAttribute("uphoto",map.get("UPHOTO"));
+//			System.out.println("멤버 로그인 성공");
+//			return "redirect:/";
+//		}else {
+//			System.out.println("멤버 로그인 실패");
+//			attrs.addFlashAttribute("msg", "이메일과 비밀번호를 확인해주세요");
+//			return "redirect:/";
+//		}
 	}
 	
 	@RequestMapping(value = "/recruiterLogin", method = RequestMethod.GET)//로그인창 보여주기

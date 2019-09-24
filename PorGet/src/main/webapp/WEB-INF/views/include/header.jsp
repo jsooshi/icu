@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -176,12 +177,14 @@
 			<li class="nav-item"><a href="/porget/portfolio"
 				class="portfolio nav-link">Portfolio</a></li>
 
-			<c:choose>
-				<c:when test="${empty sessionScope.uname}">
-					<li class="nav-item"><a href="#myModal" class="nav-link" data-toggle="modal">login</a></li>
+				<sec:authorize access="isAnonymous()">
+					<li class="nav-item"><a href="<c:url value='/login'/>" class="nav-link">login</a></li>
 					<button onclick="location.href='join'" class="btn btn-primary">Sign in</button>
-				</c:when>
-				<c:otherwise>
+				</sec:authorize>
+				
+				<sec:authentication property="principal" var ="pinfo"/>
+				
+				<sec:authorize access="isAuthenticated()">
 					<!-- <button onclick="location.href='portfolio/post'" class="btn btn-primary">Posting!</button> -->
 					<div class="dropdown show">
 						  <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -189,51 +192,19 @@
 						  </a>
 						
 						  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-						    <div class="dropdown-item">${sessionScope.uname }님 환영합니다! </div>
+						    <div class="dropdown-item">${pinfo.user.uname}님 환영합니다! </div>
 						    <a class="dropdown-item" href="/porget/mypage#portfolio">포트폴리오</a>
 						    <a class="dropdown-item" href="/porget/mypage#bookmark">북마크</a>
 						    <a class="dropdown-item" href="/porget/mypage">마이페이지</a>
 						    <a class="dropdown-item" href="/porget/logout">로그아웃</a>
 						  </div>
 					</div>
-				</c:otherwise>
-
-			</c:choose>
+				</sec:authorize>
 
 		</ul>
 	</div>
 </nav>
 
-	<!-- Login Modal -->
-	<div id="myModal" class="modal fade">
-		<div class="modal-dialog modal-login">
-			<div class="modal-content">
-				<div class="modal-header">
-					<div class="avatar">
-						<img src="/porget/img/member/avatar.png" alt="Avatar">
-					</div>				
-					<h4 class="modal-title">Member Login</h4>	
-	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				</div>
-				<div class="modal-body">
-					<form action="/porget/login" method="post">
-						<div class="form-group">
-							<input type="text" class="form-control" name="uemail" placeholder="Email" required="required">		
-						</div>
-						<div class="form-group">
-							<input type="password" class="form-control" name="upass" placeholder="Password" required="required" id="upass">	
-						</div>        
-						<div class="form-group">
-							<button type="submit" name="login" class="btn btn-primary btn-lg btn-block login-btn">Login</button>
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<a href="#">Forgot Password?</a>
-				</div>
-			</div>
-		</div>
-	</div>   
 
 <!--  jquery  -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

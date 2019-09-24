@@ -2,24 +2,34 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	
 	
 	<bean id="customAccessDenied" class="com.porget.security.CustomAccessDeniedHandler"></bean>
 	<bean id="customLoginSuccess" class="com.porget.security.CustomLoginSuccessHandler"></bean>
 	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
-	<bean id="customUserDetailsService" class="com.porget.security.CustomUserDetailsService"></bean>
+	<bean id="userService" class="com.porget.security.CustomUserDetailsService"></bean>
 	
 	<security:http>
 		<security:intercept-url pattern="/security/all" access="permitAll"/>
-		<security:intercept-url pattern="/security/member" access="hasRole('ROLE_MEMBER')"/>
+		<security:intercept-url pattern="/security/member" access="hasRole('ROLE_USER')"/>
 		<security:intercept-url pattern="/security/admin" access="hasRole('ROLE_ADMIN')"/>
 		
-		<security:form-login/>
+		<security:form-login
+			username-parameter="uemail"
+			password-parameter="upass"
+			login-processing-url="/login"
+			authentication-success-handler-ref="customLoginSuccess"
+			login-page="/common/login"
+			default-target-url="/"
+		/>
+		
+		<security:logout logout-url = "/porget/logout" invalidate-session="true"/>
 	
-	<!-- 로그인 페이지 -->
-	<security:form-login login-page="/security/customLogin" authentication-success-handler-ref="customLoginSuccess"/>
-	<security:logout logout-url="/security/customLogout" invalidate-session="true"/>
+
 	
 	<!-- 접근제한 페이지 -->
 	<security:access-denied-handler ref="customAccessDenied"/>
@@ -28,15 +38,24 @@
 	<security:csrf disabled="true"/>
 		
 	</security:http>
+
+
+
 	<security:authentication-manager>
-		<security:authentication-provider user-service-ref="customUserDetailsService">
-			<security:password-encoder></security:password-encoder>
+		<security:authentication-provider user-service-ref="userService">
 <!-- 			<security:user-service>
-				<security:user name="member" password="{noop}member" authorities="ROLE_MEMBER"/>
-				<security:user name="admin" password="{noop}admin" authorities="ROLE_MEMBER,ROLE_MEMBER"/>
+				<security:user name="member" password="{noop}member" authorities="ROLE_USER"/>
 			</security:user-service> -->
-<!-- 			<security:jdbc-user-service data-source-ref="dataSource"/> -->
+<!-- 			<security:jdbc-user-service data-source-ref="dataSource"
+				users-by-username-query="select uemail,upass,enabled from userlist where uemail=?"
+				authorities-by-username-query="select uemail,authority from userlist where uemail=?"/> 
+		 -->
+ 			<security:password-encoder ref="bcryptPasswordEncoder"></security:password-encoder>
+			
+			
 		</security:authentication-provider>
 	</security:authentication-manager>
+	
+	
 
 </beans>

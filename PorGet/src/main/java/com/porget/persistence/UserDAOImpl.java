@@ -42,4 +42,11 @@ public class UserDAOImpl implements UserDAO{
 	public UserVO selectMyPage(String uname) {
 		return sqlSession.selectOne("userList.selectMyPage",uname);
 	}
+	
+/* 시큐리티 */
+	
+	@Override
+	public UserVO read(String uemail) {
+		return sqlSession.selectOne("userList.read",uemail);
+	}
 }

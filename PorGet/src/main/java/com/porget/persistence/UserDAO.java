@@ -13,6 +13,8 @@ public interface UserDAO {
 	/* 마이페이지 */
 	public UserVO selectMyPage(String uname);
 	
+	/* 시큐리티 */
+	public UserVO read(String uemail);
 	
 	
 }
