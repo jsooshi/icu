@@ -58,5 +58,9 @@ public class ReportDAOImpl implements ReportDAO{
 	public List<ChatVO> selectChatContext(Map map) {
 		return sqlSession.selectList("report.selectChatContext",map);
 	}
-
+	
+	@Override
+	public int delete(int pfnum) {
+		return sqlSession.delete("report.deletePf",pfnum);
+	}
 }

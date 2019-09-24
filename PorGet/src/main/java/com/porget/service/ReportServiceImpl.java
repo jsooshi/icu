@@ -64,4 +64,12 @@ public class ReportServiceImpl implements ReportService{
 		map.put("defendant", defendant);
 		return dao.selectChatContext(map);
 	}
+	
+
+	@Override
+	public boolean removePortpolio(int pfnum) {
+		if(dao.delete(pfnum)==1) return true;
+		return false;
+	}
+
 }

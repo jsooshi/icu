@@ -23,4 +23,6 @@ public interface ReportService {
 	public int reportTotal(Criteria cri);
 	
 	public List<ChatVO> selectChatContext(String reporter,String defendant);
+	
+	public boolean removePortpolio(int pfnum);
 }

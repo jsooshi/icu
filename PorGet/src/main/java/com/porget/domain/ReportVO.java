@@ -13,8 +13,7 @@ public class ReportVO {
 	private String reporter;
 	private String defendant;
 	private String reportResult;
-
-
+    private int pfnum;
 	public ReportVO() {
 		
 	}
@@ -33,6 +32,18 @@ public class ReportVO {
 		this.reporter = reporter;
 		this.defendant = defendant;
 		this.reportResult = reportResult;
+	}
+
+
+
+	public int getPfnum() {
+		return pfnum;
+	}
+
+
+
+	public void setPfnum(int pfnum) {
+		this.pfnum = pfnum;
 	}
 
 

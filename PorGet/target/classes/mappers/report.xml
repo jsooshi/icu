@@ -50,4 +50,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where senderUname in (#{reporter},#{defendant}) and toUname in (#{defendant},#{reporter})
 	</select>
 	
+	<delete id="deletePf">
+		delete from portfolio
+		where pfnum=#{pfnum}
+	</delete>
+	
 </mapper>

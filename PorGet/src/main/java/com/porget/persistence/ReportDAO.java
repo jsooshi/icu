@@ -22,4 +22,6 @@ public interface ReportDAO {
 	
 	public List<ChatVO> selectChatContext(Map map);
 
+	public int delete(int pfnum);
+	
 }

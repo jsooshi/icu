@@ -1,7 +1,9 @@
 package com.porget.persistence;
 
+import java.util.List;
 import java.util.Map;
 
+import com.porget.domain.ReplyVO;
 import com.porget.domain.UserVO;
 
 public interface UserDAO {
@@ -12,7 +14,7 @@ public interface UserDAO {
 	
 	/* 마이페이지 */
 	public UserVO selectMyPage(String uname);
-	
-	
-	
+	public int countUnread(String uname);
+	public List<ReplyVO> replyNotification(String uname);
+	public void checked(String uname);
 }

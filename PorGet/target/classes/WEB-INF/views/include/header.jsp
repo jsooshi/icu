@@ -105,7 +105,25 @@
 	<script>
 	var socket = null;
 	$(document).ready(function(){
-		connectWS();	
+		connectWS();
+		
+		$('#dropdownUnreadLink').click(function(){
+			$.ajax({
+				url: '/porget/checked',
+				data: {
+					uname : "${uname}"
+				},
+				success:function(){
+					$("#dropdownUnreadLink").children("span").html("");
+				}
+				
+			})
+			
+		})
+		
+		
+		
+		
 	})
 	
 	function connectWS(){
@@ -140,7 +158,8 @@
 	    location.replace('/porget');
 	  }
 	
-
+	
+ 	
 </script>
 <style>
  body {
@@ -252,6 +271,7 @@
 			<li class="nav-item"><a href="/porget" class="home nav-link">Home</a></li>
 			<li class="nav-item"><a href="/porget/portfolio"
 				class="portfolio nav-link">Portfolio</a></li>
+			<!-- unread숫자 -->
 
 			<c:choose>
 				<c:when test="${empty uname}">
@@ -259,6 +279,27 @@
 					<button onclick="location.href='join'" class="btn btn-primary">Sign in</button>
 				</c:when>
 				<c:otherwise>
+					<li class="nav-item">
+					<div class="dropdown show">
+					<a class="portfolio nav-link" href="#" role="button" id="dropdownUnreadLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+ 						Notification  						
+ 						<c:if test="${unread > 0 }">
+ 						<span class="badge badge-danger">${unread }</span>
+ 						</c:if>
+ 						</a>
+							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+							
+								<c:forEach items="${notification }" var="i">
+						      <a class="dropdown-item" href="/porget/portfolio/view?pfnum=${i.pfnum }"><font color="blue"><strong>${i.uname }</strong></font>님이 ${i.pfnum }번 글에 댓글을 달았습니다</a>
+						    	</c:forEach>
+						    	
+						    	
+							
+								</div>
+					</div>
+				</li> 
+				
+				
 					<!-- <button onclick="location.href='portfolio/post'" class="btn btn-primary">Posting!</button> -->
 					<div class="dropdown show">
 						  <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -273,6 +314,8 @@
 						    <a class="dropdown-item" href="/porget/logout">로그아웃</a>
 						  </div>
 					</div>
+					
+					
 				</c:otherwise>
 
 			</c:choose>

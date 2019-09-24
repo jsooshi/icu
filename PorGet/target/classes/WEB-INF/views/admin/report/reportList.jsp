@@ -80,7 +80,7 @@
 					</thead>
 					<tbody>
 					<c:forEach items="${list}" var="board">
-						<tr>
+						<tr data-pfnum="${board.pfnum }" >  <!-- 포트폴리오 주소 가져옴 -->
 							<td><c:out value="${board.reportNum}" /></td>
 
 							<td><c:out value="${board.reportType}" /></td>
@@ -89,7 +89,7 @@
 									value="${board.reportDate}" /></td>
 							<td><fmt:formatDate pattern="yyyy-MM-dd"
 									value="${board.reportResultDate}" /></td>
-							<td><c:out value="${board.reportResult}" /></td>
+							<td><c:out value="${board.reportResult}" /></td>							
 						</tr>
 					</c:forEach>
 					</tbody>
@@ -153,7 +153,7 @@
 
 						<c:forEach var="num" begin="${pageMaker.startPage}"
 							end="${pageMaker.endPage}">
-							<li class="paginate_button  ${pageMaker.cri.pageNum == num ? "active":""} ">
+							<li class='paginate_button  ${pageMaker.cri.pageNum == num ? "active":""} '>
 								<a href="${num}">${num}</a>
 							</li>
 						</c:forEach>
@@ -183,6 +183,7 @@
 			<!-- Modal  추가 -->
 			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 				aria-labelledby="myModalLabel" aria-hidden="true">
+				<div id="dddd"></div>
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
@@ -193,7 +194,8 @@
 						<div class="modal-body">처리가 완료되었습니다.</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default"
-								data-dismiss="modal">Close</button>
+								data-dismiss="modal">닫기</button>
+							<button type="button" class="btn btn-primary" id="postConfirm" data-no="0">게시글 확인</button>	<!-- 버튼에 data-no 속성을 줌 -->			
 							<button type="button" class="btn btn-primary">Save
 								changes</button>
 						</div>
@@ -219,14 +221,21 @@
 
 
 <script type="text/javascript">
+var defendant="";
 	$(document)
 			.ready(
 					function() {
+						$('#postConfirm').click(function(){		
+							//alert($(this).attr("data-no"));
+							var pfnum = $(this).attr('data-no');
+							location.href='/porget/portfolio/view?pfnum='+ pfnum+'&defendant='+defendant;
+						});
 						
 						$(".reportTable tbody tr").on("click",function(){
-							alert("하이"+$(this).find("td").eq(0).html()+"]");
+							alert("ㅇㅇㅇㅇㅇ"+$(this).find("td").eq(0).html()+"]");
 							var reportNum = parseInt($(this).find("td").eq(0).html());
 							$("#myModalLabel").html(reportNum+"번 신고입니다");
+							$('#postConfirm').attr("data-no", $(this).attr("data-pfnum")); //버튼 클릭시 
 							$.ajax({
 								url: "/porget/test/selectReport",
 								type: "POST",
@@ -234,6 +243,13 @@
 								data: {reportNum:reportNum},
 								success: function(result){
 									$(".modal-body").html(result.reportContext);
+									console.log("리포트 경로  : "+result.reportPath)
+									var pageNum = result.reportPath
+									if(pageNum !== 'chat'){
+										pageNum=pageNum.substring(1)
+									}
+									defendant=result.defendant;
+									$('#postConfirm').attr("data-no", pageNum); //버튼 클릭시
 								}
 							})
 							
