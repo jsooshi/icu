@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- "chat" 관련 sql문 -->
+<mapper namespace="chat"> 
+
+	<insert id="insertChat">
+		INSERT INTO chat (senderUname, toUname, chatContext, mCheck, sendDate)
+		VALUES (#{senderUname}, #{toUname}, #{chatContext}, 0, sysdate)
+	</insert>
+	
+	<select id="chatList" resultType="Map"> 
+		select senderUname, toUname, chatContext, mCheck, sendDate
+		from chat
+		where (senderUname=#{senderUname} and toUname=#{toUname}) or (senderUname=#{toUname} and toUname=#{senderUname})
+		order by sendDate 
+	</select>
+	
+	<select id="selectUphoto" resultType="String">
+		select uphoto from userList where uname=#{uname}
+	</select>
+	
+</mapper>
