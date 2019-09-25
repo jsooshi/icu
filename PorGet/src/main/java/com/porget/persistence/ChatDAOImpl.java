@@ -24,8 +24,9 @@ public class ChatDAOImpl implements ChatDAO{
 	}
 
 	@Override
-	public List<Map<String, Object>> chatList(ChatVO vo) {
-		return sqlSession.selectList("chat.chatList", vo);
+	public List<Map<String, Object>> chatList(ChatVO vo, int base, int bound) {
+		RowBounds bounds = new RowBounds(bound-10*base, 10);
+		return sqlSession.selectList("chat.chatList", vo, bounds);
 	}
 
 	@Override
@@ -36,6 +37,11 @@ public class ChatDAOImpl implements ChatDAO{
 	@Override
 	public List<Map<String, Object>> chatListAll(String uname) {
 		return sqlSession.selectList("chat.chatListAll", uname);
+	}
+
+	@Override
+	public int chatListCount(ChatVO vo) {
+		return sqlSession.selectOne("chat.chatListCount", vo);
 	}
 
 

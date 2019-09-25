@@ -705,26 +705,48 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	$('#scrollDiv').scrollTop($('#scrollDiv').prop('scrollHeight'));
+	
 
 	var toUname = '<%= request.getAttribute("toUname") %>';
 	var uname = '<%=session.getAttribute("uname")%>';
+	var i = 2;
 		 $.ajax({
 			url : "/porget/chatList",
-			data : {toUname:toUname, uname:uname},
+			data : {toUname:toUname, uname:uname, base:1},
 			success : function(data) {
 				$(data).appendTo($('.messages ul'));
+				
+				var objDiv = document.getElementById("messages");
+				objDiv.scrollTop = objDiv.scrollHeight;
 			}
 			
 		}); 
+		 
+		 $('.messages').scroll(function() {
+			 var maxHeight = $('.messages').height();
+			    var currentScroll = $('.messages').scrollTop();
+			    if (currentScroll==0) {
+					$.ajax({
+						url : "/porget/chatList",
+						data : {toUname:toUname, uname:uname, base:i++},
+						success : function(data) {
+							$(data).prependTo($('.messages ul'));
+						}
+					});
+				}
+			});
+		 
 		  $.ajax({
 				url : "/porget/chatListAll",
 				data : {uname:uname},
 				success : function(data) {
 					$(data).appendTo($('.contacts ul'));
+					var objDiv = document.getElementById("messages");
+					objDiv.scrollTop = objDiv.scrollHeight;
 				}
 				
 			}); 
+		  
 });
 </script>
 
@@ -831,11 +853,7 @@ connect();
 		    };
 		    sock.onmessage = function(evt) {
 	    	   var data = evt.data;
-	    	   console.log(data)
 	  		   var obj = JSON.parse(data)  	   
-	    	   console.log(obj)
-	    	   console.log('obj.senderUname>>'+obj.senderUname)
-	    	   
 	    	   appendMessage(obj.chatContext, obj.senderUname);
 		    };
 		    sock.onclose = function() {
@@ -929,6 +947,9 @@ $("#status-options ul li").click(function() {
 		 $('<li class="replies"><img src="/porget/files/profile/${uphoto}" alt="" /><p>' + msg + '</p><div>'+t+'&nbsp;&nbsp;</div></li>').appendTo($('.messages ul'));
 		 $('.message-input input').val(null);
 		 
+		 var objDiv = document.getElementById("messages");
+			objDiv.scrollTop = objDiv.scrollHeight;
+		 
 		/*  var chatAreaHeight = $("#replies").height();
 		  var maxScroll = $("#messages").height() - chatAreaHeight;
 		  $("#replies").scrollTop(maxScroll);  */
@@ -946,10 +967,7 @@ $("#status-options ul li").click(function() {
 		 $('<li class="sent"><img src="/porget/files/profile/${toUphoto}" alt="" /><p>' + msg + '</p>&nbsp;'+t+'</li>').appendTo($('.messages ul'));
 		 $('.message-input input').val(null);
 		 
-/* 	var chatAreaHeight = $("#sent").height();
-		  var maxScroll = $("#messages").height() - chatAreaHeight;
-		  $("#sent").scrollTop(maxScroll);  */
-		  
+		 
 		 $.ajax({
 				url : "/porget/chatListAll",
 				data : {uname:uname},
@@ -959,6 +977,8 @@ $("#status-options ul li").click(function() {
 				}
 				
 			}); 
+		 var objDiv = document.getElementById("messages");
+			objDiv.scrollTop = objDiv.scrollHeight;
 		 }
 	
 		 }
@@ -976,12 +996,42 @@ $("#status-options ul li").click(function() {
 	$(".messages").animate({ scrollTop: $(document).height() }, "fast");
 };
  */
+ 
+
 
 
 $(document).ready(function() {
-	
-	  $('#contacts ul li').click(function(){
-		  $('.contact').attr('class','contact active');
+	  $('.contacts ul').on('click','li',function(){
+		  var toUname = $(this).find("p.name").html();
+		  var uname = '<%=session.getAttribute("uname")%>';
+		  console.log('투네임>'+toUname);
+		  var i = 2;
+			 $.ajax({
+				url : "/porget/chatList",
+				data : {toUname:toUname, uname:uname, base:1},
+				success : function(data) {
+					$('.messages ul').empty();
+					$(data).appendTo($('.messages ul'));
+					
+					var objDiv = document.getElementById("messages");
+					objDiv.scrollTop = objDiv.scrollHeight;
+				}
+				
+			}); 
+			 
+			 $('.messages').scroll(function() {
+				 var maxHeight = $('.messages').height();
+				    var currentScroll = $('.messages').scrollTop();
+				    if (currentScroll==0) {
+						$.ajax({
+							url : "/porget/chatList",
+							data : {toUname:toUname, uname:uname, base:i++},
+							success : function(data) {
+								$(data).prependTo($('.messages ul'));
+							}
+						});
+					}
+				});
 	    });
 	
 	
