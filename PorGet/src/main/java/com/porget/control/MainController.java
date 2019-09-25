@@ -345,6 +345,7 @@ public class MainController {
 	public @ResponseBody String notiChecked(String uname, HttpServletRequest request) {
 		userdao.checked(uname);
 		request.getSession().setAttribute("unread", 0);
+
 		return "success";
 		
 	}
