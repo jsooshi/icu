@@ -89,7 +89,9 @@
 									value="${board.reportDate}" /></td>
 							<td><fmt:formatDate pattern="yyyy-MM-dd"
 									value="${board.reportResultDate}" /></td>
-							<td><c:out value="${board.reportResult}" /></td>							
+									
+							<td class="nr"><p id="reportResult"><c:out value="${board.reportResult}"/></p></td>	
+													
 						</tr>
 					</c:forEach>
 					</tbody>
@@ -196,8 +198,9 @@
 							<button type="button" class="btn btn-default"
 								data-dismiss="modal">닫기</button>
 							<button type="button" class="btn btn-primary" id="postConfirm" data-no="0">게시글 확인</button>	<!-- 버튼에 data-no 속성을 줌 -->			
-							<button type="button" class="btn btn-primary">Save
+							<button type="button" class="btn btn-primary" id="resultChange" class="tablefind">Save
 								changes</button>
+							
 						</div>
 					</div>
 					<!-- /.modal-content -->
@@ -225,6 +228,35 @@ var defendant="";
 	$(document)
 			.ready(
 					function() {
+						$('#resultChanges').click(function(){
+							 /* $("table tr td").click(function(){
+								 var txt = $(this).text();
+								 alert(txt);
+							 }); */
+
+							/* if($('#reportResult').html() == '처리중') {
+								$('#reportResult').html('처리완료');
+							}else{
+								$('#reportResult').html('처리중');
+							}  */
+							/* $(".tablefind").click(function(){
+							    var $item = $(this).closest("tr")   // Finds the closest row <tr> 
+							                       .find(".nr")     // Gets a descendent with class="nr"
+							                       .$('#reportResult').html("처리완료");         // Retrieves the text within <td>
+							    
+							}); */
+							/* var $row = $(this).closest("tr"),        
+						    $tds = $row.find("td:nth-child(2)"); 
+
+							$.each($tds, function() {         
+								alert("dasd");
+						    console.log($(this).text("asd"));         
+							}); */
+							$( 'tr td:nth-child(5)' ).click(function(){
+								
+							});
+						});
+						
 						$('#postConfirm').click(function(){		
 							//alert($(this).attr("data-no"));
 							var pfnum = $(this).attr('data-no');
@@ -232,7 +264,7 @@ var defendant="";
 						});
 						
 						$(".reportTable tbody tr").on("click",function(){
-							alert("ㅇㅇㅇㅇㅇ"+$(this).find("td").eq(0).html()+"]");
+							/* alert("ㅇㅇㅇㅇㅇ"+$(this).find("td").eq(0).html()+"]"); */
 							var reportNum = parseInt($(this).find("td").eq(0).html());
 							$("#myModalLabel").html(reportNum+"번 신고입니다");
 							$('#postConfirm').attr("data-no", $(this).attr("data-pfnum")); //버튼 클릭시 
