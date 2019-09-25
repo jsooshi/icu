@@ -54,13 +54,24 @@ ALTER TABLE report
 /
 
 ALTER TABLE report
+	drop constraint FK_report_reporter_userList_un
+ALTER TABLE REPORT
+	drop constraint FK_REPORT_REPORTER_USERLIST_U
+	
+SELECT * FROM    ALL_CONSTRAINTS
+WHERE    TABLE_NAME = 'REPORT'
+
+ALTER TABLE report
     ADD CONSTRAINT FK_report_defendant_userList_u FOREIGN KEY (defendant)
         REFERENCES userList (uname)
 /
 
 select * from report
+select reportNum, reportType, reportDate, reportResultDate, reportResult, pfnum
+		from report, portfolio
+		where portfolio.uname = report.defendant
 
 update report set defendant='ekdrms'
 
 insert into report (reportNum, reportContext, reportPath, reportType, reportDate, reportResultDate, reporter, defendant, reportResult)
-values(report_seq.nextval,'욕했어요 시바','P1','폭언,욕설',sysdate,null,'jsooshi','ekdrms','처리중')
+values(report_seq.nextval,'욕했습니다 저 사람이','chat','폭언,욕설',sysdate,null,'jsooshi','ekdrms','처리중')

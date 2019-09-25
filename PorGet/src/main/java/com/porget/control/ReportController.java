@@ -69,7 +69,10 @@ public class ReportController {
 		return vo;
 	}
 	
-	
-
+	@RequestMapping("/removeUser")
+	public @ResponseBody String removeUser(String uname) {
+		if(service.removeUser(uname)) return uname+"님이 삭제되었습니다.";
+		else return "삭제에 실패했습니다.";
+	}
 
 }

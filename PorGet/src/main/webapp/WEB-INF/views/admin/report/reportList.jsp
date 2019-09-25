@@ -185,7 +185,6 @@
 			<!-- Modal  추가 -->
 			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 				aria-labelledby="myModalLabel" aria-hidden="true">
-				<div id="dddd"></div>
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">

@@ -154,7 +154,7 @@ public class PortfolioController {
 		request.setAttribute("thumb",((String)list.get(0).get("PFTHUMB")).split("\\|"));
 		return "portfolio/portfolioView";
 	}
-
+	
 	@GetMapping("/update")
 	public String portfolioUpdateView(int pfnum, Model m) {// 게시글 수정뷰
 		

@@ -1,11 +1,11 @@
 package com.porget.service;
 
 import java.util.List;
-
-
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.porget.domain.ChatVO;
 import com.porget.domain.Criteria;
 
 import com.porget.domain.ReportVO;
@@ -22,5 +22,9 @@ public interface ReportService {
 	
 	public int reportTotal(Criteria cri);
 	
+	public List<ChatVO> selectChatContext(String reporter,String defendant);
+	
 	public boolean removePortpolio(int pfnum);
+	
+	public boolean removeUser(String uname);
 }

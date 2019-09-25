@@ -125,72 +125,78 @@
 			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
-
-		<!-- JSON Converter(컨트롤러에서 전달한 VO데이터를 JSON으로 변경하기 위해 사용) -->
+		
+		<!-- JSON Converter(컨트롤러에서 전달한 VO데이터를 JSON으로 변경하기 위해 사용) -->	  
+	  <dependency>
+	     <groupId>com.fasterxml.jackson.core</groupId>
+	     <artifactId>jackson-databind</artifactId>
+	     <version>2.9.9.2</version>
+	  </dependency>
+	  
+	  
+	  
+	  
+	  
+	  <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
 		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>2.9.9.2</version>
+		    <groupId>com.google.code.gson</groupId>
+		    <artifactId>gson</artifactId>
+		    <version>2.8.5</version>
 		</dependency>
+	  
+	  
+	  
+	  <!-- 오라클 드라이버 추가 -->
+	<dependency>
+	  <groupId>com.oracle</groupId>
+	  <artifactId>ojdbc6</artifactId>
+	  <version>12.1.0.2</version>
+    </dependency>
+    
+    <!-- 스프링 JDBC연동 -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+	  <artifactId>spring-jdbc</artifactId>
+	  <version>${org.springframework-version}</version>
+    </dependency>
+    
+    <!-- 스프링 JUnit연동 -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+	  <artifactId>spring-test</artifactId>
+	  <version>${org.springframework-version}</version>
+    </dependency>
+    
+    <!-- MyBatis라이브러리 -->
+    <dependency>
+      <groupId>org.mybatis</groupId>
+	  <artifactId>mybatis</artifactId>
+	  <version>3.4.1</version> 
+    </dependency>  <!-- mybatis.3.4.1.jar -->
+    
+    
+    <!-- 스프링 MyBatis연동 -->
+    <dependency>
+      <groupId>org.mybatis</groupId>
+	  <artifactId>mybatis-spring</artifactId>
+	  <version>1.3.0</version>
+    </dependency>
+ 
 
-		<!-- 오라클 드라이버 추가 -->
-		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>ojdbc6</artifactId>
-			<version>12.1.0.2</version>
-		</dependency>
-
-		<!-- 스프링 JDBC연동 -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jdbc</artifactId>
-			<version>${org.springframework-version}</version>
-		</dependency>
-
-		<!-- 스프링 JUnit연동 -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<version>${org.springframework-version}</version>
-		</dependency>
-
-		<!-- MyBatis라이브러리 -->
-		<dependency>
-			<groupId>org.mybatis</groupId>
-			<artifactId>mybatis</artifactId>
-			<version>3.4.1</version>
-		</dependency>  <!-- mybatis.3.4.1.jar -->
-
-
-		<!-- 스프링 MyBatis연동 -->
-		<dependency>
-			<groupId>org.mybatis</groupId>
-			<artifactId>mybatis-spring</artifactId>
-			<version>1.3.0</version>
-		</dependency>
-
-		<!-- 스프링 Transaction처리 -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-tx</artifactId>
-			<version>${org.springframework-version}</version>
-		</dependency>
-
-
-		<!--webSocket -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-websocket</artifactId>
-			<version>5.1.9.RELEASE</version>
-		</dependency>
-
-		<!-- -->
-
-		<dependency>
-			<groupId>javax.websocket</groupId>
-			<artifactId>javax.websocket-api</artifactId>
-			<version>1.1</version>
-		</dependency>
+	<!--webSocket -->
+    <dependency>
+    	<groupId>org.springframework</groupId>
+    	<artifactId>spring-websocket</artifactId>
+    	<version>5.1.9.RELEASE</version>
+    </dependency>
+    
+    <!-- -->
+    
+    <dependency>
+    	<groupId>javax.websocket</groupId>
+    	<artifactId>javax.websocket-api</artifactId>
+    	<version>1.1</version>
+    </dependency>
 	</dependencies>
 	<build>
 		<plugins>

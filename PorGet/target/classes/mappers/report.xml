@@ -16,9 +16,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="selectReportPage" resultType="ReportVO">
 		select /*+  INDEX_DESC(report report_pk)*/
-		reportNum, reportType, reportDate, reportResultDate, reportResult, pfnum
-		from report, portfolio
-		where portfolio.uname = report.defendant
+		reportNum, reportType, reportDate, reportResultDate, reportResult
+		from report
 	</select>
 
 	<select id="selectReport" resultType="ReportVO">
@@ -43,13 +42,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="insert">
 		insert into report(reportNum,reportContext,reportPath,reportType,reportDate,reporter,defendant,reportResult) 
-		values ( #{reportNum}, #{reportContext}, #{reportPath}, #{reportType}, sysdate, #{reporter},'dldldl','처리중' )
+		values ( #{reportNum}, #{reportContext}, #{reportPath}, #{reportType}, sysdate, #{reporter},#{defendant},'처리중' )
 	</insert>
+	
+	<select id="selectChatContext" resultType="ChatVO">
+		select senderUname, toUname,chatContext,mCheck,sendDate from chat
+		where senderUname in (#{reporter},#{defendant}) and toUname in (#{defendant},#{reporter})
+	</select>
 	
 	<delete id="deletePf">
 		delete from portfolio
 		where pfnum=#{pfnum}
 	</delete>
 	
+	<delete id="deleteUser">
+		delete from userList
+		where uname=#{uname}
+	</delete>
 	
 </mapper>

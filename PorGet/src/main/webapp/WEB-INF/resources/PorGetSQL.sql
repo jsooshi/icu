@@ -155,3 +155,35 @@ INSERT INTO portfolio VALUES ('jihwan',portfolio_SEQ.nextval, '공략법',sysdat
 INSERT INTO portfolio VALUES ('bonjin',portfolio_SEQ.nextval, '이정도다',sysdate,'문의.png|',2,'https://www.youtube.com/watch?v=fwjyFSbFkT0',null,'웹개발자','#JAVA#JAVASCRIPT');
 INSERT INTO portfolio VALUES ('rhrnak',portfolio_SEQ.nextval, '자소서가아니다',sysdate,'자소서가아니다.png|',2,'https://www.youtube.com/watch?v=50uiNkGLfHI',null,'웹개발자','#JAVA#JAVASCRIPT');
 INSERT INTO portfolio VALUES ('ekdrms',portfolio_SEQ.nextval, '당근의 포트폴리오입니다',sysdate,'20171124171320_SEU.jpg|',2,'https://www.youtube.com/watch?v=YnLtR9HT52U',null,'웹개발자','#당근');
+
+
+drop table chat;
+CREATE TABLE chat
+(
+    senderUname    VARCHAR2(30)    NOT NULL, 
+    toUname        VARCHAR2(30)    NOT NULL, 
+    chatContext    VARCHAR2(1000)    NOT NULL, 
+    mCheck         NUMBER          NOT NULL, 
+    sendDate       DATE            NOT NULL
+)
+;
+COMMENT ON TABLE chat IS '채팅'
+;
+COMMENT ON COLUMN chat.senderUname IS '보내는 사람'
+;
+COMMENT ON COLUMN chat.toUname IS '받는 사람'
+;
+COMMENT ON COLUMN chat.chatContext IS '내용'
+;
+COMMENT ON COLUMN chat.mCheck IS '수신여부'
+;
+COMMENT ON COLUMN chat.sendDate IS '보낸 시간'
+;
+ALTER TABLE chat
+    ADD CONSTRAINT FK_chat_senderUname_userList_u FOREIGN KEY (senderUname)
+        REFERENCES userList (uname)
+;
+ALTER TABLE chat
+    ADD CONSTRAINT FK_chat_toUname_userList_uname FOREIGN KEY (toUname)
+        REFERENCES userList (uname)
+;
