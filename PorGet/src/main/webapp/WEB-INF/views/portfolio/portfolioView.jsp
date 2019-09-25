@@ -367,8 +367,7 @@ console.log("pppppppppppp+ ${param.defendant}")
 											</div>
 										</div>
 										<div class="modal-footer">
-											<button type="submit" class="btn btn-default" id="singo">신고
-												접수</button>
+											<button type="submit" class="btn btn-default" id="singo" onclick="location.href='insert">신고 접수</button>
 											<button type="reset" class="btn btn-default">닫기</button>
 										</div>
 									</div>
@@ -411,7 +410,7 @@ console.log("pppppppppppp+ ${param.defendant}")
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-
+		
 		crossorigin="anonymous"></script> 
 		
 	

@@ -27,81 +27,14 @@ import com.porget.domain.UserVO;
 import com.porget.persistence.ReportDAO;
 import com.porget.service.ReportService;
 
-@Controller
-@RequestMapping("test")
-public class testController {
-	
-	@Inject
-	private ReportService service;
-	
-	@Inject
-	private ReportDAO dao;
-	
-	@RequestMapping(value = "input", method = RequestMethod.GET)
-	public String input() {
-		return "test/inputFile";
-	}
-	@RequestMapping(value = "input", method = RequestMethod.POST)
-	public String input2(MultipartFile[] uploadFile, HttpServletRequest request) {
-		System.out.println("하이");
-//		MultipartRequest mr;
-		System.out.println("update ajax post.....");
-		String uploadFolder = request.getSession().getServletContext().getRealPath("/resources/files");
-		System.out.println(uploadFolder);
-		System.out.println(request.getSession().getServletContext().getContextPath());
-		System.out.println(request.getServletContext().getRealPath("/"));
-		System.out.println(request.getServletContext().getRealPath("/").substring(1,request.getServletContext().getRealPath("/").indexOf(".metadata"))+"Test/WebContent");
-		for(MultipartFile multipartFile : uploadFile) {
-			System.out.println("------------");
-			System.out.println("upload file name : " + multipartFile.getOriginalFilename());
-			System.out.println("upload file size : " + multipartFile.getSize());
-			
-			String uploadFileName = multipartFile.getOriginalFilename();
-			
-			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\")+1);
-			
-			UUID uuid=UUID.randomUUID();
-			uploadFileName=uuid.toString()+"_"+uploadFileName;
-			
-			System.out.println("only file name : "+ uploadFileName);
-			File saveFile = new File(uploadFolder,uploadFileName);
-			try {
-				multipartFile.transferTo(saveFile);
-				System.out.println("성공");
-			} catch (IllegalStateException | IOException e) {
-				System.out.println("icy...");
-				e.printStackTrace();
-			}
-		}
-		
-		return "redirect:/test/input";
-	}
-	
-	@RequestMapping(value="reportList")
-	public String reportList(Model model,Criteria cri) {
-		model.addAttribute("list", service.selectReportPage(cri));
-		model.addAttribute("pageMaker",new PageDTO(cri, service.reportTotal(cri)));
-		model.addAttribute("pfnum", 8);
-	
-		return "admin/report/reportList";
-	}
-	
-	@RequestMapping("/selectReport")
-	public @ResponseBody ReportVO selectReport(int reportNum) {
-		System.out.println(reportNum);
-		ReportVO vo = service.selectReport(reportNum);
-		System.out.println(vo.getReportContext());
-		System.out.println(vo);
-		return vo;
-	}
-	
-	@RequestMapping("/remove")
-	public String portfolioDelete(int pfnum, RedirectAttributes attr) {// 게시글 삭제후 게시판으로 이동
 
-		if(service.removePortpolio(pfnum)) {
-			attr.addFlashAttribute("result","success");
-		}
-		return "redirect:/portfolio";
-	}
+public class testController {
+
+	
+	
+	
+	
+	
+
 
 }

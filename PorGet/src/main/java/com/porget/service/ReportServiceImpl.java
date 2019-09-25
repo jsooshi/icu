@@ -13,6 +13,9 @@ import com.porget.persistence.ReportDAO;
 
 @Service
 public class ReportServiceImpl implements ReportService{
+	
+	@Inject
+	private ReportService service;
 
 	@Inject
 	private ReportDAO dao;
