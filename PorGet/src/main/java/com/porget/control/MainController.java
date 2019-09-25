@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.porget.domain.UserVO;
 import com.porget.persistence.PortfolioDAO;
 import com.porget.persistence.UserDAO;
+import com.porget.security.domain.CustomUser;
 
 import lombok.extern.log4j.Log4j;
 
@@ -43,6 +46,7 @@ public class MainController {
 
 	@GetMapping(value= {"/",""})
 	public String index() {
+		
 		return "main/index";
 	}
 	
@@ -126,26 +130,24 @@ public class MainController {
 		return "common/login";
 	}
 	
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String loginSuccess(String uemail,String error, String logout, Model model){//로그인시 세션 저장
-		
-		log.info(uemail);
-		
-		log.info("login------");
-		log.info("error:"+error);
-		log.info("logout:"+logout);
-		
-		if(error!=null) {
-			model.addAttribute("error","Login Error");
-		}
-		
-		if(logout != null) {
-			model.addAttribute("logout", "logout");
-		}
-		
-		
-		return "redirect:/";
-		
+//	@RequestMapping(value = "/login", method = RequestMethod.POST)
+//	public String loginSuccess(String uemail,String error, String logout, Model model,Authentication authentication,HttpSession session){//로그인시 세션 저장
+//		
+//		log.info(uemail);
+//		
+//		log.info("login------");
+//		log.info("error:"+error);
+//		log.info("logout:"+logout);
+//		
+//		if(error!=null) {
+//			model.addAttribute("error","Login Error");
+//		}
+//		
+//		if(logout != null) {
+//			model.addAttribute("logout", "logout");
+//		}
+//		return "redirect:/";
+//		
 //		Map<String,String> map = (Map<String, String>) userdao.login(vo);
 //		if(map != null) {
 //			session.setAttribute("uname",map.get("UNAME"));
@@ -158,7 +160,7 @@ public class MainController {
 //			attrs.addFlashAttribute("msg", "이메일과 비밀번호를 확인해주세요");
 //			return "redirect:/";
 //		}
-	}
+//	}
 	
 	@RequestMapping(value = "/recruiterLogin", method = RequestMethod.GET)//로그인창 보여주기
 	public String recruiter() {

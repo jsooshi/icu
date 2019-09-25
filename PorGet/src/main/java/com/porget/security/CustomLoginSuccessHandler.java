@@ -7,9 +7,13 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+
+import com.porget.security.domain.CustomUser;
 
 import lombok.extern.log4j.Log4j;
 
@@ -33,6 +37,15 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{
 			response.sendRedirect("/porget/admin");
 			return;
 		}
+		
+		HttpSession session = request.getSession(true);
+		CustomUser user = (CustomUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		log.info(user.getUser().getUname());
+		log.info(user.getUser().getUphoto());
+		
+		session.setAttribute("uname",user.getUser().getUname());
+		session.setAttribute("uphoto",user.getUser().getUphoto());
 		
 		response.sendRedirect("/porget");
 	}
