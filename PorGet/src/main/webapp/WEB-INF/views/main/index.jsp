@@ -10,7 +10,10 @@
 	<div id="bannerimage"></div>
 
 <!-- Banner -->
-    <div class="jumbotron">
+    <div class="jumbotron" >
+    	<div name='pfname'>asdfasdf</div>
+    	<div name='joa'>asdf</div>
+    	<div class='uname'>asdfasdf</div>
     </div>	
 
 <!-- Popular Content -->
@@ -52,6 +55,18 @@
 				$('#recent').html(result);
 			}
 		});
+		
+		$.ajax({
+			url:"/porget/banner/selectBanner",
+			success:function(banner){
+				console.log("ㅇㅇㅇㅇ ㅁㄴㅇㄹ>> "+banner.PFTHUMB)
+				var pfThumb = 'url("/porget/files/'+banner.PFTHUMB+"\")"
+				$('.jumbotron').css("background-image",pfThumb)
+				$('.jumbotron').children('div[name=pfname]').html(banner.PFNAME)
+				$('.jumbotron').children('div[name=joa]').html(banner.JOA)
+				$('.jumbotron').children('.uname').html(banner.UNAME)
+			}
+		})
 	});
 
 </script>
