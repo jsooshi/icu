@@ -1005,29 +1005,32 @@ $(document).ready(function() {
 		  var toUname = $(this).find("p.name").html();
 		  var uname = '<%=session.getAttribute("uname")%>';
 		  console.log('투네임>'+toUname);
+		  
+
+		
 		  var i = 2;
-			 $.ajax({
-				url : "/porget/chatList",
+		   $.ajax({
+				url : "/porget/chatting",
 				data : {toUname:toUname, uname:uname, base:1},
 				success : function(data) {
-					$('.messages ul').empty();
-					$(data).appendTo($('.messages ul'));
+					/* $('#frame').html(data); */
 					
-					var objDiv = document.getElementById("messages");
-					objDiv.scrollTop = objDiv.scrollHeight;
+					location.href='/porget/chatting?toUname='+toUname;
 				}
-				
 			}); 
+				
+				
 			 
 			 $('.messages').scroll(function() {
 				 var maxHeight = $('.messages').height();
 				    var currentScroll = $('.messages').scrollTop();
 				    if (currentScroll==0) {
 						$.ajax({
-							url : "/porget/chatList",
+							url : "/porget/chatting",
 							data : {toUname:toUname, uname:uname, base:i++},
 							success : function(data) {
-								$(data).prependTo($('.messages ul'));
+							/* 	$(data).prependTo($('.messages ul')); */
+								console.log('이동성공');
 							}
 						});
 					}
