@@ -41,6 +41,23 @@ ALTER TABLE chat
 select senderUname, toUname,chatContext,mCheck,sendDate from chat
 where (senderUname='jsooshi' and toUname='afterup') or (senderUname='afterup' and toUname='jsooshi')
 
+select c.chatuser, CASE when d.sendDate > c.sendDate then d.sendDate else c.sendDate end as sendDate  from (select toUname chatuser, sendDate, chatContext from CHAT
+where sendDate in (select max(sendDate) from CHAT where senderUname='jsooshi' group by toUname)) c join
+(select senderUname chatuser, sendDate, chatContext from CHAT
+where sendDate in (select max(sendDate) from CHAT where toUname='jsooshi' group by toUname)) d
+//////////////////////////////
+select c.chatuser, d.chatuser, CASE when d.sendDate > c.sendDate then d.chatContext else c.chatContext end as sendContent  from
+(select toUname chatuser, sendDate, chatContext from CHAT 
+where sendDate in (select max(sendDate) from CHAT where senderUname='jsooshi' group by toUname)) c full outer join
+(select senderUname chatuser, sendDate, chatContext from CHAT
+where sendDate in (select max(sendDate) from CHAT where toUname='jsooshi' group by senderUname)) d on c.chatuser=d.chatuser 
+/////////////////////
+select toUname chatuser, sendDate, chatContext from CHAT
+where sendDate in (select max(sendDate) from CHAT where senderUname='jsooshi' group by toUname);
+select senderUname chatuser, sendDate, chatContext from CHAT
+where sendDate in (select max(sendDate) from CHAT where toUname='jsooshi' group by toUname);
+
+
 select senderUname, toUname,chatContext,mCheck,sendDate from chat
 where senderUname in ('jsooshi','afterup') and toUname in ('jsooshi','afterup')
 
@@ -51,4 +68,6 @@ insert into chat (senderUname, toUname,chatContext,mCheck,sendDate)
 values ('jsooshi','afterup','안녕하세요afterup',0,sysdate);
 
 insert into chat (senderUname, toUname,chatContext,mCheck,sendDate)
-values ('jsooshi','gggggg','안녕하세요gg',0,sysdate);
+values ('jsooshi','gggggg11','안녕하세요gg',0,sysdate);
+insert into chat (senderUname, toUname,chatContext,mCheck,sendDate)
+values ('gggggg','jsooshi','안녕하세요11',0,sysdate);

@@ -24,4 +24,6 @@ public interface ReportDAO {
 
 	public int delete(int pfnum);
 	
+	public int deleteUser(String uname);
+	
 }

@@ -63,4 +63,9 @@ public class ReportDAOImpl implements ReportDAO{
 	public int delete(int pfnum) {
 		return sqlSession.delete("report.deletePf",pfnum);
 	}
+	
+	@Override
+	public int deleteUser(String uname) {
+		return sqlSession.delete("report.deleteUser",uname);
+	}
 }

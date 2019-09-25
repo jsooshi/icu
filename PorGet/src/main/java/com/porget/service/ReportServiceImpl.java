@@ -72,4 +72,9 @@ public class ReportServiceImpl implements ReportService{
 		return false;
 	}
 
+	@Override
+	public boolean removeUser(String uname) {
+		if(dao.deleteUser(uname)==1) return true;
+		return false;
+	}
 }

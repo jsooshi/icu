@@ -54,6 +54,14 @@ ALTER TABLE report
 /
 
 ALTER TABLE report
+	drop constraint FK_report_reporter_userList_un
+ALTER TABLE REPORT
+	drop constraint FK_REPORT_REPORTER_USERLIST_U
+	
+SELECT * FROM    ALL_CONSTRAINTS
+WHERE    TABLE_NAME = 'REPORT'
+
+ALTER TABLE report
     ADD CONSTRAINT FK_report_defendant_userList_u FOREIGN KEY (defendant)
         REFERENCES userList (uname)
 /

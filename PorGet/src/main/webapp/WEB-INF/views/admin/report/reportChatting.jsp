@@ -293,8 +293,8 @@
 		$.ajax({
 			url:"/porget/test/selectChatContext",
 			data:{
-				reporter:'jsooshi',
-				defendant:'afterup'
+				reporter:'afterup',
+				defendant:'jsooshi'
 			},
 			success:function(list){
 				chatList=list;

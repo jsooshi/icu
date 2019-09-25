@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.porget.domain.ReportVO;
@@ -36,6 +37,11 @@ public class ReportController {
 		
 		return "redirect:/admin/report";
 	}
-
+	
+	@RequestMapping("/removeUser")
+	public @ResponseBody String removeUser(String uname) {
+		if(service.removeUser(uname)) return uname+"님이 삭제되었습니다.";
+		else return "삭제에 실패했습니다.";
+	}
 
 }

@@ -55,4 +55,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where pfnum=#{pfnum}
 	</delete>
 	
+	<delete id="deleteUser">
+		delete from userList
+		where uname=#{uname}
+	</delete>
+	
 </mapper>

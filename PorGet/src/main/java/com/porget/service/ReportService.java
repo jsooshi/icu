@@ -25,4 +25,6 @@ public interface ReportService {
 	public List<ChatVO> selectChatContext(String reporter,String defendant);
 	
 	public boolean removePortpolio(int pfnum);
+	
+	public boolean removeUser(String uname);
 }
