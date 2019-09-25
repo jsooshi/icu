@@ -35,8 +35,4 @@ public class AdminServiceImpl implements AdminService{
 		return dao.delete(uname);
 	}
 	
-	@Override
-	public List<PortfolioVO> selectPortfolio() {
-		return dao.selectPortfolio();
-	}
 }

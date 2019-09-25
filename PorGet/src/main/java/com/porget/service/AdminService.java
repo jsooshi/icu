@@ -14,7 +14,6 @@ public interface AdminService {
 
 	public int delete(String uname);
 
-	public List<PortfolioVO> selectPortfolio();
 
 
 }

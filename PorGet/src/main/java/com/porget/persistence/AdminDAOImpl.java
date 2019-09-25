@@ -32,10 +32,5 @@ public class AdminDAOImpl implements AdminDAO {
 	public int delete(String uname) {
 		return sqlSession.delete("admin.delete", uname);
 	}
-	
-	@Override
-	public List<PortfolioVO> selectPortfolio() {
-		return sqlSession.selectList("admin.selectPortfolio");
-	}
 
 }

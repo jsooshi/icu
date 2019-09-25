@@ -63,18 +63,4 @@ public class AdminController {
 				: new ResponseEntity<>("fail",HttpStatus.INTERNAL_SERVER_ERROR);
 	}	
 	
-	
-	/*게시글관리*/
-	@GetMapping("/board")
-	public String selectBoard(Model m) {
-		
-		List<PortfolioVO> vo = service.selectPortfolio();
-		m.addAttribute("list",vo);
-		
-//		m.addAttribute("list",service.selectAll(cri));
-//		m.addAttribute("pageMaker",new PageDTO(cri,service.getTotal(cri)));
-		
-		return "admin/adminBoard";
-	}
-	
 }

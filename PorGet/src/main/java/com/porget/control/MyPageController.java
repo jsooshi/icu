@@ -52,16 +52,6 @@ public class MyPageController {
 		return "member/myPage";
 	}
 	
-	@PostMapping("/mypage/changeuname")
-	public String changeUname(String uname) { //추후 변경
-		System.out.println(uname);
-		if(dao.changeUname(uname)==1) {
-			return "수정되었습니다.";
-		}else {
-			return "오류가 발생하였습니다.";
-		}
-	}
-	
 	@RequestMapping("/mypage/changeuphoto")
 	public @ResponseBody String changeUphoto(HttpServletRequest request,MultipartFile photo) {
 		String removeName = (String) request.getSession().getAttribute("uphoto");

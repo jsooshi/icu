@@ -46,9 +46,5 @@
 		delete from userList where uname=#{uname}
 	</delete>
 
-	<select id="selectPortfolio" resultType="PortfolioVO">
-		select pfnum, uname, pfname, pfdate, tagname from portfolio
-	</select>
-	
 
 </mapper>

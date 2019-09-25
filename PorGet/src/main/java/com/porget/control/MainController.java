@@ -167,16 +167,6 @@ public class MainController {
 		return "main/recruiterLogin";
 	}
 	
-	/*
-	 * @RequestMapping(value = "/recruiterLogin", method = RequestMethod.POST)//로그인창
-	 * 보여주기 public String recruiterLoginSuccess(UserVO vo, HttpSession session,
-	 * RedirectAttributes attrs) { String uname = recruiterdao.loginRecruiter(vo);
-	 * System.out.println("로그인>"+vo); if(uname != null) {
-	 * session.setAttribute("uname", uname); System.out.println("리크루터 로그인 성공");
-	 * return "redirect:/"; }else { System.out.println("리쿠르터 로그인 실패");
-	 * attrs.addFlashAttribute("msg", "이메일과 비밀번호를 확인해주세요"); return
-	 * "redirect:/login"; } }
-	 */
 
 	@RequestMapping(value="/logout")
 	public String logout(HttpSession session) {
@@ -209,22 +199,6 @@ public class MainController {
 		
 		return msg;
 	}
-	
-	/*
-	 * @RequestMapping("checkCname") public @ResponseBody String checkCname(String
-	 * companyName) { System.out.println("checkcname>>"+companyName); String msg;
-	 * if(recruiterdao.cidCheck(companyName)==0) {
-	 * msg="<font color=blue>사용가능한 회사명입니다</font>"; }else {
-	 * msg="<font color=red>사용불가능한 회사명입니다</font>"; } return msg; }
-	 */
-	
-	/*
-	 * @RequestMapping("checkCemail") public @ResponseBody String checkCemail(String
-	 * companyEmail) { System.out.println("checkcname>>"+companyEmail); String msg;
-	 * if(recruiterdao.cemailCheck(companyEmail)==0) {
-	 * msg="<font color=blue>사용가능한 이메일입니다</font>"; }else {
-	 * msg="<font color=red>사용불가능한 이메일입니다</font>"; } return msg; }
-	 */
 	
 	@RequestMapping("findPass")
 	public String findPass() {

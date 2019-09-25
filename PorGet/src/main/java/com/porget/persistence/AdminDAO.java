@@ -14,7 +14,5 @@ public interface AdminDAO {
 	
 	public int delete(String uname);
 
-	public List<PortfolioVO> selectPortfolio();
-	
 
 }
