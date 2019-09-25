@@ -6,11 +6,11 @@
 
 
 
-	<select id="selectAll" resultType="UserVO">
+	<select id="selectAll" resultType="Map">
    	<![CDATA[
-   		select uemail, uname, ucheck from (
+   		select u.uemail, u.uname, u.udate , a.auth from (
    			select /*+INDEX_DESC(userlist pk_user) */
-   					rownum rn, uemail, uname, ucheck from userlist 
+   					rownum rn, uemail, uname, udate from userlist 
    			where
    	]]>
 		<if test="type == 'N'.toString()">
@@ -19,11 +19,10 @@
 		<if test="type == 'E'.toString()">
 			uemail like '%'||#{keyword}||'%' and
 		</if>
-		<if test="type == 'C'.toString()">
-			ucheck like '%'||#{keyword}||'%' and
-		</if>
 	<![CDATA[
-  		 rownum <= #{pageNum} * #{amount})
+  		 rownum <= #{pageNum} * #{amount}) u 
+  		 inner join userlist_auth a
+  		 on u.uname = a.uname
  		where rn > (#{pageNum}-1) * #{amount}
 	]]>
 	</select>
@@ -35,9 +34,6 @@
 		</if>
 		<if test="type == 'E'.toString()">
 			where uemail like '%'||#{keyword}||'%'
-		</if>
-		<if test="type == 'C'.toString()">
-			where ucheck like '%'||#{keyword}||'%'
 		</if>
 
 	</select>

@@ -16,5 +16,8 @@ public interface UserDAO {
 	/* 시큐리티 */
 	public UserVO read(String uemail);
 	
+	public void insertAuth(String uname);
+	public void insertAuth2(String uname);
+	
 	
 }

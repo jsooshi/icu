@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -121,10 +122,11 @@
 					</c:if>
 				</div>
 			</div>
-<%-- 			<c:if test="${sessionScope.ucheck == 4 }"> --%>
+			<sec:authorize access="hasRole('ROLE_ADMIN')">
 				<div class="col-sm-6">
 					<button id="deleteMember"  class=" btn btn-danger">강퇴</button>
 				</div>
+			</sec:authorize>
 		</div>
 		<!--/row-->
 	</div>

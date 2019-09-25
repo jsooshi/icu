@@ -174,6 +174,9 @@
 	<div class="collapse navbar-collapse" id="navbarResponsive">
 		<ul class="navbar-nav ml-auto">
 			<li class="nav-item"><a href="/porget" class="home nav-link">Home</a></li>
+			<sec:authorize access="hasRole('ROLE_ADMIN')">
+				<li class="nav-item"><a href="/porget/admin" class="home nav-link">Admin</a></li>
+			</sec:authorize>
 			<li class="nav-item"><a href="/porget/portfolio"
 				class="portfolio nav-link">Portfolio</a></li>
 

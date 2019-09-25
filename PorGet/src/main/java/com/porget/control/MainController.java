@@ -65,26 +65,16 @@ public class MainController {
 	@RequestMapping(value = "/userjoin", method = RequestMethod.POST)//구직자 DB 회원가입 
     public String userJoin(MultipartFile file,UserVO vo,  
     				HttpServletRequest request, HttpServletResponse response) throws Exception {
-        System.out.println("구직자 회원가입vo="+vo);
-        
-        //프로필 이미지
-        String uploadPath =  request.getSession().getServletContext().getRealPath("/resources/files/profile");
-        System.out.println(uploadPath);
-        System.out.println(file.getOriginalFilename());
-        String fileName = file.getOriginalFilename();//파일이름
-        
-        //중복이름
-        UUID uuid = UUID.randomUUID();
-        String savedName = uuid.toString() + "_" + fileName;
-        File target = new File(uploadPath,savedName);
-        FileCopyUtils.copy(file.getBytes(), target);
-//        vo.setAuthority("ROLE_USER");
-        vo.setUphoto(savedName);
+        System.out.println("구직자 회원가입vo="+vo); 
+        	
+    	vo.setUphoto("defaultMan.png");
         
         //비밀번호 암호화
         vo.setUpass(this.bcryptPasswordEncoder.encode(vo.getUpass()));
         
         userdao.insert(vo);
+        userdao.insertAuth(vo.getUname());
+        
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		response.getWriter().print("<script>alert('회원가입을 축하드립니다.');</script>");
@@ -102,21 +92,15 @@ public class MainController {
 	public String insertRecruit(MultipartFile file, UserVO vo,HttpServletRequest request, HttpServletResponse response) throws Exception {
 		System.out.println("리크루터 회원가입vo="+vo);
 		
-		//프로필 이미지
-        String uploadPath =  request.getSession().getServletContext().getRealPath("/resources/files/profile");
-        System.out.println(uploadPath);
-        System.out.println(file.getOriginalFilename());
-        String fileName = file.getOriginalFilename();//파일이름
+		vo.setUphoto("defaultMan.png");
+		
+        //비밀번호 암호화
+        vo.setUpass(this.bcryptPasswordEncoder.encode(vo.getUpass()));
         
-        //중복이름
-        UUID uuid = UUID.randomUUID();
-        String savedName = uuid.toString() + "_" + fileName;
-        File target = new File(uploadPath,savedName);
-        FileCopyUtils.copy(file.getBytes(), target);
-//        vo.setAuthority("ROLE_RECRU");
-        vo.setUphoto(savedName);
         userdao.insert(vo);
-		response.setContentType("text/html; charset=UTF-8");
+        userdao.insertAuth2(vo.getUname());
+		
+        response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		response.getWriter().print("<script>alert('회원가입을 축하드립니다.');</script>");
 		out.flush();

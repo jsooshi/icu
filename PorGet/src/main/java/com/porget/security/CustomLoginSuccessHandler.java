@@ -33,11 +33,6 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{
 		});
 		log.warn("ROLE_NAME:"+roleNames); 
 		
-		if(roleNames.contains("ROLE_ADMIN")) {
-			response.sendRedirect("/porget/admin");
-			return;
-		}
-		
 		HttpSession session = request.getSession(true);
 		CustomUser user = (CustomUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
@@ -46,7 +41,11 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{
 		
 		session.setAttribute("uname",user.getUser().getUname());
 		session.setAttribute("uphoto",user.getUser().getUphoto());
-		
+
+		if(roleNames.contains("ROLE_ADMIN")) {
+			response.sendRedirect("/porget/admin");
+			return; 
+		}
 		response.sendRedirect("/porget");
 	}
 	

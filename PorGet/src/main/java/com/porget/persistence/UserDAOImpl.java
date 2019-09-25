@@ -49,4 +49,14 @@ public class UserDAOImpl implements UserDAO{
 	public UserVO read(String uemail) {
 		return sqlSession.selectOne("userList.read",uemail);
 	}
+	
+	@Override
+	public void insertAuth(String uname) {
+		sqlSession.insert("userList.insertAuth",uname);
+	}
+	
+	@Override
+	public void insertAuth2(String uname) {
+		sqlSession.insert("userList.insertAuth2",uname);
+	}
 }

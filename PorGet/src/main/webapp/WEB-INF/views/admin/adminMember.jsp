@@ -24,8 +24,8 @@
 				<tr>
 					<th>닉네임</th>
 					<th>이메일</th>
-					<th>회원등급</th>
 					<th>가입일</th>
+					<th>회원등급</th>
 					<th>신고누적수</th>
 					<th>정보</th>
 				</tr>
@@ -33,12 +33,12 @@
 			<tbody>
 				<c:forEach items="${list}" var="list">
 					<tr>
-						<td>${list.uname }</td>
-						<td>${list.uemail }</td>
-						<td>${list.ucheck }</td>
+						<td>${list.UNAME }</td>
+						<td>${list.UEMAIL }</td>
+						<td>${list.UDATE }</td>
+						<td>${list.AUTH }</td>
 						<td></td>
-						<td></td>
-						<td><a href="/porget/member/${list.uname}" class="info btn-sm btn btn-light">info</a></td>
+						<td><a href="/porget/member/${list.UNAME}" class="info btn-sm btn btn-light">info</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>

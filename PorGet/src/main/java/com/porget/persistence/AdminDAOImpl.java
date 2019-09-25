@@ -1,15 +1,13 @@
 package com.porget.persistence;
 
 import java.util.List;
+import java.util.Map;
 
-import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.porget.domain.Criteria;
-import com.porget.domain.PortfolioVO;
-import com.porget.domain.UserVO;
 
 @Repository
 public class AdminDAOImpl implements AdminDAO {
@@ -19,7 +17,7 @@ public class AdminDAOImpl implements AdminDAO {
 	private SqlSession sqlSession;
 	
 	@Override
-	public List<UserVO> selectAll(Criteria cri) {
+	public List<Map<String,Object>> selectAll(Criteria cri) {
 		return sqlSession.selectList("admin.selectAll",cri);
 	}
 	

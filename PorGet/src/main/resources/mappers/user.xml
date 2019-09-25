@@ -5,8 +5,16 @@
 <mapper namespace="userList">    
 	<!-- 회원가입 -->
 	<insert id="insert">
-		insert into userList (uname, upass, uemail, uphoto, uinfo, authority, enabled) 
-						values (#{uname}, #{upass}, #{uemail},#{uphoto},null,#{authority},1)
+		insert into userList (uname, upass, uemail, uphoto, uinfo, enabled) 
+						values (#{uname}, #{upass}, #{uemail},#{uphoto},null,1)
+	</insert>
+	
+	<insert id="insertAuth">
+		insert into userlist_auth (uname,auth) values (#{uname},'ROLE_USER')
+	</insert>
+	
+	<insert id="insertAuth2">
+		insert into userlist_auth (uname,auth) values (#{uname},'ROLE_RECRU')
 	</insert>
 	
 	<!-- 로그인 -->
