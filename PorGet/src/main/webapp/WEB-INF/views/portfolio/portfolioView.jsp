@@ -64,7 +64,6 @@ $(function(){ //jquery영역
 		data: {
 			pfnum : ${param.pfnum}
 		}
-		
 	})	 
 	
 	//게시글을 열람, 접속한 사람, 무조건 실행? 실행. 
@@ -157,11 +156,6 @@ $(function(){ //jquery영역
 	  $("#myBtn").click(function(){
 	    $("#myModal").modal();
 	  });
-<<<<<<< HEAD
-=======
-	
-
->>>>>>> f219e2995ab72ffe36b8ebd7378004e28a4f8562
 }); //ready
 
 var pfnum=${param.pfnum}
@@ -328,7 +322,6 @@ console.log("pppppppppppp+ ${param.defendant}")
 						data-toggle="modal">포트폴리오 신고</a></li>
 					<!-- Modal -->
 					<div class="container">
-<<<<<<< HEAD
 					<form role="form" method="post" action="/porget/report/insert">
 						<!-- Modal -->
 						<input type="hidden" name="reportPath" value="P${param.pfnum }">
@@ -361,40 +354,6 @@ console.log("pppppppppppp+ ${param.defendant}")
 												<option value="2">폭언, 욕설 사용</option>
 												<option value="3">저작권 침해</option>
 											</select>
-=======
-						<form role="form" method="post" action="/porget/report/insert">
-							<!-- Modal -->
-							<input type="hidden" name="reportPath" value="P${param.pfnum }">
-							<input type="hidden" name="reporter" value="${uname }">
-							<div class="modal fade" id="reportModal" role="dialog">
-								<div class="modal-dialog">
-
-									<!-- Modal content-->
-									<div class="modal-content">
-										<div class="modal-header">
-											<button type="button" class="close" data-dismiss="modal">&times;</button>
-											<h4 class="modal-title">신고하기</h4>
->>>>>>> f219e2995ab72ffe36b8ebd7378004e28a4f8562
-										</div>
-										<div class="modal-body">
-											<table>
-												<tr>
-													<td><label>게시글:</label></td>
-													<td><input type="text" class="form-control"
-														name="pfname"></td>
-												</tr>
-											</table>
-											<br>
-											<div class="input-group mb-3">
-												<div class="input-group-prepend">
-													<label class="input-group-text" for="inputGroupSelect01">사유</label>
-												</div>
-												<select class="custom-select" name="reportType">
-													<option selected>신고 유형을 선택해주세요.</option>
-													<option value="1">부적절한 홍보 게시물</option>
-													<option value="2">폭언, 욕설 사용</option>
-													<option value="3">저작권 침해</option>
-												</select>
 											</div>
 											<div class="input-group">
 												<div class="input-group-prepend">
