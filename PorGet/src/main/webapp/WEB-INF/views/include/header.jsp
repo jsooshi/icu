@@ -29,124 +29,143 @@
 			}
 			check=true;
 		}
-		
-		function sendKeyword(){
-			console.log('>>>sendKeyword')
-			if(!loopKeyword) return;
-			
-			var keyword = document.searchForm.keyword.value;
-			
-			
-			if(!keyword.includes('#')&&keyword != ''){
+
+	function sendKeyword() {
+		console.log('>>>sendKeyword')
+		if (!loopKeyword)
+			return;
+
+		var keyword = document.searchForm.keyword.value;
+
+		if (!keyword.includes('#') && keyword != '') {
+			show('suggest');
+			$.ajax({
+				url : "/porget/searchKey",
+				data : {
+					keyword : keyword
+				},
+				success : function(data) {
+					$('#suggestList').html(data);
+				}
+			});
+			check = false;
+			loopKeyword = false;
+		} else if (keyword.includes('#')) {
+			if (keyword.substr(0, keyword.length) == '#'
+					|| keyword.substr(keyword.lastIndexOf('#'), keyword.length) == '#') {
+				hide('suggest');
+				check = false;
+				loopKeyword = false;
+			} else {
+				keyword = keyword.substr(keyword.lastIndexOf('#') + 1,
+						keyword.length);
 				show('suggest');
 				$.ajax({
-					url:"/porget/searchKey",
-					data: {keyword:keyword},
-					success: function(data){
+					url : "/porget/searchTagBox",
+					data : {
+						keyword : keyword
+					},
+					success : function(data) {
 						$('#suggestList').html(data);
 					}
 				});
 				check = false;
-				loopKeyword=false;
-			}else if(keyword.includes('#')){
-					if(keyword.substr(0,keyword.length)=='#'||keyword.substr(keyword.lastIndexOf('#'),keyword.length)=='#'){
-						hide('suggest');
-						check = false;
-						loopKeyword=false;
-					}else{
-						keyword = keyword.substr(keyword.lastIndexOf('#')+1,keyword.length);
-							show('suggest');
-							$.ajax({
-								url:"/porget/searchTagBox",
-								data: {keyword:keyword},
-								success: function(data){
-									$('#suggestList').html(data);
-								}
-							});
-							check = false;
-							loopKeyword=false;
-						}
-			}else{
-				hide('suggest');
-				check = false;
-				loopKeyword=false;
+				loopKeyword = false;
 			}
-				setTimeout('sendKeyword()',200)
-		}//sendKeyword
-		
-		function show(elementId) {
-			var ele = document.getElementById(elementId); //ele:Element
-			if(ele)//id에 해당하는 엘리먼트가 존재한다면
-				ele.style.display='';
+		} else {
+			hide('suggest');
+			check = false;
+			loopKeyword = false;
 		}
-		
-		function hide(elementId) {
-			var ele = document.getElementById(elementId); //ele:Element
-			if(ele)//id에 해당하는 엘리먼트가 존재한다면
-				ele.style.display='none';
-		}
-		
-		 function select(selectedKeyword){
-			 var key =  document.searchForm.keyword.value;
-				key = key.substr(0, key.lastIndexOf('#'));
-				console.log('key는 '+key);
-		   document.searchForm.keyword.value= key + selectedKeyword;
-				check=false;
-				loopKeyword=false;
-		       hide('suggest');
-		}	
-	
-		 function select2(selectedKeyword){ //해시태그로 검색후 쌓이게
-			 var key =  document.searchForm.keyword.value;
-				key = key.substr(0, key.lastIndexOf('#')-1);
-				console.log('key는 '+key);
-		   document.searchForm.keyword.value=selectedKeyword;
-		       //제시어 기능이 일단락 되었음
-				/* check=false;
-				loopKeyword=false;*/
-		       show('suggest'); 
-		}	
-	
-	</script>  
-	<script>
+		setTimeout('sendKeyword()', 200)
+	}//sendKeyword
+
+	function show(elementId) {
+		var ele = document.getElementById(elementId); //ele:Element
+		if (ele)//id에 해당하는 엘리먼트가 존재한다면
+			ele.style.display = '';
+	}
+
+	function hide(elementId) {
+		var ele = document.getElementById(elementId); //ele:Element
+		if (ele)//id에 해당하는 엘리먼트가 존재한다면
+			ele.style.display = 'none';
+	}
+
+	function select(selectedKeyword) {
+		var key = document.searchForm.keyword.value;
+		key = key.substr(0, key.lastIndexOf('#'));
+		console.log('key는 ' + key);
+		document.searchForm.keyword.value = key + selectedKeyword;
+		check = false;
+		loopKeyword = false;
+		hide('suggest');
+	}
+
+	function select2(selectedKeyword) { //해시태그로 검색후 쌓이게
+		var key = document.searchForm.keyword.value;
+		key = key.substr(0, key.lastIndexOf('#') - 1);
+		console.log('key는 ' + key);
+		document.searchForm.keyword.value = selectedKeyword;
+		//제시어 기능이 일단락 되었음
+		/* check=false;
+		loopKeyword=false;*/
+		show('suggest');
+	}
+</script>
+<script>
 	var socket = null;
-	$(document).ready(function(){
-		connectWS();	
-	})
-	
-	function connectWS(){
+	$(document).ready(function() {
+		connectWS();
+
+		$('#dropdownUnreadLink').click(function() {
+			$.ajax({
+				url : '/porget/checked',
+				data : {
+					uname : "${uname}"
+				},
+				success : function() {
+					$("#dropdownUnreadLink").children("span").html("");
+				}
+
+			})
+
+		})
+})
+
+	function connectWS() {
 		var ws = new WebSocket("ws://192.168.0.124/porget/replyEcho?pfnum=1");
 		socket = ws
-		ws.onopen = function(){
-		console.log('Info: connection opened')
-	};
-	
-		ws.onmessage = function (event) {
-		console.log(event.data+'\n');
-		$('#socketAlert').html(event.data);
-		$('#socketAlert').css("display","block");
-		setTimeout(function(){
-			$('#socketAlert').css("display","none");
-		},7000)
-	}	
-	
-		ws.onclose = function (event) {
+		ws.onopen = function() {
+			console.log('Info: connection opened')
+		};
+
+		ws.onmessage = function(event) {
+			console.log(event.data + '\n');
+			$('#socketAlert').html(event.data);
+			$('#socketAlert').css("display", "block");
+			setTimeout(function() {
+				$('#socketAlert').css("display", "none");
+			}, 7000)
+		}
+
+		ws.onclose = function(event) {
 			console.log('Info: connecion closed')
-			setTimeout(function () {connect()},1000); //retry connection	
+			setTimeout(function() {
+				connect()
+			}, 1000); //retry connection	
+		}
+		ws.onerror = function(err) {
+			console.log('error: ', err)
+		}
+
 	}
-		ws.onerror = function (err) { console.log('error: ', err)}
-	
-	}	
-	
-	
 
-	  var str = '${msg}';
-	  if(str!=''){
-	    alert(str);
-	    location.replace('/porget');
-	  }
-	
-
+	var str = '${msg}';
+	if (str != '') {
+		alert(str);
+		location.replace('/porget');
+	}
 </script>
 </head>
 
@@ -188,6 +207,30 @@
 				<sec:authentication property="principal" var ="pinfo"/>
 				
 				<sec:authorize access="isAuthenticated()">
+					<li class="nav-item">
+							<div class="dropdown show">
+								<a class="portfolio nav-link" href="#" role="button"
+									id="dropdownUnreadLink" data-toggle="dropdown"
+									aria-haspopup="true" aria-expanded="false"> Notification <c:if
+										test="${unread > 0 }">
+										<span class="badge badge-danger">${unread }</span>
+									</c:if>
+								</a>
+								<div class="dropdown-menu dropdown-menu-right"
+									aria-labelledby="dropdownMenuLink">
+										
+									<c:forEach items="${notification }" var="i">
+										<div class="dropdown-item">
+											<font color="blue"><strong>${i.uname }</strong></font>님이 <a
+												href="/porget/portfolio/view?pfnum=${i.pfnum }">
+												${i.pfnum }번</a> 글에 댓글을 달았습니다.
+										</div>
+									</c:forEach>
+
+								</div>
+							</div>
+						</li>
+				
 					<!-- <button onclick="location.href='portfolio/post'" class="btn btn-primary">Posting!</button> -->
 					<div class="dropdown show">
 						  <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

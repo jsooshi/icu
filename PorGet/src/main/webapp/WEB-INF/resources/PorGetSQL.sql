@@ -135,6 +135,12 @@ CREATE OR REPLACE TRIGGER recommend_trg
         WHERE uname = :OLD.uname;
     END;
 /
+
+ALTER TABLE reply ADD(reply_read number);
+update reply set reply_read=1 where uname='yunajo'
+select * from reply;
+select count(*) from reply
+where reply_read=1 and pfnum in (select pfnum from portfolio where uname='yunajo')
       
 --user 추가 //  회원가입하고 글 insert 해줘야합니다( ㅠㅠ..)
 --INSERT INTO userList VALUES ('gildong','1a2s3d4f','gildong@naver.com','yellow.png',4,null);

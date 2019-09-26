@@ -12,5 +12,6 @@ public interface ReplyDAO {
 	public void replyDelete(Map<String, Integer>map);
 	public void updateHit(int pfnum);
 	
+	
 
 }

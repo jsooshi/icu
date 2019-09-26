@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.porget.domain.UserVO;
 import com.porget.persistence.PortfolioDAO;
@@ -109,33 +111,19 @@ public class MainController {
 		return "common/login";
 	}
 	
+//	@Transactional
 //	@RequestMapping(value = "/login", method = RequestMethod.POST)
-//	public String loginSuccess(String uemail,String error, String logout, Model model,Authentication authentication,HttpSession session){//로그인시 세션 저장
-//		
-//		log.info(uemail);
-//		
-//		log.info("login------");
-//		log.info("error:"+error);
-//		log.info("logout:"+logout);
-//		
-//		if(error!=null) {
-//			model.addAttribute("error","Login Error");
-//		}
-//		
-//		if(logout != null) {
-//			model.addAttribute("logout", "logout");
-//		}
-//		return "redirect:/";
-//		
+//	public String loginSuccess(UserVO vo, HttpSession session, RedirectAttributes attrs){//로그인시 세션 저장
 //		Map<String,String> map = (Map<String, String>) userdao.login(vo);
 //		if(map != null) {
+//			
 //			session.setAttribute("uname",map.get("UNAME"));
-//			System.out.println(map.get("UNAME"));
 //			session.setAttribute("uphoto",map.get("UPHOTO"));
-//			System.out.println("멤버 로그인 성공");
+//			session.setAttribute("unread",userdao.countUnread(map.get("UNAME")));
+//			session.setAttribute("notification", userdao.replyNotification(map.get("UNAME")));
 //			return "redirect:/";
 //		}else {
-//			System.out.println("멤버 로그인 실패");
+//			
 //			attrs.addFlashAttribute("msg", "이메일과 비밀번호를 확인해주세요");
 //			return "redirect:/";
 //		}
@@ -317,5 +305,14 @@ public class MainController {
 		System.out.println(list);
 		m.addAttribute("list",list);
 		return "portfolio/cardPost";
+	}
+	
+	@RequestMapping("/checked")
+	public @ResponseBody String notiChecked(String uname, HttpServletRequest request) {
+		userdao.checked(uname);
+		request.getSession().setAttribute("unread", 0);
+
+		return "success";
+		
 	}
 }

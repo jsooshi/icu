@@ -38,37 +38,8 @@
 <title>Document</title>
 <script src="/porget/js/jquery-3.js"></script>
 
+
 <script>
-	var socket = null;
-	$(document).ready(function(){
-		connectWS();	
-	})
-	
-	function connectWS(){
-		var ws = new WebSocket("ws://localhost/porget/replyEcho?pfnum=1");
-		socket = ws
-		ws.onopen = function(){
-		console.log('Info: connection opened')
-	};
-	
-		ws.onmessage = function (event) {
-		console.log(event.data+'\n');
-		$('#socketAlert').html(event.data);
-		$('#socketAlert').css("display","block");
-		setTimeout(function(){
-			$('#socketAlert').css("display","none");
-		},3000)	}	
-	
-		ws.onclose = function (event) {
-			console.log('Info: connecion closed')
-			setTimeout(function () {connect()},1000); //retry connection	
-	}
-		ws.onerror = function (err) { console.log('error: ', err)}
-	
-	}	
-
-
-
 var realPath = "${realPath}";
 
 function delPortfolio(num){
@@ -76,109 +47,11 @@ function delPortfolio(num){
 		location.replace("delete?pfnum="+num);
 	}
 }
-$(function(){ //jquery영역
-	
-	$(".carousel-indicators").children('li').eq(0).addClass("active");
-	$(".carousel-inner").children('div').eq(0).addClass("active");
-	$('.carousel').carousel()
-	
-	$.ajax({ //조회수 업데이트 
-		url: '/porget/replies/read',
-		type: 'post',
-		data: {
-			pfnum : ${param.pfnum}
-		}
-		
-	})	 
-	
-	//게시글을 열람, 접속한 사람, 무조건 실행? 실행. 
-	function replyList (){ 	
-	 $.ajax({
-		 url : '/porget/replies/list',
-		 type : 'post',
-		 data: {
-			 pfnum : ${param.pfnum},
-			 uname : "${uname}",
-			 
-		 },
-		 success: function(result){
-			 $('#replyArea').html(result);
-			 
-		 }
-	 })
-	 
-	}
-	
-	replyList(); //댓글리스트 로딩
-		
-	$('a[name=replySave]').click(function(){ //댓글작성 클릭 
-		var replyCon = $("#replyContents").val(); //댓글내용 
-		if(replyCon===""){
-			alert('내용을 입력하세요')
-			$('#replyContents').focus();
-			return; 
-		}
-		var replyData={
-				pfnum: ${param.pfnum},  //게시판번홈
-				rcontent: replyCon, //댓글내용
-				rdeep: 0,
-				uname: "${uname}" //userID 
-							
-			}; 
-	
-		var msg = "reply,${uname},${list.UNAME },${param.pfnum}"
-		$.ajax({
-			url: '../replies/save',
-			type: "post",
-			data:  replyData,
-			success: function(){
-				replyList()
-				socket.send(msg);
-				
-			},
-			error:function(xhr,staTxt){
-				alert("에러?"+staTxt+':'+xhr.status)
-			}
-		})//ajax	
-		
-		
-		$('#replyContents').val(''); //댓글초기화
-		
-	})//replySave click
-
-	
-	$('#replyContents').keyup(function (e){ //댓글글자수카운터 및 제한
-		var content = $(this).val();
-		$('#counter').html("("+content.length+"/최대100자)");
-		if(content.length>150){
-			alert('최대100자까지 가능합니다')
-			$(this).val(content.substring(0, 100));
-			$('#counter').html('(100/최대100자)')
-		}
-	});
-	
-	$('#recommend').on('click',"a",function(event){//좋아요버튼
-		var uName = '${uname}';
-		event.preventDefault();
-		if(uName == ""){
-			alert("로그인 해주세요");	
-			return;
-		}else {
-			 $.ajax({
-				 url : '/porget/portfolio/good',
-				 type: 'post',
-				 data: {
-					 pfnum : ${param.pfnum}
-				 },
-				 success: function(result){
-					 var rec = $(result).find('#recommend').html();
-					 $('#recommend').html(rec); 
-				}
-			})
-		}
-	});
-}); //ready
+var pfnum=${param.pfnum}
+var uname="${uname}"
+var writer="${list.UNAME }"
 </script>
+<script src="/porget/js/reply.js"></script>
 <style>
 
 	.maxSize{
@@ -360,6 +233,8 @@ $(function(){ //jquery영역
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 		crossorigin="anonymous"></script> 
+		
+	
 
 </body>
 
