@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +24,17 @@ public class ChatController {
 	private ChatDAO dao;
 	
 	@RequestMapping("chatting")
-	public String chattingView(String toUname, Model m) {
+	public String chattingView(String toUname, Model m,HttpServletRequest request) {
 		System.out.println("toUname>>>"+toUname);
 		m.addAttribute("toUname", toUname);
 		String toUphoto = dao.selectUphoto(toUname);
 		m.addAttribute("toUphoto",toUphoto);
+		ChatVO vo = new ChatVO();
+		vo.setToUname(toUname);
+		vo.setSenderUname((String) request.getSession().getAttribute("uname"));
+		int bound = dao.chatListCount(vo);
+		int page = (int) Math.ceil(bound/10+bound%10);
+		m.addAttribute("page",page);
 		return "portfolio/chatView4";
 	}
 	
@@ -39,11 +46,13 @@ public class ChatController {
 		vo.setToUname(toUname);
 		vo.setSenderUname(uname);
 		int bound = dao.chatListCount(vo);
+		int page = (int) Math.ceil(bound/10+bound%10);
 		List<List<Map<String, Object>>> list4 = new ArrayList<List<Map<String,Object>>>();
 		list4.add(dao.chatList(vo, base, bound));
 		m.addAttribute("list4", list4);
 		String toUphoto = dao.selectUphoto(toUname);
 		m.addAttribute("toUphoto",toUphoto);
+		m.addAttribute("page",page);
 		return "portfolio/chatList";
 	}
 	

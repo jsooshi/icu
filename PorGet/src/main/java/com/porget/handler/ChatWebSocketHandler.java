@@ -2,6 +2,7 @@ package com.porget.handler;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,19 +28,22 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 	private ChatDAO dao;
 
 	private List<WebSocketSession> connectedUsers;
+	Map<String, WebSocketSession> userSessions = new HashMap<>(); //접속된 애들
+	
 
 	public ChatWebSocketHandler() {
-	      connectedUsers = new ArrayList<WebSocketSession>();
-	   }
+		connectedUsers = new ArrayList<WebSocketSession>();
+	}
 
 	private Map<String, WebSocketSession> users = new ConcurrentHashMap<String, WebSocketSession>();
 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		System.out.println("afterConnectionEstablished:"+session);
+		System.out.println("afterConnectionEstablished:" + session);
 		log(session.getId() + " 연결 됨!!");
-
-		users.put(session.getId(), session);
+		
+		String senderId = getId(session);
+		users.put(senderId, session);
 		connectedUsers.add(session);
 	}
 
@@ -48,32 +52,39 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 
 		log(session.getId() + " 연결 종료됨");
 		connectedUsers.remove(session);
-		users.remove(session.getId());
+		String senderId = getId(session);
+		users.remove(senderId);
 
 	}
 
-
+	private String getId(WebSocketSession session) {
+		Map<String, Object> httpSession = session.getAttributes();
+		String loginUser = (String)httpSession.get("uname");	
+		if(null==loginUser)
+			return session.getId();
+		else 
+			return loginUser;
+	}
+	
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 
+		System.out.println(message.getPayload());// 사용자가 보낸 메세지
 
-		System.out.println(message.getPayload());//사용자가 보낸 메세지
+		Map<String, Object> map = null;
 
-		  Map<String, Object> map = null;
+		ChatVO chatVO = ChatVO.convertMessage(message.getPayload());
+		System.out.println(chatVO.getChatContext());
+		System.out.println(chatVO.getToUname());
+		System.out.println(chatVO.getSenderUname());
 
-	      ChatVO chatVO = ChatVO.convertMessage(message.getPayload());
-	      System.out.println(chatVO.getChatContext());
-	      System.out.println(chatVO.getToUname());
-	      System.out.println(chatVO.getSenderUname());
-	      
-	      if (dao.insertChat(chatVO) == 1) {
-				System.out.println("추가성공");
-			} else {
-				System.out.println("추가실패");
-			}
+		if (dao.insertChat(chatVO) == 1) {
+			System.out.println("추가성공");
+		} else {
+			System.out.println("추가실패");
+		}
 
-	      System.out.println("1 : " + chatVO.toString());
-
+		System.out.println("1 : " + chatVO.toString());
 
 		/*
 		 * ChatRoomVO roomVO = new ChatRoomVO();
@@ -100,24 +111,30 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 		 * chatVO.setMessage_receiver(roomVO.getTUTOR_USER_user_id()); }else {
 		 * chatVO.setMessage_receiver(roomVO.getUSER_user_id()); }
 		 */
-
-
-
-	      for (WebSocketSession websocketSession : connectedUsers) {
-	         map = websocketSession.getAttributes();
-			/*
-			 * UserVO login = (UserVO) map.get("login");
-			 * 
-			 * //받는사람 if (login.getUser_id().equals(messageVO.getMessage_sender())) {
-			 */
-	            Gson gson = new Gson();
-	            String msgJson = gson.toJson(chatVO);
-	            websocketSession.sendMessage(new TextMessage(msgJson));
-	        // }
-
-
-	      }
-	   }	
+		
+		/*
+		 * Gson gson = new Gson(); String msgJson = gson.toJson(chatVO);
+		 * users.get(chatVO.getToUname()).sendMessage(new TextMessage(msgJson));
+		 */
+		Gson gson = new Gson(); 
+		String msgJson = gson.toJson(chatVO);
+		WebSocketSession web = users.get(chatVO.getToUname());
+        web.sendMessage(new TextMessage(msgJson));
+		  
+//		
+//		  for (WebSocketSession websocketSession : connectedUsers) { map =
+//		  websocketSession.getAttributes();
+//		  
+//			/* UserVO login = (UserVO) map.get("login"); */
+//		  
+//		  //받는사람 if (login.getUser_id().equals(messageVO.getMessage_sender())) {
+//		  
+//		  Gson gson = new Gson(); String msgJson = gson.toJson(chatVO);
+//		  websocketSession.sendMessage(new TextMessage(msgJson)); // }
+//		 
+		  
+		  }
+		
 
 	@Override
 	public void handleTransportError(

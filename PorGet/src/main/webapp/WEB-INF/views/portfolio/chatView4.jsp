@@ -715,7 +715,7 @@ $(document).ready(function() {
 		
 		  var i = 2;
 		   $.ajax({
-				url : "/porget/chatListClick",
+				url : "/porget/chatList",
 				data : {toUname:toUname, uname:uname, base:1},
 				success : function(data) {
 					/* $('#frame').html(data); */
@@ -732,11 +732,14 @@ $(document).ready(function() {
 				
 			  
 			 $('.messages').scroll(function() {
+				 if(i>${page}-1){
+					 return;
+				 }
 				 var maxHeight = $('.messages').height();
 				    var currentScroll = $('.messages').scrollTop();
 				    if (currentScroll==0) {
 						$.ajax({
-							url : "/porget/chatListClick",
+							url : "/porget/chatList",
 							data : {toUname:toUname, uname:uname, base:i++},
 							success : function(data) {
 								/* $(data).prependTo($('.messages ul')); */
@@ -765,6 +768,9 @@ $(document).ready(function() {
 		}); 
 		 
 		 $('.messages').scroll(function() {
+			 if(i>${page}-1){
+				 return;
+			 }
 			 var maxHeight = $('.messages').height();
 			    var currentScroll = $('.messages').scrollTop();
 			    if (currentScroll==0) {
@@ -890,7 +896,7 @@ connect();
 
 
 	 function connect() {
-		 	var ws = new WebSocket("ws://localhost/porget/chat");
+		 	var ws = new WebSocket("ws://192.168.0.64/porget/chat");
 		 	sock = ws
 		    sock.onopen = function() {
 		        console.log('open');
@@ -952,6 +958,8 @@ $("#status-options ul li").click(function() {
 	
 	 sock.send(JSON.stringify(message));
 	  $("#textInput").val("");
+	  appendMessage(msg,'<%=session.getAttribute("uname")%>')
+	  $('.message-input input').val(null);
 	 }
 	
 	 function getTimeStamp() {
@@ -987,9 +995,8 @@ $("#status-options ul li").click(function() {
 		var uname = '<%=session.getAttribute("uname")%>';
 		 var t = getTimeStamp();
 		 
-		 if(senderUname==uname){
+		 if(senderUname===uname){
 		 $('<li class="replies"><img src="/porget/files/profile/${uphoto}" alt="" /><p>' + msg + '</p><div>'+t+'&nbsp;&nbsp;</div></li>').appendTo($('.messages ul'));
-		 $('.message-input input').val(null);
 		 
 		 var objDiv = document.getElementById("messages");
 			objDiv.scrollTop = objDiv.scrollHeight;
@@ -1002,31 +1009,33 @@ $("#status-options ul li").click(function() {
 				url : "/porget/chatListAll",
 				data : {uname:uname},
 				success : function(data) {
-					$('.contacts ul').empty();
+					$('.contacts ul').html("");
 					$(data).appendTo($('.contacts ul'));
 				}
 				
-			}); 
-		 }else{
+			});  
+		 }else if(senderUname=="${param.toUname}"){
 		 $('<li class="sent"><img src="/porget/files/profile/${toUphoto}" alt="" /><p>' + msg + '</p>&nbsp;'+t+'</li>').appendTo($('.messages ul'));
-		 $('.message-input input').val(null);
 		 
 		 
-		 $.ajax({
+		 
+		 }
+		  $.ajax({
 				url : "/porget/chatListAll",
 				data : {uname:uname},
 				success : function(data) {
+					$('.contacts ul').html("");
 					console.log(data);
 					$(data).appendTo($('.contacts ul'));
 				}
 				
-			}); 
+			});
+			  
 		 var objDiv = document.getElementById("messages");
 			objDiv.scrollTop = objDiv.scrollHeight;
+		  }
 		 }
-	
-		 }
-	 }
+
 
 
 /* function newMessage() {
