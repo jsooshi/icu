@@ -44,6 +44,17 @@ public class ChatDAOImpl implements ChatDAO{
 		return sqlSession.selectOne("chat.chatListCount", vo);
 	}
 
+	@Override
+	public int deleteChat(ChatVO vo) {
+		return sqlSession.delete("chat.deleteChat", vo);
+	}
+
+	@Override
+	public List<Map<String, Object>> deleteChattoUname(String uname) {
+		RowBounds bounds = new RowBounds(0, 1);
+		return sqlSession.selectList("chat.chatListAll", uname, bounds);
+	}
+
 
 
 }

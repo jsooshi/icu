@@ -706,6 +706,48 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	
+	  $('.contacts ul').on('click','li',function(){
+		  var toUname = $(this).find("p.name").html();
+		  var uname = '<%=session.getAttribute("uname")%>';
+		  console.log('투네임>'+toUname);
+		  
+
+		
+		  var i = 2;
+		   $.ajax({
+				url : "/porget/chatListClick",
+				data : {toUname:toUname, uname:uname, base:1},
+				success : function(data) {
+					/* $('#frame').html(data); */
+					/* $('.messages ul').empty();
+					$(data).appendTo($('.messages ul')); */
+					
+					 location.href='/porget/chatting?toUname='+toUname; 
+					var objDiv = document.getElementById("messages");
+					objDiv.scrollTop = objDiv.scrollHeight;
+					
+				}
+			}); 
+				
+				
+			  
+			 $('.messages').scroll(function() {
+				 var maxHeight = $('.messages').height();
+				    var currentScroll = $('.messages').scrollTop();
+				    if (currentScroll==0) {
+						$.ajax({
+							url : "/porget/chatListClick",
+							data : {toUname:toUname, uname:uname, base:i++},
+							success : function(data) {
+								/* $(data).prependTo($('.messages ul')); */
+								 location.href='/porget/chatting?toUname='+toUname; 
+							}
+						});
+					}
+				}); 
+	    });
+	
+	
 
 	var toUname = '<%= request.getAttribute("toUname") %>';
 	var uname = '<%=session.getAttribute("uname")%>';
@@ -809,10 +851,12 @@ $(document).ready(function() {
 			<img src="/porget/files/profile/${toUphoto}" alt="" />
 			<p>${toUname }</p>
 			<div class="social-media">
+				 <a href="/porget/deleteChat?toUname=${toUname}&uname=${uname}">삭제</a>
 				<i class="fa fa-facebook" aria-hidden="true"></i>
 				<i class="fa fa-twitter" aria-hidden="true"></i>
 				 <i class="fa fa-instagram" aria-hidden="true"></i>
 			</div>
+			
 		</div>
 		<div class="messages" id="messages"  style="overflow:auto">
 			<ul>
@@ -1001,41 +1045,7 @@ $("#status-options ul li").click(function() {
 
 
 $(document).ready(function() {
-	  $('.contacts ul').on('click','li',function(){
-		  var toUname = $(this).find("p.name").html();
-		  var uname = '<%=session.getAttribute("uname")%>';
-		  console.log('투네임>'+toUname);
-		  
-
-		
-		  var i = 2;
-		   $.ajax({
-				url : "/porget/chatting",
-				data : {toUname:toUname, uname:uname, base:1},
-				success : function(data) {
-					/* $('#frame').html(data); */
-					
-					location.href='/porget/chatting?toUname='+toUname;
-				}
-			}); 
-				
-				
-			 
-			 $('.messages').scroll(function() {
-				 var maxHeight = $('.messages').height();
-				    var currentScroll = $('.messages').scrollTop();
-				    if (currentScroll==0) {
-						$.ajax({
-							url : "/porget/chatting",
-							data : {toUname:toUname, uname:uname, base:i++},
-							success : function(data) {
-							/* 	$(data).prependTo($('.messages ul')); */
-								console.log('이동성공');
-							}
-						});
-					}
-				});
-	    });
+	
 	
 	
 	  $('#textInput').keypress(function(event){

@@ -4,7 +4,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
 	<c:choose>
 	<c:when test="${clear eq 'clear'}">		
 		<li class="contact">
@@ -27,6 +26,7 @@
 								<div class="meta">
 									<p class="name">${result.CHATUSER}</p>
 									<p class="preview">${result.SENDCONTENT}</p>
+									
 								</div>
 							</div>
 						</li>

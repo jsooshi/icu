@@ -14,13 +14,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="chatListCount" resultType="int"> 
 		select count(*)
 		from chat
-		where (senderUname=#{senderUname} and toUname=#{toUname}) or (senderUname=#{toUname} and toUname=#{senderUname})
+		where (senderUname=#{senderUname} and toUname=#{toUname} and mcheck=0) or (senderUname=#{toUname} and toUname=#{senderUname})
+		
 	</select>
 
 	<select id="chatList" resultType="Map"> 
 		select senderUname, toUname, chatContext, mCheck, sendDate
 		from chat
-		where (senderUname=#{senderUname} and toUname=#{toUname}) or (senderUname=#{toUname} and toUname=#{senderUname})
+		where (senderUname=#{senderUname} and toUname=#{toUname} and mcheck=0) or (senderUname=#{toUname} and toUname=#{senderUname})
 		order by sendDate 
 	</select>
 
@@ -46,15 +47,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from
 		(select cc.toUname chatuser, cc.sendDate, cc.chatContext, u.uphoto from CHAT cc inner join userList u
 		on cc.toUname=u.uname
-		where sendDate in (select max(sendDate) from CHAT where senderUname=#{senderUname} group by toUname)) c full outer join
+		where sendDate in (select max(sendDate) from CHAT where senderUname=#{senderUname} and mcheck=0 group by toUname)) c full outer join
 		(select cc.senderUname chatuser, cc.sendDate, cc.chatContext, u.uphoto from CHAT cc inner join userList u
 		on cc.senderUname=u.uname
-		where sendDate in (select max(sendDate) from CHAT where toUname=#{senderUname} group by senderUname)) d on c.chatuser=d.chatuser
+		where sendDate in (select max(sendDate) from CHAT where toUname=#{senderUname} and mcheck=0 group by senderUname)) d on c.chatuser=d.chatuser
+		order by sendDate desc
+	</select>
+	
+	<select id="deleteChatToUname" resultType="String"> 
+		select CASE when d.sendDate is null then c.chatuser
+		when c.sendDate is null then d.chatuser
+		when d.sendDate > c.sendDate then d.chatuser else c.chatuser end as chatuser,
+		from
+		(select toUname chatuser, sendDate
+		where sendDate in (select max(sendDate) from CHAT where mcheck=0 group by toUname)) c full outer join
+		(select senderUname chatuser, sendDate
+		where sendDate in (select max(sendDate) from CHAT where mcheck=0 group by senderUname)) d on c.chatuser=d.chatuser
 		order by sendDate desc
 	</select>
 	
 	<select id="selectUphoto" resultType="String">
 		select uphoto from userList where uname=#{uname}
 	</select>
+	
+	<update id="deleteChat">
+		UPDATE chat SET mcheck=3
+			WHERE senderUname=#{senderUname} and toUname=#{toUname}
+	</update> 
 	
 </mapper>
