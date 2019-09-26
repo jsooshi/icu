@@ -38,7 +38,7 @@
 						<td>${list.UDATE }</td>
 						<td>${list.AUTH }</td>
 						<td></td>
-						<td><a href="/porget/member/${list.UNAME}" class="info btn-sm btn btn-light">info</a></td>
+						<td><a href="/porget/mypage/${list.UNAME}" class="info btn-sm btn btn-light">info</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>

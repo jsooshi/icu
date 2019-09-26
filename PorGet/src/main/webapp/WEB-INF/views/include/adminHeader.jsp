@@ -32,10 +32,7 @@
 			        <ul class="list-unstyled components">
 			            <p>관리자님 안녕하세요</p>
 			            <li class="active">
-			                <a href="#">DashBoard</a>
-			            </li>
-			            <li>
-			                <a href="/porget/admin/member" class="memberPage">회원 관리</a>
+			                <a href="/porget/admin/" class="memberPage">회원 관리</a>
 			            </li>
 			            <li>
 			                <a href="#" class="">신고글 관리</a>

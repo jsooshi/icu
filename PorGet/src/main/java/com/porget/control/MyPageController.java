@@ -32,9 +32,9 @@ public class MyPageController {
 	@Autowired
 	private MyPageDAO dao;
 	
-	@GetMapping(value={"/mypage","/mypage/"})
-	public String selectMyPage(HttpSession session, Model m) {
-		String uname = (String)session.getAttribute("uname");
+	@GetMapping("/mypage/{uname}")
+	public String selectMyPage(HttpSession session, @PathVariable("uname")String uname, Model m) {
+//		String uname = (String)session.getAttribute("uname");
 		UserVO vo = dao.selectUser(uname);
 		m.addAttribute("vo",vo);
 		
@@ -47,6 +47,7 @@ public class MyPageController {
 		m.addAttribute("pvo",portfolioVO);
 		
 		List<PortfolioVO> portfolioVO2 = dao.likePortfolio(uname);
+		System.out.println(portfolioVO2);
 		m.addAttribute("like",portfolioVO2);
 		
 		return "member/myPage";
@@ -90,15 +91,15 @@ public class MyPageController {
 				: new ResponseEntity<>("fail",HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-	
-	/* 유저페이지*/
-	@GetMapping("/member/{uname}")
-	public String showUserPage(@PathVariable("uname")String uname,Model model) {
-		
-		UserVO vo = dao.selectUser(uname);
-		model.addAttribute("vo",vo);
-		
-		return "member/myPage";
-	}
+//	
+//	/* 유저페이지*/
+//	@GetMapping("/member/{uname}")
+//	public String showUserPage(@PathVariable("uname")String uname,Model model) {
+//		
+//		UserVO vo = dao.selectUser(uname);
+//		model.addAttribute("vo",vo);
+//		
+//		return "member/myPage";
+//	}
 	
 }

@@ -62,7 +62,7 @@
 	</update>
 	
 	<select id="likePortfolio" resultType="PortfolioVO">
-		select pfname, pfdate, pfthumb, uname
+		select pfname, pfdate, pfthumb, uname, pfposition
 		from portfolio where 
 		pfnum IN(select pfnum from recommend where uname = #{uname})
 	</select>

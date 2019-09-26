@@ -199,6 +199,13 @@ $(function(){ //jquery영역
 	.recommendimg {
 		width: 50px;
 	}
+	
+	.rounded-circle {
+		position:absolute;
+		width:50px;
+		top:20%;
+		left:35%;
+	}
 
 
 </style>
@@ -296,21 +303,17 @@ $(function(){ //jquery영역
                 <div class="card my-4">
                     <div class="row">
                         <div class="col-lg-4">
-                            <img src="/porget/files/profile/${list.UPHOTO } " class="rounded-circle" style="width:50px;">
+                        	<a href="/porget/mypage/${list.UNAME }">
+	                            <img src="/porget/files/profile/${list.UPHOTO } " class="rounded-circle">
+                        	</a>
                         </div>
                         <div class="col-lg-8">
                             <ul class="list-unstyled mb-0">
-                                <li>
-                                    ${list.UNAME }
-                                </li>
-                                <li>
-                                    ${list.PFPOSITION }
-                                </li>
-                                <li>
+                                <li>${list.UNAME }</li>
+                                <li>${list.PFPOSITION }</li>
 									<c:forTokens items="${list.TAGNAME }" delims="#" var="item">
 									   <a href="/porget/searchHashClick?keyword=${item}">#${item}</a> &nbsp;
 									</c:forTokens>
-                                </li>
                             </ul>
                         </div>
                     </div>

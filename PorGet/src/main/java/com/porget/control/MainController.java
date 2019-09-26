@@ -1,24 +1,20 @@
 package com.porget.control;
 
-import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,7 +23,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.porget.domain.UserVO;
 import com.porget.persistence.PortfolioDAO;
 import com.porget.persistence.UserDAO;
-import com.porget.security.domain.CustomUser;
 
 import lombok.extern.log4j.Log4j;
 
@@ -56,13 +51,13 @@ public class MainController {
 		return "member/memberJoin";
 	}
 	
-	@RequestMapping(value = "/userjoin", method = RequestMethod.GET)//구직자 회원가입 폼
+	@GetMapping("/userjoin")//구직자 회원가입 폼
 	public String insertUser() {
 		
 		return "member/userJoin";
 	}
 	
-	@RequestMapping(value = "/userjoin", method = RequestMethod.POST)//구직자 DB 회원가입 
+	@PostMapping("/userjoin")//구직자 DB 회원가입 
     public String userJoin(MultipartFile file,UserVO vo,  
     				HttpServletRequest request, HttpServletResponse response) throws Exception {
         System.out.println("구직자 회원가입vo="+vo); 
@@ -82,13 +77,13 @@ public class MainController {
 		return "main/index";
 	}
 	
-	@RequestMapping(value = "/recrujoin", method = RequestMethod.GET)//리쿠르터 회원가입 폼
+	@GetMapping("/recrujoin")//리쿠르터 회원가입 폼
 	public String recruitjJinForm() {
 		
 		return "member/recruiterJoin";
 	}
 	
-	@RequestMapping(value = "/recrujoin", method = RequestMethod.POST)//리쿠르터 DB 회원가입 
+	@PostMapping("/recrujoin")//리쿠르터 DB 회원가입 
 	public String insertRecruit(MultipartFile file, UserVO vo,HttpServletRequest request, HttpServletResponse response) throws Exception {
 		System.out.println("리크루터 회원가입vo="+vo);
 		
@@ -108,7 +103,7 @@ public class MainController {
 	}
 	
 	
-	@RequestMapping(value = "/login", method = RequestMethod.GET)//로그인창 보여주기
+	@GetMapping("/login")//로그인창 보여주기
 	public String login() {
 		
 		return "common/login";

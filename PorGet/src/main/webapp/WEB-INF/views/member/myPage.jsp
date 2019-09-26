@@ -43,8 +43,10 @@
 						data-toggle="tab" href="#portfolio">포트폴리오</a></li>
    					<li class="nav-item"><a class="nav-link" data-toggle="tab"
 						href="#like">좋아요</a></li>
+					<c:if test="${sessionScope.uname == vo.uname}">
 					<li class="nav-item"><a class="nav-link" data-toggle="tab"
 						href="#setting">설정</a></li>
+					</c:if>
 				</ul>
 
 				<div class="tab-content">
@@ -75,7 +77,7 @@
 					<!-- like -->
 					<div class="tab-pane" id="like">
 						<hr>
-													<c:forEach items="${like }" var="like">
+							<c:forEach items="${like }" var="like">
 								<div class="card mb-3">
 									<a href="portfolio/view?pfnum=${like.pfnum }" class="btn">
 										<div class="row no-gutters">
@@ -100,7 +102,6 @@
 					<!--/tab-pane-->
 					
 					<!-- setting -->
-					<c:if test="${sessionScope.uname == vo.uname}">
 					<div class="tab-pane" id="setting">
 	
 							<div class="form-group">
@@ -119,7 +120,6 @@
 						  변경
 						</button> --%>
 					</div>
-					</c:if>
 				</div>
 			</div>
 			<sec:authorize access="hasRole('ROLE_ADMIN')">

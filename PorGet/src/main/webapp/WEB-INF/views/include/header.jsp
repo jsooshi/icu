@@ -198,7 +198,7 @@
 						    <div class="dropdown-item">${pinfo.user.uname}님 환영합니다! </div>
 						    <a class="dropdown-item" href="/porget/mypage#portfolio">포트폴리오</a>
 						    <a class="dropdown-item" href="/porget/mypage#bookmark">북마크</a>
-						    <a class="dropdown-item" href="/porget/mypage">마이페이지</a>
+						    <a class="dropdown-item" href="/porget/mypage/${pinfo.user.uname}">마이페이지</a>
 						    <a class="dropdown-item" href="/porget/logout">로그아웃</a>
 						  </div>
 					</div>

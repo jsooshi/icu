@@ -23,7 +23,9 @@
   		 rownum <= #{pageNum} * #{amount}) u 
   		 inner join userlist_auth a
   		 on u.uname = a.uname
- 		where rn > (#{pageNum}-1) * #{amount}
+ 		where rn > (#{pageNum}-1) * #{amount} 
+ 		AND u.uname != 
+        (select u.uname from userlist u inner join userlist_auth a on u.uname = a.uname where a.auth='ROLE_ADMIN')
 	]]>
 	</select>
 
