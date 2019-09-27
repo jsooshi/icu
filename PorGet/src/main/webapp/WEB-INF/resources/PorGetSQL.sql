@@ -2,7 +2,16 @@
 select * from reply;
 select * from userList;
 select * from portfolio;
+update reply set reply_read=1 where uname='yunajo'
+select * from reply;
+select count(*) from reply
+where reply_read=1 and pfnum in (select pfnum from portfolio where uname='yunajo')
 -- user Table Create SQL
+drop sequence banner_seq;
+drop table banner cascade constraints;
+drop table chat cascade constraints;
+drop sequence report_seq;
+DROP table report cascade CONSTRAINTS;
 DROP TRIGGER recommend_trg;
 drop table recommend;
 DROP TRIGGER reply_trg;
@@ -11,7 +20,9 @@ drop table reply cascade CONSTRAINTS;
 DROP TRIGGER portfolio_trg;
 drop sequence portfolio_SEQ;
 drop table portfolio cascade CONSTRAINTS;
+drop table userlist_Auth cascade CONSTRAINTS;
 drop table userList cascade CONSTRAINTS;
+
 
 CREATE TABLE userList
 (
@@ -26,13 +37,15 @@ CREATE TABLE userList
 );
 
 
-create table userlist_auth (
-
+create table userlist_auth 
+(
    uname varchar2(30) not null,
-   auth varchar2(50) not null,
-   constraint fk_userlist_auth foreign key(uname) references userlist(uname) on delete cascade
- 
+   auth varchar2(50) not null
 );
+ALTER TABLE userlist_auth
+    ADD CONSTRAINT FK_userlist_auth_uname FOREIGN KEY (uname)
+        REFERENCES userList (uname)ON DELETE CASCADE
+;
 
 
 CREATE TABLE portfolio
@@ -51,7 +64,6 @@ CREATE TABLE portfolio
 )
 ;
 
-select * from userList;
 CREATE SEQUENCE portfolio_SEQ
 START WITH 1
 INCREMENT BY 1;
@@ -81,7 +93,8 @@ CREATE TABLE reply
     rdate       DATE             default sysdate NOT NULL, 
     rnum        NUMBER           NOT NULL,
     rdeep       NUMBER           NOT NULL, 
-    rgroup      NUMBER           NOT NULL, 
+    rgroup      NUMBER           NOT NULL,
+    reply_read    NUMBER default '1',
     CONSTRAINT REPLY_PK PRIMARY KEY (rnum)
 )
 ;
@@ -110,6 +123,26 @@ CREATE OR REPLACE TRIGGER reply_trg
     END;
 /
 
+CREATE TABLE report
+(
+    reportNum         NUMBER            NOT NULL,  --신고 번호
+    reportContext     VARCHAR2(1000)    ,  --신고 내용
+    reportPath        VARCHAR2(30)      NOT NULL,  --신고 
+    reportType        VARCHAR2(30)      NOT NULL,  --신고 유형
+    reportDate        DATE              NOT NULL,  --신고 날짜
+    reportResultDate         DATE,                 --신고 접수 처리 날짜
+    reporter          VARCHAR2(30)      NOT NULL,  --신고자
+    defendant         VARCHAR2(30)      NOT NULL,  --신고대상자
+    reportResult         VARCHAR2(20)   , --신고 결과
+    CONSTRAINT REPORT_PK PRIMARY KEY (reportNum)
+)
+/
+
+CREATE SEQUENCE report_SEQ
+START WITH 1
+INCREMENT BY 1;
+/
+
 CREATE TABLE recommend
 (
     pfnum    NUMBER          NOT NULL, 
@@ -136,13 +169,7 @@ CREATE OR REPLACE TRIGGER recommend_trg
     END;
 /
 
-ALTER TABLE reply ADD(reply_read number);
-update reply set reply_read=1 where uname='yunajo'
-select * from reply;
-select count(*) from reply
-where reply_read=1 and pfnum in (select pfnum from portfolio where uname='yunajo')
       
-drop table chat;
 CREATE TABLE chat
 (
     senderUname    VARCHAR2(30)    NOT NULL, 
@@ -152,26 +179,34 @@ CREATE TABLE chat
     sendDate       DATE            NOT NULL
 )
 ;
-COMMENT ON TABLE chat IS '채팅'
-;
-COMMENT ON COLUMN chat.senderUname IS '보내는 사람'
-;
-COMMENT ON COLUMN chat.toUname IS '받는 사람'
-;
-COMMENT ON COLUMN chat.chatContext IS '내용'
-;
-COMMENT ON COLUMN chat.mCheck IS '수신여부'
-;
-COMMENT ON COLUMN chat.sendDate IS '보낸 시간'
-;
+
 ALTER TABLE chat
     ADD CONSTRAINT FK_chat_senderUname_userList_u FOREIGN KEY (senderUname)
-        REFERENCES userList (uname)
+        REFERENCES userList (uname)ON DELETE CASCADE
 ;
 ALTER TABLE chat
     ADD CONSTRAINT FK_chat_toUname_userList_uname FOREIGN KEY (toUname)
-        REFERENCES userList (uname)
+        REFERENCES userList (uname)ON DELETE CASCADE
 ;
+
+
+CREATE TABLE portfolioBanner
+(
+    bannerNum number,
+    pfnum number,
+    bannerDate date default sysdate,
+    CONSTRAINT portfolioBanner_PK PRIMARY KEY (bannerNum)
+);
+
+ALTER TABLE portfolioBanner
+    ADD CONSTRAINT FK_portfolioBanner_pfnum FOREIGN KEY (pfnum)
+        REFERENCES portfolio (pfnum)on delete set null
+;
+
+CREATE SEQUENCE portfolioBanner_SEQ
+START WITH 1
+INCREMENT BY 1;
+
 --user 추가 //  회원가입하고 글 insert 해줘야합니다( ㅠㅠ..)
 --INSERT INTO userList VALUES ('gildong','1a2s3d4f','gildong@naver.com','yellow.png',4,null);
 --INSERT INTO userList VALUES ('afterup','asd1234','afterup@naver.com','girl.png',0,'심아영입니다.');

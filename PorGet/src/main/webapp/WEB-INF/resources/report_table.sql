@@ -74,4 +74,4 @@ select reportNum, reportType, reportDate, reportResultDate, reportResult, pfnum
 update report set defendant='ekdrms'
 
 insert into report (reportNum, reportContext, reportPath, reportType, reportDate, reportResultDate, reporter, defendant, reportResult)
-values(report_seq.nextval,'욕했습니다 저 사람이','chat','폭언,욕설',sysdate,null,'jsooshi','ekdrms','처리중')
+values(report_seq.nextval,'욕했습니다 저 사람이','P1','1',sysdate,null,'jsooshi','jsooshi','처리중')

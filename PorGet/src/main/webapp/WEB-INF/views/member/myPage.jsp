@@ -189,7 +189,7 @@
 					if(confirm("정말 사진을 변경하시겠습니까")){
 						console.log(formData.get("photo"))
 						$.ajax({
-							url : "mypage/changeuphoto",
+							url : "/porget/mypage/changeuphoto",
 							processData:false,
 							contentType:false,
 							type : "post",
