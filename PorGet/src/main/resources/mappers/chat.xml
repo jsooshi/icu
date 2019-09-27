@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- "chat" 관련 sql문 -->
+<mapper namespace="chat"> 
+
+	<insert id="insertChat">
+		INSERT INTO chat (senderUname, toUname, chatContext, mCheck, sendDate)
+		VALUES (#{senderUname}, #{toUname}, #{chatContext}, 0, sysdate)
+	</insert>
+	
+	<select id="chatListCount" resultType="int"> 
+		select count(*)
+		from chat
+		where (senderUname=#{senderUname} and toUname=#{toUname} and mcheck=0) or (senderUname=#{toUname} and toUname=#{senderUname})
+		
+	</select>
+
+	<select id="chatList" resultType="Map"> 
+		select senderUname, toUname, chatContext, mCheck, sendDate
+		from chat
+		where (senderUname=#{senderUname} and toUname=#{toUname} and mcheck=0) or (senderUname=#{toUname} and toUname=#{senderUname})
+		order by sendDate 
+	</select>
+
+	<select id="chatListAll" resultType="Map"> 
+		<!-- select c.senderUname, c.toUname, c.chatContext, c.mCheck, c.sendDate, u.uphoto from chat c inner join userList u
+		on c.toUname=u.uname
+		where (senderUname, toUname, sendDate) in (select senderUname, toUname, max (sendDate) from chat group by senderUname, toUname) 
+		and  (senderUname=#{senderUname} or toUname=#{senderUname}) 
+		order by sendDate desc -->
+		
+		select CASE when d.sendDate is null then c.chatuser
+		when c.sendDate is null then d.chatuser
+		when d.sendDate > c.sendDate then d.chatuser else c.chatuser end as chatuser,
+		CASE when d.sendDate is null then c.chatContext
+		when c.sendDate is null then d.chatContext
+		when d.sendDate > c.sendDate then d.chatContext else c.chatContext end as sendContent,
+		CASE when d.sendDate is null then c.uphoto
+		when c.sendDate is null then d.uphoto
+		when d.sendDate > c.sendDate then d.uphoto else c.uphoto end as uphoto,
+		CASE when d.sendDate is null then c.sendDate
+		when c.sendDate is null then d.sendDate
+		when d.sendDate > c.sendDate then d.sendDate else c.sendDate end as sendDate
+		from
+		(select cc.toUname chatuser, cc.sendDate, cc.chatContext, u.uphoto from CHAT cc inner join userList u
+		on cc.toUname=u.uname
+		where sendDate in (select max(sendDate) from CHAT where senderUname=#{senderUname} and mcheck=0 group by toUname)) c full outer join
+		(select cc.senderUname chatuser, cc.sendDate, cc.chatContext, u.uphoto from CHAT cc inner join userList u
+		on cc.senderUname=u.uname
+		where sendDate in (select max(sendDate) from CHAT where toUname=#{senderUname} and mcheck=0 group by senderUname)) d on c.chatuser=d.chatuser
+		order by sendDate desc
+	</select>
+	
+	<select id="deleteChatToUname" resultType="String"> 
+		select CASE when d.sendDate is null then c.chatuser
+		when c.sendDate is null then d.chatuser
+		when d.sendDate > c.sendDate then d.chatuser else c.chatuser end as chatuser,
+		from
+		(select toUname chatuser, sendDate
+		where sendDate in (select max(sendDate) from CHAT where mcheck=0 group by toUname)) c full outer join
+		(select senderUname chatuser, sendDate
+		where sendDate in (select max(sendDate) from CHAT where mcheck=0 group by senderUname)) d on c.chatuser=d.chatuser
+		order by sendDate desc
+	</select>
+	
+	<select id="selectUphoto" resultType="String">
+		select uphoto from userList where uname=#{uname}
+	</select>
+	
+	<update id="deleteChat">
+		UPDATE chat SET mcheck=3
+			WHERE senderUname=#{senderUname} and toUname=#{toUname}
+	</update> 
+	
+</mapper>

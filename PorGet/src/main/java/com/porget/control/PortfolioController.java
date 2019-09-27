@@ -126,9 +126,13 @@ public class PortfolioController {
 	}
 
 	@GetMapping("/view")
-	public String portfolioView(int pfnum, HttpServletRequest request, HttpServletResponse response) {// 게시글 클릭시 포트폴리오 뷰
-		String uname = (String) request.getSession().getAttribute("uname");
-		if (uname == "" || uname == null) {
+	public String portfolioView(int pfnum,String defendant,HttpServletRequest request, HttpServletResponse response) {// 게시글 클릭시 포트폴리오 뷰
+		String uname = (String)request.getSession().getAttribute("uname");
+		if(defendant!=null) {
+			uname=defendant;
+			request.setAttribute("defendant", defendant);;
+		}
+		if(uname==""||uname==null) {
 			PrintWriter out;
 			try {
 				// request.setCharacterEncoding("UTF-8");
@@ -154,7 +158,7 @@ public class PortfolioController {
 		request.setAttribute("thumb", ((String) list.get(0).get("PFTHUMB")).split("\\|"));
 		return "portfolio/portfolioView";
 	}
-
+	
 	@GetMapping("/update")
 	public String portfolioUpdateView(int pfnum, Model m) {// 게시글 수정뷰
 

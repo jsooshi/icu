@@ -142,6 +142,36 @@ select * from reply;
 select count(*) from reply
 where reply_read=1 and pfnum in (select pfnum from portfolio where uname='yunajo')
       
+drop table chat;
+CREATE TABLE chat
+(
+    senderUname    VARCHAR2(30)    NOT NULL, 
+    toUname        VARCHAR2(30)    NOT NULL, 
+    chatContext    VARCHAR2(1000)    NOT NULL, 
+    mCheck         NUMBER          NOT NULL, 
+    sendDate       DATE            NOT NULL
+)
+;
+COMMENT ON TABLE chat IS '채팅'
+;
+COMMENT ON COLUMN chat.senderUname IS '보내는 사람'
+;
+COMMENT ON COLUMN chat.toUname IS '받는 사람'
+;
+COMMENT ON COLUMN chat.chatContext IS '내용'
+;
+COMMENT ON COLUMN chat.mCheck IS '수신여부'
+;
+COMMENT ON COLUMN chat.sendDate IS '보낸 시간'
+;
+ALTER TABLE chat
+    ADD CONSTRAINT FK_chat_senderUname_userList_u FOREIGN KEY (senderUname)
+        REFERENCES userList (uname)
+;
+ALTER TABLE chat
+    ADD CONSTRAINT FK_chat_toUname_userList_uname FOREIGN KEY (toUname)
+        REFERENCES userList (uname)
+;
 --user 추가 //  회원가입하고 글 insert 해줘야합니다( ㅠㅠ..)
 --INSERT INTO userList VALUES ('gildong','1a2s3d4f','gildong@naver.com','yellow.png',4,null);
 --INSERT INTO userList VALUES ('afterup','asd1234','afterup@naver.com','girl.png',0,'심아영입니다.');

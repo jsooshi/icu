@@ -49,4 +49,28 @@ public class PageDTO {
 		return cri;
 	}
 
+	public void setStartPage(int startPage) {
+		this.startPage = startPage;
+	}
+
+	public void setEndPage(int endPage) {
+		this.endPage = endPage;
+	}
+
+	public void setPrev(boolean prev) {
+		this.prev = prev;
+	}
+
+	public void setNext(boolean next) {
+		this.next = next;
+	}
+
+	public void setTotal(int total) {
+		this.total = total;
+	}
+
+	public void setCri(Criteria cri) {
+		this.cri = cri;
+	}
+	
 }
