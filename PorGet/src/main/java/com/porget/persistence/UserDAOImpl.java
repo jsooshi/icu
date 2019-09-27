@@ -44,7 +44,26 @@ public class UserDAOImpl implements UserDAO{
 	public UserVO selectMyPage(String uname) {
 		return sqlSession.selectOne("userList.selectMyPage",uname);
 	}
+	
+/* 시큐리티 */
+	
+	@Override
+	public UserVO read(String uemail) {
+		return sqlSession.selectOne("userList.read",uemail);
+	}
+	
+	@Override
+	public void insertAuth(String uname) {
+		sqlSession.insert("userList.insertAuth",uname);
+	}
+	
+	@Override
+	public void insertAuth2(String uname) {
+		sqlSession.insert("userList.insertAuth2",uname);
+	}
 
+/* reply 알람 */
+		
 	@Override
 	public int countUnread(String uname) {
 		

@@ -157,25 +157,31 @@ var writer="${list.UNAME }"
 </script>
 <script src="/porget/js/reply.js"></script>
 <style>
-.maxSize {
-	width: 925px;
-	height: 500px;
-}
+	.maxSize{
+		width: 925px;
+		height: 500px;
+	}
+	.imgMaxSize{
+		position:absolute;
+		top:0;
+		left:0;
+		right:0;
+		bottom:0;
+		max-width:100%;
+		max-height:100%;
+		margin: auto;
+	} 
 
-.imgMaxSize {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	max-width: 100%;
-	max-height: 100%;
-	margin: auto;
-}
-
-.recommendimg {
-	width: 50px;
-}
+	.recommendimg {
+		width: 50px;
+	}
+	
+	.rounded-circle {
+		position:absolute;
+		width:50px;
+		top:20%;
+		left:35%;
+	}
 </style>
 </head>
 <body>
@@ -241,7 +247,7 @@ var writer="${list.UNAME }"
 						<br>
 					</c:when>
 				</c:choose>
-
+				
 				<!-- Comments Form -->
 				<div class="box">
 					<div class="box-header with-border">

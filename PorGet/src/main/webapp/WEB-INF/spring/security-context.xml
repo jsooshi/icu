@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans">
+
+	<bean class="com.porget.security.CustomAccessDeniedHandler" id="customAccessDenied" />
+	<bean class="com.porget.security.CustomLoginSuccessHandler" id="customLoginSuccess" />
+	<bean class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" id="bcryptPasswordEncoder" />
+	<bean class="com.porget.security.CustomUserDetailsService" id="userService" />
+
+	<security:http>
+		<security:intercept-url access="permitAll" pattern="/security/all" />
+		<security:intercept-url access="hasRole('ROLE_USER')" pattern="/security/member" />
+		<security:intercept-url access="hasRole('ROLE_ADMIN')" pattern="/admin/**" />
+
+		<security:form-login default-target-url="/"
+			login-page="/login"
+			authentication-success-handler-ref="customLoginSuccess"
+			login-processing-url="/login" 
+			password-parameter="upass"
+			username-parameter="uemail" />
+
+		<security:logout invalidate-session="true" logout-url="/porget/logout" />
+
+		<!-- 접근제한 페이지 -->
+		<security:access-denied-handler ref="customAccessDenied" />
+
+		<!-- CSRF 토큰 -->
+		<security:csrf disabled="true" />
+
+	</security:http>
+
+	<security:authentication-manager>
+		<security:authentication-provider user-service-ref="userService">
+
+			<!-- <security:user-service><security:user name="member" password="{noop}member" 
+				authorities="ROLE_USER"/></security:user-service> -->
+			<!-- <security:jdbc-user-service data-source-ref="dataSource"users-by-username-query="select 
+				uemail,upass,enabled from userlist where uemail=?"authorities-by-username-query="select 
+				uemail,authority from userlist where uemail=?"/> -->
+			<security:password-encoder ref="bcryptPasswordEncoder" />
+
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+</beans>

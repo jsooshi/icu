@@ -236,13 +236,6 @@ body {
 						name="upassCheck">
 				</div>
 			</div>
-			<div class="form-group">
-				<label class="control-label col-xs-4">프로필사진</label>
-				<div class="col-xs-8 col-xs-offset-4">
-					<input type="file" class="form-control-file" id="file" name="file"
-						accept=".jpg,.jpeg,.gif,.bmp,.png">
-				</div>
-			</div>
 
 			<div class="form-group">
 				<div class="col-xs-8 col-xs-offset-4">

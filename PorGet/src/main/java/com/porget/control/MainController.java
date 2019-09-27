@@ -1,36 +1,35 @@
 package com.porget.control;
 
-import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.porget.domain.RecruiterVO;
 import com.porget.domain.UserVO;
 import com.porget.persistence.PortfolioDAO;
-import com.porget.persistence.RecruiterDAO;
 import com.porget.persistence.UserDAO;
 
+import lombok.extern.log4j.Log4j;
+
 @Controller
+@Log4j
 public class MainController {
 	
 	@Autowired
@@ -38,9 +37,13 @@ public class MainController {
 	
 	@Autowired
 	private UserDAO userdao;
+	
+	@Autowired
+	private BCryptPasswordEncoder bcryptPasswordEncoder;
 
-	@GetMapping("/")
+	@GetMapping(value= {"/",""})
 	public String index() {
+		
 		return "main/index";
 	}
 	
@@ -50,30 +53,25 @@ public class MainController {
 		return "member/memberJoin";
 	}
 	
-	@RequestMapping(value = "/userjoin", method = RequestMethod.GET)//구직자 회원가입 폼
+	@GetMapping("/userjoin")//구직자 회원가입 폼
 	public String insertUser() {
 		
 		return "member/userJoin";
 	}
 	
-	@RequestMapping(value = "/userjoin", method = RequestMethod.POST)//구직자 DB 회원가입 
-    public String userJoin(MultipartFile file,UserVO vo,  HttpServletRequest request, HttpServletResponse response) throws Exception {
-        System.out.println("구직자 회원가입vo="+vo);
+	@PostMapping("/userjoin")//구직자 DB 회원가입 
+    public String userJoin(MultipartFile file,UserVO vo,  
+    				HttpServletRequest request, HttpServletResponse response) throws Exception {
+        System.out.println("구직자 회원가입vo="+vo); 
+        	
+    	vo.setUphoto("defaultMan.png");
         
-        //프로필 이미지
-        String uploadPath =  request.getSession().getServletContext().getRealPath("/resources/files/profile");
-        System.out.println(uploadPath);
-        System.out.println(file.getOriginalFilename());
-        String fileName = file.getOriginalFilename();//파일이름
+        //비밀번호 암호화
+        vo.setUpass(this.bcryptPasswordEncoder.encode(vo.getUpass()));
         
-        //중복이름
-        UUID uuid = UUID.randomUUID();
-        String savedName = uuid.toString() + "_" + fileName;
-        File target = new File(uploadPath,savedName);
-        FileCopyUtils.copy(file.getBytes(), target);
-        vo.setUcheck(0);
-        vo.setUphoto(savedName);
         userdao.insert(vo);
+        userdao.insertAuth(vo.getUname());
+        
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		response.getWriter().print("<script>alert('회원가입을 축하드립니다.');</script>");
@@ -81,31 +79,25 @@ public class MainController {
 		return "main/index";
 	}
 	
-	@RequestMapping(value = "/recrujoin", method = RequestMethod.GET)//리쿠르터 회원가입 폼
+	@GetMapping("/recrujoin")//리쿠르터 회원가입 폼
 	public String recruitjJinForm() {
 		
 		return "member/recruiterJoin";
 	}
 	
-	@RequestMapping(value = "/recrujoin", method = RequestMethod.POST)//리쿠르터 DB 회원가입 
+	@PostMapping("/recrujoin")//리쿠르터 DB 회원가입 
 	public String insertRecruit(MultipartFile file, UserVO vo,HttpServletRequest request, HttpServletResponse response) throws Exception {
 		System.out.println("리크루터 회원가입vo="+vo);
 		
-		//프로필 이미지
-        String uploadPath =  request.getSession().getServletContext().getRealPath("/resources/files/profile");
-        System.out.println(uploadPath);
-        System.out.println(file.getOriginalFilename());
-        String fileName = file.getOriginalFilename();//파일이름
+		vo.setUphoto("defaultMan.png");
+		
+        //비밀번호 암호화
+        vo.setUpass(this.bcryptPasswordEncoder.encode(vo.getUpass()));
         
-        //중복이름
-        UUID uuid = UUID.randomUUID();
-        String savedName = uuid.toString() + "_" + fileName;
-        File target = new File(uploadPath,savedName);
-        FileCopyUtils.copy(file.getBytes(), target);
-        vo.setUcheck(1);
-        vo.setUphoto(savedName);
         userdao.insert(vo);
-		response.setContentType("text/html; charset=UTF-8");
+        userdao.insertAuth2(vo.getUname());
+		
+        response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		response.getWriter().print("<script>alert('회원가입을 축하드립니다.');</script>");
 		out.flush();
@@ -113,29 +105,29 @@ public class MainController {
 	}
 	
 	
-	@RequestMapping(value = "/login", method = RequestMethod.GET)//로그인창 보여주기
+	@GetMapping("/login")//로그인창 보여주기
 	public String login() {
 		
-		return "main/login";
+		return "common/login";
 	}
 	
-	@Transactional
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String loginSuccess(UserVO vo, HttpSession session, RedirectAttributes attrs){//로그인시 세션 저장
-		Map<String,String> map = (Map<String, String>) userdao.login(vo);
-		if(map != null) {
-			
-			session.setAttribute("uname",map.get("UNAME"));
-			session.setAttribute("uphoto",map.get("UPHOTO"));
-			session.setAttribute("unread",userdao.countUnread(map.get("UNAME")));
-			session.setAttribute("notification", userdao.replyNotification(map.get("UNAME")));
-			return "redirect:/";
-		}else {
-			
-			attrs.addFlashAttribute("msg", "이메일과 비밀번호를 확인해주세요");
-			return "redirect:/";
-		}
-	}
+//	@Transactional
+//	@RequestMapping(value = "/login", method = RequestMethod.POST)
+//	public String loginSuccess(UserVO vo, HttpSession session, RedirectAttributes attrs){//로그인시 세션 저장
+//		Map<String,String> map = (Map<String, String>) userdao.login(vo);
+//		if(map != null) {
+//			
+//			session.setAttribute("uname",map.get("UNAME"));
+//			session.setAttribute("uphoto",map.get("UPHOTO"));
+//			session.setAttribute("unread",userdao.countUnread(map.get("UNAME")));
+//			session.setAttribute("notification", userdao.replyNotification(map.get("UNAME")));
+//			return "redirect:/";
+//		}else {
+//			
+//			attrs.addFlashAttribute("msg", "이메일과 비밀번호를 확인해주세요");
+//			return "redirect:/";
+//		}
+//	}
 	
 	@RequestMapping(value = "/recruiterLogin", method = RequestMethod.GET)//로그인창 보여주기
 	public String recruiter() {
@@ -144,16 +136,6 @@ public class MainController {
 		return "main/recruiterLogin";
 	}
 	
-	/*
-	 * @RequestMapping(value = "/recruiterLogin", method = RequestMethod.POST)//로그인창
-	 * 보여주기 public String recruiterLoginSuccess(UserVO vo, HttpSession session,
-	 * RedirectAttributes attrs) { String uname = recruiterdao.loginRecruiter(vo);
-	 * System.out.println("로그인>"+vo); if(uname != null) {
-	 * session.setAttribute("uname", uname); System.out.println("리크루터 로그인 성공");
-	 * return "redirect:/"; }else { System.out.println("리쿠르터 로그인 실패");
-	 * attrs.addFlashAttribute("msg", "이메일과 비밀번호를 확인해주세요"); return
-	 * "redirect:/login"; } }
-	 */
 
 	@RequestMapping(value="/logout")
 	public String logout(HttpSession session) {
@@ -186,22 +168,6 @@ public class MainController {
 		
 		return msg;
 	}
-	
-	/*
-	 * @RequestMapping("checkCname") public @ResponseBody String checkCname(String
-	 * companyName) { System.out.println("checkcname>>"+companyName); String msg;
-	 * if(recruiterdao.cidCheck(companyName)==0) {
-	 * msg="<font color=blue>사용가능한 회사명입니다</font>"; }else {
-	 * msg="<font color=red>사용불가능한 회사명입니다</font>"; } return msg; }
-	 */
-	
-	/*
-	 * @RequestMapping("checkCemail") public @ResponseBody String checkCemail(String
-	 * companyEmail) { System.out.println("checkcname>>"+companyEmail); String msg;
-	 * if(recruiterdao.cemailCheck(companyEmail)==0) {
-	 * msg="<font color=blue>사용가능한 이메일입니다</font>"; }else {
-	 * msg="<font color=red>사용불가능한 이메일입니다</font>"; } return msg; }
-	 */
 	
 	@RequestMapping("findPass")
 	public String findPass() {
@@ -345,6 +311,7 @@ public class MainController {
 	public @ResponseBody String notiChecked(String uname, HttpServletRequest request) {
 		userdao.checked(uname);
 		request.getSession().setAttribute("unread", 0);
+
 		return "success";
 		
 	}

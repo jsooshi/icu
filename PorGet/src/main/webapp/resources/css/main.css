@@ -6,13 +6,6 @@
 	padding: 10px;
 }
 
-.jumbotron {
-	background-image: url("/porget/img/main/whale.jpg");
-	height: 500px;
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: cover;
-}
 
 .wrap-loading{
 	width:20%;

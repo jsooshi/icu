@@ -14,6 +14,14 @@ public interface UserDAO {
 	
 	/* 마이페이지 */
 	public UserVO selectMyPage(String uname);
+	
+	/* 시큐리티 */
+	public UserVO read(String uemail);
+	
+	public void insertAuth(String uname);
+	public void insertAuth2(String uname);
+	
+	/* reply 알람 */
 	public int countUnread(String uname);
 	public List<ReplyVO> replyNotification(String uname);
 	public void checked(String uname);
