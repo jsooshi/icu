@@ -5,13 +5,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="reply"><!-- mybatis는 namespace필수 -->
 <!-- pfnum, rcontent, uname, rdate, rnum, rdeep, rgroup -->
 	<insert id="save">
-		insert into reply (pfnum, rcontent, uname, rdate, rnum, rdeep, rgroup)
+		insert into reply (pfnum, rcontent, uname, rdate, rnum, rdeep, rgroup, reply_read)
 		<choose>
 		<when test="rdeep!=0">
-		values (#{pfnum}, #{rcontent}, #{uname}, sysdate, reply_seq.nextval, #{rdeep}, #{rgroup})
+		values (#{pfnum}, #{rcontent}, #{uname}, sysdate, reply_seq.nextval, #{rdeep}, #{rgroup}, 1)
 		</when>
 		<otherwise>
-		values (#{pfnum}, #{rcontent}, #{uname},sysdate,reply_seq.nextval, #{rdeep}, reply_seq.currval)
+		values (#{pfnum}, #{rcontent}, #{uname},sysdate,reply_seq.nextval, #{rdeep}, reply_seq.currval, 1)
 		</otherwise>
 		</choose>
 	</insert>
