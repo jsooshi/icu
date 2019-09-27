@@ -16,12 +16,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="selectReportPage" resultType="ReportVO">
 		select /*+  INDEX_DESC(report report_pk)*/
-		reportNum, reportType, reportDate, reportResultDate, reportResult
+		reportNum,
+		 CASE reportType when '1' then '부적절한 홍보 게시물'
+		 				when '2' then '폭언, 욕설 사용'
+		 				when '3' then '저작권 침해'
+		 			 else '폭언, 욕설 사용' end as reportType, 
+		 reportDate, reportResultDate, reportResult
 		from report
 	</select>
 
 	<select id="selectReport" resultType="ReportVO">
-		select reportNum, reportContext, reportPath, reportType, reportDate, reportResultDate, reporter, defendant, reportResult
+		select reportNum, reportContext, reportPath,
+		 CASE reportType when '1' then '부적절한 홍보 게시물'
+		 				when '2' then '폭언, 욕설 사용'
+		 				when '3' then '저작권 침해'
+		 			 else '폭언, 욕설 사용' end as reportType
+		 , reportDate, reportResultDate, reporter, defendant, reportResult
 		from report
 		where reportNum=#{reportNum} 
 	</select>	

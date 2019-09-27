@@ -917,7 +917,6 @@ $(document).ready(function() {
 								<!-- Modal content-->
 								<div class="modal-content">
 									<div class="modal-header">
-										<button type="button" class="close" data-dismiss="modal">&times;</button>
 										<h4 class="modal-title">신고하기</h4>
 									</div>
 									<div class="modal-body">
@@ -950,7 +949,7 @@ $(document).ready(function() {
 									<div class="modal-footer">
 										<button type="submit" class="btn btn-default" 
 											>신고 접수</button>
-										<button type="reset" class="btn btn-default"
+										<button type="button" class="btn btn-default close"
 											>닫기</button>
 									</div>
 								</div>
@@ -1124,7 +1123,6 @@ $(document).ready(function() {
 			send();
 		});
 	  $('#chatReportButton').on("click",function(){
-		  $('input[name="reporter"]').attr('value','afterup')
 		  $('input[name="defendant"]').attr('value',$('#frame .contact-profile p').html())
 		  console.log($('input[name="defendant"]').attr('value'))
 	  })

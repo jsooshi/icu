@@ -1,5 +1,7 @@
 package com.porget.control;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.porget.domain.ChatVO;
 import com.porget.domain.Criteria;
 import com.porget.domain.PageDTO;
 import com.porget.domain.ReportVO;
@@ -73,6 +76,18 @@ public class ReportController {
 	public @ResponseBody String removeUser(String uname) {
 		if(service.removeUser(uname)) return uname+"님이 삭제되었습니다.";
 		else return "삭제에 실패했습니다.";
+	}
+	
+	@RequestMapping("/reportChatting")
+	public String reportChatting(String reporter,String defendant,Model model) {
+		model.addAttribute("reporter", reporter);
+		model.addAttribute("defendant", defendant);
+		return "admin/report/reportChatting";
+	}
+	
+	@RequestMapping("/selectChatContext")
+	public @ResponseBody List<ChatVO> selectChatContext(String reporter, String defendant){
+		return service.selectChatContext(reporter, defendant);
 	}
 
 }

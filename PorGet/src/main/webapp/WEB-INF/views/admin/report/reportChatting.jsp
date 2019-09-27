@@ -281,7 +281,7 @@
 	 
 	    var a = document.createElement('a');
 	 
-	    a.download = 'jsooshi 신고';
+	    a.download = '${param.defendant} 신고';
 	    a.href = objURL;
 	    a.click()
 		
@@ -291,10 +291,10 @@
 	$(function(){
 		
 		$.ajax({
-			url:"/porget/test/selectChatContext",
+			url:"/porget/report/selectChatContext",
 			data:{
-				reporter:'afterup',
-				defendant:'jsooshi'
+				reporter:"${param.reporter}",
+				defendant:"${param.defendant}"
 			},
 			success:function(list){
 				chatList=list;
