@@ -36,5 +36,15 @@ public class MyPageDAOImpl implements MyPageDAO {
 	public int changeUphoto(HashMap<String, String> photoName) {
 		return sqlSession.update("userList.changeUphotho", photoName);
 	}
+	
+	@Override
+	public List<PortfolioVO> likePortfolio(String uname) {
+		return sqlSession.selectList("userList.likePortfolio",uname);
+	}
+	
+	@Override
+	public int breakMember(String uname) {
+		return sqlSession.delete("userList.breakMember",uname);
+	}
 
 }
