@@ -177,14 +177,14 @@
 <!-- Navigation -->
 <!-- 상단에  알람바 변경 -->
 <div id="socketAlert" class="alert alert-success" role="alert" style="display:none;left:0px ;top:100px; position: fixed; z-index: 1;"></div> 
-<nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
 	<a href="/porget" class="navbar-brand">
 	    <img id="logo" class="d-inline-block mr-1" alt="Logo" src="/porget/img/main/dotty.svg">
         <span>PorGet</span>
 	</a>
 	<form name="searchForm" action="searchButton" method="post">
 		<input type="text" name="keyword" size="50" onkeydown="startSuggest()" id="searchInput">
-		<input type="submit" value="검색">
+		<input type="submit" class="btn btn-light" value="검색">
 		&nbsp;&nbsp;&nbsp;
 		<div id="suggest" style="display:; position: absolute; left: 150px;">
 		<div id="suggestList"></div>

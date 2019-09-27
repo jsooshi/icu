@@ -2,12 +2,27 @@
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-
 <jsp:include page="/WEB-INF/views/include/header.jsp" />
-<br>
+<style>
+
+	.wrap-loading {
+		height: 100vh;
+		
+	}
+
+
+	.wrap-loading img{
+		
+		position: relative;
+		top: 10%;
+		left: 400px;
+		width: 100px;
+	}
+</style>
+
 <div class="container">
 	<div class="content">
-		<h3>게시판</h3>
+		<h3>Portfolio</h3>
 		<hr>
 		<!-- <div id="div01"	style="text-align: center; border: 1px solid #5AAFFF; height: 500px; overflow-y: scroll;"> -->
 		<div class="wrap-loading"><img src="/porget/img/Spin-1s-200px.gif"/></div>
@@ -20,9 +35,6 @@
 <div class="bg-white p-4 rounded shadow-sm h-100">
 	<button class="btn-post btn btn-primary btn-circle btn-circle-xl m-1">+</button>
 </div>
-
-<!-- 모달창 -->
-<div class="modal" id="myModal"></div>
 
 
 <jsp:include page="/WEB-INF/views/include/footer.jsp" />

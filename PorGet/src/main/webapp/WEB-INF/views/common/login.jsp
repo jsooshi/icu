@@ -2,11 +2,16 @@
     pageEncoding="UTF-8"%>
 
 <jsp:include page="/WEB-INF/views/include/header.jsp"/>	
+<style>
+	.container {
+		width: 50%;
+	}
 
+</style>
 
 <div class="container">
 		<div class="avatar">
-			<img src="/porget/img/member/avatar.png" alt="Avatar">
+			<img src="/porget/img/defaultMan.png">
 		</div>				
 		<h4 class="modal-title">Member Login</h4>	
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
