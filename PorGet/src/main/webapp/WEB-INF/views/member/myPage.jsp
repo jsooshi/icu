@@ -217,7 +217,7 @@
 						success: function(result){
 							if(result == "success"){
 								alert("강퇴 완료");
-								window.location.href = '/porget/admin/member';
+								window.location.href = '/porget/admin/';
 							}else{
 								alert("강퇴 실패");
 							}

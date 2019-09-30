@@ -15,14 +15,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  </sql>
 
 	<select id="selectReportPage" resultType="ReportVO">
+		<![CDATA[
+		select reportNum, reportType, reportDate, reportResultDate, reportResult from (
 		select /*+  INDEX_DESC(report report_pk)*/
-		reportNum,
+		rownum, reportNum,
 		 CASE reportType when '1' then '부적절한 홍보 게시물'
 		 				when '2' then '폭언, 욕설 사용'
 		 				when '3' then '저작권 침해'
 		 			 else '폭언, 욕설 사용' end as reportType, 
 		 reportDate, reportResultDate, reportResult
-		from report
+		from report where rownum <= #{pageNum} * #{amount})
+		where rownum > (#{pageNum}-1) * #{amount}
+		]]>
 	</select>
 
 	<select id="selectReport" resultType="ReportVO">
@@ -38,7 +42,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 	<update id="updateReport">
-		update report set reportResult = #{reportResult}, reportResultDate = sysdate where reportNum=#{reportNum}
+		update report set reportResult = '처리완료', reportResultDate = sysdate where reportNum=#{reportNum}
 	</update>
 	
 	<select id="reportTotal" resultType="int">

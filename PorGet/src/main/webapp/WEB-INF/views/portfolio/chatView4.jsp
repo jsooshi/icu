@@ -904,9 +904,7 @@ $(document).ready(function() {
 									<div class="modal-body">
 										<table>
 											<tr>
-												<td><label>게시글:</label></td>
-												<td><input type="text" class="form-control"
-													name="pfname"></td>
+												<td><label>신고 대상 : ${param.toUname }</label></td>
 											</tr>
 										</table>
 										<br>
@@ -931,7 +929,7 @@ $(document).ready(function() {
 									<div class="modal-footer">
 										<button type="submit" class="btn btn-default" 
 											>신고 접수</button>
-										<button type="button" class="btn btn-default close"
+										<button type="button" class="btn btn-default" data-dismiss="modal"
 											>닫기</button>
 									</div>
 								</div>
