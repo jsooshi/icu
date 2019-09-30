@@ -45,11 +45,6 @@ public class ReportDAOImpl implements ReportDAO{
 	}
 
 	@Override
-	public int updateReport(ReportVO vo) {
-		return sqlSession.update("report.updateReport",vo);
-	}
-
-	@Override
 	public int reportTotal(Criteria cri) {
 		return sqlSession.selectOne("report.reportTotal",cri);
 	}
@@ -67,5 +62,9 @@ public class ReportDAOImpl implements ReportDAO{
 	@Override
 	public int deleteUser(String uname) {
 		return sqlSession.delete("report.deleteUser",uname);
+	}
+	@Override
+	public int updateReport(int reportNum) {
+		return sqlSession.update("report.updateReport", reportNum);
 	}
 }

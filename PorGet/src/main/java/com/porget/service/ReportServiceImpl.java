@@ -16,6 +16,9 @@ import com.porget.persistence.ReportDAO;
 
 @Service
 public class ReportServiceImpl implements ReportService{
+	
+	@Inject
+	private ReportService service;
 
 	@Inject
 	private ReportDAO dao;
@@ -44,14 +47,6 @@ public class ReportServiceImpl implements ReportService{
 	}
 
 	@Override
-	public boolean updateReport(ReportVO vo) {
-		if(dao.updateReport(vo)==1) {
-			return true;
-		}
-		return false;
-	}
-
-	@Override
 	public int reportTotal(Criteria cri) {
 		return dao.reportTotal(cri);
 	}
@@ -77,4 +72,9 @@ public class ReportServiceImpl implements ReportService{
 		if(dao.deleteUser(uname)==1) return true;
 		return false;
 	}
+	
+	public boolean updateReport(int reportNum) {
+		if(dao.updateReport(reportNum)==1) return true;
+		return false;
+	};
 }

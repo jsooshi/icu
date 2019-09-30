@@ -1,57 +1,47 @@
 package com.porget.domain;
 
+import java.util.Date;
+import java.util.List;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class UserVO {
 	
 	private String uname;
 	private String upass;
 	private String uemail;
 	private String uphoto;
-	private int ucheck;
+	private String uinfo;
+	private Date udate;
+	private int enabled;
 	
+	private List<AuthVO> authList;
 	
-	
-	
-	public int getUcheck() {
-		return ucheck;
-	}
-	public void setUcheck(int ucheck) {
-		this.ucheck = ucheck;
-	}
-	public String getUname() {
-		return uname;
-	}
-	public void setUname(String uname) {
-		this.uname = uname;
-	}
-	public String getUpass() {
-		return upass;
-	}
-	public void setUpass(String upass) {
-		this.upass = upass;
-	}
-	public String getUemail() {
-		return uemail;
-	}
-	public void setUemail(String uemail) {
-		this.uemail = uemail;
+	public UserVO() {
 	}
 
-	public String getUphoto() {
-		return uphoto;
-	}
-	public void setUphoto(String uphoto) {
+	public UserVO(String uname, String upass, String uemail, String uphoto, String uinfo, int enabled) {
+		super();
+		this.uname = uname;
+		this.upass = upass;
+		this.uemail = uemail;
 		this.uphoto = uphoto;
+		this.uinfo = uinfo;
+		this.enabled = enabled;
 	}
+
 	@Override
 	public String toString() {
-		return "UserVO [uname=" + uname + ", upass=" + upass + ", uemail=" + uemail + ", uphoto=" + uphoto + ", ucheck="
-				+ ucheck + "]";
+		return "UserVO [uname=" + uname + ", upass=" + upass + ", uemail=" + uemail + ", uphoto=" + uphoto + ", uinfo="
+				+ uinfo + ", udate=" + udate + ", enabled=" + enabled + ", authList=" + authList + "]";
 	}
-	
-	
-	
-	
-	
-	
 
+	
+	
+		
+	
+	
 }

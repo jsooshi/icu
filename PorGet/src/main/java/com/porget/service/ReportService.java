@@ -18,8 +18,6 @@ public interface ReportService {
 	public List<ReportVO> selectReportPage(Criteria cri);//신고글 조회
 	public ReportVO selectReport(int reportNum);//신고내용 확인
 	
-	public boolean updateReport(ReportVO vo);
-	
 	public int reportTotal(Criteria cri);
 	
 	public List<ChatVO> selectChatContext(String reporter,String defendant);
@@ -27,4 +25,6 @@ public interface ReportService {
 	public boolean removePortpolio(int pfnum);
 	
 	public boolean removeUser(String uname);
+	
+	public boolean updateReport(int reportNum);
 }

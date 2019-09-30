@@ -5,7 +5,16 @@
 <mapper namespace="userList">    
 	<!-- 회원가입 -->
 	<insert id="insert">
-		insert into userList values (#{uname}, #{upass}, #{uemail},#{uphoto},#{ucheck},null)
+		insert into userList (uname, upass, uemail, uphoto, uinfo, enabled) 
+						values (#{uname}, #{upass}, #{uemail},#{uphoto},null,1)
+	</insert>
+	
+	<insert id="insertAuth">
+		insert into userlist_auth (uname,auth) values (#{uname},'ROLE_USER')
+	</insert>
+	
+	<insert id="insertAuth2">
+		insert into userlist_auth (uname,auth) values (#{uname},'ROLE_RECRU')
 	</insert>
 	
 	<!-- 로그인 -->
@@ -51,6 +60,41 @@
 	<update id="changeUphotho">
 		update userlist set uphoto=#{uphoto} where uname=#{uname}
 	</update>
+	
+	<select id="likePortfolio" resultType="PortfolioVO">
+		select pfname, pfdate, pfthumb, uname, pfposition
+		from portfolio where 
+		pfnum IN(select pfnum from recommend where uname = #{uname})
+	</select>
+	
+	<delete id="breakMember">
+		delete from userlist where uname = #{uname}
+	</delete>
+	
+	<!-- 시큐리티 -->
+	<resultMap type="com.porget.domain.UserVO" id="userMap">
+		<id property="uname" column ="uname"></id>
+		<result property="uname" column="uname"/>
+		<result property="upass" column="upass"/>
+		<result property="uemail" column="uemail"/>
+		<result property="uphoto" column="uphoto"/>
+		<result property="uinfo" column="uinfo"/>
+		<result property="enabled" column="enabled"/>
+		<collection property="authList" resultMap="authMap"></collection>
+	</resultMap>
+	
+	<resultMap type="com.porget.domain.AuthVO" id="authMap">
+		<result property="uname" column="uname"/>
+		<result property="auth" column="auth"/>
+	</resultMap>
+	
+	
+	<select id="read" resultMap="userMap">
+		select u.uname, upass, uemail, uphoto, uinfo, enabled, auth
+			from userlist u left outer join userlist_auth auth
+			on u.uname = auth.uname
+			where u.uemail = #{uemail}
+	</select>
 	
 
 </mapper>

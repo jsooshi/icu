@@ -14,5 +14,7 @@ public interface MyPageDAO {
 	
 	public int changeUname(String uname);//닉네임변경
 	public int changeUphoto(HashMap<String,String> photoName);
+	public List<PortfolioVO> likePortfolio(String uname);
+	public int breakMember(String uname);
 	
 }

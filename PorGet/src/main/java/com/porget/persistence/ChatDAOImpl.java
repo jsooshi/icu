@@ -24,13 +24,35 @@ public class ChatDAOImpl implements ChatDAO{
 	}
 
 	@Override
-	public List<Map<String, Object>> chatList(ChatVO vo) {
-		return sqlSession.selectList("chat.chatList", vo);
+	public List<Map<String, Object>> chatList(ChatVO vo, int base, int bound) {
+		RowBounds bounds = new RowBounds(bound-10*base, 10);
+		return sqlSession.selectList("chat.chatList", vo, bounds);
 	}
 
 	@Override
 	public String selectUphoto(String uname) {
 		return sqlSession.selectOne("chat.selectUphoto", uname);
+	}
+
+	@Override
+	public List<Map<String, Object>> chatListAll(String uname) {
+		return sqlSession.selectList("chat.chatListAll", uname);
+	}
+
+	@Override
+	public int chatListCount(ChatVO vo) {
+		return sqlSession.selectOne("chat.chatListCount", vo);
+	}
+
+	@Override
+	public int deleteChat(ChatVO vo) {
+		return sqlSession.delete("chat.deleteChat", vo);
+	}
+
+	@Override
+	public List<Map<String, Object>> deleteChattoUname(String uname) {
+		RowBounds bounds = new RowBounds(0, 1);
+		return sqlSession.selectList("chat.chatListAll", uname, bounds);
 	}
 
 
