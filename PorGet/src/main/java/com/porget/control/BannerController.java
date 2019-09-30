@@ -21,4 +21,9 @@ public class BannerController {
 		Map<String,Object> map = service.selectBannerPortfolio();
 		return map;
 	}
+	
+	@RequestMapping("/insertBanner")
+	public @ResponseBody boolean insertBanner(int pfnum) {
+		return service.insertBanner(pfnum);
+	}
 }

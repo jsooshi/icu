@@ -22,7 +22,9 @@ public class BannerServiceImpl implements BannerService{
 	@Override
 	public Map<String, Object> selectBannerPortfolio() {
 		Map<String,Object> map = dao.selectBannerPortfolio();
-		map.put("PFTHUMB",map.get("PFTHUMB").toString().split("\\|")[0]);
+		if(map!=null) {
+			map.put("PFTHUMB",map.get("PFTHUMB").toString().split("\\|")[0]);
+		}
 		return map;
 	}
 

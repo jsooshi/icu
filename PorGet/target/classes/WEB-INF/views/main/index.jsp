@@ -9,12 +9,22 @@
 	
 	.jumbotron {
 		background-image: url("/porget/img/main/whale.jpg");
+		padding:200px;
 		height: 500px;
 		background-position: center;
 		background-repeat: no-repeat;
 		background-size: cover;
 	}
-
+	.jumbotron .pfname{
+		font-size: 30px;
+		text-align: center;
+		background-color: rgba( 255, 255, 255, 0.1 );
+	}
+	.jumbotron .joa, .jumbotron .uname{
+		text-align: center;
+		margin-top: 15px;
+		background-color: rgba( 255, 255, 255, 0.3 );
+	}
 </style>
 
 
@@ -24,9 +34,9 @@
 
 <!-- Banner -->
     <div class="jumbotron" >
-    	<div name='pfname'>asdfasdf</div>
-    	<div name='joa'>asdf</div>
-    	<div class='uname'>asdfasdf</div>
+    	<div class='pfname'></div>
+    	<div class='joa'></div>
+    	<div class='uname'></div>
     </div>	
 
 <%-- <!-- 임시 -->
@@ -64,6 +74,20 @@
 
 <script>
 	$(function(){
+		var bannerNum=0;
+		$.ajax({
+			url:"/porget/banner/selectBanner",
+			success:function(banner){
+				if(banner.PFNUM != null){
+					bannerNum=banner.PFNUM
+					var pfThumb = 'url("/porget/files/'+banner.PFTHUMB+"\")"
+					$('.jumbotron').css("background-image",pfThumb)
+					$('.jumbotron').children('div.pfname').html(banner.PFNAME)
+					$('.jumbotron').children('div.joa').html("좋아요 : "+banner.JOA)
+					$('.jumbotron').children('.uname').html(banner.UNAME)
+				}
+			}
+		})
 		$.ajax({
 			url:"/porget/mainpopular",
 			success: function(result){
@@ -77,16 +101,9 @@
 				$('#recent').html(result);
 			}
 		});
-		
-		$.ajax({
-			url:"/porget/banner/selectBanner",
-			success:function(banner){
-				console.log("ㅇㅇㅇㅇ ㅁㄴㅇㄹ>> "+banner.PFTHUMB)
-				var pfThumb = 'url("/porget/files/'+banner.PFTHUMB+"\")"
-				$('.jumbotron').css("background-image",pfThumb)
-				$('.jumbotron').children('div[name=pfname]').html(banner.PFNAME)
-				$('.jumbotron').children('div[name=joa]').html(banner.JOA)
-				$('.jumbotron').children('.uname').html(banner.UNAME)
+		$('div.jumbotron').on("click",function(){
+			if(bannerNum !=0){
+				location.href="/porget/portfolio/view?pfnum="+bannerNum;
 			}
 		})
 	});

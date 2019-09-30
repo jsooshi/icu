@@ -5,14 +5,14 @@
 <mapper namespace="banner">
 
 	<insert id="insertBanner">
-		insert into bannerPortfolio(bannernum,pfnum) values(banner_SEQ.nextval,#{pfnum})
+		insert into portfolioBanner(bannerNum,pfnum) values(portfolioBanner_SEQ.nextval,#{pfnum})
 	</insert>
 	
 	<select id="selectBannerPortfolio" resultType="Map">
 		select p.uname, p.pfnum, p.pfname, p.pfthumb, (select count(*) from recommend rc where p.pfnum=rc.pfnum) as joa
 		from portfolio p join 
 		(SELECT MAX(pfnum)KEEP(DENSE_RANK FIRST ORDER BY bannernum DESC) as pfnum 
-    	FROM bannerportfolio) b on p.pfnum =b.pfnum
+    	FROM portfolioBanner) b on p.pfnum =b.pfnum
 	</select>
 
 </mapper>

@@ -2,12 +2,24 @@
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <jsp:include page="/WEB-INF/views/include/header.jsp" />
 <script src="/porget/js/jquery-3.js"></script>
 <script>
 var realPath = "${realPath}";
+
+function insertBanner(num){
+	if(confirm("배너로 등록하시겠습니까??")){
+		$.ajax({
+			url:"/porget/banner/insertBanner",
+			data:{pfnum:num},
+			success:function(){
+				alert("등록에 성공했습니다.")
+			}
+		})
+	}
+}
 
 function delPortfolio(num){
 	if(confirm("정말 삭제하시겠습니까?")){
@@ -29,7 +41,7 @@ var writer="${list.UNAME }"
 
 <style>
 	.maxSize{
-		width: 925px;
+		width: 730px;
 		height: 500px;
 	}
 	.imgMaxSize{
@@ -174,6 +186,10 @@ var writer="${list.UNAME }"
 					</div>
 				</div>
 				<div class="card my-4">
+					<sec:authorize access="hasRole('ROLE_ADMIN')">
+						<a href="javascript:insertBanner(${list.PFNUM })" class="btn btn-warning pd-4"
+							>포트폴리오 배너 등록</a>
+					</sec:authorize>
 					<c:if test="${not empty list.PFURL}">
 						<a href="http://${list.PFURL }" class="btn btn-primary pd-4"
 							target="_blank"> 포트폴리오 링크 </a>
