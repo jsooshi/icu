@@ -3,25 +3,7 @@
 <!DOCTYPE html>
 <html lang="kr">
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Membership Join</title>
-
-    <meta name="description" content="Source code generated using layoutit.com">
-    <meta name="author" content="LayoutIt!">
-
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	
-	
-	<script src="/porget/js/jquery-3.js"></script>
-	<script src="/porget/js/ajax.js"></script>
+<jsp:include page="/WEB-INF/views/include/header.jsp" />
 	<style type="text/css">
 body {
 	color: #fff;
@@ -249,38 +231,4 @@ body {
 		</div>
 	</div>
 	
-	
-
-
-
-<!--      	<script>
-		$(function() {
-			var formData = new FormData();
-			formData.append("uname",$("input[name=uname]").val());
-			formData.append("uemail",$("input[name=uemail]").val());
-			formData.append("upass",$("input[name=upass]").val());
-			
-			$("#uploadBtn").on("click", function(event) {
-				var inputFile = $("input[name='file']").val();
-				console.log(inputFile);
-
-				formData.append("file", inputFile);
-			})
-
-			$.ajax({
-				url : "/porget/userjoin",
-				type: "post",
-				processData : false,
-				contentType : false,
-				data : formData,
-				type : 'post',
-				success : function(result) {
-					console.log(result);
-					alert("Uploaded");
-				}
-			})// ajax
-		})
-	</script> --> 
-</body>
-
-</html>
+<jsp:include page="/WEB-INF/views/include/footer.jsp" />

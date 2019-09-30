@@ -3,19 +3,19 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>마이페이지</title>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
-<body>
 
 	<jsp:include page="/WEB-INF/views/include/header.jsp" />
+<style>
+	
+	.container {
+		height: 70vh;
+	}
+
+	#setting {
+		margin-top: 30px;
+	}
+</style>
+<title>마이페이지</title>
 
 	<hr>
 	<div class="container">
@@ -112,7 +112,7 @@
 								<button type="button" class="btn btn-start-order" id='changeUphoto'>프로필 사진 변경</button>
 							</div>
 							<div class="form-group">
-								<button id="breakMember" class="btn btn-default">회원탈퇴</button>
+								<button id="breakMember" class="btn btn-warning">회원탈퇴</button>
 							</div>
 							
 						<%-- 					<h5>닉네임: ${vo.uname }</h5>
@@ -134,7 +134,7 @@
 
 
 
-	<jsp:include page="/WEB-INF/views/include/footer.jsp" />
+	
 	<script>
 		function isImageFile( fileName ) {
 		    var fileSuffix = fileName.substring(fileName.lastIndexOf(".") + 1);
@@ -157,7 +157,7 @@
 				var uname = $('input[name="uname"]').val();
 
 				$.ajax({
-					url : "mypage/changeuname",
+					url : "/porget/mypage/changeuname",
 					type : "post",
 					data : {
 						"uname" : uname
@@ -189,7 +189,7 @@
 					if(confirm("정말 사진을 변경하시겠습니까")){
 						console.log(formData.get("photo"))
 						$.ajax({
-							url : "mypage/changeuphoto",
+							url : "/porget/mypage/changeuphoto",
 							processData:false,
 							contentType:false,
 							type : "post",
@@ -217,7 +217,7 @@
 						success: function(result){
 							if(result == "success"){
 								alert("강퇴 완료");
-								window.location.href = '/porget/admin/member';
+								window.location.href = '/porget/admin';
 							}else{
 								alert("강퇴 실패");
 							}
@@ -244,6 +244,4 @@
 			})
 		});
 	</script>
-
-</body>
-</html>
+	<jsp:include page="/WEB-INF/views/include/footer.jsp" />

@@ -3,37 +3,8 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-	crossorigin="anonymous">
-
-<style type="text/css">
-.maxSize {
-	width: 925px;
-	height: 500px;
-}
-
-.imgMaxSize {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	max-width: 100%;
-	max-height: 100%;
-	margin: auto;
-}
-</style>
-<title>Document</title>
+<jsp:include page="/WEB-INF/views/include/header.jsp" />
 <script src="/porget/js/jquery-3.js"></script>
 <script>
 var realPath = "${realPath}";
@@ -45,109 +16,10 @@ function delPortfolio(num){
 }
 $(function(){ //jquery영역
 	
-	$(".carousel-indicators").children('li').eq(0).addClass("active");
-	$(".carousel-inner").children('div').eq(0).addClass("active");
-	$('.carousel').carousel()
-	
-	$.ajax({ //조회수 업데이트 
-		url: '/porget/replies/read',
-		type: 'post',
-		data: {
-			pfnum : ${param.pfnum}
-		}
-		
-	})	 
-	
-	//게시글을 열람, 접속한 사람, 무조건 실행? 실행. 
-	function replyList (){ 	
-	 $.ajax({
-		 url : '/porget/replies/list',
-		 type : 'post',
-		 data: {
-			 pfnum : ${param.pfnum},
-			 uname : "${uname}",
-			 
-		 },
-		 success: function(result){
-			 $('#replyArea').html(result);
-			 
-		 }
-	 })
-	 
-	}
-	
-	replyList(); //댓글리스트 로딩
-		
-	$('a[name=replySave]').click(function(){ //댓글작성 클릭 
-		var replyCon = $("#replyContents").val(); //댓글내용 
-		if(replyCon===""){
-			alert('내용을 입력하세요')
-			$('#replyContents').focus();
-			return; 
-		}
-		var replyData={
-				pfnum: ${param.pfnum},  //게시판번홈
-				rcontent: replyCont, //댓글내용
-				rdeep: 0,
-				uname: "${uname}" //userID 
-							
-			}; 
-	
-		var msg = "reply,${uname},${list.UNAME },${param.pfnum}"
-		$.ajax({
-			url: '../replies/save',
-			type: "post",
-			data:  replyData,
-			success: function(){
-				replyList()
-				socket.send(msg);
-				
-			},
-			error:function(xhr,staTxt){
-				alert("에러?"+staTxt+':'+xhr.status)
-			}
-		})//ajax	
-		
-		
-		$('#replyContents').val(''); //댓글초기화
-		
-	})//replySave click
-
-	
-	$('#replyContents').keyup(function (e){ //댓글글자수카운터 및 제한
-		var content = $(this).val();
-		$('#counter').html("("+content.length+"/최대100자)");
-		if(content.length>150){
-			alert('최대100자까지 가능합니다')
-			$(this).val(content.substring(0, 100));
-			$('#counter').html('(100/최대100자)')
-		}
-	});
-	
-	$('#recommend').on('click',"a",function(event){//좋아요버튼
-		var uName = '${uname}';
-		event.preventDefault();
-		if(uName == ""){
-			alert("로그인 해주세요");	
-			return;
-		}else {
-			 $.ajax({
-				 url : '/porget/portfolio/good',
-				 type: 'post',
-				 data: {
-					 pfnum : ${param.pfnum}
-				 },
-				 success: function(result){
-					 var rec = $(result).find('#recommend').html();
-					 $('#recommend').html(rec); 
-				}
-			})
-		}
-	});
-	
 	  $("#myBtn").click(function(){
 	    $("#myModal").modal();
 	  });
+	  
 }); //ready
 
 var pfnum=${param.pfnum}
@@ -156,6 +28,7 @@ var writer="${list.UNAME }"
 
 </script>
 <script src="/porget/js/reply.js"></script>
+
 <style>
 	.maxSize{
 		width: 925px;
@@ -183,10 +56,8 @@ var writer="${list.UNAME }"
 		left:35%;
 	}
 </style>
-</head>
-<body>
 
-	<jsp:include page="/WEB-INF/views/include/header.jsp" />
+	
 
 
 	<!-- Page Content -->
@@ -288,8 +159,9 @@ var writer="${list.UNAME }"
 				<div class="card my-4">
 					<div class="row">
 						<div class="col-lg-4">
-							<img src="/porget/files/profile/${list.UPHOTO } "
-								class="rounded-circle" style="width: 50px;">
+							<a href="/porget/mypage/${list.UNAME }">
+                                <img src="/porget/files/profile/${list.UPHOTO } " class="rounded-circle">
+                            </a>
 						</div>
 						<div class="col-lg-8">
 							<ul class="list-unstyled mb-0">
@@ -305,7 +177,7 @@ var writer="${list.UNAME }"
 				</div>
 				<div class="card my-4">
 					<c:if test="${not empty list.PFURL}">
-						<a href="${list.PFURL }" class="btn btn-primary pd-4"
+						<a href="http://${list.PFURL }" class="btn btn-primary pd-4"
 							target="_blank"> 포트폴리오 링크 </a>
 					</c:if>
 					<c:if test="${not empty list.PFFILE}">
@@ -357,7 +229,7 @@ var writer="${list.UNAME }"
 											</div>
 										</div>
 										<div class="modal-footer">
-											<button type="submit" class="btn btn-default" id="singo" onclick="location.href='insert">신고 접수</button>
+											<button type="submit" class="btn btn-default" id="singo" onclick="location.href='insert'">신고 접수</button>
 											<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 										</div>
 									</div>
@@ -394,9 +266,3 @@ var writer="${list.UNAME }"
      </div>
      
 	<jsp:include page="/WEB-INF/views/include/footer.jsp"/>	
-
-	
-
-</body>
-
-</html>

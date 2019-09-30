@@ -6,7 +6,7 @@
 	<div class="container-fluid padding">
 		<div class="row text-center">
 			<div class="col-sm-6">icu Company</div>
-			<div class="col-sm-6">footer</div>
+			<div class="col-sm-6"><a href="https://github.com/jsooshi/icu">GitHub</a></div>
 		</div>
 		<div class="col-12">
 			<hr class="light">
