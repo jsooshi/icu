@@ -18,6 +18,7 @@
 <!DOCTYPE html>
 <html class=''>
 <head>
+
 <!-- <script src='//production-assets.codepen.io/assets/editor/live/console_runner-079c09a0e3b9ff743e39ee2d5637b9216b3545af0de366d4b9aad9dc87e26bfd.js'></script><script src='//production-assets.codepen.io/assets/editor/live/events_runner-73716630c22bbc8cff4bd0f07b135f00a0bdc5d14629260c3ec49e5606f98fdd.js'></script><script src='//production-assets.codepen.io/assets/editor/live/css_live_reload_init-2c0dc5167d60a5af3ee189d570b1835129687ea2a61bee3513dee3a50c115a77.js'></script><meta charset='UTF-8'><meta name="robots" content="noindex"><link rel="shortcut icon" type="image/x-icon" href="//production-assets.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico" /><link rel="mask-icon" type="" href="//production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111" /><link rel="canonical" href="https://codepen.io/emilcarlsson/pen/ZOQZaV?limit=all&page=74&q=contact+" />
  -->
  <script src="/porget/js/sockjs.min.js"></script>  
@@ -802,6 +803,7 @@ $(document).ready(function() {
 <body>
 
 
+
 <div id="frame">
 	<div id="sidepanel">
 		<div id="profile">
@@ -848,7 +850,7 @@ $(document).ready(function() {
 			</ul>
 		</div>
 		<div id="bottom-bar">
-			<button id="addcontact"><i class="fa fa-user-plus fa-fw" aria-hidden="true"></i> <span>Add contact</span></button>
+			<button id="addcontact" onclick="location.href='/porget/'"><i class="fa fa-user-plus fa-fw" aria-hidden="true"></i> <span>Go to Porget</span></button>
 			<button id="settings"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> <span>Settings</span></button>
 		</div>
 	</div>
@@ -857,6 +859,7 @@ $(document).ready(function() {
 			<img src="/porget/files/profile/${toUphoto}" alt="" />
 			<p>${toUname }</p>
 			<div class="social-media">
+				<button class="btn btn-danger" id="chatReportButton" data-toggle="modal" data-target="#reportModal">신고</button>
 				 <a href="/porget/deleteChat?toUname=${toUname}&uname=${uname}">삭제</a>
 				<i class="fa fa-facebook" aria-hidden="true"></i>
 				<i class="fa fa-twitter" aria-hidden="true"></i>
@@ -884,6 +887,60 @@ $(document).ready(function() {
 		</div>
 	</div>
 </div>
+
+
+<!-- Modal -->
+					<form role="form" method="post" action="/porget/report/insert">
+						<!-- Modal -->
+						<input type="hidden" name="reportPath" value="chat">
+						<input type="hidden" name="reporter" value="${uname }">
+						<input type="hidden" name="defendant" value="">
+						<div class="modal fade" id="reportModal" role="dialog">
+							<div class="modal-dialog">
+
+								<!-- Modal content-->
+								<div class="modal-content">
+									<div class="modal-header">
+										<h4 class="modal-title">신고하기</h4>
+									</div>
+									<div class="modal-body">
+										<table>
+											<tr>
+												<td><label>신고 대상 : ${param.toUname }</label></td>
+											</tr>
+										</table>
+										<br>
+										<div class="input-group mb-3">
+											<div class="input-group-prepend">
+												<label class="input-group-text" for="inputGroupSelect01">사유</label>
+											</div>
+											<select class="custom-select" name="reportType">
+												<option value="" disabled selected>신고 유형을 선택해주세요.</option>
+												<option value="1">부적절한 홍보 게시물</option>
+												<option value="2">폭언, 욕설 사용</option>
+												<option value="3">저작권 침해</option>
+											</select>
+										</div>
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<span class="input-group-text">신고 내용</span>
+											</div>
+											<textarea class="form-control" aria-label="With textarea" name="reportContext"></textarea>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="submit" class="btn btn-default" 
+											>신고 접수</button>
+										<button type="button" class="btn btn-default" data-dismiss="modal"
+											>닫기</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+					<!-- /.modal -->
+
+
 <script src='//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js'></script>
 <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>	
@@ -896,7 +953,7 @@ connect();
 
 
 	 function connect() {
-		 	var ws = new WebSocket("ws://192.168.0.64/porget/chat");
+		 	var ws = new WebSocket("ws://192.168.0.29/porget/chat");
 		 	sock = ws
 		    sock.onopen = function() {
 		        console.log('open');
@@ -904,7 +961,7 @@ connect();
 		    sock.onmessage = function(evt) {
 	    	   var data = evt.data;
 	  		   var obj = JSON.parse(data)  	   
-	    	   appendMessage(obj.chatContext, obj.senderUname);
+	    	  /*  appendMessage(obj.chatContext, obj.senderUname); */
 		    };
 		    sock.onclose = function() {
 		    	 appendMessage("연결을 끊었습니다.");
@@ -1025,7 +1082,7 @@ $("#status-options ul li").click(function() {
 				data : {uname:uname},
 				success : function(data) {
 					$('.contacts ul').html("");
-					console.log(data);
+				/* 	console.log(data); */
 					$(data).appendTo($('.contacts ul'));
 				}
 				
@@ -1068,6 +1125,10 @@ $(document).ready(function() {
 	  $('.submit').click(function() {
 			send();
 		});
+	  $('#chatReportButton').on("click",function(){
+		  $('input[name="defendant"]').attr('value',$('#frame .contact-profile p').html())
+		  console.log($('input[name="defendant"]').attr('value'))
+	  })
 });
 	
 </script>

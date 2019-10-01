@@ -305,7 +305,11 @@
 		
 		$('#chatLogDown').on('click',function(){
 			chatLogDown()
-		})		
+		})
+		
+		$('#defendantInfo').on('click',function(){
+			location.href = "/porget/mypage/${param.defendant}"
+		})
 	})
 </script>
 </head>
@@ -316,6 +320,7 @@
 				<img src="" alt="" />
 				<p>${toUname }</p>
 				<div class="social-media">
+					<button type="button" class="btn btn-success" id="defendantInfo">피신고자 정보</button>
 					<button type="button" class="btn btn-primary" id="chatLogDown">다운로드</button>
 				</div>
 			</div>

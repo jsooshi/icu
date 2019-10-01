@@ -58,7 +58,6 @@ public class ReportController {
 	public String reportList(Model model,Criteria cri) {
 		model.addAttribute("list", service.selectReportPage(cri));
 		model.addAttribute("pageMaker",new PageDTO(cri, service.reportTotal(cri)));
-		model.addAttribute("pfnum", 8);
 		
 		return "admin/report/reportList";
 	}
@@ -88,6 +87,11 @@ public class ReportController {
 	@RequestMapping("/selectChatContext")
 	public @ResponseBody List<ChatVO> selectChatContext(String reporter, String defendant){
 		return service.selectChatContext(reporter, defendant);
+	}
+	
+	@RequestMapping("/updateResult")
+	public @ResponseBody boolean updateResult(int reportNum) {
+		return service.updateReport(reportNum);
 	}
 
 }

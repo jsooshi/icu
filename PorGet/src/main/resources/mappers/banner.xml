@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="banner">
+
+	<insert id="insertBanner">
+		insert into portfolioBanner(bannerNum,pfnum) values(portfolioBanner_SEQ.nextval,#{pfnum})
+	</insert>
+	
+	<select id="selectBannerPortfolio" resultType="Map">
+		select p.uname, p.pfnum, p.pfname, p.pfthumb, (select count(*) from recommend rc where p.pfnum=rc.pfnum) as joa
+		from portfolio p join 
+		(SELECT MAX(pfnum)KEEP(DENSE_RANK FIRST ORDER BY bannernum DESC) as pfnum 
+    	FROM portfolioBanner) b on p.pfnum =b.pfnum
+	</select>
+
+</mapper>

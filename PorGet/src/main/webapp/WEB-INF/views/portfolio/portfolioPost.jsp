@@ -1,14 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+<jsp:include page="/WEB-INF/views/include/header.jsp" />
 <title>포트폴리오 등록</title>
-<script src="/porget/js/jquery-3.js"></script>
 <link rel="stylesheet" href="/porget/css/portfolioPost.css">
 <script type="text/javascript">
 	var fileCount =0;
@@ -184,13 +179,10 @@
 </head>
 <body>
 
-	<jsp:include page="/WEB-INF/views/include/header.jsp" />
+	
 
 	<div class="container">
 				<h3>포트폴리오 등록</h3>
-		<div class="row">
-		
-			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xs-offset-3">
 				<form id="contact-form" class="form" action="#" method="POST"
 					role="form">
 					<div class="form-group">
@@ -241,11 +233,5 @@
 					</div>
 				</form>
 			</div>
-		</div>
-	</div>
 	
 	<jsp:include page="/WEB-INF/views/include/footer.jsp"/>	
-
-
-</body>
-</html>

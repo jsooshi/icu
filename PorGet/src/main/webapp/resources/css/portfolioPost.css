@@ -44,3 +44,15 @@ textarea {
 	border-color: #5e9bfc;
 	color: #5e9bfc;
 }
+
+.container {
+	border: 1px solid gray;
+	margin:30px auto;
+	width: 90vh;
+}
+
+h3 {
+	margin-top : 20px;
+	text-align:center;
+}
+

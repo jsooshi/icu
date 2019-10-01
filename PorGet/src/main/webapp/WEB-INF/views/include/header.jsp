@@ -138,7 +138,7 @@
 })
 
 	function connectWS() {
-		var ws = new WebSocket("ws://192.168.0.120/porget/replyEcho?pfnum=1");
+		var ws = new WebSocket("ws://192.168.0.29/porget/replyEcho?pfnum=1");
 		socket = ws
 		ws.onopen = function() {
 			console.log('Info: connection opened')
@@ -177,7 +177,7 @@
 <!-- Navigation -->
 <!-- 상단에  알람바 변경 -->
 <div id="socketAlert" class="alert alert-success" role="alert" style="display:none;left:0px ;top:100px; position: fixed; z-index: 1;"></div> 
-<nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
 	<a href="/porget" class="navbar-brand">
 	    <img id="logo" class="d-inline-block mr-1" alt="Logo" src="/porget/img/main/dotty.svg">
         <span>PorGet</span>
@@ -215,7 +215,7 @@
 							<div class="dropdown show">
 								<a class="portfolio nav-link" href="#" role="button"
 									id="dropdownUnreadLink" data-toggle="dropdown"
-									aria-haspopup="true" aria-expanded="false"> Notification <c:if
+									aria-haspopup="true" aria-expanded="false"><img src="/porget/img/bell.png" class="bell"><c:if
 										test="${unread > 0 }">
 										<span class="badge badge-danger">${unread }</span>
 									</c:if>
@@ -236,19 +236,19 @@
 						</li>
 				
 					<!-- <button onclick="location.href='portfolio/post'" class="btn btn-primary">Posting!</button> -->
-					<div class="dropdown show">
-						  <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
- 						  	<img src="/porget/files/profile/${sessionScope.uphoto }" class="rounded-circle" style="width: 50px; height:50px;"> 
-						  </a>
-						
-						  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-						    <div class="dropdown-item">${pinfo.user.uname}님 환영합니다! </div>
-						    <a class="dropdown-item" href="/porget/mypage#portfolio">포트폴리오</a>
-						    <a class="dropdown-item" href="/porget/mypage#bookmark">북마크</a>
-						    <a class="dropdown-item" href="/porget/mypage/${pinfo.user.uname}">마이페이지</a>
-						    <a class="dropdown-item" href="/porget/logout">로그아웃</a>
-						  </div>
-					</div>
+					<li class="nav-item">
+						<div class="dropdown show">
+							  <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	 						  	<img src="/porget/files/profile/${sessionScope.uphoto }" class="rounded-circle" style="width: 50px; height:50px;"> 
+							  </a>
+							
+							  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+							    <div class="dropdown-item">${pinfo.user.uname}님 환영합니다! </div>
+							    <a class="dropdown-item" href="/porget/mypage/${pinfo.user.uname}">마이페이지</a>
+							    <a class="dropdown-item" href="/porget/logout">로그아웃</a>
+							  </div>
+						</div>
+					</li>
 				</sec:authorize>
 
 		</ul>

@@ -12,8 +12,6 @@ public interface ReportDAO {
 	public List<ReportVO> selectReportPage(Criteria cri);
 	public ReportVO selectReport(int reportNum);
 	
-	public int updateReport(ReportVO vo);
-	
 	public int reportTotal(Criteria cri);
 	
 	public void insert(ReportVO rvo);
@@ -25,5 +23,7 @@ public interface ReportDAO {
 	public int delete(int pfnum);
 	
 	public int deleteUser(String uname);
+	
+	public int updateReport(int reportNum);
 	
 }

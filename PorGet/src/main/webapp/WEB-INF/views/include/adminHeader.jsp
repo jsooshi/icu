@@ -35,7 +35,7 @@
 			                <a href="/porget/admin/" class="memberPage">회원 관리</a>
 			            </li>
 			            <li>
-			                <a href="#" class="">신고글 관리</a>
+			                <a href="/porget/report/reportList" class="">신고글 관리</a>
 			            </li>
 			            <li>
 			                <a href="/porget">Home</a>

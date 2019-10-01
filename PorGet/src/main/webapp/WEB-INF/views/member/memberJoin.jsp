@@ -1,29 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html lang="kr">
-
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-
-	<title>Join</title>
-
-	<meta name="description" content="Source code generated using layoutit.com">
-	<meta name="author" content="LayoutIt!">
-
-	<link href="css/bootstrap.min.css" rel="stylesheet">
-	<link href="css/style.css" rel="stylesheet">
-
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-</head>
-
-<body>
 
 	<jsp:include page="/WEB-INF/views/include/header.jsp" />
+	<style>
+		.container-fluid {
+			margin-top : 20vh;
+			height: 60vh;
+		}
+	</style>
 
 	<div class="container-fluid">
 		<div class="row">
@@ -40,7 +24,6 @@
 					</div>
 					<div class="col-md-6">
 						<h2>
-							<center></center>
 							Recruiter
 						</h2>
 						<p>
@@ -84,10 +67,6 @@
 	</div>
 	
 	<jsp:include page="/WEB-INF/views/include/footer.jsp" />
-
-	<script src=" js/jquery.min.js"> </script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/scripts.js"></script>
 </body>
 
 </html>

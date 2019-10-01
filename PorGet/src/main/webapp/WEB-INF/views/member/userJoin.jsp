@@ -3,27 +3,7 @@
 <!DOCTYPE html>
 <html lang="kr">
 
-<head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<title>Membership Join</title>
-
-<meta name="description"
-	content="Source code generated using layoutit.com">
-<meta name="author" content="LayoutIt!">
-
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/style.css" rel="stylesheet">
-
-
-<
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-	crossorigin="anonymous">
-
+<jsp:include page="/WEB-INF/views/include/header.jsp" />
 
 <script src="/porget/js/jquery-3.js"></script>
 <script src="/porget/js/ajax.js"></script>
@@ -255,80 +235,4 @@ body {
 		</div>
 	</div>
 
-
-<!-- 
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-12">
-				<h3>Membership Join</h3>
-				<hr>
-				<form id="userJoinForm" role="form" method="post"
-					enctype="multipart/form-data">
-					<div class="form-group">
-						<label for="mName"> 닉네임 </label> <input type="text"
-							class="form-control" id="userName" name="uname">
-						<div id="userNameMsg"></div>
-						<div class="check_font" id="id_check"></div>
-
-						<label for="mEmail"> 이메일 </label> <input type="email"
-							class="form-control" id="userEmail" name="uemail">
-						<div id="userEmailMsg"></div>
-					</div>
-
-
-					<div class="form-group">
-
-						<label for="mPass"> 비밀번호 </label> <input type="password"
-							class="form-control" id="userPass" name="upass">
-					</div>
-
-					<div class="form-group">
-
-						<label for="mPass"> 비밀번호 확인 </label> <input type="password"
-							class="form-control" id="userPassCheck" name="upassCheck">
-					</div>
-
-
-
-					<label for="file"> 프로필사진 </label> <input type="file"
-						class="form-control-file" id="file" name="file"
-						accept=".jpg,.jpeg,.gif,.bmp,.png">
-					<button type="button" id="btnJoin" class="btn btn-primary">
-						가입</button>
-				</form>
-			</div>
-		</div>
-	</div>
- -->
-
-	<!--      	<script>
-		$(function() {
-			var formData = new FormData();
-			formData.append("uname",$("input[name=uname]").val());
-			formData.append("uemail",$("input[name=uemail]").val());
-			formData.append("upass",$("input[name=upass]").val());
-			
-			$("#uploadBtn").on("click", function(event) {
-				var inputFile = $("input[name='file']").val();
-				console.log(inputFile);
-
-				formData.append("file", inputFile);
-			})
-
-			$.ajax({
-				url : "/porget/userjoin",
-				type: "post",
-				processData : false,
-				contentType : false,
-				data : formData,
-				type : 'post',
-				success : function(result) {
-					console.log(result);
-					alert("Uploaded");
-				}
-			})// ajax
-		})
-	</script> -->
-</body>
-
-</html>
+<jsp:include page="/WEB-INF/views/include/footer.jsp" />
