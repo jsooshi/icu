@@ -18,7 +18,7 @@
 					var keyword=$("input[name='keyword2']").val();
 					
 					$(this).parents().siblings().removeClass("active");    
-				    $(this).parents().addClass("active"); 
+				    $(this).parent().addClass("active"); 
 					
 					console.log(type);
 					console.log(keyword);
