@@ -21,7 +21,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler{
 		log.error("Access Denied");
 		log.error("Redirect..");
 		
-		response.sendRedirect("/security/accessError");
+		response.sendRedirect("/porget");
 	}
 	
 	
