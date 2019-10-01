@@ -953,7 +953,7 @@ connect();
 
 
 	 function connect() {
-		 	var ws = new WebSocket("ws://192.168.0.64/porget/chat");
+		 	var ws = new WebSocket("ws://192.168.0.120/porget/chat");
 		 	sock = ws
 		    sock.onopen = function() {
 		        console.log('open');
@@ -961,7 +961,7 @@ connect();
 		    sock.onmessage = function(evt) {
 	    	   var data = evt.data;
 	  		   var obj = JSON.parse(data)  	   
-	    	   appendMessage(obj.chatContext, obj.senderUname);
+	    	  /*  appendMessage(obj.chatContext, obj.senderUname); */
 		    };
 		    sock.onclose = function() {
 		    	 appendMessage("연결을 끊었습니다.");
@@ -1082,7 +1082,7 @@ $("#status-options ul li").click(function() {
 				data : {uname:uname},
 				success : function(data) {
 					$('.contacts ul').html("");
-					console.log(data);
+				/* 	console.log(data); */
 					$(data).appendTo($('.contacts ul'));
 				}
 				

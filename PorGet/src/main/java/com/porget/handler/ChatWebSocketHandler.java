@@ -119,7 +119,11 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 		Gson gson = new Gson(); 
 		String msgJson = gson.toJson(chatVO);
 		WebSocketSession web = users.get(chatVO.getToUname());
-        web.sendMessage(new TextMessage(msgJson));
+		users.get(chatVO.getSenderUname()).sendMessage(new TextMessage(msgJson));
+		if(web!=null) {
+			web.sendMessage(new TextMessage(msgJson));
+		}
+
 		  
 //		
 //		  for (WebSocketSession websocketSession : connectedUsers) { map =

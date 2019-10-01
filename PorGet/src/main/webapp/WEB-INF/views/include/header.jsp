@@ -138,7 +138,7 @@
 })
 
 	function connectWS() {
-		var ws = new WebSocket("ws://192.168.0.124/porget/replyEcho?pfnum=1");
+		var ws = new WebSocket("ws://192.168.0.120/porget/replyEcho?pfnum=1");
 		socket = ws
 		ws.onopen = function() {
 			console.log('Info: connection opened')

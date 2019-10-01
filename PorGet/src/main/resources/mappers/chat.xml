@@ -14,14 +14,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="chatListCount" resultType="int"> 
 		select count(*)
 		from chat
-		where (senderUname=#{senderUname} and toUname=#{toUname} and mcheck=0) or (senderUname=#{toUname} and toUname=#{senderUname})
+		where (senderUname=#{senderUname} and toUname=#{toUname} and mcheck=0) or (senderUname=#{toUname} and toUname=#{senderUname} and mcheck=0)
 		
 	</select>
 
 	<select id="chatList" resultType="Map"> 
 		select senderUname, toUname, chatContext, mCheck, sendDate
 		from chat
-		where (senderUname=#{senderUname} and toUname=#{toUname} and mcheck=0) or (senderUname=#{toUname} and toUname=#{senderUname})
+		where (senderUname=#{senderUname} and toUname=#{toUname} and mcheck=0) or (senderUname=#{toUname} and toUname=#{senderUname} and mcheck=0)
+		and mcheck=0
 		order by sendDate 
 	</select>
 
@@ -72,7 +73,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<update id="deleteChat">
 		UPDATE chat SET mcheck=3
-			WHERE senderUname=#{senderUname} and toUname=#{toUname}
+			WHERE (senderUname=#{senderUname} and toUname=#{toUname} and mcheck=0) or (senderUname=#{toUname} and toUname=#{senderUname} and mcheck=0)
 	</update> 
 	
 </mapper>
