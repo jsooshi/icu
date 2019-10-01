@@ -202,6 +202,8 @@
 			</sec:authorize>
 			<li class="nav-item"><a href="/porget/portfolio"
 				class="portfolio nav-link">Portfolio</a></li>
+				
+		
 
 				<sec:authorize access="isAnonymous()">
 					<li class="nav-item"><a href="<c:url value='/login'/>" class="nav-link">login</a></li>
@@ -211,6 +213,8 @@
 				<sec:authentication property="principal" var ="pinfo"/>
 				
 				<sec:authorize access="isAuthenticated()">
+					<li class="nav-item"><a href="/porget/chatting?toUname=${sessionScope.uname }"
+					class="portfolio nav-link">Chat</a></li>
 					<li class="nav-item">
 							<div class="dropdown show">
 								<a class="portfolio nav-link" href="#" role="button"
