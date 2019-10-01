@@ -953,7 +953,7 @@ connect();
 
 
 	 function connect() {
-		 	var ws = new WebSocket("ws://192.168.0.29/porget/chat");
+		 	var ws = new WebSocket("ws://192.168.0.65/porget/chat");
 		 	sock = ws
 		    sock.onopen = function() {
 		        console.log('open');

@@ -50,7 +50,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{
 		session.setAttribute("notification", userdao.replyNotification(user.getUser().getUname()));
 
 		if(roleNames.contains("ROLE_ADMIN")) {
-			response.sendRedirect("/porget/admin");
+			response.sendRedirect("/porget/admin/member");
 			return; 
 		}
 		response.sendRedirect("/porget");

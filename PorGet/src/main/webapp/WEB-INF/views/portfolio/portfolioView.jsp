@@ -191,7 +191,7 @@ var writer="${list.UNAME }"
 							>포트폴리오 배너 등록</a>
 					</sec:authorize>
 					<c:if test="${not empty list.PFURL}">
-						<a href="http://${list.PFURL }" class="btn btn-primary pd-4"
+						<a href="${list.PFURL }" class="btn btn-primary pd-4"
 							target="_blank"> 포트폴리오 링크 </a>
 					</c:if>
 					<c:if test="${not empty list.PFFILE}">

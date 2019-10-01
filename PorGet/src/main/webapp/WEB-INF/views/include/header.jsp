@@ -138,7 +138,7 @@
 })
 
 	function connectWS() {
-		var ws = new WebSocket("ws://192.168.0.29/porget/replyEcho?pfnum=1");
+		var ws = new WebSocket("ws://192.168.0.65/porget/replyEcho?pfnum=1");
 		socket = ws
 		ws.onopen = function() {
 			console.log('Info: connection opened')
@@ -198,7 +198,7 @@
 		<ul class="navbar-nav ml-auto">
 			<li class="nav-item"><a href="/porget" class="home nav-link">Home</a></li>
 			<sec:authorize access="hasRole('ROLE_ADMIN')">
-				<li class="nav-item"><a href="/porget/admin" class="home nav-link">Admin</a></li>
+				<li class="nav-item"><a href="/porget/admin/member" class="home nav-link">Admin</a></li>
 			</sec:authorize>
 			<li class="nav-item"><a href="/porget/portfolio"
 				class="portfolio nav-link">Portfolio</a></li>

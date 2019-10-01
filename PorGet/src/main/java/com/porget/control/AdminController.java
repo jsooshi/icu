@@ -31,7 +31,7 @@ public class AdminController {
 	private PortfolioDAO portfolioDao;
 	
 	/*회원관리*/
-	@GetMapping(value= {"/",""})
+	@GetMapping(value= {"/member"})
 	public String selectAll(Model m,Criteria cri) {
 		
 		log.info("member:"+cri.getPageNum());

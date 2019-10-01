@@ -47,6 +47,10 @@ public class MyPageController {
 		m.addAttribute("pvo",portfolioVO);
 		
 		List<PortfolioVO> portfolioVO2 = dao.likePortfolio(uname);
+		for(int i=0; i<portfolioVO2.size();i++) {
+			PortfolioVO pvo2 = portfolioVO2.get(i);
+			pvo2.setPfthumb(pvo2.getPfthumb().split("\\|")[0]);
+		}
 		System.out.println(portfolioVO2);
 		m.addAttribute("like",portfolioVO2);
 		
