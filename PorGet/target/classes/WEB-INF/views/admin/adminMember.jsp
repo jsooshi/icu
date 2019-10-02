@@ -5,11 +5,6 @@
 
 <jsp:include page="/WEB-INF/views/include/adminHeader.jsp" />
 
-<style>
-.card {
-	width: 1000px;
-}
-</style>
 <script src="/porget/js/adminMember.js"></script>
 
 <div class="col-9">
