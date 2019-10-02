@@ -4,10 +4,27 @@
 
 
 <jsp:include page="/WEB-INF/views/include/header.jsp" />
+<style>
+
+    .wrap-loading {
+        height: 100vh;
+        
+    }
+
+
+    .wrap-loading img{
+        
+        position: relative;
+        top: 10%;
+        left: 400px;
+        width: 100px;
+    }
+</style>
+
 <br>
 <div class="container">
 	<div class="content">
-		<h3>게시판</h3>
+		<h3>Portfolio</h3>
 		<hr>
 		<!-- <div id="div01"	style="text-align: center; border: 1px solid #5AAFFF; height: 500px; overflow-y: scroll;"> -->
 		<div class="wrap-loading"><img src="/porget/img/Spin-1s-200px.gif"/></div>

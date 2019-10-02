@@ -720,8 +720,8 @@ $(document).ready(function() {
 				data : {toUname:toUname, uname:uname, base:1},
 				success : function(data) {
 					/* $('#frame').html(data); */
-					/* $('.messages ul').empty();
-					$(data).appendTo($('.messages ul')); */
+					 $('.messages ul').empty();
+					$(data).appendTo($('.messages ul')); 
 					
 					 location.href='/porget/chatting?toUname='+toUname; 
 					var objDiv = document.getElementById("messages");
@@ -953,7 +953,7 @@ connect();
 
 
 	 function connect() {
-		 	var ws = new WebSocket("ws://192.168.0.65/porget/chat");
+		 	var ws = new WebSocket("ws://192.168.0.45/porget/chat");
 		 	sock = ws
 		    sock.onopen = function() {
 		        console.log('open');
@@ -961,7 +961,7 @@ connect();
 		    sock.onmessage = function(evt) {
 	    	   var data = evt.data;
 	  		   var obj = JSON.parse(data)  	   
-	    	  /*  appendMessage(obj.chatContext, obj.senderUname); */
+	    	  appendMessage(obj.chatContext, obj.senderUname); 
 		    };
 		    sock.onclose = function() {
 		    	 appendMessage("연결을 끊었습니다.");

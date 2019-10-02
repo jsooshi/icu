@@ -42,7 +42,7 @@ public class ReportController {
 		int reportNum = service.insert(rvo);
 		attrs.addFlashAttribute("result",reportNum);
 		
-		return "redirect:/reportList";
+		return "redirect:/portfolio";
 	}
 	
 	

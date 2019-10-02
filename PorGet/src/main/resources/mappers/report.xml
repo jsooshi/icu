@@ -56,7 +56,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="insert">
 		insert into report(reportNum,reportContext,reportPath,reportType,reportDate,reporter,defendant,reportResult) 
-		values ( #{reportNum}, #{reportContext}, #{reportPath}, #{reportType}, sysdate, #{reporter},#{defendant},'처리중' )
+		values ( report_seq.nextval , #{reportContext}, #{reportPath}, #{reportType}, sysdate, #{reporter},#{defendant},'처리중' )
 	</insert>
 	
 	<select id="selectChatContext" resultType="ChatVO">

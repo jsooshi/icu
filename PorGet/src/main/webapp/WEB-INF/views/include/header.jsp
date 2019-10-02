@@ -138,7 +138,7 @@
 })
 
 	function connectWS() {
-		var ws = new WebSocket("ws://192.168.0.65/porget/replyEcho?pfnum=1");
+		var ws = new WebSocket("ws://192.168.0.45/porget/replyEcho?pfnum=1");
 		socket = ws
 		ws.onopen = function() {
 			console.log('Info: connection opened')
@@ -242,7 +242,7 @@
 					<!-- <button onclick="location.href='portfolio/post'" class="btn btn-primary">Posting!</button> -->
 					<li class="nav-item">
 						<div class="dropdown show">
-							  <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							  <a class="dropdown-toggle nav-link" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 	 						  	<img src="/porget/files/profile/${sessionScope.uphoto }" class="rounded-circle" style="width: 50px; height:50px;"> 
 							  </a>
 							

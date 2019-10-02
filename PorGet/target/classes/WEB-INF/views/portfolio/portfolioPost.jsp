@@ -184,7 +184,7 @@
 	<div class="container">
 				<h3>포트폴리오 등록</h3>
 				<form id="contact-form" class="form" action="#" method="POST"
-					role="form">
+					role="form" onsubmit="return false">
 					<div class="form-group">
 						<label for="pfname">제목</label> <input
 							type="text" class="form-control" id="pfname" name="pfname"
